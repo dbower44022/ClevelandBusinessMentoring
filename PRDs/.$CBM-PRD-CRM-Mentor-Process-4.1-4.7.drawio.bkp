@@ -1,0 +1,863 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="7">
+  <diagram id="mentor-4.1" name="4.1 — Mentor Registration">
+    <mxGraphModel dx="860" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="r1_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="175" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Applicant / Mentor" vertex="1">
+          <mxGeometry height="20" width="115" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l4" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;" value="" vertex="1">
+          <mxGeometry height="18" width="20" x="30" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l4t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Decision point" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="156" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_l5t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Rejection / end path" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="153" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.1 — Mentor Registration" vertex="1">
+          <mxGeometry height="50" width="400" x="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_s" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="Prospective mentor&#xa;visits CBM website" vertex="1">
+          <mxGeometry height="60" width="200" x="300" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e0" edge="1" parent="1" source="r1_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_s">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" value="Applicant completes &amp; submits&#xa;mentor application form" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e1" edge="1" parent="1" source="r1_s" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_ref" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=10;align=left;spacingLeft=8;size=14;" value="Application fields:&#xa;&#xa;• Why Interested in Mentoring&#xa;• Name, Email, Address, Phone&#xa;• Professional Bio / Work Experience&#xa;• LinkedIn URL, Currently Employed&#xa;• Industry Experience (multi-select)&#xa;• Fluent Languages&#xa;• How Did You Hear About CBM&#xa;• Felony Conviction disclosure&#xa;• Terms &amp; Conditions acceptance" vertex="1">
+          <mxGeometry height="185" width="230" x="620" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;WordPress posts data to CRM&lt;br&gt;via REST API&lt;/span&gt;" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e2" edge="1" parent="1" source="r1_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="CRM creates Contact record:&lt;br&gt;Contact Type = Mentor, Status = Submitted,&lt;br&gt;T&amp;amp;C Accepted = Yes, T&amp;amp;C Date = now" vertex="1">
+          <mxGeometry height="55" width="320" x="240" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e3" edge="1" parent="1" source="r1_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="System automatically sends confirmation&amp;nbsp;&lt;br&gt;email to applicant acknowledging receipt" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e4" edge="1" parent="1" source="r1_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Admin reviews submitted mentor&amp;nbsp;&lt;br&gt;requests view in CRM" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e5" edge="1" parent="1" source="r1_4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews application&#xa;(informal review, notes recorded on Contact)" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e6" edge="1" parent="1" source="r1_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_d1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="Approved?" vertex="1">
+          <mxGeometry height="90" width="120" x="340" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e7" edge="1" parent="1" source="r1_6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_dec1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Status → Declined&lt;br&gt;Admin notifies applicant manually via email&lt;div&gt;with predefined email template&lt;/div&gt;" vertex="1">
+          <mxGeometry height="45" width="280" x="560" y="682" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e8a" edge="1" parent="1" source="r1_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="r1_dec1" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_dec2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontStyle=1;fontSize=11;" value="End&#xa;(Declined)" vertex="1">
+          <mxGeometry height="50" width="120" x="639" y="755" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e8b" edge="1" parent="1" source="r1_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_dec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_dec_note" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fontColor=#9E9E9E;align=center;" value="Contact record retained&#xa;permanently" vertex="1">
+          <mxGeometry height="30" width="150" x="616" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_app" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Admin changes Mentor record Status:&lt;br&gt;Submitted → Provisional&lt;/span&gt;" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e9" edge="1" parent="1" source="r1_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="r1_app" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Proceed to&lt;br&gt;4.2 Activation&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="325" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="r1_e10" edge="1" parent="1" source="r1_app" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="r1_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mentor-4.2" name="4.2 — Provisional → Active Activation">
+    <mxGraphModel dx="860" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="a2_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="135" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Mentor action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_l4t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Milestone / status" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.2 — Provisional → Active Activation" vertex="1">
+          <mxGeometry height="50" width="420" x="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_s" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="Mentor Status:&#xa;Provisional" vertex="1">
+          <mxGeometry height="60" width="180" x="320" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e0" edge="1" parent="1" source="a2_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_s">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_note" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=10;align=left;spacingLeft=8;size=14;" value="All seven steps must be&#xa;completed before Status&#xa;can change to Active.&#xa;&#xa;All steps are manual and&#xa;admin-driven except&#xa;Moodle training completion." vertex="1">
+          <mxGeometry height="120" width="200" x="620" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin communicates onboarding requirements&lt;br&gt;(LMS training modules + CBM ethics agreement)" vertex="1">
+          <mxGeometry height="50" width="340" x="240" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e1" edge="1" parent="1" source="a2_s" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" value="Mentor completes required&lt;br&gt;LMS training modules" vertex="1">
+          <mxGeometry height="45" width="340" x="240" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e2" edge="1" parent="1" source="a2_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_2b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;LMS integration auto-sets:&lt;br&gt;Training Completed = Yes, Completion Date&lt;/span&gt;" vertex="1">
+          <mxGeometry height="45" width="340" x="240" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e2b" edge="1" parent="1" source="a2_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_2b">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" value="Mentor accepts CBM ethics agreement" vertex="1">
+          <mxGeometry height="40" width="340" x="240" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e3" edge="1" parent="1" source="a2_2b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_3b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sets Ethics Agreement Accepted = Yes&#xa;and Ethics Agreement Acceptance Date/Time" vertex="1">
+          <mxGeometry height="45" width="340" x="240" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e3b" edge="1" parent="1" source="a2_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_3b">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin confirms background check complete&#xa;Sets Background Check Completed = Yes, Date" vertex="1">
+          <mxGeometry height="45" width="340" x="240" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e4" edge="1" parent="1" source="a2_3b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin assigns CBM Gmail address&lt;br&gt;(provisions Google Workspace outside of CRM)&lt;br&gt;Populates CBM Gmail Address field" vertex="1">
+          <mxGeometry height="55" width="340" x="240" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e5" edge="1" parent="1" source="a2_4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sets Maximum Client Capacity&#xa;and Accepting New Clients = Yes" vertex="1">
+          <mxGeometry height="45" width="340" x="240" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e6" edge="1" parent="1" source="a2_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=12;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Admin changes Mentor Status:&lt;br&gt;Provisional → Active&lt;br&gt;(communicates activation directly to mentor)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="55" width="340" x="240" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e7" edge="1" parent="1" source="a2_6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Mentor Active&lt;br&gt;(ready for assignments)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="310" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="a2_e8" edge="1" parent="1" source="a2_7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="a2_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mentor-4.3" name="4.3 — Client Assignment (Mentor Side)">
+    <mxGraphModel dx="1229" dy="1020" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ca_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="155" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Mentor action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l4" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;" value="" vertex="1">
+          <mxGeometry height="18" width="20" x="30" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l4t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Decision point" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="156" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_l5t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Rejection / revert" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="153" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.3 — Client Assignment (Mentor Side)" vertex="1">
+          <mxGeometry height="50" width="420" x="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_xref" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=10;align=left;spacingLeft=8;size=14;" value="Full assignment process documented&#xa;in CBM-PRD-CRM-Client.docx&#xa;Section 4.2.&#xa;&#xa;This tab shows mentor-side&#xa;responsibilities and touchpoints." vertex="1">
+          <mxGeometry height="100" width="220" x="640" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin nominates Mentor&lt;br&gt;for client engagement" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e0" edge="1" parent="1" source="ca_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;System verifies Mentor is:&lt;br&gt;Active, Accepting New Clients = Yes,&lt;br&gt;Available Capacity &amp;gt; 0&lt;/span&gt;" vertex="1">
+          <mxGeometry height="55" width="320" x="250" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e1" edge="1" parent="1" source="ca_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="System sends notification email to mentor containing:&lt;br&gt;client intake data summary + accept/refuse link&lt;br&gt;Acceptance window: 48 hours (configurable)" vertex="1">
+          <mxGeometry height="55" width="320" x="250" y="338" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e2" edge="1" parent="1" source="ca_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;entryX=0.502;entryY=0.055;entryDx=0;entryDy=0;entryPerimeter=0;" target="JBhub9WkTFShfUEIHtGB-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_d1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Mentor&lt;br&gt;response?&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="140" x="340" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e3" edge="1" parent="1" source="ca_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e4r" edge="1" parent="1" source="ca_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" value="Refuses">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580" y="450.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ca_e4n" edge="1" parent="1" source="ca_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=10;fontColor=#F57F17;entryX=-0.004;entryY=0.461;entryDx=0;entryDy=0;entryPerimeter=0;" target="JBhub9WkTFShfUEIHtGB-11" value="No response&#xa;(48hr)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="580" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ca_acc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Engagement Status → Assigned&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="320" x="250" y="578" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e4a" edge="1" parent="1" source="ca_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="ca_acc" value="Accepts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Mentor personally introduces themselves&#xa;to the client via email" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="648" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e5" edge="1" parent="1" source="ca_acc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Mentor sets Meeting Cadence&#xa;on Engagement record" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="723" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e6" edge="1" parent="1" source="ca_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;dashed=1;" value="Mentor deploys Phase 2 client intake form&#xa;at their discretion" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="798" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e7" edge="1" parent="1" source="ca_6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="Mentor assigned&#xa;and engaged" vertex="1">
+          <mxGeometry height="60" width="160" x="330" y="878" as="geometry" />
+        </mxCell>
+        <mxCell id="ca_e8" edge="1" parent="1" source="ca_7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ca_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Admin views &quot;Mentor Declined&quot; view&amp;nbsp;&lt;div&gt;and re-nominates new Mentor&lt;br&gt;(no explanation required)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="880" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Mentor changes Engagement Status:&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&quot;Mentor Declined&quot;&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="260" x="580" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-4" edge="1" parent="1" source="JBhub9WkTFShfUEIHtGB-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.004;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="JBhub9WkTFShfUEIHtGB-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-6" edge="1" parent="1" source="JBhub9WkTFShfUEIHtGB-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.505;exitY=0.962;exitDx=0;exitDy=0;exitPerimeter=0;" target="ca_acc">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="711" y="569" />
+              <mxPoint x="710" y="569" />
+              <mxPoint x="710" y="598" />
+            </Array>
+            <mxPoint x="710" y="563" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Admin&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;re-nominates new Mentor&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="880" y="508" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-8" edge="1" parent="1" source="JBhub9WkTFShfUEIHtGB-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="JBhub9WkTFShfUEIHtGB-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="550" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-10" edge="1" parent="1" source="JBhub9WkTFShfUEIHtGB-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ca_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;System sets Assigned Mentor to mentor name, Engagement Status = Pending Acceptance, Assignment Date = Current date/time&lt;/span&gt;" vertex="1">
+          <mxGeometry height="55" width="320" x="250" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="JBhub9WkTFShfUEIHtGB-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Admin views &quot;Mentor Unresponsive&quot; View&lt;br&gt;&amp;nbsp;to follow up or nominate different mentor&lt;br&gt;(Engagement Status stays Pending Acceptance)" vertex="1">
+          <mxGeometry height="60" width="260" x="580" y="508" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mentor-4.4" name="4.4 — SME Request Workflow">
+    <mxGraphModel dx="1400" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Legend -->
+        <mxCell id="sme_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="175" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Mentor / SME action" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l4" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;" value="" vertex="1">
+          <mxGeometry height="18" width="20" x="30" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l4t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Decision point" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="156" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_l5t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Declined path" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="153" as="geometry" />
+        </mxCell>
+        <!-- Header -->
+        <mxCell id="sme_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.4 — SME Request Workflow" vertex="1">
+          <mxGeometry height="50" width="400" x="200" y="30" as="geometry" />
+        </mxCell>
+        <!-- Step 1 -->
+        <mxCell id="sme_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Primary Mentor initiates SME Request&#xa;from Engagement record&#xa;(identifies expertise needed)" vertex="1">
+          <mxGeometry height="55" width="320" x="240" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e0" edge="1" parent="1" source="sme_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 2 -->
+        <mxCell id="sme_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="System notifies admin&#xa;of SME request" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="195" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e1" edge="1" parent="1" source="sme_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 3 -->
+        <mxCell id="sme_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin identifies eligible SME&#xa;from mentor pool" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e2" edge="1" parent="1" source="sme_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 4 -->
+        <mxCell id="sme_4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sends SME request&#xa;to identified mentor" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e3" edge="1" parent="1" source="sme_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Decision -->
+        <mxCell id="sme_d1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="SME&#xa;accepts?" vertex="1">
+          <mxGeometry height="90" width="120" x="340" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e4" edge="1" parent="1" source="sme_4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Declines -->
+        <mxCell id="sme_dec" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="SME declines&#xa;Admin identifies another SME" vertex="1">
+          <mxGeometry height="45" width="200" x="560" y="442" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e5d" edge="1" parent="1" source="sme_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="sme_dec" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Loop back -->
+        <mxCell id="sme_e5d_loop" edge="1" parent="1" source="sme_dec" style="edgeStyle=orthogonalEdgeStyle;rounded=1;dashed=1;strokeColor=#C62828;" target="sme_3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="465" />
+              <mxPoint x="750" y="293" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- Accepts -->
+        <mxCell id="sme_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;fontStyle=1;" value="SME linked to Engagement&#xa;Gains scoped read access to client records" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e5a" edge="1" parent="1" source="sme_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="sme_5" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 6: SME logs sessions -->
+        <mxCell id="sme_6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="SME logs sessions against Engagement&#xa;(standard session logging process)&#xa;Must be listed in Mentor Attendees panel" vertex="1">
+          <mxGeometry height="55" width="320" x="240" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e6" edge="1" parent="1" source="sme_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 7: Involvement concludes -->
+        <mxCell id="sme_7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="When SME involvement concludes:&#xa;Admin removes SME link from Engagement&#xa;→ scoped access revoked" vertex="1">
+          <mxGeometry height="55" width="320" x="240" y="705" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e7" edge="1" parent="1" source="sme_6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- End -->
+        <mxCell id="sme_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="SME Engagement&#xa;Complete" vertex="1">
+          <mxGeometry height="60" width="160" x="320" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="sme_e8" edge="1" parent="1" source="sme_7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="sme_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mentor-4.5" name="4.5 — Mentor Inactivity Monitoring">
+    <mxGraphModel dx="1400" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Legend -->
+        <mxCell id="mi_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="135" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l3" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;" value="" vertex="1">
+          <mxGeometry height="18" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Decision point" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_l4t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Alert triggered" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="132" as="geometry" />
+        </mxCell>
+        <!-- Header -->
+        <mxCell id="mi_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.5 — Mentor Inactivity Monitoring" vertex="1">
+          <mxGeometry height="50" width="420" x="200" y="30" as="geometry" />
+        </mxCell>
+        <!-- Distinction note -->
+        <mxCell id="mi_note" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=10;align=left;spacingLeft=8;size=14;" value="Mentor-level monitoring&#xa;(independent of per-engagement&#xa;inactivity in Client PRD 4.5).&#xa;&#xa;Tracks whether Active mentors&#xa;are engaging with ANY clients&#xa;across all assignments." vertex="1">
+          <mxGeometry height="120" width="210" x="640" y="100" as="geometry" />
+        </mxCell>
+        <!-- Step 1: System monitors -->
+        <mxCell id="mi_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="System monitors all Active mentors&#xa;for inactivity" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_e0" edge="1" parent="1" source="mi_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Conditions box -->
+        <mxCell id="mi_cond" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;align=left;spacingLeft=10;" value="Check ALL conditions for configurable period&#xa;(default: 60 days):&#xa;&#xa;  1. No session logged where mentor is Attendee&#xa;  2. No new client engagement accepted&#xa;  3. No engagements in Active or Assigned status" vertex="1">
+          <mxGeometry height="100" width="380" x="220" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_e1" edge="1" parent="1" source="mi_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_cond">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Decision -->
+        <mxCell id="mi_d1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;fontStyle=1;" value="All conditions&#xa;met for&#xa;threshold period?" vertex="1">
+          <mxGeometry height="110" width="150" x="335" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_e2" edge="1" parent="1" source="mi_cond" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- No: Continue -->
+        <mxCell id="mi_no" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="No alert — continue&#xa;monitoring" vertex="1">
+          <mxGeometry height="40" width="180" x="130" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_e3n" edge="1" parent="1" source="mi_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="mi_no" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Yes: Alert -->
+        <mxCell id="mi_alert" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;fontStyle=1;" value="System generates admin alert&#xa;(NO automated status change)" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_e3y" edge="1" parent="1" source="mi_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="mi_alert" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Admin review -->
+        <mxCell id="mi_review" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews situation and&#xa;determines appropriate action" vertex="1">
+          <mxGeometry height="45" width="320" x="250" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_e4" edge="1" parent="1" source="mi_alert" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Possible actions -->
+        <mxCell id="mi_act1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=10;" value="Direct outreach&#xa;to mentor" vertex="1">
+          <mxGeometry height="40" width="140" x="140" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_act2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=10;" value="Update Accepting&#xa;New Clients flag" vertex="1">
+          <mxGeometry height="40" width="140" x="340" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_act3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=10;" value="Initiate offboarding&#xa;process (see 4.7)" vertex="1">
+          <mxGeometry height="40" width="140" x="540" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_ea1" edge="1" parent="1" source="mi_review" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_act1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_ea2" edge="1" parent="1" source="mi_review" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_act2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mi_ea3" edge="1" parent="1" source="mi_review" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="mi_act3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mentor-4.6" name="4.6 — Dues Billing &amp; Collection">
+    <mxGraphModel dx="1400" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Legend -->
+        <mxCell id="du_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="155" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="du_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Mentor action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l4" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;" value="" vertex="1">
+          <mxGeometry height="18" width="20" x="30" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l4t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Decision point" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="131" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="156" as="geometry" />
+        </mxCell>
+        <mxCell id="du_l5t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Alert / follow-up" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="153" as="geometry" />
+        </mxCell>
+        <!-- Header -->
+        <mxCell id="du_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.6 — Dues Billing &amp; Collection" vertex="1">
+          <mxGeometry height="50" width="400" x="200" y="30" as="geometry" />
+        </mxCell>
+        <!-- Step 1: Create Dues record -->
+        <mxCell id="du_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin creates Dues record for each&#xa;Active mentor at billing cycle start" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e0" edge="1" parent="1" source="du_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 2: Set Unpaid -->
+        <mxCell id="du_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sets Dues Status = Unpaid&#xa;on mentor Contact record" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e1" edge="1" parent="1" source="du_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 3: Send invoice -->
+        <mxCell id="du_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sends dues invoice to mentor&#39;s&#xa;CBM Gmail with Stripe payment link" vertex="1">
+          <mxGeometry height="45" width="320" x="240" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e2" edge="1" parent="1" source="du_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Decision: Payment outcome -->
+        <mxCell id="du_d1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;fontStyle=1;" value="Payment&#xa;outcome?" vertex="1">
+          <mxGeometry height="100" width="130" x="335" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e3" edge="1" parent="1" source="du_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Pays path -->
+        <mxCell id="du_pay1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" value="Mentor completes payment&#xa;via Stripe" vertex="1">
+          <mxGeometry height="40" width="200" x="130" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4p" edge="1" parent="1" source="du_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="du_pay1" value="Pays">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="du_pay2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="Stripe webhook confirms&#xa;payment receipt" vertex="1">
+          <mxGeometry height="40" width="200" x="130" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4p2" edge="1" parent="1" source="du_pay1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_pay2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="du_pay3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin updates Dues Payment Date&#xa;Sets Dues Status = Paid on Contact" vertex="1">
+          <mxGeometry height="45" width="200" x="130" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4p3" edge="1" parent="1" source="du_pay2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_pay3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="du_pay_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=11;" value="Dues Paid" vertex="1">
+          <mxGeometry height="45" width="120" x="170" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4p4" edge="1" parent="1" source="du_pay3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_pay_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Waiver path -->
+        <mxCell id="du_waive" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sets Dues Status = Waived&#xa;(no payment required,&#xa;no Dues Payment Date recorded)" vertex="1">
+          <mxGeometry height="55" width="200" x="560" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4w" edge="1" parent="1" source="du_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=10;" target="du_waive" value="Waiver&#xa;granted">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="du_waive_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=11;" value="Dues Waived" vertex="1">
+          <mxGeometry height="45" width="120" x="600" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4w2" edge="1" parent="1" source="du_waive" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_waive_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Unpaid past grace period -->
+        <mxCell id="du_unpaid" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" value="Dues remain unpaid past&#xa;configurable grace period" vertex="1">
+          <mxGeometry height="45" width="200" x="560" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4u" edge="1" parent="1" source="du_d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=10;fontColor=#F57F17;" target="du_unpaid" value="Unpaid&#xa;(past grace)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="480" />
+              <mxPoint x="500" y="523" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="du_unpaid2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin receives alert&#xa;and follows up directly&#xa;(no automated status change)" vertex="1">
+          <mxGeometry height="55" width="200" x="560" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="du_e4u2" edge="1" parent="1" source="du_unpaid" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="du_unpaid2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mentor-4.7" name="4.7 — Mentor Offboarding">
+    <mxGraphModel dx="1400" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Legend -->
+        <mxCell id="ob_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="115" width="155" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_leg_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="20" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_l1t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="55" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="87" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_l2t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Outcome / status" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="30" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Retention policy" vertex="1">
+          <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
+        </mxCell>
+        <!-- Header -->
+        <mxCell id="ob_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.7 — Mentor Offboarding" vertex="1">
+          <mxGeometry height="50" width="400" x="200" y="30" as="geometry" />
+        </mxCell>
+        <!-- Note -->
+        <mxCell id="ob_note" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=10;align=left;spacingLeft=8;size=14;" value="All steps are manual&#xa;and admin-driven.&#xa;&#xa;No data is deleted or&#xa;anonymized as part&#xa;of offboarding." vertex="1">
+          <mxGeometry height="100" width="180" x="650" y="100" as="geometry" />
+        </mxCell>
+        <!-- Step 1 -->
+        <mxCell id="ob_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;fontStyle=1;" value="Admin changes Mentor Status → Departed&#xa;Sets Departure Date&#xa;Selects Departure Reason" vertex="1">
+          <mxGeometry height="55" width="340" x="240" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e0" edge="1" parent="1" source="ob_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 2 -->
+        <mxCell id="ob_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sets Accepting New Clients = No" vertex="1">
+          <mxGeometry height="40" width="340" x="240" y="195" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e1" edge="1" parent="1" source="ob_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 3 -->
+        <mxCell id="ob_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews all Active &amp; Assigned engagements&#xa;where departing mentor is Primary Mentor" vertex="1">
+          <mxGeometry height="50" width="340" x="240" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e2" edge="1" parent="1" source="ob_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 3 sub-actions -->
+        <mxCell id="ob_3a" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=10;" value="Reassign to new&#xa;Primary Mentor" vertex="1">
+          <mxGeometry height="40" width="150" x="200" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_3b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=10;" value="OR close&#xa;engagement" vertex="1">
+          <mxGeometry height="40" width="150" x="450" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e3a" edge="1" parent="1" source="ob_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_3a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e3b" edge="1" parent="1" source="ob_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_3b">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 4 -->
+        <mxCell id="ob_4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews and removes Co-Mentor&#xa;and SME assignments as appropriate" vertex="1">
+          <mxGeometry height="45" width="340" x="240" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e4a" edge="1" parent="1" source="ob_3a" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e4b" edge="1" parent="1" source="ob_3b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Step 5 -->
+        <mxCell id="ob_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin deprovisions Google Workspace account&#xa;(outside EspoCRM)&#xa;Clears CBM Gmail Address field on Contact" vertex="1">
+          <mxGeometry height="55" width="340" x="240" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e5" edge="1" parent="1" source="ob_4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Retention -->
+        <mxCell id="ob_ret" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontSize=11;fontStyle=2;" value="Contact record retained permanently&#xa;All historical session attendance, engagement history,&#xa;notes, and dues records remain intact for reporting" vertex="1">
+          <mxGeometry height="55" width="340" x="240" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e6" edge="1" parent="1" source="ob_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_ret">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- End -->
+        <mxCell id="ob_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontStyle=1;fontSize=12;" value="Mentor&#xa;Offboarded" vertex="1">
+          <mxGeometry height="60" width="140" x="340" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="ob_e7" edge="1" parent="1" source="ob_ret" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
