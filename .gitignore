@@ -16,3 +16,5 @@ htmlcov/
 *.docx#
 
 *.odt#
+
+tests/php/.phpunit.cache/test-results
