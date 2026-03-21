@@ -745,11 +745,10 @@
     </mxGraphModel>
   </diagram>
   <diagram id="mentor-4.7" name="4.7 — Mentor Offboarding">
-    <mxGraphModel dx="1400" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <!-- Legend -->
         <mxCell id="ob_leg_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
           <mxGeometry height="115" width="155" x="20" y="30" as="geometry" />
         </mxCell>
@@ -774,36 +773,30 @@
         <mxCell id="ob_l3t" parent="1" style="text;html=1;fontSize=10;align=left;" value="Retention policy" vertex="1">
           <mxGeometry height="20" width="120" x="55" y="106" as="geometry" />
         </mxCell>
-        <!-- Header -->
         <mxCell id="ob_hdr" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.7 — Mentor Offboarding" vertex="1">
           <mxGeometry height="50" width="400" x="200" y="30" as="geometry" />
         </mxCell>
-        <!-- Note -->
         <mxCell id="ob_note" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=10;align=left;spacingLeft=8;size=14;" value="All steps are manual&#xa;and admin-driven.&#xa;&#xa;No data is deleted or&#xa;anonymized as part&#xa;of offboarding." vertex="1">
           <mxGeometry height="100" width="180" x="650" y="100" as="geometry" />
         </mxCell>
-        <!-- Step 1 -->
         <mxCell id="ob_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;fontStyle=1;" value="Admin changes Mentor Status → Departed&#xa;Sets Departure Date&#xa;Selects Departure Reason" vertex="1">
           <mxGeometry height="55" width="340" x="240" y="110" as="geometry" />
         </mxCell>
         <mxCell id="ob_e0" edge="1" parent="1" source="ob_hdr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- Step 2 -->
         <mxCell id="ob_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin sets Accepting New Clients = No" vertex="1">
           <mxGeometry height="40" width="340" x="240" y="195" as="geometry" />
         </mxCell>
         <mxCell id="ob_e1" edge="1" parent="1" source="ob_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- Step 3 -->
         <mxCell id="ob_3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews all Active &amp; Assigned engagements&#xa;where departing mentor is Primary Mentor" vertex="1">
           <mxGeometry height="50" width="340" x="240" y="265" as="geometry" />
         </mxCell>
         <mxCell id="ob_e2" edge="1" parent="1" source="ob_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- Step 3 sub-actions -->
         <mxCell id="ob_3a" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=10;" value="Reassign to new&#xa;Primary Mentor" vertex="1">
           <mxGeometry height="40" width="150" x="200" y="350" as="geometry" />
         </mxCell>
@@ -816,7 +809,6 @@
         <mxCell id="ob_e3b" edge="1" parent="1" source="ob_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_3b">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- Step 4 -->
         <mxCell id="ob_4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews and removes Co-Mentor&#xa;and SME assignments as appropriate" vertex="1">
           <mxGeometry height="45" width="340" x="240" y="425" as="geometry" />
         </mxCell>
@@ -826,21 +818,18 @@
         <mxCell id="ob_e4b" edge="1" parent="1" source="ob_3b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- Step 5 -->
         <mxCell id="ob_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin deprovisions Google Workspace account&#xa;(outside EspoCRM)&#xa;Clears CBM Gmail Address field on Contact" vertex="1">
           <mxGeometry height="55" width="340" x="240" y="500" as="geometry" />
         </mxCell>
         <mxCell id="ob_e5" edge="1" parent="1" source="ob_4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- Retention -->
         <mxCell id="ob_ret" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontSize=11;fontStyle=2;" value="Contact record retained permanently&#xa;All historical session attendance, engagement history,&#xa;notes, and dues records remain intact for reporting" vertex="1">
           <mxGeometry height="55" width="340" x="240" y="590" as="geometry" />
         </mxCell>
         <mxCell id="ob_e6" edge="1" parent="1" source="ob_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="ob_ret">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <!-- End -->
         <mxCell id="ob_end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontStyle=1;fontSize=12;" value="Mentor&#xa;Offboarded" vertex="1">
           <mxGeometry height="60" width="140" x="340" y="680" as="geometry" />
         </mxCell>

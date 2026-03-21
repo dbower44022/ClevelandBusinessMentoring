@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="6">
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="9">
   <diagram id="client-process-4.1-4.3" name="Client Intake → Assignment → Session Logging">
-    <mxGraphModel dx="1483" dy="1076" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="3600" math="0" shadow="0">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="3600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -335,10 +335,367 @@
     </mxGraphModel>
   </diagram>
   <diagram id="client-process-4.4-4.5-4.8-4.9" name="NPS Surveys → Inactivity → Meeting Requests → Summary Emails">
-    <mxGraphModel dx="1721" dy="1248" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="3600" math="0" shadow="0">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="3600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="L0imV3r2LFq-thGQvs49" name="4.1 - Client Intake">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_LWCdLfmltig6thi3sWg-1" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.1 — Client Intake" vertex="1">
+          <mxGeometry height="50" width="400" x="270" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="Client visits&#xa;CBM website" vertex="1">
+          <mxGeometry height="60" width="200" x="370" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-3" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" value="Client completes &amp; submits&#xa;Phase 1 Mentoring Request form" vertex="1">
+          <mxGeometry height="50" width="320" x="310" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-5" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="CRM REST API receives&#xa;form submission" vertex="1">
+          <mxGeometry height="50" width="320" x="310" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-7" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Create&#xa;Company&#xa;record" vertex="1">
+          <mxGeometry height="60" width="120" x="220" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Create&#xa;Contact record&#xa;(Primary Contact)" vertex="1">
+          <mxGeometry height="60" width="120" x="410" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Create&#xa;Engagement&#xa;(Status: Submitted)" vertex="1">
+          <mxGeometry height="60" width="120" x="600" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-11" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-12" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-13" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews via&#xa;&quot;New Client Submissions&quot; preset" vertex="1">
+          <mxGeometry height="50" width="320" x="310" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-15" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-16" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-17" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin reviews submission&#xa;for completeness &amp; eligibility" vertex="1">
+          <mxGeometry height="50" width="320" x="310" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-19" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-20" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="Eligible for&#xa;program?" vertex="1">
+          <mxGeometry height="100" width="140" x="400" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-21" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Status → Abandoned&#xa;Close Reason: Other" vertex="1">
+          <mxGeometry height="50" width="180" x="700" y="685" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-23" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="_LWCdLfmltig6thi3sWg-22" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Notify applicant&#xa;via email" vertex="1">
+          <mxGeometry height="50" width="180" x="700" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-25" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-26" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontStyle=1;fontSize=11;" value="End&#xa;(Not Eligible)" vertex="1">
+          <mxGeometry height="50" width="120" x="730" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-27" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-24" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="_LWCdLfmltig6thi3sWg-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-28" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.2 — Mentor Assignment" vertex="1">
+          <mxGeometry height="50" width="400" x="270" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-29" edge="1" parent="1" source="_LWCdLfmltig6thi3sWg-20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="_LWCdLfmltig6thi3sWg-28" value="Yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="800" />
+              <mxPoint x="470" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-85" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="200" width="155" x="90" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-86" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" value="Legend" vertex="1">
+          <mxGeometry height="25" width="155" x="90" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-87" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="100" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-88" parent="1" style="text;html=1;fontSize=10;align=left;" value="Client action" vertex="1">
+          <mxGeometry height="20" width="110" x="125" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-89" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="100" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-90" parent="1" style="text;html=1;fontSize=10;align=left;" value="Admin action" vertex="1">
+          <mxGeometry height="20" width="110" x="125" y="117" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-91" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="100" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-92" parent="1" style="text;html=1;fontSize=10;align=left;" value="Mentor action" vertex="1">
+          <mxGeometry height="20" width="110" x="125" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-93" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="100" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-94" parent="1" style="text;html=1;fontSize=10;align=left;" value="System / automated" vertex="1">
+          <mxGeometry height="20" width="120" x="125" y="167" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-95" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="18" width="20" x="100" y="192" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-96" parent="1" style="text;html=1;fontSize=10;align=left;" value="Decision point" vertex="1">
+          <mxGeometry height="20" width="110" x="125" y="192" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-97" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="100" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="_LWCdLfmltig6thi3sWg-98" parent="1" style="text;html=1;fontSize=10;align=left;" value="Rejection / end path" vertex="1">
+          <mxGeometry height="20" width="120" x="125" y="217" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="QIOdgqfMalrj4w5okjoc" name="4.2 - Mentor Assignment">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-3" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.2 — Mentor Assignment" vertex="1">
+          <mxGeometry height="50" width="400" x="80" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin searches Available Mentor list&#xa;(filter: NAICS sector, skills, expertise,&#xa;Active status, accepting clients, capacity)" vertex="1">
+          <mxGeometry height="60" width="320" x="120" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-5" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;" value="Admin selects Primary Mentor&#xa;(optionally Co-Mentors and/or SMEs)&#xa;on Engagement form" vertex="1">
+          <mxGeometry height="60" width="320" x="120" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-7" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="System validates: Mentor is Active,&#xa;Accepting Clients, and Has Capacity" vertex="1">
+          <mxGeometry height="50" width="320" x="120" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-9" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="Engagement Status → Pending Acceptance" vertex="1">
+          <mxGeometry height="40" width="320" x="120" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-11" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="System sends notification email to mentor&#xa;(Phase 1 summary + accept/refuse link)&#xa;Acceptance window: 48 hours (configurable)" vertex="1">
+          <mxGeometry height="60" width="320" x="120" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-13" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-14" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="Mentor&#xa;response?" vertex="1">
+          <mxGeometry height="110" width="140" x="210" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-15" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;" value="Status → Submitted&#xa;Admin notified" vertex="1">
+          <mxGeometry height="50" width="180" x="440" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-17" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="5Gjduv7WylVtdxlxkdWa-16" value="Refuses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-18" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;dashed=1;strokeColor=#C62828;" target="5Gjduv7WylVtdxlxkdWa-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="575" />
+              <mxPoint x="630" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-19" parent="1" style="text;html=1;fontSize=10;fontColor=#C62828;fontStyle=2;align=center;" value="Re-nominate&lt;br&gt;different mentor" vertex="1">
+          <mxGeometry height="40" width="95" x="635" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" value="Admin alerted to&#xa;follow up or re-nominate" vertex="1">
+          <mxGeometry height="50" width="180" x="440" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-21" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=10;fontColor=#F57F17;" target="5Gjduv7WylVtdxlxkdWa-20" value="No response&#xa;(48hr)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" value="Status → Assigned&#xa;Admin notified" vertex="1">
+          <mxGeometry height="40" width="320" x="120" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-23" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="5Gjduv7WylVtdxlxkdWa-22" value="Accepts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Mentor sets Meeting Cadence&#xa;on Engagement record&#xa;(Weekly / Bi-Weekly / Monthly / As Needed)" vertex="1">
+          <mxGeometry height="55" width="320" x="120" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-25" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Mentor sends personal intro email&#xa;to client (using available templates)&#xa;— NOT auto-generated by system" vertex="1">
+          <mxGeometry height="55" width="320" x="120" y="875" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-27" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-24" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;dashed=1;" value="Phase 2 Client Registration form&#xa;deployed at mentor&#39;s discretion&#xa;(with intro or after first session)" vertex="1">
+          <mxGeometry height="55" width="320" x="120" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-29" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-26" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-30" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.3 — Session Logging" vertex="1">
+          <mxGeometry height="50" width="400" x="80" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-31" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-28" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="5Gjduv7WylVtdxlxkdWa-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5Gjduv7WylVtdxlxkdWa-32" edge="1" parent="1" source="5Gjduv7WylVtdxlxkdWa-20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;dashed=1;strokeColor=#C62828;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="5Gjduv7WylVtdxlxkdWa-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="665" />
+              <mxPoint x="730" y="170" />
+            </Array>
+            <mxPoint x="935" y="1025" as="sourcePoint" />
+            <mxPoint x="460" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="S2hS7R1j0QtPrhIOYI2M" name="4.3 Session Logging">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-1" parent="1" style="shape=mxgraph.flowchart.start_2;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#1a237e;fontColor=#FFFFFF;strokeColor=#1a237e;rounded=1;arcSize=20;size=0.09;" value="4.3 — Session Logging" vertex="1">
+          <mxGeometry height="50" width="400" x="60" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Mentor / Co-Mentor / SME navigates to&#xa;Engagement and creates new Session&#xa;(or edits a previously scheduled Session)" vertex="1">
+          <mxGeometry height="60" width="320" x="100" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-3" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;" value="Complete session fields:&#xa;Date/Time, Duration, Session Type,&#xa;Meeting Location Type &amp; Details (if in-person),&#xa;Topics Covered, Mentor Notes, Next Steps,&#xa;New Business Started, Next Session Date/Time" vertex="1">
+          <mxGeometry height="90" width="320" x="100" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-5" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;fontStyle=1;" value="Session saved &amp; linked&#xa;to Engagement" vertex="1">
+          <mxGeometry height="45" width="320" x="100" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-7" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Engagement roll-up fields auto-update:&#xa;Total Sessions, Total Sessions (Last 30 Days),&#xa;Last Session Date, Total Session Hours" vertex="1">
+          <mxGeometry height="60" width="320" x="100" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-9" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Inactivity monitoring clock resets&#xa;(new session = most recent activity)" vertex="1">
+          <mxGeometry height="45" width="320" x="100" y="485" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-11" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-12" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Next Session&lt;br&gt;Date/Time&lt;br&gt;set?&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="140" x="190" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-13" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="Engagement Next Session&lt;br&gt;Date/Time field set" vertex="1">
+          <mxGeometry height="45" width="280" x="420" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-15" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="6ChCq5ceBuH2gyZ0NWFf-14" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="&lt;b&gt;Go To 4.8 - Meeting Request Generation&lt;/b&gt;" vertex="1">
+          <mxGeometry height="55" width="280" x="420" y="615" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-17" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="&lt;b&gt;Go To 4.4 NPS Survey Processing&lt;/b&gt;" vertex="1">
+          <mxGeometry height="55" width="320" x="100" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-19" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="6ChCq5ceBuH2gyZ0NWFf-18" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-20" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="6ChCq5ceBuH2gyZ0NWFf-18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="700" />
+              <mxPoint x="260" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-21" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" value="First session on&#xa;Assigned&#xa;Engagement?" vertex="1">
+          <mxGeometry height="110" width="170" x="175" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-22" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=12;fontStyle=1;" value="Engagement Status → Active" vertex="1">
+          <mxGeometry height="40" width="280" x="420" y="845" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-24" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-21" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#2E7D32;" target="6ChCq5ceBuH2gyZ0NWFf-23" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-25" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontStyle=1;fontSize=12;" value="Session&#xa;Complete" vertex="1">
+          <mxGeometry height="60" width="140" x="190" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-26" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-21" style="edgeStyle=orthogonalEdgeStyle;rounded=1;fontStyle=1;fontSize=11;fontColor=#C62828;" target="6ChCq5ceBuH2gyZ0NWFf-25" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-27" edge="1" parent="1" source="6ChCq5ceBuH2gyZ0NWFf-23" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="6ChCq5ceBuH2gyZ0NWFf-25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="525" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6ChCq5ceBuH2gyZ0NWFf-28" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontSize=11;fontStyle=0;align=left;spacingLeft=8;size=14;" value="Continues to:&#xa;→ 4.4 NPS Survey Triggers&#xa;→ 4.5 Inactivity Monitoring&#xa;→ 4.8 Meeting Request&#xa;→ 4.9 Session Summary Email" vertex="1">
+          <mxGeometry height="90" width="280" x="550" y="980" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
@@ -680,7 +1037,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="6Di9Iog5bBZl1AaVYEuF" name="4.9 Session  Summary Email">
-    <mxGraphModel dx="1229" dy="891" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2151" dy="1785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
