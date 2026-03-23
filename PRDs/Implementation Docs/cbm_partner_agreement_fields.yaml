@@ -166,6 +166,7 @@ entities:
         columns:
           - field: name
             width: 25
+            link: true
           - field: agreementType
             width: 25
           - field: creationDate

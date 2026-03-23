@@ -102,6 +102,7 @@ entities:
         columns:
           - field: name
             width: 30
+            link: true
           - field: associationType
             width: 25
           - field: notes

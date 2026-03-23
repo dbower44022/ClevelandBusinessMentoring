@@ -695,6 +695,7 @@ entities:
         columns:
           - field: name
             width: 25
+            link: true
           - field: accountType
             width: 15
           - field: organizationType
