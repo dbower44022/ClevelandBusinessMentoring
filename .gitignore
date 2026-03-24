@@ -1,20 +1,22 @@
+# Python
 __pycache__/
 *.py[cod]
-*.egg-info/
-dist/
-build/
+*.pyo
 .venv/
-venv/
+*.egg-info/
+
+# Environment
 .env
-*.db
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-htmlcov/
-.coverage
+*.env.local
 
-*.docx#
+# Editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
 
-*.odt#
-
-tests/php/.phpunit.cache/test-results
+# macOS
+._*
+.Spotlight-V100
+.Trashes

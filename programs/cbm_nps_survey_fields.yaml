@@ -51,6 +51,7 @@ entities:
         type: bool
         label: "Did CBM Help You?"
         required: true
+        default: false
 
       - name: wouldReturnToMentor
         type: int

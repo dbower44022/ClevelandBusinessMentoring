@@ -1,0 +1,519 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cbm_yaml_schema.json",
+  "title": "CBM EspoCRM Implementation YAML Schema",
+  "description": "Formal schema for all CBM EspoCRM YAML implementation files. Every YAML file used by the CBM deployment tool must validate against this schema. Generated files (from PRD) must pass validation before being accepted into the repository.",
+  "version": "1.0",
+
+  "type": "object",
+  "additionalProperties": false,
+
+  "properties": {
+
+    "version": {
+      "description": "Schema version of this YAML file. Must be a quoted string (e.g. '1.0', '1.1').",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+
+    "description": {
+      "description": "Human-readable summary of what this YAML file configures.",
+      "type": "string",
+      "minLength": 10
+    },
+
+    "entities": {
+      "description": "Map of EspoCRM entity names to their configuration. Key is the EspoCRM internal entity name (e.g. Account, Contact, CEngagement). A file may define one or more entities.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/definitions/entity"
+      }
+    },
+
+    "relationships": {
+      "description": "List of relationships to create or skip. Used in relationship-only files (cbm_relationships.yaml, cbm_partner_relationships.yaml). A file may contain entities, relationships, or both.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/relationship"
+      }
+    }
+
+  },
+
+  "anyOf": [
+    { "required": ["entities"] },
+    { "required": ["relationships"] }
+  ],
+
+  "definitions": {
+
+    "entity": {
+      "description": "Configuration for a single EspoCRM entity — either a native entity (Account, Contact) extended with custom fields, or a custom entity to be created.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+
+        "description": {
+          "description": "Human-readable description of what this entity represents and its role in CBM's data model. Should include a Requirement reference.",
+          "type": "string",
+          "minLength": 20
+        },
+
+        "action": {
+          "description": "Deployment action for this entity. Omit for native entities (Account, Contact) where only fields are being added. Required for custom entities.",
+          "type": "string",
+          "enum": ["create", "delete", "delete_and_create", "skip"]
+        },
+
+        "type": {
+          "description": "EspoCRM entity base type. Always 'Base' for CBM custom entities.",
+          "type": "string",
+          "enum": ["Base"]
+        },
+
+        "labelSingular": {
+          "description": "Singular display name shown in EspoCRM UI (e.g. 'Engagement', 'Partner Agreement').",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "labelPlural": {
+          "description": "Plural display name shown in EspoCRM list views and navigation (e.g. 'Engagements', 'Partner Agreements').",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "stream": {
+          "description": "Whether EspoCRM's activity stream is enabled for this entity. True enables the Stream panel on the detail view — use for entities where audit trail and user notes are valuable.",
+          "type": "boolean"
+        },
+
+        "fields": {
+          "description": "List of custom fields to add to this entity. Fields are added in the order listed. Native EspoCRM fields (name, createdAt, etc.) are never listed here.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/field"
+          }
+        },
+
+        "layout": {
+          "description": "Layout configuration for this entity's detail view and list view.",
+          "$ref": "#/definitions/layout"
+        }
+
+      },
+
+      "if": {
+        "properties": {
+          "action": { "enum": ["create", "delete_and_create"] }
+        },
+        "required": ["action"]
+      },
+      "then": {
+        "required": ["type", "labelSingular", "labelPlural", "stream", "fields"]
+      }
+    },
+
+    "field": {
+      "description": "A single custom field definition. The set of valid properties depends on the field type — see per-type constraints below.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "label"],
+
+      "properties": {
+
+        "name": {
+          "description": "Internal EspoCRM field name in camelCase. The deployment tool prepends 'c' when creating the field in EspoCRM (e.g. 'organizationType' becomes 'cOrganizationType'). Must be unique within the entity.",
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9]*$",
+          "minLength": 2
+        },
+
+        "type": {
+          "description": "EspoCRM field type. Determines which additional properties are valid and required.",
+          "type": "string",
+          "enum": [
+            "enum",
+            "multiEnum",
+            "varchar",
+            "wysiwyg",
+            "bool",
+            "int",
+            "float",
+            "date",
+            "datetime",
+            "url",
+            "email",
+            "currency"
+          ]
+        },
+
+        "label": {
+          "description": "Human-readable field label displayed in the EspoCRM UI.",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "required": {
+          "description": "Whether this field must have a value before the record can be saved. Defaults to false if omitted.",
+          "type": "boolean"
+        },
+
+        "readOnly": {
+          "description": "Whether this field is system-managed and cannot be edited by users. Typically used for formula-calculated fields or fields set by automated processes.",
+          "type": "boolean"
+        },
+
+        "default": {
+          "description": "Default value applied when a new record is created. Type must match the field type (boolean for bool fields, string for enum, etc.)."
+        },
+
+        "isSorted": {
+          "description": "For enum and multiEnum fields only. When true, options are displayed in alphabetical order in the UI. When false, options appear in the order listed in the 'options' array.",
+          "type": "boolean"
+        },
+
+        "category": {
+          "description": "Logical grouping label used to organize fields into layout panels. Fields sharing a category are placed in the same panel when layout uses category-based tabs.",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "description": {
+          "description": "Implementation notes explaining the field's purpose, business rules, and PRD requirement reference. Should include 'Requirement: [filename] Section [X.X]'.",
+          "type": "string",
+          "minLength": 10
+        },
+
+        "options": {
+          "description": "For enum and multiEnum fields only. Ordered list of valid option values. Order is preserved in the UI when isSorted = false.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+
+        "translatedOptions": {
+          "description": "For enum and multiEnum fields only. Map of option value to display label. Keys must exactly match the values in 'options'. Used when the display label differs from the stored value — in CBM's case they are identical, but EspoCRM requires this map for styled enums.",
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+
+        "style": {
+          "description": "For enum and multiEnum fields only. Map of option value to EspoCRM badge style. Valid styles: 'success' (green), 'danger' (red), 'warning' (orange/yellow), 'info' (blue), 'primary' (dark blue), 'default' (grey), null (no badge). Keys must exactly match the values in 'options'.",
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string", "enum": ["success", "danger", "warning", "info", "primary", "default"] },
+              { "type": "null" }
+            ]
+          }
+        },
+
+        "maxLength": {
+          "description": "For varchar fields only. Maximum number of characters allowed. Common values: 100 (names), 150 (titles), 255 (standard text), 500 (notes).",
+          "type": "integer",
+          "minimum": 1
+        },
+
+        "min": {
+          "description": "For int and float fields only. Minimum allowed numeric value.",
+          "type": "number"
+        },
+
+        "max": {
+          "description": "For int and float fields only. Maximum allowed numeric value.",
+          "type": "number"
+        }
+
+      },
+
+      "allOf": [
+
+        {
+          "description": "enum fields must have options. bool fields must not have options.",
+          "if": { "properties": { "type": { "enum": ["enum", "multiEnum"] } } },
+          "then": { "required": ["options"] }
+        },
+
+        {
+          "description": "varchar fields must have maxLength.",
+          "if": { "properties": { "type": { "const": "varchar" } } },
+          "then": { "required": ["maxLength"] }
+        },
+
+        {
+          "description": "bool fields must have a default value.",
+          "if": { "properties": { "type": { "const": "bool" } } },
+          "then": { "required": ["default"] }
+        }
+
+      ]
+    },
+
+    "layout": {
+      "description": "Layout definitions for this entity. Controls how fields are arranged in EspoCRM's detail view and list view.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+
+        "detail": {
+          "description": "Detail view layout — the full record view shown when a user opens a single record.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["panels"],
+          "properties": {
+            "panels": {
+              "description": "Ordered list of panels displayed on the detail view. Each panel groups related fields. Panels may use explicit row/column layout or category-based tab layout.",
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/definitions/detailPanel" }
+            }
+          }
+        },
+
+        "list": {
+          "description": "List view layout — the columns shown when viewing a list of records.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["columns"],
+          "properties": {
+            "columns": {
+              "description": "Ordered list of columns in the list view. Column widths should sum to approximately 100.",
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/definitions/listColumn" }
+            }
+          }
+        }
+
+      }
+    },
+
+    "detailPanel": {
+      "description": "A single panel on the entity detail view. Panels group related fields. Two layout patterns are supported: explicit rows (using 'rows') or category-based tabs (using 'tabs').",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label"],
+
+      "properties": {
+
+        "label": {
+          "description": "Panel heading displayed in the EspoCRM UI.",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "tabBreak": {
+          "description": "When true, this panel starts a new top-level tab in EspoCRM's tab-based layout. The tab label is set by tabLabel.",
+          "type": "boolean"
+        },
+
+        "tabLabel": {
+          "description": "The label for the tab created by tabBreak. Required when tabBreak = true.",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "style": {
+          "description": "Panel visual style in the EspoCRM UI.",
+          "type": "string",
+          "enum": ["default", "success", "danger", "warning", "info", "primary"]
+        },
+
+        "description": {
+          "description": "Admin-facing description of this panel's purpose. Visible in EspoCRM's layout editor.",
+          "type": "string"
+        },
+
+        "dynamicLogicVisible": {
+          "description": "Conditional visibility rule for this panel. The panel is shown only when the specified attribute matches the specified value.",
+          "$ref": "#/definitions/dynamicLogicCondition"
+        },
+
+        "rows": {
+          "description": "Explicit row/column layout for this panel. Each row is an array of field names or null (for an empty cell). Two columns per row — use null for a single-column row.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "oneOf": [
+                { "type": "string", "minLength": 1 },
+                { "type": "null" }
+              ]
+            }
+          }
+        },
+
+        "tabs": {
+          "description": "Category-based sub-tab layout for this panel. Each tab renders all fields whose 'category' property matches the tab's category value. Use when a panel contains many fields organized by category.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/panelTab" }
+        }
+
+      },
+
+      "oneOf": [
+        { "required": ["rows"] },
+        { "required": ["tabs"] }
+      ]
+    },
+
+    "panelTab": {
+      "description": "A sub-tab within a detail panel. Renders all fields whose 'category' matches this tab's category value.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "category"],
+      "properties": {
+        "label": {
+          "description": "Tab label displayed in the EspoCRM UI.",
+          "type": "string",
+          "minLength": 2
+        },
+        "category": {
+          "description": "The category value to match against field 'category' properties. All fields with this category will be rendered in this tab.",
+          "type": "string",
+          "minLength": 2
+        }
+      }
+    },
+
+    "listColumn": {
+      "description": "A single column in the entity list view.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "width"],
+      "properties": {
+        "field": {
+          "description": "The field name (camelCase internal name) to display in this column. May include native EspoCRM fields such as 'name', 'billingAddressCity'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "description": "Column width as a percentage of the list view width. All column widths in a list view should sum to approximately 100.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "link": {
+          "description": "When true, clicking this column value navigates to the record detail view. Typically used for the 'name' column only.",
+          "type": "boolean"
+        }
+      }
+    },
+
+    "dynamicLogicCondition": {
+      "description": "A conditional visibility or required rule. The panel or field is shown/required only when the named attribute matches the given value.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attribute", "value"],
+      "properties": {
+        "attribute": {
+          "description": "The field name (camelCase) whose value is evaluated.",
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "description": "The value the attribute must equal for the condition to be true. May be a string (for enum fields) or boolean (for bool fields)."
+        }
+      }
+    },
+
+    "relationship": {
+      "description": "A relationship between two EspoCRM entities. Defines a navigational link that EspoCRM renders as a panel on the related entity's detail view.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "entity", "entityForeign", "linkType", "link", "linkForeign", "label", "labelForeign", "audited"],
+
+      "properties": {
+
+        "name": {
+          "description": "Unique internal name for this relationship in camelCase. Used as the relationship identifier in EspoCRM metadata.",
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9]*$",
+          "minLength": 2
+        },
+
+        "description": {
+          "description": "Human-readable description of what this relationship represents and how it is used. Should include a Requirement reference.",
+          "type": "string",
+          "minLength": 10
+        },
+
+        "entity": {
+          "description": "The primary entity in this relationship (the 'owning' side for manyToOne, the 'one' side for oneToMany).",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "entityForeign": {
+          "description": "The related entity in this relationship.",
+          "type": "string",
+          "minLength": 2
+        },
+
+        "linkType": {
+          "description": "The cardinality of this relationship. manyToOne: many records of 'entity' link to one 'entityForeign'. oneToMany: one 'entity' links to many 'entityForeign'. manyToMany: many-to-many junction relationship.",
+          "type": "string",
+          "enum": ["manyToOne", "oneToMany", "manyToMany"]
+        },
+
+        "link": {
+          "description": "The link name on the primary entity side. This is the field/panel name as it appears on the 'entity' record.",
+          "type": "string",
+          "minLength": 1
+        },
+
+        "linkForeign": {
+          "description": "The link name on the foreign entity side. This is the field/panel name as it appears on the 'entityForeign' record.",
+          "type": "string",
+          "minLength": 1
+        },
+
+        "label": {
+          "description": "Display label for the relationship on the primary entity side (shown as the panel heading on the entity record).",
+          "type": "string",
+          "minLength": 1
+        },
+
+        "labelForeign": {
+          "description": "Display label for the relationship on the foreign entity side (shown as the panel heading on the entityForeign record).",
+          "type": "string",
+          "minLength": 1
+        },
+
+        "relationName": {
+          "description": "For manyToMany relationships only. The internal name of the junction table EspoCRM creates. Must be unique across all manyToMany relationships on the instance. Conventionally prefixed with 'c'.",
+          "type": "string",
+          "pattern": "^c[A-Z][a-zA-Z0-9]*$"
+        },
+
+        "audited": {
+          "description": "Whether changes to this relationship are recorded in EspoCRM's audit log. Set to false for all CBM relationships unless there is a specific compliance requirement.",
+          "type": "boolean"
+        },
+
+        "action": {
+          "description": "Deployment action for this relationship. Omit to create the relationship. 'skip' means the relationship already exists and should not be modified — it is documented here for full reproducibility.",
+          "type": "string",
+          "enum": ["skip"]
+        }
+
+      },
+
+      "if": {
+        "properties": { "linkType": { "const": "manyToMany" } }
+      },
+      "then": {
+        "required": ["relationName"]
+      }
+    }
+
+  }
+}
