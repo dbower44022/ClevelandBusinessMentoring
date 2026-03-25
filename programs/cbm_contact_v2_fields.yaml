@@ -1,0 +1,439 @@
+version: "1.0"
+content_version: "1.0.0"
+description: "CBM EspoCRM Configuration — Contact Entity (Mentor, Client, Partner)"
+
+# Source: CBM Entity Definition Session — Contact
+# Generated: March 2026
+# PRD Reference: CBM-PRD-CRM-Contact.docx
+
+# MANUAL CONFIG REQUIRED:
+# - Annual ethics agreement renewal alert: Administration → Workflows
+# - Badge level calculation formula: Entity Manager → Contact → Formula
+# - Mentor analytics dashboard: Reports → Dashboards
+# - Role-based access control: Administration → Roles
+# - Date of Last Activity formula: Entity Manager → Contact → Formula
+
+entities:
+  Contact:
+    description: >
+      Represents any individual person CBM works with — mentors, client
+      contacts, partner contacts, and administrators. A single person can
+      hold multiple roles simultaneously. Role-based fields and Dynamic
+      Logic ensure each contact type sees only relevant information.
+      Contact is the foundation entity of CBM's CRM — every other entity
+      connects to it.
+
+    fields:
+
+      # ---------------------------------------------------------------
+      # IDENTITY
+      # ---------------------------------------------------------------
+
+      - name: preferredName
+        type: varchar
+        label: "Preferred Name"
+        maxLength: 100
+        category: "Overview"
+        description: >
+          The name the person prefers to go by, if different from their
+          legal first name. For example, Bob instead of Robert. Used in
+          all communications to provide a personalized experience.
+
+      - name: spouseName
+        type: varchar
+        label: "Spouse / Partner Name"
+        maxLength: 100
+        category: "Personal"
+        description: >
+          Name of the contact's spouse or partner. Helps mentors build
+          personal relationships with clients by remembering family details.
+
+      - name: personalNotes
+        type: wysiwyg
+        label: "Personal Notes"
+        category: "Personal"
+        description: >
+          Free-form notes capturing personal relationship details —
+          family members, pets, interests, hobbies. Helps mentors provide
+          a personalized mentoring experience.
+          TBD: A structured personal notes template may be developed to
+          guide mentors on what to capture. Needs input from: Program staff.
+
+      - name: linkedInProfile
+        type: url
+        label: "LinkedIn Profile"
+        category: "Social & Professional"
+        description: >
+          URL to the contact's LinkedIn profile. Used for professional
+          background research and networking.
+
+      - name: socialMediaProfiles
+        type: text
+        label: "Social Media Profiles"
+        category: "Social & Professional"
+        description: >
+          Free-text field for other social media profile URLs (Twitter,
+          Facebook, Instagram, etc.).
+
+      - name: cbmStartDate
+        type: date
+        label: "CBM Start Date"
+        category: "Mentor"
+        description: >
+          Date the person first joined CBM in any capacity (as mentor,
+          client, or partner). Used for tenure tracking and anniversary
+          recognition.
+
+      - name: dateInactive
+        type: date
+        label: "Date Inactive"
+        category: "Administrative"
+        description: >
+          Date the contact was marked inactive or resigned from their
+          role. Set manually when mentor status changes to Inactive
+          or Resigned.
+
+      - name: dateOfLastActivity
+        type: date
+        label: "Date of Last Activity"
+        readOnly: true
+        category: "Administrative"
+        description: >
+          Automatically calculated from the most recent session,
+          workshop attendance, or engagement activity. Read-only.
+          MANUAL CONFIG: Configure via entity formula in Entity Manager.
+
+      # ---------------------------------------------------------------
+      # CHAPTER
+      # ---------------------------------------------------------------
+
+      - name: chapters
+        type: multiEnum
+        label: "Chapter(s)"
+        category: "Overview"
+        description: >
+          Chapter(s) the contact is associated with, based on geographic
+          territory. Passed automatically from the intake form on the
+          website. Mentors may be associated with multiple chapters.
+          Client contacts are typically associated with one chapter.
+          TBD: Complete chapter list to be defined as chapters are
+          established. Needs input from: Leadership.
+        options:
+          - "TBD - Chapter list to be defined"
+
+      # ---------------------------------------------------------------
+      # MENTOR ROLE FLAGS
+      # ---------------------------------------------------------------
+
+      - name: isMentor
+        type: bool
+        label: "Is Mentor"
+        category: "Mentor"
+        description: >
+          Person is approved as a primary mentor and eligible for direct
+          client assignment. Drives visibility of the Mentor tab and
+          mentor-specific fields via Dynamic Logic.
+
+      - name: isCoMentor
+        type: bool
+        label: "Is Co-Mentor"
+        category: "Mentor"
+        description: >
+          Person participates as a co-mentor alongside a primary mentor.
+          Typically used during the provisional onboarding phase and for
+          experienced mentors supporting new clients.
+
+      - name: isSME
+        type: bool
+        label: "Is Subject Matter Expert"
+        category: "Mentor"
+        description: >
+          Person provides specialist expertise to support other mentors
+          on specific topics. SMEs are vetted and approved but never
+          assigned as primary mentors.
+
+      # ---------------------------------------------------------------
+      # MENTOR STATUS & LIFECYCLE
+      # ---------------------------------------------------------------
+
+      - name: mentorStatus
+        type: enum
+        label: "Mentor Status"
+        default: "Prospect"
+        category: "Mentor"
+        description: >
+          Current lifecycle stage of the mentor. Drives assignment
+          eligibility and workflow routing. Default is Prospect when
+          a new record is created from the website intake form.
+        options:
+          - "Prospect"
+          - "Provisional"
+          - "Active"
+          - "Paused"
+          - "Inactive"
+          - "Resigned"
+          - "Rejected"
+        style:
+          "Prospect": "info"
+          "Provisional": "warning"
+          "Active": "success"
+          "Paused": "primary"
+          "Inactive": "default"
+          "Resigned": "danger"
+          "Rejected": "danger"
+
+      # ---------------------------------------------------------------
+      # MENTOR EXPERTISE
+      # ---------------------------------------------------------------
+
+      - name: areasOfExpertise
+        type: multiEnum
+        label: "Areas of Expertise"
+        category: "Mentor"
+        description: >
+          Business disciplines the mentor is qualified to advise on.
+          Used for mentor-client matching. Same taxonomy as client
+          business needs to enable automated matching.
+          TBD: Complete taxonomy to be defined with Leadership/Program
+          staff before go-live. Needs input from: Leadership/Program staff.
+        options:
+          - "TBD - Taxonomy to be defined"
+
+      - name: technologySkills
+        type: text
+        label: "Technology Skills"
+        category: "Mentor"
+        description: >
+          Free-text description of the mentor's technology knowledge,
+          tools, and software expertise. Free-form to accommodate the
+          breadth and pace of change in technology.
+
+      - name: certifications
+        type: text
+        label: "Certifications"
+        category: "Mentor"
+        description: >
+          Free-text list of professional certifications held by the
+          mentor. For example: CPA, CFPA, PMP, Series 7.
+
+      # ---------------------------------------------------------------
+      # MENTOR ONBOARDING
+      # ---------------------------------------------------------------
+
+      - name: trainingComplete
+        type: bool
+        label: "Training Complete"
+        category: "Mentor"
+        description: >
+          Mandatory onboarding training has been completed. Must be
+          true before a provisional mentor can be promoted to active
+          status. Also required when a resigned mentor rejoins.
+
+      - name: trainingCompletionDate
+        type: date
+        label: "Training Completion Date"
+        category: "Mentor"
+        description: >
+          Date the mandatory onboarding training was completed. Used
+          for compliance tracking and to determine if training needs
+          to be retaken when a mentor rejoins.
+
+      - name: ethicsAgreementSigned
+        type: bool
+        label: "Ethics Agreement Signed"
+        category: "Mentor"
+        description: >
+          Current annual ethics and confidentiality agreement has been
+          signed. Must be renewed annually. Workflow alert configured
+          to notify administrator when renewal is approaching.
+          MANUAL CONFIG: Configure renewal workflow in Administration
+          → Workflows after deployment.
+
+      - name: ethicsAgreementDate
+        type: date
+        label: "Ethics Agreement Date"
+        category: "Mentor"
+        description: >
+          Date the current ethics and confidentiality agreement was
+          signed. Used to calculate annual renewal due date.
+
+      # ---------------------------------------------------------------
+      # MENTOR RECOGNITION
+      # ---------------------------------------------------------------
+
+      - name: badgeLevel
+        type: enum
+        label: "Badge Level"
+        readOnly: true
+        category: "Mentor"
+        description: >
+          Recognition badge earned based on cumulative mentoring
+          contribution. Calculated automatically via entity formula.
+          Read-only. Triggers recognition letter when level changes.
+          MANUAL CONFIG: Configure calculation formula in Entity Manager
+          → Contact → Formula after deployment.
+          TBD: Bronze/Silver/Gold thresholds to be defined by Leadership.
+        options:
+          - ""
+          - "Bronze"
+          - "Silver"
+          - "Gold"
+        style:
+          "Bronze": "warning"
+          "Silver": "default"
+          "Gold": "primary"
+
+      - name: totalClientsServed
+        type: int
+        label: "Total Clients Served"
+        readOnly: true
+        category: "Mentor"
+        description: >
+          Cumulative count of client engagements the mentor has been
+          assigned to. Calculated automatically from engagement records.
+          Read-only. Used in badge level calculation.
+
+      - name: totalMentoringHours
+        type: float
+        label: "Total Mentoring Hours"
+        readOnly: true
+        category: "Mentor"
+        description: >
+          Cumulative hours contributed across all sessions. Calculated
+          automatically from session duration records. Read-only.
+          Used in badge level calculation.
+
+      - name: totalSessionsDelivered
+        type: int
+        label: "Total Sessions Delivered"
+        readOnly: true
+        category: "Mentor"
+        description: >
+          Cumulative count of sessions delivered as primary mentor,
+          co-mentor, or SME. Calculated automatically from session
+          records. Read-only.
+
+      # ---------------------------------------------------------------
+      # CLIENT FIELDS
+      # ---------------------------------------------------------------
+
+      - name: businessSkills
+        type: multiEnum
+        label: "Business Skills"
+        category: "Client"
+        description: >
+          Business disciplines relevant to the client contact's
+          background and needs. Same taxonomy as mentor expertise
+          to enable automated mentor-client matching.
+          TBD: Complete taxonomy to be defined. Same as areasOfExpertise
+          taxonomy. Needs input from: Leadership/Program staff.
+        options:
+          - "TBD - Taxonomy to be defined"
+
+      - name: clientTechnologySkills
+        type: text
+        label: "Technology Skills"
+        category: "Client"
+        description: >
+          Free-text description of the client contact's technology
+          background, tools, and software experience. Helps mentors
+          understand the client's technical context.
+
+      - name: roleAndResponsibilities
+        type: text
+        label: "Role & Responsibilities"
+        category: "Client"
+        description: >
+          Description of the client contact's role and responsibilities
+          within their business. Helps mentors understand the client's
+          position and decision-making authority.
+
+      # ---------------------------------------------------------------
+      # GENERAL
+      # ---------------------------------------------------------------
+
+      - name: generalNotes
+        type: wysiwyg
+        label: "Notes"
+        category: "Overview"
+        description: >
+          General observations and miscellaneous information about the
+          contact that does not fit in other fields.
+
+    layout:
+      detail:
+        panels:
+
+          - label: "Overview"
+            tabBreak: true
+            tabLabel: "Overview"
+            style: default
+            rows:
+              - [preferredName, null]
+              - [emailAddress, phoneNumber]
+              - [account, title]
+              - [chapters, null]
+              - [generalNotes, null]
+
+          - label: "Mentor"
+            tabBreak: true
+            tabLabel: "Mentor"
+            style: default
+            description: >
+              Mentor-specific fields. Visible when Is Mentor, Is Co-Mentor,
+              or Is Subject Matter Expert is checked.
+            dynamicLogicVisible:
+              attribute: isMentor
+              value: true
+            tabs:
+              - label: "Roles & Status"
+                category: "Mentor"
+
+          - label: "Client"
+            tabBreak: true
+            tabLabel: "Client"
+            style: default
+            description: >
+              Client contact fields for business skills and responsibilities.
+            tabs:
+              - label: "Background"
+                category: "Client"
+
+          - label: "Personal"
+            tabBreak: true
+            tabLabel: "Personal"
+            style: default
+            tabs:
+              - label: "Personal Details"
+                category: "Personal"
+
+          - label: "Social & Professional"
+            tabBreak: true
+            tabLabel: "Social"
+            style: default
+            tabs:
+              - label: "Online Presence"
+                category: "Social & Professional"
+
+          - label: "Administrative"
+            tabBreak: true
+            tabLabel: "Admin"
+            style: default
+            tabs:
+              - label: "Administrative"
+                category: "Administrative"
+
+      list:
+        columns:
+          - field: lastName
+            width: 15
+          - field: firstName
+            width: 15
+          - field: account
+            width: 20
+          - field: isMentor
+            width: 10
+          - field: phoneNumber
+            width: 20
+          - field: emailAddress
+            width: 20
