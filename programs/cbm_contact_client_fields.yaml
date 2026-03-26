@@ -1,0 +1,207 @@
+version: "1.0"
+content_version: "1.0.0"
+description: "CBM EspoCRM Configuration — Contact: Client Contact variant"
+
+# Source: CBM Phase 2 Entity Definition Sessions A + B — Contact: Client Contact
+# Generated: March 2026
+# PRD Reference: cbm_contact_client_prd.md
+
+# MANUAL CONFIG REQUIRED:
+# - Last Contact Date formula: Entity Manager → Contact → Formula
+# - Sessions Attended formula: Entity Manager → Contact → Formula
+# - Workshops Attended formula: Entity Manager → Contact → Formula
+# - Field change audit logging: Entity Manager → Contact → Stream
+# - Duplicate detection rules: Administration → Duplicate Check Rules
+# - Email display on Contact: Administration → Integrations → Google
+
+entities:
+  Contact:
+    description: >
+      Represents individual people associated with client businesses
+      receiving CBM mentoring services. Typically business owners,
+      co-owners, or key staff. The primary use case for viewing a
+      client contact record is communication — finding contact details
+      and reviewing recent email exchanges and session history before
+      reaching out. Client contacts do not have their own lifecycle
+      status — that is tracked on the Engagement.
+
+    fields:
+
+      # ---------------------------------------------------------------
+      # IDENTITY & CONTACT
+      # ---------------------------------------------------------------
+
+      - name: contactType
+        type: enum
+        label: "Contact Type"
+        required: true
+        default: "Client"
+        category: "Overview"
+        description: >
+          Primary role of this contact in CBM. Distinguishes clients
+          from mentors, partner contacts, and administrators in list
+          views and searches.
+        options:
+          - "Client"
+          - "Mentor"
+          - "Partner Contact"
+          - "Administrator"
+
+      # ---------------------------------------------------------------
+      # PROFILE
+      # ---------------------------------------------------------------
+
+      - name: businessSkills
+        type: multiEnum
+        label: "Business Skills"
+        category: "Profile"
+        description: >
+          Business disciplines relevant to the client's background and
+          needs. Same taxonomy as mentor Areas of Expertise to enable
+          automated mentor-client matching.
+          TBD: Complete taxonomy to be defined by Leadership/Program staff.
+        options:
+          - "TBD - Taxonomy to be defined"
+
+      - name: technologySkills
+        type: text
+        label: "Technology Skills"
+        category: "Profile"
+        description: >
+          Free-text description of the client contact's technology
+          background, tools, and software experience. Helps mentors
+          understand the client's technical context.
+
+      - name: roleAndResponsibilities
+        type: text
+        label: "Role & Responsibilities"
+        category: "Profile"
+        description: >
+          Description of the client contact's role and decision-making
+          authority within their business. Helps mentors understand
+          who they are working with and the client's capacity to act
+          on recommendations.
+
+      # ---------------------------------------------------------------
+      # ANALYTICS (READ-ONLY, CALCULATED)
+      # ---------------------------------------------------------------
+
+      - name: sessionsAttended
+        type: int
+        label: "Sessions Attended"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Total number of mentoring sessions attended across all
+          engagements. Calculated from session attendance records.
+          Read-only.
+          MANUAL CONFIG: Configure formula in Entity Manager →
+          Contact → Formula.
+
+      - name: workshopsAttended
+        type: int
+        label: "Workshops Attended"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Total number of workshops and seminars attended. Calculated
+          from workshop attendance records. Read-only.
+          MANUAL CONFIG: Configure formula in Entity Manager →
+          Contact → Formula.
+
+      - name: lastContactDate
+        type: date
+        label: "Last Contact Date"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Date of most recent communication — email, session, or
+          engagement activity. Calculated automatically. Read-only.
+          MANUAL CONFIG: Configure formula in Entity Manager →
+          Contact → Formula.
+
+      # ---------------------------------------------------------------
+      # GENERAL
+      # ---------------------------------------------------------------
+
+      - name: notes
+        type: wysiwyg
+        label: "Notes"
+        category: "Overview"
+        description: >
+          General notes and observations about the client contact.
+          Visible to all mentors and admins working with this client.
+
+    layout:
+      detail:
+        panels:
+
+          - label: "Overview"
+            tabBreak: true
+            tabLabel: "Overview"
+            style: default
+            description: >
+              Primary use case — communication. Contact details and
+              notes front and center.
+            rows:
+              - [name, contactType]
+              - [account, title]
+              - [emailAddress, phoneNumber]
+              - [notes, null]
+
+          - label: "Sessions & Engagement"
+            tabBreak: true
+            tabLabel: "Sessions"
+            style: default
+            description: >
+              Engagement and session history — second most common
+              use case after communication.
+            rows:
+              - [sessionsAttended, workshopsAttended]
+              - [lastContactDate, null]
+
+          - label: "Profile"
+            tabBreak: true
+            tabLabel: "Profile"
+            style: default
+            description: >
+              Client's business background and skills for mentor matching.
+            tabs:
+              - label: "Background"
+                category: "Profile"
+
+          - label: "Personal"
+            tabBreak: true
+            tabLabel: "Personal"
+            style: default
+            description: >
+              Personal contact details — less prominent, admin and
+              mentor access.
+            rows:
+              - [birthday, null]
+
+          - label: "Activity"
+            tabBreak: true
+            tabLabel: "Activity"
+            style: default
+            description: >
+              Activity stream and email history. Available but not
+              prominent — placed on its own tab.
+            rows: []
+
+      list:
+        columns:
+          - field: lastName
+            width: 12
+          - field: firstName
+            width: 12
+          - field: account
+            width: 18
+          - field: title
+            width: 13
+          - field: contactType
+            width: 10
+          - field: emailAddress
+            width: 20
+          - field: phoneNumber
+            width: 15
