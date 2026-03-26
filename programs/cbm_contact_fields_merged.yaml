@@ -1,0 +1,763 @@
+version: "1.0"
+content_version: "1.0.0"
+description: "CBM EspoCRM Configuration — Contact entity (all variants merged)"
+
+# Source: CBM Phase 2 Entity Definition Sessions — Contact: Mentor, Client, Partner, Administrator
+# Generated: March 2026
+# PRD References:
+#   cbm_contact_mentor_prd.md
+#   cbm_contact_client_prd.md
+#   cbm_contact_partner_prd.md
+
+# MANUAL CONFIG REQUIRED:
+# --- MENTOR ---
+# - Activity stream filtering (significant events only): Entity Manager → Contact → Stream
+# - "New Mentor Applicants" saved view: List View → Save Filter
+# - Application confirmation email workflow: Administration → Workflows
+# - Decline notification email template: Administration → Email Templates
+# - Provisional acceptance email template: Administration → Email Templates
+# - Provisional completion review view: List View → Save Filter
+# - Active promotion congratulations template: Administration → Email Templates
+# - Automated pause expiry workflow: Administration → Workflows
+# - Engagement panel sort/filter: Entity Manager → Contact → Relationships
+# - Sessions panel sort/filter: Entity Manager → Contact → Relationships
+# - Partner Liaison panel active-only filter: Entity Manager → Contact → Relationships
+# - Role-based field visibility (mentor profile visible to other mentors): Administration → Roles
+# - Mentor field-level editing permissions: Administration → Roles
+# - Status change audit logging: Entity Manager → Contact → Stream
+# - Mentor calculated field formulas: Entity Manager → Contact → Formula
+# - Annual Code of Ethics renewal alert: Administration → Workflows
+# - Badge level calculation formula: Entity Manager → Contact → Formula
+# - LMS integration (future): Administration → Integrations
+# --- CLIENT ---
+# - Last Contact Date formula: Entity Manager → Contact → Formula
+# - Sessions Attended formula: Entity Manager → Contact → Formula
+# - Workshops Attended formula: Entity Manager → Contact → Formula
+# - Client field change audit logging: Entity Manager → Contact → Stream
+# - Duplicate detection rules: Administration → Duplicate Check Rules
+# - Email display on Contact: Administration → Integrations → Google
+# --- PARTNER ---
+# - Note logging on Partner Contact: Entity Manager → Contact → Stream
+# - Partner field change audit logging: Entity Manager → Contact → Stream
+# - Last Activity Date formula: Entity Manager → Contact → Formula
+# - Additional Organizations relationship: Entity Manager → Contact → Relationships
+# --- ADMINISTRATOR ---
+# - Administrator role configuration: Administration → Roles
+# --- GOOGLE WORKSPACE (ALL) ---
+# - Google Workspace integration: Administration → Integrations → Google
+
+entities:
+  Contact:
+    description: >
+      Represents any individual person CBM works with — mentors, client
+      contacts, partner contacts, and administrators. Contact Type field
+      distinguishes the primary role. A person can hold multiple mentor
+      roles simultaneously (Mentor, Co-Mentor, SME). Dynamic Logic shows
+      mentor-specific fields only when a mentor role is active. Contact
+      is the foundation entity of CBM's CRM — every other entity connects
+      to it.
+
+    fields:
+
+      # ---------------------------------------------------------------
+      # SHARED — ALL VARIANTS
+      # ---------------------------------------------------------------
+
+      - name: contactType
+        type: enum
+        label: "Contact Type"
+        required: true
+        default: "Client"
+        category: "Overview"
+        description: >
+          Primary role of this contact in CBM. Used in list views and
+          searches to distinguish between contact types. A mentor contact
+          uses the Mentor role flags (isMentor, isCoMentor, isSME) for
+          more granular role tracking.
+        options:
+          - "Client"
+          - "Mentor"
+          - "Partner Contact"
+          - "Administrator"
+
+      - name: notes
+        type: wysiwyg
+        label: "Notes"
+        category: "Overview"
+        description: >
+          General notes and observations. For client contacts: visible
+          to all mentors and admins. For partner contacts: supplement
+          to the activity stream for quick context.
+
+      # ---------------------------------------------------------------
+      # SHARED — MENTOR + PARTNER
+      # ---------------------------------------------------------------
+
+      - name: linkedInProfile
+        type: url
+        label: "LinkedIn"
+        category: "Profile"
+        description: >
+          LinkedIn profile URL. For mentors: displayed on public website
+          profile when Profile Visible on Website is true. For partner
+          contacts: used for professional context and background research.
+
+      - name: lastActivityDate
+        type: date
+        label: "Last Activity Date"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Most recent CRM activity — email, call, note, session, or
+          engagement activity. Calculated automatically. Read-only.
+          MANUAL CONFIG: Configure formula in Entity Manager →
+          Contact → Formula.
+
+      # ---------------------------------------------------------------
+      # MENTOR IDENTITY
+      # ---------------------------------------------------------------
+
+      - name: preferredName
+        type: varchar
+        label: "Preferred Name"
+        maxLength: 100
+        category: "Overview"
+        description: >
+          The name the mentor prefers to go by. Used in all
+          communications for a personalized experience.
+
+      - name: spouseName
+        type: varchar
+        label: "Spouse / Partner Name"
+        maxLength: 100
+        category: "Personal"
+        description: >
+          Name of the mentor's spouse or partner for personalized
+          relationship building.
+
+      - name: workStatus
+        type: enum
+        label: "Work Status"
+        category: "Personal"
+        description: >
+          Current employment status. Provides context for availability
+          and professional background.
+        options:
+          - "Employed Full-Time"
+          - "Employed Part-Time"
+          - "Self-Employed"
+          - "Retired"
+          - "Unemployed"
+
+      - name: militaryStatus
+        type: enum
+        label: "Military Status"
+        category: "Personal"
+        description: >
+          Military background for recognition and availability context.
+        options:
+          - "Civilian"
+          - "Active Military"
+          - "Reserves"
+          - "Veteran"
+
+      # ---------------------------------------------------------------
+      # MENTOR ROLE FLAGS
+      # ---------------------------------------------------------------
+
+      - name: isMentor
+        type: bool
+        label: "Is Mentor"
+        category: "Mentor"
+        description: >
+          Approved as primary mentor, eligible for direct client
+          assignment. Drives Mentor tab visibility via Dynamic Logic.
+
+      - name: isCoMentor
+        type: bool
+        label: "Is Co-Mentor"
+        category: "Mentor"
+        description: >
+          Participates as co-mentor alongside a primary mentor. Can
+          hold simultaneously with Is Mentor or Is SME.
+
+      - name: isSME
+        type: bool
+        label: "Is Subject Matter Expert"
+        category: "Mentor"
+        description: >
+          Provides specialist expertise to support other mentors.
+          Never assigned as primary mentor to a client.
+
+      - name: isWorkshopPresenter
+        type: bool
+        label: "Is Workshop Presenter"
+        category: "Mentor"
+        description: >
+          Willing and available to present at CBM workshops and seminars.
+
+      - name: isMentorReviewer
+        type: bool
+        label: "Is Mentor Reviewer"
+        category: "Mentor"
+        description: >
+          Available to conduct interviews of prospective mentor applicants.
+          Used to filter the list of available reviewers.
+
+      # ---------------------------------------------------------------
+      # MENTOR STATUS & LIFECYCLE
+      # ---------------------------------------------------------------
+
+      - name: mentorStatus
+        type: enum
+        label: "Mentor Status"
+        default: "Submitted"
+        category: "Mentor"
+        description: >
+          Current lifecycle stage of the mentor. Set to Submitted when
+          application is received. Status changes are logged in the
+          activity stream.
+        options:
+          - "Submitted"
+          - "In-Review"
+          - "Provisional"
+          - "Active"
+          - "Paused"
+          - "Inactive"
+          - "Resigned"
+          - "Declined"
+        style:
+          "Submitted": "default"
+          "In-Review": "default"
+          "Provisional": "warning"
+          "Active": "success"
+          "Paused": "primary"
+          "Inactive": "danger"
+          "Resigned": "danger"
+          "Declined": "danger"
+
+      - name: primaryChapter
+        type: enum
+        label: "Primary Chapter"
+        category: "Mentor"
+        description: >
+          The single chapter the mentor is assigned to. One chapter only
+          to ensure accurate analytics and assignment calculations.
+          TBD: Chapter list to be defined by Leadership.
+        options:
+          - "TBD - Chapter list to be defined"
+
+      - name: mentoringInformationComplete
+        type: bool
+        label: "Mentoring Information Complete"
+        category: "Compliance"
+        description: >
+          Admin-set flag confirming all required profile information
+          has been reviewed and verified. Must be set before Active
+          promotion. Admin-set only.
+
+      - name: statusChangeReason
+        type: text
+        label: "Status Change Reason"
+        category: "Administrative"
+        description: >
+          Reason captured when mentor goes Inactive or Resigned.
+          Cleared when mentor is reactivated.
+
+      # ---------------------------------------------------------------
+      # MENTOR PROFILE
+      # ---------------------------------------------------------------
+
+      - name: areaOfExpertise
+        type: wysiwyg
+        label: "Area of Expertise"
+        category: "Profile"
+        description: >
+          Rich text description of business expertise and specializations.
+          Mentor-maintained. Used for client matching context.
+
+      - name: industryExperience
+        type: wysiwyg
+        label: "Industry Experience"
+        category: "Profile"
+        description: >
+          Rich text description of industry background and work history.
+          Mentor-maintained.
+
+      - name: educationDetails
+        type: wysiwyg
+        label: "Education Details"
+        category: "Profile"
+        description: >
+          Rich text description of educational background and qualifications.
+          Mentor-maintained.
+
+      - name: interests
+        type: wysiwyg
+        label: "Interests"
+        category: "Profile"
+        description: >
+          Professional and personal interests. Helps match mentors to
+          clients with aligned backgrounds. Mentor-maintained.
+
+      - name: languagesSpoken
+        type: multiEnum
+        label: "Languages Spoken"
+        category: "Profile"
+        description: >
+          Languages the mentor is fluent in. Used for mentor-client
+          matching. TBD: Language list to be defined.
+        options:
+          - "TBD - Language list to be defined"
+
+      - name: twitterProfile
+        type: url
+        label: "Twitter / X"
+        category: "Profile"
+        description: >
+          Twitter/X profile URL. Displayed on public website profile
+          when Profile Visible on Website is true.
+
+      - name: youtubeProfile
+        type: url
+        label: "YouTube"
+        category: "Profile"
+        description: >
+          YouTube channel URL. Displayed on public website profile
+          when Profile Visible on Website is true.
+
+      - name: instagramProfile
+        type: url
+        label: "Instagram"
+        category: "Profile"
+        description: >
+          Instagram profile URL. Displayed on public website profile
+          when Profile Visible on Website is true.
+
+      # ---------------------------------------------------------------
+      # MENTOR AVAILABILITY & CAPACITY
+      # ---------------------------------------------------------------
+
+      - name: maxClientRequestsPerWeek
+        type: int
+        label: "Max Client Requests / Week"
+        min: 0
+        category: "Availability"
+        description: >
+          Maximum new client requests the mentor will review per week.
+          Mentor-set. Controls intake coordinator assignment volume.
+
+      - name: maxActiveClients
+        type: int
+        label: "Max Active Clients"
+        min: 0
+        category: "Availability"
+        description: >
+          Maximum simultaneous active client engagements. Mentor-set.
+          Used to determine availability for new assignments.
+
+      - name: pauseMentorAssignmentsUntil
+        type: date
+        label: "Pause Assignments Until"
+        category: "Availability"
+        description: >
+          Date when mentor auto-resumes accepting new client assignments.
+          Used for scheduled pauses. Leave blank for open-ended pauses.
+
+      - name: datePaused
+        type: date
+        label: "Date Paused"
+        category: "Availability"
+        description: >
+          Date the mentor's status was changed to Paused. Set
+          automatically on status change.
+
+      - name: mentorSelfScheduleUrl
+        type: url
+        label: "Self-Schedule URL"
+        category: "Availability"
+        description: >
+          Link to mentor's personal scheduling tool (e.g., Calendly)
+          for client and admin booking.
+
+      - name: profileVisibleOnWebsite
+        type: bool
+        label: "Profile Visible on Website"
+        category: "Availability"
+        description: >
+          Controls whether mentor's profile appears on the public CBM
+          website. Admin-controlled.
+
+      # ---------------------------------------------------------------
+      # MENTOR COMPLIANCE
+      # ---------------------------------------------------------------
+
+      - name: backgroundCheckCompleted
+        type: bool
+        label: "Background Check Completed"
+        category: "Compliance"
+        description: >
+          Background check completed. Required for onboarding.
+          Admin-set only.
+
+      - name: ethicsClassCompleted
+        type: bool
+        label: "Ethics Class Completed"
+        category: "Compliance"
+        description: >
+          Mandatory ethics class completed. Required before Active
+          promotion. Admin-set; future LMS integration will auto-update.
+
+      - name: ethicsClassCompletionDate
+        type: date
+        label: "Ethics Class Completion Date"
+        category: "Compliance"
+        description: >
+          Date ethics class was completed.
+
+      - name: introToMentoringCompleted
+        type: bool
+        label: "Intro to Mentoring Completed"
+        category: "Compliance"
+        description: >
+          Mandatory Introduction to Mentoring class completed. Required
+          before Active promotion. Admin-set; future LMS auto-update.
+
+      - name: introToMentoringDate
+        type: date
+        label: "Intro to Mentoring Date"
+        category: "Compliance"
+        description: >
+          Date Introduction to Mentoring class was completed.
+
+      - name: crmTrainingComplete
+        type: bool
+        label: "CRM Training Complete"
+        category: "Compliance"
+        description: >
+          CRM system training completed. Admin-set only.
+
+      - name: codeOfEthicsSigned
+        type: bool
+        label: "Code of Ethics Signed"
+        category: "Compliance"
+        description: >
+          Current annual Code of Ethics signed. Renewed annually.
+          Admin-set only. Annual renewal alert workflow configured.
+
+      - name: codeOfEthicsDate
+        type: date
+        label: "Code of Ethics Date"
+        category: "Compliance"
+        description: >
+          Date current Code of Ethics was signed. Used for renewal
+          calculation.
+
+      - name: codeOfEthicsRenewalDate
+        type: date
+        label: "Code of Ethics Renewal Date"
+        category: "Compliance"
+        description: >
+          Due date for next Code of Ethics renewal.
+
+      - name: mentoringAgreementSigned
+        type: bool
+        label: "Mentoring Agreement Signed"
+        category: "Compliance"
+        description: >
+          Mentoring Agreement signed. Required before Active promotion.
+          Admin-set only.
+
+      - name: mentoringAgreementDate
+        type: date
+        label: "Mentoring Agreement Date"
+        category: "Compliance"
+        description: >
+          Date Mentoring Agreement was signed.
+
+      # ---------------------------------------------------------------
+      # MENTOR ANALYTICS
+      # ---------------------------------------------------------------
+
+      - name: totalActiveEngagements
+        type: int
+        label: "Total Active Engagements"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Current active client engagements. Calculated from engagement
+          records. Read-only.
+
+      - name: assignedEngagements7Days
+        type: int
+        label: "Assigned Engagements (7 Days)"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Client assignments offered in past 7 days. Calculated. Read-only.
+
+      - name: acceptedEngagements7Days
+        type: int
+        label: "Accepted Engagements (7 Days)"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Client assignments accepted in past 7 days. Calculated. Read-only.
+
+      - name: totalEngagementHistory
+        type: int
+        label: "Total Engagement History"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Cumulative count of all engagements across full tenure.
+          Calculated. Read-only.
+
+      - name: totalHoursDelivered
+        type: float
+        label: "Total Hours Delivered"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Cumulative mentoring hours across all sessions. Calculated.
+          Read-only. Used in badge level calculation.
+
+      - name: averageNpsScore
+        type: float
+        label: "Average NPS Score"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Average NPS score from clients across all engagements.
+          Calculated. Read-only.
+
+      - name: yearsOfService
+        type: float
+        label: "Years of Service"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Years since Date Joined. Calculated from Date Joined field.
+          Read-only.
+
+      - name: badgeLevel
+        type: enum
+        label: "Badge Level"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Recognition badge earned. Calculated automatically. Triggers
+          recognition letter on level change. Read-only.
+          TBD: Thresholds to be defined by Leadership.
+        options:
+          - ""
+          - "Bronze"
+          - "Silver"
+          - "Gold"
+
+      # ---------------------------------------------------------------
+      # MENTOR KEY DATES
+      # ---------------------------------------------------------------
+
+      - name: dateJoined
+        type: date
+        label: "Date Joined"
+        category: "Personal"
+        description: >
+          Date mentor first joined CBM. Used for Years of Service
+          calculation and tenure recognition.
+
+      - name: resignDate
+        type: date
+        label: "Resign Date"
+        category: "Personal"
+        description: >
+          Date mentor resigned. Set when status changes to Resigned.
+
+      - name: lastEngagementAccepted
+        type: date
+        label: "Last Engagement Accepted"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Date of most recently accepted client engagement. Calculated.
+          Read-only.
+
+      # ---------------------------------------------------------------
+      # MENTOR ADMINISTRATIVE
+      # ---------------------------------------------------------------
+
+      - name: howDidYouHearAboutCbm
+        type: enum
+        label: "How Did You Hear About CBM"
+        category: "Administrative"
+        description: >
+          Referral source when mentor first learned about CBM.
+          TBD: Values to be defined by Leadership.
+        options:
+          - "TBD - Values to be defined"
+
+      # ---------------------------------------------------------------
+      # CLIENT CONTACT FIELDS
+      # ---------------------------------------------------------------
+
+      - name: businessSkills
+        type: multiEnum
+        label: "Business Skills"
+        category: "Client Profile"
+        description: >
+          Business disciplines relevant to the client's background and
+          needs. Same taxonomy as mentor Areas of Expertise for matching.
+          TBD: Taxonomy to be defined.
+        options:
+          - "TBD - Taxonomy to be defined"
+
+      - name: technologySkills
+        type: text
+        label: "Technology Skills"
+        category: "Client Profile"
+        description: >
+          Free-text description of client's technology background and
+          tools. Helps mentors understand client's technical context.
+
+      - name: roleAndResponsibilities
+        type: text
+        label: "Role & Responsibilities"
+        category: "Client Profile"
+        description: >
+          Client's role and decision-making authority within their
+          business. Helps mentors understand who they are working with.
+
+      - name: sessionsAttended
+        type: int
+        label: "Sessions Attended"
+        readOnly: true
+        category: "Client Analytics"
+        description: >
+          Total sessions attended across all engagements. Calculated
+          from session records. Read-only.
+
+      - name: workshopsAttended
+        type: int
+        label: "Workshops Attended"
+        readOnly: true
+        category: "Client Analytics"
+        description: >
+          Total workshops attended. Calculated from workshop attendance
+          records. Read-only.
+
+      - name: lastContactDate
+        type: date
+        label: "Last Contact Date"
+        readOnly: true
+        category: "Client Analytics"
+        description: >
+          Most recent communication — email, session, or engagement
+          activity. Calculated automatically. Read-only.
+
+    layout:
+      detail:
+        panels:
+
+          - label: "Overview"
+            tabBreak: true
+            tabLabel: "Overview"
+            style: default
+            rows:
+              - [name, contactType]
+              - [account, title]
+              - [emailAddress, phoneNumber]
+              - [notes, null]
+
+          - label: "Mentor"
+            tabBreak: true
+            tabLabel: "Mentor"
+            style: default
+            description: >
+              Mentor-specific fields. Visible when Is Mentor, Is
+              Co-Mentor, or Is SME is checked.
+            dynamicLogicVisible:
+              attribute: isMentor
+              value: true
+            tabs:
+              - label: "Roles & Status"
+                category: "Mentor"
+              - label: "Availability"
+                category: "Availability"
+              - label: "Analytics"
+                category: "Analytics"
+
+          - label: "Profile"
+            tabBreak: true
+            tabLabel: "Profile"
+            style: default
+            description: >
+              Professional profile. Mentor-maintained. Visible to other
+              mentors and on public website when enabled.
+            tabs:
+              - label: "Expertise"
+                category: "Profile"
+
+          - label: "Client"
+            tabBreak: true
+            tabLabel: "Client"
+            style: default
+            description: >
+              Client background and skills for mentor matching.
+            tabs:
+              - label: "Background"
+                category: "Client Profile"
+
+          - label: "Compliance"
+            tabBreak: true
+            tabLabel: "Compliance"
+            style: default
+            description: >
+              Admin-only compliance and onboarding requirements.
+            dynamicLogicVisible:
+              attribute: isMentor
+              value: true
+            tabs:
+              - label: "Requirements"
+                category: "Compliance"
+
+          - label: "Personal"
+            tabBreak: true
+            tabLabel: "Personal"
+            style: default
+            description: >
+              Personal information. Less prominent — admin and mentor
+              access only.
+            rows:
+              - [birthday, spouseName]
+              - [workStatus, militaryStatus]
+              - [dateJoined, resignDate]
+
+          - label: "Administrative"
+            tabBreak: true
+            tabLabel: "Admin"
+            style: default
+            description: >
+              Administrative fields. Admin-only.
+            rows:
+              - [howDidYouHearAboutCbm, null]
+              - [statusChangeReason, null]
+
+      list:
+        columns:
+          - field: lastName
+            width: 12
+          - field: firstName
+            width: 12
+          - field: account
+            width: 18
+          - field: title
+            width: 13
+          - field: contactType
+            width: 10
+          - field: emailAddress
+            width: 18
+          - field: phoneNumber
+            width: 10
+          - field: mentorStatus
+            width: 7
