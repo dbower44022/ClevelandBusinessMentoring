@@ -1,5 +1,5 @@
-version: "1.0"
-content_version: "1.0.0"
+version: "1.1"
+content_version: "1.1.0"
 description: "CBM EspoCRM Configuration — Contact entity (all variants merged)"
 
 # Source: CBM Phase 2 Entity Definition Sessions — Contact: Mentor, Client, Partner, Administrator
