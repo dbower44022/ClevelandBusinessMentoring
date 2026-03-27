@@ -1,0 +1,254 @@
+version: "1.0"
+content_version: "1.0.0"
+description: "CBM EspoCRM Configuration — Account: Partner Organization variant"
+
+# Source: CBM-PRD-CRM-Partners.docx v0.4 — Sections 3-15
+# Generated: March 2026
+# PRD Reference: CBM-PRD-CRM-Partners.docx
+
+# IMPLEMENTATION NOTE:
+# Partners use the same Account entity as Client Companies.
+# Account Type field (multi-select) distinguishes between them.
+# Dynamic Logic shows partner-specific fields only when Account Type
+# includes "Partner". See CBM-PRD-CRM-Partners.docx Section 15.
+
+# MANUAL CONFIG REQUIRED:
+# - Partner-specific Dynamic Logic panels: Entity Manager → Account → Dynamic Logic
+#   Show partner fields when accountType includes "Partner"
+#   Show client fields when accountType includes "Client Company"
+# - "Partners" filtered list view: List View → Save Filter
+# - "Client Companies" filtered list view: List View → Save Filter
+# - Partner agreement document access restriction (management only): Administration → Roles
+# - Assigned Liaison field-level permissions: Administration → Roles
+# - Liaison role-based access (full access to assigned partners): Administration → Roles
+# - Other mentors read-only Partner Directory: Administration → Roles
+# - Partner analytics calculated metrics: Administration → Reports
+# - Agreements expiring soon alert: Administration → Workflows
+# - Partners with no recent activity view: List View → Save Filter
+# - Google Workspace email sync for Partner contacts: Administration → Integrations → Google
+
+entities:
+  Account:
+    description: >
+      The Account entity covers all organizations CBM works with —
+      both Client Companies receiving mentoring and Partner Organizations
+      in CBM's community network. The accountType field differentiates
+      them. A single organization can be both a Client Company and a
+      Partner simultaneously. Dynamic Logic panels show the appropriate
+      fields for each type.
+      PRD Reference: CBM-PRD-CRM-Partners.docx Section 15.
+
+    fields:
+
+      # ---------------------------------------------------------------
+      # SHARED — ALL ACCOUNT TYPES
+      # ---------------------------------------------------------------
+
+      - name: accountType
+        type: multiEnum
+        label: "Account Type"
+        required: true
+        category: "Overview"
+        description: >
+          The role(s) this organization plays in CBM. Multi-select —
+          a single organization can be both a Client Company and a
+          Partner. Drives Dynamic Logic to show appropriate field panels.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 15.2.
+        options:
+          - "Client Company"
+          - "Partner"
+
+      # ---------------------------------------------------------------
+      # PARTNER CLASSIFICATION
+      # ---------------------------------------------------------------
+
+      - name: partnerTypes
+        type: multiEnum
+        label: "Partner Type(s)"
+        required: true
+        category: "Partner Profile"
+        description: >
+          The nature of CBM's relationship with this partner. Multi-select
+          — a partner may hold more than one type simultaneously. Type
+          assignments should be reviewed annually or when the relationship
+          nature changes.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 3.
+        options:
+          - "Referral Partner"
+          - "Co-Delivery Partner"
+          - "Funding / Sponsorship Partner"
+          - "Resource Partner"
+
+      - name: partnerStatus
+        type: enum
+        label: "Partner Status"
+        required: true
+        default: "Prospect"
+        category: "Partner Profile"
+        description: >
+          Current state of the partner relationship. Status changes
+          should always be accompanied by a note explaining what prompted
+          the change. No automated workflow triggers status changes —
+          this is manual, managed by the liaison or admin.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 4.
+        options:
+          - "Prospect"
+          - "Active"
+          - "Lapsed"
+          - "Inactive"
+        style:
+          "Prospect": "info"
+          "Active": "success"
+          "Lapsed": "warning"
+          "Inactive": "default"
+
+      - name: organizationType
+        type: enum
+        label: "Organization Type"
+        required: true
+        category: "Partner Profile"
+        description: >
+          The category of organization the partner represents. Required.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+        options:
+          - "Chamber of Commerce"
+          - "Small Business Development Center (SBDC)"
+          - "Economic Development Agency"
+          - "University / Academic Institution"
+          - "Bank / Financial Institution"
+          - "Nonprofit / Community Organization"
+          - "Government Agency"
+          - "Corporate Sponsor"
+          - "Other"
+
+      # ---------------------------------------------------------------
+      # PARTNER PROFILE
+      # ---------------------------------------------------------------
+
+      - name: partnershipStartDate
+        type: date
+        label: "Partnership Start Date"
+        category: "Partner Profile"
+        description: >
+          The date the partnership was formally established. Optional
+          for Prospects; required when status moves to Active.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: publicAnnouncementAllowed
+        type: bool
+        label: "Public Announcement Allowed"
+        default: false
+        category: "Partner Profile"
+        description: >
+          Whether CBM may publicly announce or reference this partnership
+          in its marketing and communications. Defaults to No. Must be
+          confirmed with the partner before any public mention.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: geographicServiceArea
+        type: text
+        label: "Geographic Service Area"
+        category: "Partner Profile"
+        description: >
+          The geographic territory or community the organization primarily
+          serves (e.g., City of Cleveland, Cuyahoga County, Greater Akron).
+          Optional. Used for filtering and partner-client matching.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: targetPopulation
+        type: text
+        label: "Target Population"
+        category: "Partner Profile"
+        description: >
+          The specific population or business segment the organization
+          focuses on (e.g., minority-owned businesses, women entrepreneurs,
+          tech startups, underserved communities). Optional.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: socialMedia
+        type: text
+        label: "Social Media"
+        category: "Partner Profile"
+        description: >
+          Links to LinkedIn, Facebook, or other relevant social profiles
+          for the partner organization. Optional.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: partnerNotes
+        type: wysiwyg
+        label: "Partner Notes"
+        category: "Partner Profile"
+        description: >
+          General notes on the partner relationship, key milestones,
+          significant events, and status change explanations. Accessible
+          to authorized users. Notes should always accompany status changes.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+    layout:
+      detail:
+        panels:
+
+          - label: "Overview"
+            tabBreak: true
+            tabLabel: "Overview"
+            style: default
+            rows:
+              - [name, accountType]
+              - [website, phoneNumber]
+              - [billingAddressCity, billingAddressState]
+
+          - label: "Partner Profile"
+            tabBreak: true
+            tabLabel: "Partner"
+            style: default
+            description: >
+              Partner-specific fields. Visible when Account Type includes
+              Partner. MANUAL CONFIG: Configure Dynamic Logic condition.
+            tabs:
+              - label: "Classification"
+                category: "Partner Profile"
+
+          - label: "Client Company Profile"
+            tabBreak: true
+            tabLabel: "Client"
+            style: default
+            description: >
+              Client Company fields. Visible when Account Type includes
+              Client Company. MANUAL CONFIG: Configure Dynamic Logic condition.
+            tabs:
+              - label: "Business Profile"
+                category: "Business Profile"
+
+      list:
+        columns:
+          - field: name
+            width: 25
+          - field: accountType
+            width: 12
+          - field: partnerStatus
+            width: 10
+          - field: organizationType
+            width: 18
+          - field: billingAddressCity
+            width: 15
+          - field: website
+            width: 20
+
+relationships:
+
+  - name: partnerToAssignedLiaison
+    description: >
+      Links a Partner Account to the CBM member (Contact) assigned as
+      its liaison. The liaison is responsible for managing the day-to-day
+      Partner relationship, logging activities and communications, and
+      delivering analytics reports. Only the current liaison assignment
+      is stored — liaison history is not tracked.
+      PRD Reference: CBM-PRD-CRM-Partners.docx Section 9.
+    entity: Account
+    entityForeign: Contact
+    linkType: manyToOne
+    link: partnerLiaison
+    linkForeign: liaisonPartners
+    label: "Assigned Liaison"
+    labelForeign: "Partner Liaisons"
+    audited: false
