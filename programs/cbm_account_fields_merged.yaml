@@ -1,5 +1,5 @@
-version: "1.1"
-content_version: "1.1.0"
+version: "1.2"
+content_version: "1.2.0"
 description: "CBM EspoCRM Configuration — Account entity (Client Company + Partner Organization merged)"
 
 # Source: CBM-PRD-CRM-Client.docx v1.6 + CBM-PRD-CRM-Partners.docx v0.4
@@ -411,6 +411,7 @@ entities:
         label: "EIN Number"
         maxLength: 20
         category: "Legal & Registration"
+        copyToClipboard: true
         description: >
           The actual EIN number. RESTRICTED: Admin and assigned Primary
           Mentor only. Mentor-populated — not on intake form.
@@ -613,7 +614,9 @@ entities:
       - name: partnerStatus
         type: enum
         label: "Partner Status"
+        required: true
         default: "Prospect"
+        audited: true
         category: "Partner Profile"
         description: >
           Current state of the partner relationship. Status changes

@@ -1,5 +1,5 @@
-version: "1.1"
-content_version: "1.1.0"
+version: "1.2"
+content_version: "1.2.0"
 description: "CBM EspoCRM Configuration — Contact entity (all variants merged)"
 
 # Source: CBM Phase 2 Entity Definition Sessions — Contact: Mentor, Client, Partner, Administrator
@@ -97,6 +97,7 @@ entities:
         type: url
         label: "LinkedIn"
         category: "Profile"
+        copyToClipboard: true
         description: >
           LinkedIn profile URL. For mentors: displayed on public website
           profile when Profile Visible on Website is true. For partner
@@ -162,8 +163,266 @@ entities:
           - "Veteran"
 
       # ---------------------------------------------------------------
-      # MENTOR ROLE FLAGS
+      # MENTOR IDENTITY — ADDITIONAL (from CBM-PRD-CRM-Mentor.docx)
       # ---------------------------------------------------------------
+
+      - name: cbmGmailAddress
+        type: email
+        label: "CBM Gmail Address"
+        category: "Overview"
+        copyToClipboard: true
+        description: >
+          CBM-assigned Google Workspace email address (e.g.,
+          jsmith@clevelandbusinessmentors.org). Admin-populated during
+          mentor activation. Used for all ongoing mentoring communications.
+          Mentor: read-only.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 1.
+
+      - name: professionalTitle
+        type: varchar
+        label: "Professional Title"
+        maxLength: 150
+        category: "Profile"
+        description: >
+          Current job title or role at their organization.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 2.
+
+      - name: currentEmployer
+        type: varchar
+        label: "Current Employer"
+        maxLength: 150
+        category: "Profile"
+        description: >
+          Name of current employer or organization.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 2.
+
+      - name: currentlyEmployed
+        type: bool
+        label: "Currently Employed"
+        category: "Profile"
+        description: >
+          Whether the mentor is currently employed. Collected on the
+          mentor application form.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 2.
+
+      - name: yearsOfBusinessExperience
+        type: int
+        label: "Years of Business Experience"
+        min: 0
+        category: "Profile"
+        description: >
+          Years of professional business experience. Used for mentor
+          profile and matching.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 2.
+
+      - name: professionalBio
+        type: wysiwyg
+        label: "Professional Bio / Work Experience"
+        category: "Profile"
+        description: >
+          Rich text biography. Collected on application form as
+          "Describe Your Work Experience." Used for mentor profiles
+          and matching communications.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 2.
+
+      # ---------------------------------------------------------------
+      # MENTOR SKILLS — ADDITIONAL (from CBM-PRD-CRM-Mentor.docx)
+      # ---------------------------------------------------------------
+
+      - name: naicsSectors
+        type: multiEnum
+        label: "NAICS Sectors"
+        required: true
+        category: "Profile"
+        description: >
+          Industry sectors of expertise. Multi-select, aligned with the
+          Company NAICS Sector dropdown values. Used for mentor-client
+          matching. TBD: Values from full NAICS taxonomy.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 3.
+        options:
+          - "Agriculture, Forestry, Fishing and Hunting"
+          - "Mining, Quarrying, and Oil and Gas Extraction"
+          - "Utilities"
+          - "Construction"
+          - "Manufacturing"
+          - "Wholesale Trade"
+          - "Retail Trade"
+          - "Transportation and Warehousing"
+          - "Information"
+          - "Finance and Insurance"
+          - "Real Estate and Rental and Leasing"
+          - "Professional, Scientific, and Technical Services"
+          - "Management of Companies and Enterprises"
+          - "Administrative and Support and Waste Management"
+          - "Educational Services"
+          - "Health Care and Social Assistance"
+          - "Arts, Entertainment, and Recreation"
+          - "Accommodation and Food Services"
+          - "Other Services (except Public Administration)"
+          - "Public Administration"
+
+      - name: skillsAndExpertiseTags
+        type: multiEnum
+        label: "Skills & Expertise Tags"
+        category: "Profile"
+        description: >
+          Finer-grained expertise tags for advanced mentor matching.
+          TBD: Values to be defined by CBM Leadership.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 3.
+        options:
+          - "TBD - Values to be defined by Leadership"
+
+      - name: whyInterestedInMentoring
+        type: wysiwyg
+        label: "Why Interested in Mentoring"
+        category: "Profile"
+        description: >
+          Mentor's stated motivation for joining CBM as a mentor.
+          Collected on the mentor application form.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 3.
+
+      # ---------------------------------------------------------------
+      # MENTOR CAPACITY — ADDITIONAL (from CBM-PRD-CRM-Mentor.docx)
+      # ---------------------------------------------------------------
+
+      - name: acceptingNewClients
+        type: bool
+        label: "Accepting New Clients"
+        required: true
+        default: false
+        category: "Availability"
+        description: >
+          Whether the mentor is currently available for new client
+          assignments. Relevant when Mentor Status = Active.
+          Mentor-editable.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 4.
+
+      - name: maximumClientCapacity
+        type: int
+        label: "Maximum Client Capacity"
+        required: true
+        min: 0
+        category: "Availability"
+        description: >
+          Maximum number of simultaneous active client engagements this
+          mentor will accept. Mentor-editable.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 4.
+
+      - name: currentActiveClients
+        type: int
+        label: "Current Active Clients"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Count of Engagements where this mentor is Primary Mentor and
+          status is Active or Assigned. System-calculated. Read-only.
+          MANUAL CONFIG: Configure formula in Entity Manager →
+          Contact → Formula.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 4.
+
+      - name: availableCapacity
+        type: int
+        label: "Available Capacity"
+        readOnly: true
+        category: "Analytics"
+        description: >
+          Maximum Client Capacity minus Current Active Clients. Used by
+          admin during mentor nomination to verify capacity before
+          assignment. System-calculated. Read-only.
+          MANUAL CONFIG: Configure formula in Entity Manager →
+          Contact → Formula.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 4.
+
+      # ---------------------------------------------------------------
+      # MENTOR COMPLIANCE — ADDITIONAL (from CBM-PRD-CRM-Mentor.docx)
+      # ---------------------------------------------------------------
+
+      - name: termsAndConditionsAccepted
+        type: bool
+        label: "Terms & Conditions Accepted"
+        category: "Compliance"
+        description: >
+          System-populated from the mentor application form. Whether the
+          mentor has accepted current CBM terms and conditions.
+          Admin-only. Mentor: read-only.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+
+      - name: termsAndConditionsAcceptanceDateTime
+        type: datetime
+        label: "Terms & Conditions Acceptance Date/Time"
+        category: "Compliance"
+        description: >
+          Timestamp of most recent terms and conditions acceptance.
+          System-populated from application form. Mentor: read-only.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+
+      - name: felonyConviction
+        type: bool
+        label: "Felony Conviction"
+        category: "Compliance"
+        description: >
+          Disclosed on the mentor application form. Admin-only.
+          Hidden from mentor after form submission. Restricted field.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+
+      - name: backgroundCheckDate
+        type: date
+        label: "Background Check Date"
+        category: "Compliance"
+        description: >
+          Date the background check was completed. Admin-only.
+          Hidden from mentor.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+
+      - name: duesStatus
+        type: enum
+        label: "Dues Status"
+        category: "Administrative"
+        description: >
+          Current-year dues standing. Admin-only. Mentor: read-only.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+        options:
+          - "Unpaid"
+          - "Paid"
+          - "Waived"
+        style:
+          "Unpaid": "danger"
+          "Paid": "success"
+          "Waived": "default"
+
+      - name: duesPaymentDate
+        type: date
+        label: "Dues Payment Date"
+        category: "Administrative"
+        description: >
+          Date of most recent dues payment. Not applicable when Dues
+          Status = Waived. Admin-only. Mentor: read-only.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+
+      - name: departureReason
+        type: enum
+        label: "Departure Reason"
+        category: "Personal"
+        description: >
+          Reason for departure. Admin-only. Shown when Mentor Status
+          is Resigned or Inactive.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+        options:
+          - "Relocated"
+          - "Career Change"
+          - "Time Constraints"
+          - "Personal"
+          - "Other"
+
+      - name: departureDate
+        type: date
+        label: "Departure Date"
+        category: "Personal"
+        description: >
+          Date the mentor formally departed. Admin-only.
+          PRD Reference: CBM-PRD-CRM-Mentor.docx Group 5.
+
+
 
       - name: isMentor
         type: bool
@@ -211,7 +470,9 @@ entities:
       - name: mentorStatus
         type: enum
         label: "Mentor Status"
+        required: true
         default: "Submitted"
+        audited: true
         category: "Mentor"
         description: >
           Current lifecycle stage of the mentor. Set to Submitted when
@@ -376,6 +637,7 @@ entities:
         type: url
         label: "Self-Schedule URL"
         category: "Availability"
+        copyToClipboard: true
         description: >
           Link to mentor's personal scheduling tool (e.g., Calendly)
           for client and admin booking.
@@ -667,6 +929,7 @@ entities:
               - [name, contactType]
               - [account, title]
               - [emailAddress, phoneNumber]
+              - [cbmGmailAddress, null]
               - [notes, null]
 
           - label: "Mentor"
@@ -732,6 +995,7 @@ entities:
               - [birthday, spouseName]
               - [workStatus, militaryStatus]
               - [dateJoined, resignDate]
+              - [departureDate, departureReason]
 
           - label: "Administrative"
             tabBreak: true
@@ -741,6 +1005,7 @@ entities:
               Administrative fields. Admin-only.
             rows:
               - [howDidYouHearAboutCbm, null]
+              - [duesStatus, duesPaymentDate]
               - [statusChangeReason, null]
 
       list:
