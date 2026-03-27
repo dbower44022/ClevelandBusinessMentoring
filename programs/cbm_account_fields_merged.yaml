@@ -1,0 +1,794 @@
+version: "1.0"
+content_version: "1.0.0"
+description: "CBM EspoCRM Configuration — Account entity (Client Company + Partner Organization merged)"
+
+# Source: CBM-PRD-CRM-Client.docx v1.6 + CBM-PRD-CRM-Partners.docx v0.4
+# Generated: March 2026
+# PRD References:
+#   CBM-PRD-CRM-Client.docx — Client Company fields (Section 2.2)
+#   CBM-PRD-CRM-Partners.docx — Partner fields (Sections 3-15)
+
+# IMPLEMENTATION NOTE:
+# A single Account entity covers all organizations — Client Companies and
+# Partners. The accountType multi-select field drives Dynamic Logic to
+# show the appropriate fields for each type. A single organization can
+# be both a Client Company and a Partner simultaneously.
+# See CBM-PRD-CRM-Partners.docx Section 15 for the rationale.
+
+# MANUAL CONFIG REQUIRED:
+# --- DYNAMIC LOGIC ---
+# - Client Company panels: show when accountType includes "Client Company"
+# - Partner panels: show when accountType includes "Partner"
+# - State/Legal/EIN panels: show when registeredWithState = true
+# - NAICS Subsector cascade filter: filter by selected naicsSector
+# --- ACCESS CONTROL ---
+# - EIN Number restricted to Admin + assigned Primary Mentor only
+# - Partner agreement documents restricted to management-level only
+# - Liaison: full access to assigned partner records
+# - Other mentors: read-only Partner Directory access
+# - Board members: summary-level portfolio visibility only
+# Configure in: Administration → Roles
+# --- VIEWS ---
+# - "Client Companies" filtered list view: List View → Save Filter
+# - "Partners" filtered list view: List View → Save Filter
+# - "Partner Directory" view: List View → Save Filter
+# - "Agreements Expiring Soon" view: List View → Save Filter
+# - "Partners with No Recent Activity" view: List View → Save Filter
+# --- ANALYTICS ---
+# - Per-partner metrics (referral count, sessions, hours, NPS, etc.)
+# Configure in: Administration → Reports
+# --- INTEGRATIONS ---
+# - Google Workspace email sync for partner contacts
+# Configure in: Administration → Integrations → Google
+
+entities:
+  Account:
+    description: >
+      Represents all organizations CBM works with — Client Companies
+      receiving mentoring services and Partner Organizations in CBM's
+      community network. A single organization can be both simultaneously.
+      The Account Type field drives Dynamic Logic to show the appropriate
+      fields for each role. Client Company fields cover business profile,
+      legal registration, and certifications. Partner fields cover
+      relationship classification, liaison assignment, and geographic scope.
+
+    fields:
+
+      # ---------------------------------------------------------------
+      # SHARED — ALL ACCOUNT TYPES
+      # ---------------------------------------------------------------
+
+      - name: accountType
+        type: multiEnum
+        label: "Account Type"
+        required: true
+        category: "Overview"
+        description: >
+          The role(s) this organization plays in CBM. Multi-select to
+          support organizations that are both a Client Company and a
+          Partner simultaneously. Drives Dynamic Logic panels.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 15.2.
+        options:
+          - "Client Company"
+          - "Partner"
+
+      - name: website
+        type: url
+        label: "Website"
+        category: "Overview"
+        description: >
+          Organization's public website URL. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2,
+          CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      # ---------------------------------------------------------------
+      # CLIENT COMPANY — CORE FIELDS
+      # ---------------------------------------------------------------
+
+      - name: clientOrganizationType
+        type: enum
+        label: "Organization Type"
+        required: true
+        category: "Client Profile"
+        description: >
+          Whether the client business is a for-profit or non-profit
+          entity. Required for client companies. Used for analytics
+          and grant reporting.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "For-Profit"
+          - "Non-Profit"
+
+      - name: businessStage
+        type: enum
+        label: "Business Stage"
+        required: true
+        category: "Client Profile"
+        description: >
+          Current stage of business development. Required. Used for
+          mentor matching and program analytics.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Pre-Startup"
+          - "Startup"
+          - "Early Stage"
+          - "Growth Stage"
+          - "Established"
+
+      - name: naicsSector
+        type: enum
+        label: "NAICS Sector"
+        required: true
+        category: "Client Profile"
+        description: >
+          Top-level industry classification (NAICS). 20 sectors.
+          Required. Used for mentor matching and reporting.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Agriculture, Forestry, Fishing and Hunting"
+          - "Mining, Quarrying, and Oil and Gas Extraction"
+          - "Utilities"
+          - "Construction"
+          - "Manufacturing"
+          - "Wholesale Trade"
+          - "Retail Trade"
+          - "Transportation and Warehousing"
+          - "Information"
+          - "Finance and Insurance"
+          - "Real Estate and Rental and Leasing"
+          - "Professional, Scientific, and Technical Services"
+          - "Management of Companies and Enterprises"
+          - "Administrative and Support and Waste Management"
+          - "Educational Services"
+          - "Health Care and Social Assistance"
+          - "Arts, Entertainment, and Recreation"
+          - "Accommodation and Food Services"
+          - "Other Services (except Public Administration)"
+          - "Public Administration"
+
+      - name: naicsSubsector
+        type: enum
+        label: "NAICS Subsector"
+        required: true
+        category: "Client Profile"
+        description: >
+          Second-level industry classification, filtered by NAICS Sector.
+          Required. TBD: Full subsector list (~100 values) to be loaded.
+          MANUAL CONFIG: Configure Dynamic Logic cascade filter by sector.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "TBD - Full NAICS subsector list to be loaded"
+
+      - name: mentoringFocusAreas
+        type: multiEnum
+        label: "Mentoring Focus Areas"
+        required: true
+        category: "Client Profile"
+        description: >
+          Business areas where the client seeks mentoring support.
+          Multi-select. Used for mentor matching and funder reporting.
+          TBD: Values to be defined by CBM Leadership.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "TBD - Values to be defined by Leadership"
+
+      - name: mentoringNeedsDescription
+        type: wysiwyg
+        label: "Mentoring Needs Description"
+        required: true
+        category: "Client Profile"
+        description: >
+          Free-form description of what the client seeks in a mentoring
+          engagement. Rich text. Required. Collected on intake form.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      # ---------------------------------------------------------------
+      # CLIENT COMPANY — BUSINESS DETAIL
+      # ---------------------------------------------------------------
+
+      - name: businessDescription
+        type: wysiwyg
+        label: "Business Description"
+        category: "Business Detail"
+        description: >
+          Detailed description of what the business does, its history,
+          and founding story. Rich text. Optional. Mentor-populated.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: timeInOperation
+        type: enum
+        label: "Time in Operation"
+        category: "Business Detail"
+        description: >
+          How long the business has been operating. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Less than 1 year"
+          - "1-2 years"
+          - "2-5 years"
+          - "5-10 years"
+          - "More than 10 years"
+
+      - name: currentTeamSize
+        type: int
+        label: "Current Team Size"
+        min: 0
+        category: "Business Detail"
+        description: >
+          Number of current employees or team members. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: revenueRange
+        type: enum
+        label: "Revenue Range"
+        category: "Business Detail"
+        description: >
+          Approximate annual revenue range. Optional.
+          TBD: Specific ranges to be defined by Leadership.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Pre-Revenue"
+          - "TBD - Revenue ranges to be defined"
+
+      - name: fundingSituation
+        type: wysiwyg
+        label: "Funding Situation"
+        category: "Business Detail"
+        description: >
+          Current funding sources or needs. Rich text. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: currentChallenges
+        type: wysiwyg
+        label: "Current Challenges"
+        category: "Business Detail"
+        description: >
+          Primary obstacles the business faces. Rich text. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: goalsAndObjectives
+        type: wysiwyg
+        label: "Goals and Objectives"
+        category: "Business Detail"
+        description: >
+          What the client wants to achieve through mentoring. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: desiredOutcomes
+        type: wysiwyg
+        label: "Desired Outcomes (6-12 Months)"
+        category: "Business Detail"
+        description: >
+          Specific near-term outcomes the client hopes to achieve.
+          Rich text. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: previousMentoringExperience
+        type: wysiwyg
+        label: "Previous Mentoring / Advisory Experience"
+        category: "Business Detail"
+        description: >
+          Prior mentor or advisor experience and context. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: currentProfessionalAdvisors
+        type: multiEnum
+        label: "Current Professional Advisors"
+        category: "Business Detail"
+        description: >
+          Types of professional advisors currently engaged. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Banker / Financial Institution"
+          - "Attorney / Legal Counsel"
+          - "Accountant / CPA"
+          - "IT Consultant"
+          - "Insurance Agent"
+          - "Marketing / PR Consultant"
+          - "Business Coach"
+
+      # ---------------------------------------------------------------
+      # CLIENT COMPANY — LEGAL & REGISTRATION
+      # ---------------------------------------------------------------
+
+      - name: registeredWithState
+        type: bool
+        label: "Registered with State"
+        category: "Legal & Registration"
+        description: >
+          Whether the business has filed with the state as a legal entity.
+          Drives visibility of registration fields via Dynamic Logic.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: stateOfRegistration
+        type: enum
+        label: "State of Registration"
+        category: "Legal & Registration"
+        description: >
+          State where the business is registered. Shown when Registered
+          with State = Yes. Optional.
+          MANUAL CONFIG: Dynamic Logic show when registeredWithState = true.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Alabama"
+          - "Alaska"
+          - "Arizona"
+          - "Arkansas"
+          - "California"
+          - "Colorado"
+          - "Connecticut"
+          - "Delaware"
+          - "Florida"
+          - "Georgia"
+          - "Hawaii"
+          - "Idaho"
+          - "Illinois"
+          - "Indiana"
+          - "Iowa"
+          - "Kansas"
+          - "Kentucky"
+          - "Louisiana"
+          - "Maine"
+          - "Maryland"
+          - "Massachusetts"
+          - "Michigan"
+          - "Minnesota"
+          - "Mississippi"
+          - "Missouri"
+          - "Montana"
+          - "Nebraska"
+          - "Nevada"
+          - "New Hampshire"
+          - "New Jersey"
+          - "New Mexico"
+          - "New York"
+          - "North Carolina"
+          - "North Dakota"
+          - "Ohio"
+          - "Oklahoma"
+          - "Oregon"
+          - "Pennsylvania"
+          - "Rhode Island"
+          - "South Carolina"
+          - "South Dakota"
+          - "Tennessee"
+          - "Texas"
+          - "Utah"
+          - "Vermont"
+          - "Virginia"
+          - "Washington"
+          - "West Virginia"
+          - "Wisconsin"
+          - "Wyoming"
+          - "Washington D.C."
+
+      - name: legalBusinessStructure
+        type: enum
+        label: "Legal Business Structure"
+        category: "Legal & Registration"
+        description: >
+          Legal structure of the registered business. Shown when
+          Registered with State = Yes. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+        options:
+          - "Sole Proprietor"
+          - "Partnership"
+          - "LLC"
+          - "S-Corp"
+          - "C-Corp"
+          - "Non-Profit 501(c)(3)"
+          - "Other"
+
+      - name: einOnFile
+        type: bool
+        label: "EIN on File"
+        category: "Legal & Registration"
+        description: >
+          Whether the business has an Employer Identification Number.
+          Shown when Registered with State = Yes. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: dateOfFormation
+        type: date
+        label: "Date of Formation"
+        category: "Legal & Registration"
+        description: >
+          Date the business entity was formally established. Shown when
+          Registered with State = Yes. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: registeredAgent
+        type: bool
+        label: "Registered Agent"
+        category: "Legal & Registration"
+        description: >
+          Whether the business has a designated registered agent. Shown
+          when Registered with State = Yes. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.
+
+      - name: einNumber
+        type: varchar
+        label: "EIN Number"
+        maxLength: 20
+        category: "Legal & Registration"
+        description: >
+          The actual EIN number. RESTRICTED: Admin and assigned Primary
+          Mentor only. Mentor-populated — not on intake form.
+          MANUAL CONFIG: Field-level security in Administration → Roles.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 5.2.
+
+      # ---------------------------------------------------------------
+      # CLIENT COMPANY — CERTIFICATIONS
+      # ---------------------------------------------------------------
+
+      - name: veteranOwnedBusiness
+        type: enum
+        label: "Veteran-Owned Business"
+        category: "Certifications"
+        description: >
+          Majority-owned by one or more veterans.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: sdvosb
+        type: enum
+        label: "Service-Disabled Veteran-Owned (SDVOSB)"
+        category: "Certifications"
+        description: >
+          SBA/VA certification for service-disabled veteran-owned businesses.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: wosb
+        type: enum
+        label: "Woman-Owned Small Business (WOSB)"
+        category: "Certifications"
+        description: >
+          SBA certification for women-majority-owned businesses.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: mbe
+        type: enum
+        label: "Minority-Owned Business Enterprise (MBE)"
+        category: "Certifications"
+        description: >
+          Certification for racial/ethnic minority-owned businesses.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: dbe
+        type: enum
+        label: "Disadvantaged Business Enterprise (DBE)"
+        category: "Certifications"
+        description: >
+          Federal DOT certification for disadvantaged business owners.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: sbaSmallBusiness
+        type: enum
+        label: "SBA Small Business"
+        category: "Certifications"
+        description: >
+          Meets SBA size standards, registered in SAM.gov.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: hubzoneCertified
+        type: enum
+        label: "HUBZone Certified"
+        category: "Certifications"
+        description: >
+          SBA certification for Historically Underutilized Business Zones.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: eightA
+        type: enum
+        label: "8(a) Program Participant"
+        category: "Certifications"
+        description: >
+          SBA 8(a) Business Development Program.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: lgbtqOwnedBusiness
+        type: enum
+        label: "LGBTQ+-Owned Business"
+        category: "Certifications"
+        description: >
+          Certification through NGLCC for LGBTQ+-owned businesses.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: dobe
+        type: enum
+        label: "Disability-Owned Business Enterprise (DOBE)"
+        category: "Certifications"
+        description: >
+          Certification through Disability:IN.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: nativeAmericanOwned
+        type: enum
+        label: "Native American / Tribal Owned"
+        category: "Certifications"
+        description: >
+          Majority-owned by Native American, Alaska Native, or Native
+          Hawaiian individuals or a tribal entity.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: certifiedBCorp
+        type: enum
+        label: "Certified B Corporation"
+        category: "Certifications"
+        description: >
+          B Lab certification for social/environmental/governance standards.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+        options: ["Ineligible", "Eligible", "Certified", "In Progress"]
+
+      - name: unionShop
+        type: bool
+        label: "Union Shop"
+        category: "Certifications"
+        description: >
+          Operates under a union agreement. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+
+      - name: familyOwnedBusiness
+        type: bool
+        label: "Family-Owned Business"
+        category: "Certifications"
+        description: >
+          Owned and operated by members of the same family. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+
+      - name: franchise
+        type: bool
+        label: "Franchise"
+        category: "Certifications"
+        description: >
+          Operates as a franchise of a larger brand or system. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+
+      - name: socialEnterprise
+        type: bool
+        label: "Social Enterprise"
+        category: "Certifications"
+        description: >
+          Has a primary social, environmental, or community mission
+          alongside commercial activity. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+
+      - name: otherCertifications
+        type: text
+        label: "Other Certifications / Designations"
+        category: "Certifications"
+        description: >
+          Additional certifications or ownership classifications not
+          covered by structured fields. Optional.
+          PRD Reference: CBM-PRD-CRM-Client.docx Section 2.2.3.
+
+      # ---------------------------------------------------------------
+      # PARTNER ORGANIZATION FIELDS
+      # ---------------------------------------------------------------
+
+      - name: organizationType
+        type: enum
+        label: "Organization Type"
+        category: "Partner Profile"
+        description: >
+          The category of organization the partner represents. Required
+          for partner organizations.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+        options:
+          - "Chamber of Commerce"
+          - "Small Business Development Center (SBDC)"
+          - "Economic Development Agency"
+          - "University / Academic Institution"
+          - "Bank / Financial Institution"
+          - "Nonprofit / Community Organization"
+          - "Government Agency"
+          - "Corporate Sponsor"
+          - "Other"
+
+      - name: partnerTypes
+        type: multiEnum
+        label: "Partner Type(s)"
+        category: "Partner Profile"
+        description: >
+          The nature of CBM's relationship with this partner. Multi-select.
+          A partner may hold more than one type simultaneously. Review
+          annually or when the relationship nature changes.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 3.
+        options:
+          - "Referral Partner"
+          - "Co-Delivery Partner"
+          - "Funding / Sponsorship Partner"
+          - "Resource Partner"
+
+      - name: partnerStatus
+        type: enum
+        label: "Partner Status"
+        default: "Prospect"
+        category: "Partner Profile"
+        description: >
+          Current state of the partner relationship. Status changes
+          should always be accompanied by a note. No automated workflows
+          trigger status changes — manual process only.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 4.
+        options:
+          - "Prospect"
+          - "Active"
+          - "Lapsed"
+          - "Inactive"
+        style:
+          "Prospect": "info"
+          "Active": "success"
+          "Lapsed": "warning"
+          "Inactive": "default"
+
+      - name: partnershipStartDate
+        type: date
+        label: "Partnership Start Date"
+        category: "Partner Profile"
+        description: >
+          Date the partnership was formally established. Optional for
+          Prospects; required when status moves to Active.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: publicAnnouncementAllowed
+        type: bool
+        label: "Public Announcement Allowed"
+        default: false
+        category: "Partner Profile"
+        description: >
+          Whether CBM may publicly announce or reference this partnership.
+          Defaults to No. Confirm with partner before any public mention.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: geographicServiceArea
+        type: text
+        label: "Geographic Service Area"
+        category: "Partner Profile"
+        description: >
+          The geographic territory the organization primarily serves
+          (e.g., City of Cleveland, Cuyahoga County, Greater Akron).
+          Optional. Used for filtering and partner-client matching.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: targetPopulation
+        type: text
+        label: "Target Population"
+        category: "Partner Profile"
+        description: >
+          The specific population or business segment the organization
+          focuses on (e.g., minority-owned businesses, women entrepreneurs).
+          Optional.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: socialMedia
+        type: text
+        label: "Social Media"
+        category: "Partner Profile"
+        description: >
+          Links to LinkedIn, Facebook, or other social profiles. Optional.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+      - name: partnerNotes
+        type: wysiwyg
+        label: "Partner Notes"
+        category: "Partner Profile"
+        description: >
+          General notes on the partner relationship, key milestones, and
+          status change explanations. Notes should always accompany status
+          changes to explain the reason.
+          PRD Reference: CBM-PRD-CRM-Partners.docx Section 5.1.
+
+    layout:
+      detail:
+        panels:
+
+          - label: "Overview"
+            tabBreak: true
+            tabLabel: "Overview"
+            style: default
+            rows:
+              - [name, accountType]
+              - [website, phoneNumber]
+              - [billingAddressCity, billingAddressState]
+
+          - label: "Client Profile"
+            tabBreak: true
+            tabLabel: "Client"
+            style: default
+            description: >
+              Client Company fields. Visible when Account Type includes
+              Client Company. MANUAL CONFIG: Configure Dynamic Logic.
+            tabs:
+              - label: "Business Profile"
+                category: "Client Profile"
+
+          - label: "Business Detail"
+            tabBreak: true
+            tabLabel: "Detail"
+            style: default
+            description: >
+              Additional business context. Typically mentor-populated
+              after assignment.
+            tabs:
+              - label: "Operations"
+                category: "Business Detail"
+
+          - label: "Legal & Registration"
+            tabBreak: true
+            tabLabel: "Legal"
+            style: default
+            description: >
+              Legal entity and registration fields. Registration details
+              shown when Registered with State is checked.
+            rows:
+              - [registeredWithState, null]
+              - [stateOfRegistration, legalBusinessStructure]
+              - [dateOfFormation, einOnFile]
+              - [registeredAgent, einNumber]
+
+          - label: "Certifications"
+            tabBreak: true
+            tabLabel: "Certifications"
+            style: default
+            description: >
+              Business ownership designations and certifications. Used
+              for grant compliance and program eligibility tracking.
+            tabs:
+              - label: "Classifications"
+                category: "Certifications"
+
+          - label: "Partner Profile"
+            tabBreak: true
+            tabLabel: "Partner"
+            style: default
+            description: >
+              Partner Organization fields. Visible when Account Type
+              includes Partner. MANUAL CONFIG: Configure Dynamic Logic.
+            tabs:
+              - label: "Partner Details"
+                category: "Partner Profile"
+
+      list:
+        columns:
+          - field: name
+            width: 22
+          - field: accountType
+            width: 12
+          - field: partnerStatus
+            width: 10
+          - field: businessStage
+            width: 12
+          - field: billingAddressCity
+            width: 14
+          - field: website
+            width: 18
+          - field: phoneNumber
+            width: 12
+
+relationships:
+
+  - name: partnerToAssignedLiaison
+    description: >
+      Links a Partner Account to the CBM member assigned as its liaison.
+      The liaison manages the day-to-day relationship, logs activities,
+      and delivers analytics reports. Only the current assignment is
+      stored — liaison history is not tracked.
+      PRD Reference: CBM-PRD-CRM-Partners.docx Section 9.
+    entity: Account
+    entityForeign: Contact
+    linkType: manyToOne
+    link: partnerLiaison
+    linkForeign: liaisonPartners
+    label: "Assigned Liaison"
+    labelForeign: "Partner Liaisons"
+    audited: false
