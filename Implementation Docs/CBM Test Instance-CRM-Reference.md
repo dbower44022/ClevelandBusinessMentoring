@@ -4,7 +4,7 @@
 
 Generated from YAML program files
   Version: 1.2
-  Generated: 2026-03-28 04:00 UTC
+  Generated: 2026-03-28 16:34 UTC
 
 This document defines the EspoCRM configuration required to support the requirements specified in the CBM PRD documents. It is generated automatically from the YAML program files and must not be edited manually.
 
@@ -976,6 +976,8 @@ This section defines conditional field behavior (Dynamic Logic) and automated fi
 
 • Resigned
 
+• Departed
+
 • Declined
 
 ## Engagement
@@ -983,6 +985,8 @@ This section defines conditional field behavior (Dynamic Logic) and automated fi
 ### Status
 
 • Submitted
+
+• Declined
 
 • Pending Acceptance
 
