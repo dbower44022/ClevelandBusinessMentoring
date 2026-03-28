@@ -25,6 +25,7 @@ entities:
         isSorted: false
         options:
           - "Submitted"
+          - "Declined"
           - "Pending Acceptance"
           - "Assigned"
           - "Mentor Declined"
@@ -36,6 +37,7 @@ entities:
           - "Completed"
         translatedOptions:
           "Submitted": "Submitted"
+          "Declined": "Declined"
           "Pending Acceptance": "Pending Acceptance"
           "Assigned": "Assigned"
           "Mentor Declined": "Mentor Declined"
@@ -47,6 +49,7 @@ entities:
           "Completed": "Completed"
         style:
           "Submitted": "info"
+          "Declined": "danger"
           "Pending Acceptance": "warning"
           "Assigned": "primary"
           "Mentor Declined": "danger"
@@ -56,6 +59,18 @@ entities:
           "Inactive": "danger"
           "Abandoned": "default"
           "Completed": "success"
+        optionDescriptions:
+          "Submitted": "Mentoring request received via website form. Pending admin review and mentor nomination."
+          "Declined": "Admin reviewed the request and determined it is not suitable for the program. Terminal status. No mentor assignment occurs. Contact and Company records are retained."
+          "Pending Acceptance": "Admin has nominated a mentor. System has notified the mentor and is awaiting their acceptance or refusal. A configurable acceptance window applies (default: 48 hours)."
+          "Assigned": "Nominated mentor has accepted the assignment. Mentor is responsible for introducing themselves to the client."
+          "Mentor Declined": "Nominated mentor refused the assignment. Engagement reverts to admin queue for a new nomination."
+          "Active": "Mentoring is underway. Sessions are being logged."
+          "On-Hold": "Engagement temporarily paused by mutual agreement. Expected to resume."
+          "Dormant": "No session activity for a configurable period. System-triggered warning status indicating the engagement is at risk."
+          "Inactive": "No session activity for an extended configurable period. System-triggered. Engagement is effectively stalled."
+          "Abandoned": "Engagement closed due to prolonged inactivity with no response. System-triggered. Treated as permanently closed."
+          "Completed": "Engagement formally closed with goals achieved or by mutual agreement. Admin or mentor initiated."
 
       - name: startDate
         type: date

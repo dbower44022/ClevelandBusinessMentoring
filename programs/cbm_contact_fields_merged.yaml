@@ -486,7 +486,18 @@ entities:
           - "Paused"
           - "Inactive"
           - "Resigned"
+          - "Departed"
           - "Declined"
+        translatedOptions:
+          "Submitted": "Submitted"
+          "In-Review": "In-Review"
+          "Provisional": "Provisional"
+          "Active": "Active"
+          "Paused": "Paused"
+          "Inactive": "Inactive"
+          "Resigned": "Resigned"
+          "Departed": "Departed"
+          "Declined": "Declined"
         style:
           "Submitted": "default"
           "In-Review": "default"
@@ -495,7 +506,18 @@ entities:
           "Paused": "primary"
           "Inactive": "danger"
           "Resigned": "danger"
+          "Departed": "danger"
           "Declined": "danger"
+        optionDescriptions:
+          "Submitted": "Application received via the website form. Pending admin review. No approval has been granted."
+          "In-Review": "Admin is actively reviewing the application. May include interview or background screening."
+          "Provisional": "Application approved. Mentor is completing onboarding requirements (training, ethics agreement, background check) before full activation."
+          "Active": "Fully onboarded mentor. Eligible for client assignments. All onboarding requirements met."
+          "Paused": "Mentor is temporarily not accepting new client assignments. Existing engagements continue. Will resume accepting clients on a future date."
+          "Inactive": "Mentor is no longer actively mentoring. Not a formal resignation — may include extended leave or unresolved inactivity. Active clients have been reassigned."
+          "Resigned": "Mentor made a conscious, voluntary decision to leave CBM. Formal departure."
+          "Departed": "Mentor is no longer with CBM but did not formally resign. Reason for departure may be unknown or informal."
+          "Declined": "Application was reviewed by admin and determined not suitable for the CBM mentor program. Terminal status."
 
       - name: primaryChapter
         type: enum
