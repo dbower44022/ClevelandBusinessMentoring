@@ -1,0 +1,232 @@
+[
+  {
+    "id": 1,
+    "title": "CBM Mentoring Request",
+    "description": "Request free business mentoring from Cleveland Business Mentors. Complete this form and our team will match you with an experienced mentor.",
+    "labelPlacement": "top_label",
+    "descriptionPlacement": "below",
+    "button": {
+      "type": "text",
+      "text": "Submit Request"
+    },
+    "is_active": "1",
+    "is_trash": "0",
+    "fields": [
+      {
+        "id": 1,
+        "type": "name",
+        "label": "Your Name",
+        "isRequired": true,
+        "nameFormat": "simple",
+        "inputs": [
+          {
+            "id": "1.3",
+            "label": "First",
+            "name": "first_name"
+          },
+          {
+            "id": "1.6",
+            "label": "Last",
+            "name": "last_name"
+          }
+        ],
+        "description": "",
+        "cssClass": "",
+        "subLabelPlacement": "below"
+      },
+      {
+        "id": 2,
+        "type": "email",
+        "label": "Email Address",
+        "isRequired": true,
+        "description": "We'll use this email to contact you about your mentoring request.",
+        "placeholder": "your@email.com",
+        "cssClass": ""
+      },
+      {
+        "id": 3,
+        "type": "phone",
+        "label": "Phone Number",
+        "isRequired": true,
+        "phoneFormat": "standard",
+        "placeholder": "(555) 555-5555",
+        "cssClass": ""
+      },
+      {
+        "id": 4,
+        "type": "text",
+        "label": "Zip Code",
+        "isRequired": true,
+        "placeholder": "44101",
+        "maxLength": 10,
+        "cssClass": "",
+        "description": "Used for geographic reporting."
+      },
+      {
+        "id": 5,
+        "type": "text",
+        "label": "Business Name",
+        "isRequired": false,
+        "placeholder": "Leave blank if your business is not yet named",
+        "cssClass": "",
+        "description": "You may leave this blank if you are in a pre-startup stage."
+      },
+      {
+        "id": 6,
+        "type": "website",
+        "label": "Business Website",
+        "isRequired": false,
+        "placeholder": "https://",
+        "cssClass": ""
+      },
+      {
+        "id": 7,
+        "type": "address",
+        "label": "Business Address",
+        "isRequired": false,
+        "addressType": "us",
+        "inputs": [
+          { "id": "7.1", "label": "Street Address", "name": "address_street" },
+          { "id": "7.2", "label": "Address Line 2", "name": "address_street2", "isHidden": true },
+          { "id": "7.3", "label": "City", "name": "address_city" },
+          { "id": "7.4", "label": "State / Province", "name": "address_state" },
+          { "id": "7.5", "label": "ZIP / Postal Code", "name": "address_zip" },
+          { "id": "7.6", "label": "Country", "name": "address_country", "isHidden": true, "defaultValue": "United States" }
+        ],
+        "cssClass": ""
+      },
+      {
+        "id": 8,
+        "type": "select",
+        "label": "Organization Type",
+        "isRequired": false,
+        "placeholder": "Select one",
+        "cssClass": "",
+        "choices": [
+          { "text": "For-Profit", "value": "For-Profit" },
+          { "text": "Non-Profit", "value": "Non-Profit" }
+        ]
+      },
+      {
+        "id": 9,
+        "type": "select",
+        "label": "Business Stage",
+        "isRequired": true,
+        "placeholder": "Select one",
+        "cssClass": "",
+        "choices": [
+          { "text": "Pre-Startup (idea stage, not yet operating)", "value": "Pre-Startup" },
+          { "text": "Startup (operating less than 1 year)", "value": "Startup" },
+          { "text": "Early Stage (1–3 years in operation)", "value": "Early Stage" },
+          { "text": "Growth Stage (scaling operations)", "value": "Growth Stage" },
+          { "text": "Established (stable, mature business)", "value": "Established" }
+        ]
+      },
+      {
+        "id": 10,
+        "type": "select",
+        "label": "Industry Sector",
+        "isRequired": false,
+        "placeholder": "Select your industry",
+        "cssClass": "",
+        "description": "Select the sector that best describes your business.",
+        "choices": [
+          { "text": "Agriculture, Forestry, Fishing and Hunting", "value": "Agriculture, Forestry, Fishing and Hunting" },
+          { "text": "Mining, Quarrying, and Oil and Gas Extraction", "value": "Mining, Quarrying, and Oil and Gas Extraction" },
+          { "text": "Utilities", "value": "Utilities" },
+          { "text": "Construction", "value": "Construction" },
+          { "text": "Manufacturing", "value": "Manufacturing" },
+          { "text": "Wholesale Trade", "value": "Wholesale Trade" },
+          { "text": "Retail Trade", "value": "Retail Trade" },
+          { "text": "Transportation and Warehousing", "value": "Transportation and Warehousing" },
+          { "text": "Information", "value": "Information" },
+          { "text": "Finance and Insurance", "value": "Finance and Insurance" },
+          { "text": "Real Estate and Rental and Leasing", "value": "Real Estate and Rental and Leasing" },
+          { "text": "Professional, Scientific, and Technical Services", "value": "Professional, Scientific, and Technical Services" },
+          { "text": "Management of Companies and Enterprises", "value": "Management of Companies and Enterprises" },
+          { "text": "Administrative and Support and Waste Management", "value": "Administrative and Support and Waste Management" },
+          { "text": "Educational Services", "value": "Educational Services" },
+          { "text": "Health Care and Social Assistance", "value": "Health Care and Social Assistance" },
+          { "text": "Arts, Entertainment, and Recreation", "value": "Arts, Entertainment, and Recreation" },
+          { "text": "Accommodation and Food Services", "value": "Accommodation and Food Services" },
+          { "text": "Other Services (except Public Administration)", "value": "Other Services (except Public Administration)" },
+          { "text": "Public Administration", "value": "Public Administration" }
+        ]
+      },
+      {
+        "id": 11,
+        "type": "select",
+        "label": "NAICS Subsector",
+        "isRequired": false,
+        "placeholder": "Select your subsector (optional)",
+        "cssClass": "",
+        "description": "Optionally select a more specific subsector within your industry.",
+        "choices": [
+          { "text": "TBD — Full NAICS subsector list to be loaded", "value": "TBD" }
+        ],
+        "note": "IMPLEMENTATION NOTE: Full NAICS subsector list (~100 values) must be loaded before go-live. Configure conditional logic to filter by Industry Sector selection in field 10."
+      },
+      {
+        "id": 12,
+        "type": "multiselect",
+        "label": "Mentoring Focus Areas",
+        "isRequired": true,
+        "cssClass": "",
+        "description": "Select all areas where you are seeking mentoring support.",
+        "choices": [
+          { "text": "TBD — Values to be defined by CBM Leadership", "value": "TBD" }
+        ],
+        "note": "IMPLEMENTATION NOTE: Mentoring Focus Areas values must be defined by CBM Leadership and loaded before go-live."
+      },
+      {
+        "id": 13,
+        "type": "textarea",
+        "label": "Describe Your Mentoring Needs",
+        "isRequired": true,
+        "placeholder": "Please describe what you are looking for in a mentoring engagement. What challenges are you facing? What goals do you want to achieve?",
+        "maxRows": 8,
+        "cssClass": "",
+        "description": "The more detail you provide, the better we can match you with the right mentor."
+      },
+      {
+        "id": 14,
+        "type": "html",
+        "label": "",
+        "content": "<p><em>By submitting this form you agree to be contacted by Cleveland Business Mentors regarding your mentoring request. Your information will be kept confidential and used only for program purposes.</em></p>",
+        "cssClass": "form-disclaimer"
+      }
+    ],
+    "confirmations": {
+      "1": {
+        "id": "1",
+        "name": "Default Confirmation",
+        "isDefault": true,
+        "type": "message",
+        "message": "<p><strong>Thank you for your mentoring request!</strong></p><p>We have received your submission and will be in touch shortly to discuss next steps. Our team typically follows up within 2–3 business days.</p><p>If you have questions in the meantime, please contact us at <a href='mailto:info@clevelandbusinessmentors.org'>info@clevelandbusinessmentors.org</a>.</p>",
+        "disableAutoformat": false
+      }
+    },
+    "notifications": {
+      "1": {
+        "id": "1",
+        "isActive": true,
+        "to": "{admin_email}",
+        "name": "Admin Notification",
+        "event": "form_submission",
+        "toType": "email",
+        "subject": "New CBM Mentoring Request — {Name (First):1.3} {Name (Last):1.6}",
+        "message": "A new mentoring request has been submitted.\n\nName: {Name (First):1.3} {Name (Last):1.6}\nEmail: {Email Address:2}\nPhone: {Phone Number:3}\nBusiness: {Business Name:5}\nStage: {Business Stage:9}\nSector: {Industry Sector:10}\n\nLog in to EspoCRM to review and assign a mentor."
+      },
+      "2": {
+        "id": "2",
+        "isActive": true,
+        "to": "{Email Address:2}",
+        "name": "Applicant Confirmation",
+        "event": "form_submission",
+        "toType": "field",
+        "subject": "We received your mentoring request — Cleveland Business Mentors",
+        "message": "Dear {Name (First):1.3},\n\nThank you for submitting a mentoring request to Cleveland Business Mentors. We have received your information and our team will be in touch shortly.\n\nWhat happens next:\n- Our team will review your request\n- We will match you with an appropriate mentor based on your needs and industry\n- You will be contacted to discuss next steps\n\nThis process typically takes 2–3 business days. If you have questions, please contact us at info@clevelandbusinessmentors.org.\n\nWarm regards,\nThe Cleveland Business Mentors Team"
+      }
+    }
+  }
+]

@@ -1,0 +1,235 @@
+[
+  {
+    "id": 2,
+    "title": "CBM Mentor Application",
+    "description": "Apply to become a volunteer business mentor with Cleveland Business Mentors. Share your expertise and help entrepreneurs in Northeast Ohio grow their businesses.",
+    "labelPlacement": "top_label",
+    "descriptionPlacement": "below",
+    "button": {
+      "type": "text",
+      "text": "Submit Application"
+    },
+    "is_active": "1",
+    "is_trash": "0",
+    "fields": [
+      {
+        "id": 1,
+        "type": "name",
+        "label": "Your Name",
+        "isRequired": true,
+        "nameFormat": "extended",
+        "inputs": [
+          { "id": "1.2", "label": "Prefix", "name": "name_prefix", "isHidden": true },
+          { "id": "1.3", "label": "First", "name": "first_name" },
+          { "id": "1.4", "label": "Middle", "name": "middle_name" },
+          { "id": "1.6", "label": "Last", "name": "last_name" },
+          { "id": "1.8", "label": "Suffix", "name": "name_suffix", "isHidden": true }
+        ],
+        "subLabelPlacement": "below",
+        "cssClass": ""
+      },
+      {
+        "id": 2,
+        "type": "text",
+        "label": "Preferred Name",
+        "isRequired": false,
+        "placeholder": "Name you prefer to be called (if different from first name)",
+        "maxLength": 100,
+        "cssClass": ""
+      },
+      {
+        "id": 3,
+        "type": "email",
+        "label": "Personal Email Address",
+        "isRequired": true,
+        "description": "Please use your personal email address, not a work address. This will be used for all CBM onboarding communications.",
+        "placeholder": "your@email.com",
+        "cssClass": ""
+      },
+      {
+        "id": 4,
+        "type": "phone",
+        "label": "Phone Number",
+        "isRequired": false,
+        "phoneFormat": "standard",
+        "placeholder": "(555) 555-5555",
+        "cssClass": ""
+      },
+      {
+        "id": 5,
+        "type": "address",
+        "label": "Home Address",
+        "isRequired": false,
+        "addressType": "us",
+        "inputs": [
+          { "id": "5.1", "label": "Street Address", "name": "address_street" },
+          { "id": "5.2", "label": "Address Line 2", "name": "address_street2", "isHidden": true },
+          { "id": "5.3", "label": "City", "name": "address_city" },
+          { "id": "5.4", "label": "State / Province", "name": "address_state" },
+          { "id": "5.5", "label": "ZIP / Postal Code", "name": "address_zip" },
+          { "id": "5.6", "label": "Country", "name": "address_country", "isHidden": true, "defaultValue": "United States" }
+        ],
+        "cssClass": ""
+      },
+      {
+        "id": 6,
+        "type": "website",
+        "label": "LinkedIn Profile URL",
+        "isRequired": false,
+        "placeholder": "https://www.linkedin.com/in/yourprofile",
+        "cssClass": ""
+      },
+      {
+        "id": 7,
+        "type": "checkbox",
+        "label": "Current Employment Status",
+        "isRequired": false,
+        "cssClass": "",
+        "choices": [
+          { "text": "I am currently employed", "value": "1" }
+        ],
+        "inputs": [
+          { "id": "7.1", "label": "I am currently employed", "name": "currently_employed" }
+        ]
+      },
+      {
+        "id": 8,
+        "type": "textarea",
+        "label": "Professional Bio / Work Experience",
+        "isRequired": false,
+        "placeholder": "Describe your professional background, career history, and areas of business expertise. Include industries you have worked in and key roles you have held.",
+        "maxRows": 10,
+        "cssClass": ""
+      },
+      {
+        "id": 9,
+        "type": "multiselect",
+        "label": "Industry Experience and Expertise",
+        "isRequired": false,
+        "cssClass": "",
+        "description": "Select all industry sectors where you have professional experience.",
+        "choices": [
+          { "text": "Agriculture, Forestry, Fishing and Hunting", "value": "Agriculture, Forestry, Fishing and Hunting" },
+          { "text": "Mining, Quarrying, and Oil and Gas Extraction", "value": "Mining, Quarrying, and Oil and Gas Extraction" },
+          { "text": "Utilities", "value": "Utilities" },
+          { "text": "Construction", "value": "Construction" },
+          { "text": "Manufacturing", "value": "Manufacturing" },
+          { "text": "Wholesale Trade", "value": "Wholesale Trade" },
+          { "text": "Retail Trade", "value": "Retail Trade" },
+          { "text": "Transportation and Warehousing", "value": "Transportation and Warehousing" },
+          { "text": "Information", "value": "Information" },
+          { "text": "Finance and Insurance", "value": "Finance and Insurance" },
+          { "text": "Real Estate and Rental and Leasing", "value": "Real Estate and Rental and Leasing" },
+          { "text": "Professional, Scientific, and Technical Services", "value": "Professional, Scientific, and Technical Services" },
+          { "text": "Management of Companies and Enterprises", "value": "Management of Companies and Enterprises" },
+          { "text": "Administrative and Support and Waste Management", "value": "Administrative and Support and Waste Management" },
+          { "text": "Educational Services", "value": "Educational Services" },
+          { "text": "Health Care and Social Assistance", "value": "Health Care and Social Assistance" },
+          { "text": "Arts, Entertainment, and Recreation", "value": "Arts, Entertainment, and Recreation" },
+          { "text": "Accommodation and Food Services", "value": "Accommodation and Food Services" },
+          { "text": "Other Services (except Public Administration)", "value": "Other Services (except Public Administration)" },
+          { "text": "Public Administration", "value": "Public Administration" }
+        ]
+      },
+      {
+        "id": 10,
+        "type": "multiselect",
+        "label": "Languages Spoken Fluently",
+        "isRequired": false,
+        "cssClass": "",
+        "description": "Select all languages in which you can conduct a mentoring session.",
+        "choices": [
+          { "text": "TBD — Language list to be defined by CBM Leadership", "value": "TBD" }
+        ],
+        "note": "IMPLEMENTATION NOTE: Language list values must be defined before go-live."
+      },
+      {
+        "id": 11,
+        "type": "textarea",
+        "label": "Why Are You Interested in Mentoring?",
+        "isRequired": false,
+        "placeholder": "Tell us what motivates you to volunteer as a business mentor and what you hope to contribute to the entrepreneurs you work with.",
+        "maxRows": 6,
+        "cssClass": ""
+      },
+      {
+        "id": 12,
+        "type": "select",
+        "label": "How Did You Hear About CBM?",
+        "isRequired": false,
+        "placeholder": "Select one",
+        "cssClass": "",
+        "choices": [
+          { "text": "TBD — Values to be defined by CBM Leadership", "value": "TBD" }
+        ],
+        "note": "IMPLEMENTATION NOTE: Referral source values must be defined before go-live."
+      },
+      {
+        "id": 13,
+        "type": "radio",
+        "label": "Felony Conviction Disclosure",
+        "isRequired": true,
+        "cssClass": "",
+        "description": "Have you ever been convicted of a felony?",
+        "choices": [
+          { "text": "No", "value": "No" },
+          { "text": "Yes", "value": "Yes" }
+        ]
+      },
+      {
+        "id": 14,
+        "type": "checkbox",
+        "label": "Terms & Conditions",
+        "isRequired": true,
+        "cssClass": "",
+        "description": "Please review the <a href='/terms' target='_blank'>CBM Terms & Conditions</a> before submitting your application.",
+        "choices": [
+          { "text": "I have read and agree to the Cleveland Business Mentors Terms & Conditions", "value": "1" }
+        ],
+        "inputs": [
+          { "id": "14.1", "label": "I have read and agree to the Cleveland Business Mentors Terms & Conditions", "name": "terms_accepted" }
+        ],
+        "validation_message": "You must accept the Terms & Conditions to submit your application."
+      },
+      {
+        "id": 15,
+        "type": "html",
+        "label": "",
+        "content": "<p><em>Your application will be reviewed by our team. We will contact you at the email address provided with next steps. All information submitted is kept confidential.</em></p>",
+        "cssClass": "form-disclaimer"
+      }
+    ],
+    "confirmations": {
+      "1": {
+        "id": "1",
+        "name": "Default Confirmation",
+        "isDefault": true,
+        "type": "message",
+        "message": "<p><strong>Thank you for applying to become a CBM mentor!</strong></p><p>We have received your application and will be in touch shortly. Our team reviews applications on a rolling basis and typically follows up within 5–7 business days.</p><p>If you have questions in the meantime, please contact us at <a href='mailto:info@clevelandbusinessmentors.org'>info@clevelandbusinessmentors.org</a>.</p>",
+        "disableAutoformat": false
+      }
+    },
+    "notifications": {
+      "1": {
+        "id": "1",
+        "isActive": true,
+        "to": "{admin_email}",
+        "name": "Admin Notification",
+        "event": "form_submission",
+        "toType": "email",
+        "subject": "New CBM Mentor Application — {Name (First):1.3} {Name (Last):1.6}",
+        "message": "A new mentor application has been submitted.\n\nName: {Name (First):1.3} {Name (Last):1.6}\nEmail: {Personal Email Address:3}\nPhone: {Phone Number:4}\nLinkedIn: {LinkedIn Profile URL:6}\nFelony Disclosure: {Felony Conviction Disclosure:13}\n\nLog in to EspoCRM to review the full application."
+      },
+      "2": {
+        "id": "2",
+        "isActive": true,
+        "to": "{Personal Email Address:3}",
+        "name": "Applicant Confirmation",
+        "event": "form_submission",
+        "toType": "field",
+        "subject": "We received your mentor application — Cleveland Business Mentors",
+        "message": "Dear {Name (First):1.3},\n\nThank you for applying to become a volunteer business mentor with Cleveland Business Mentors. We are excited to learn more about your background and experience.\n\nWhat happens next:\n- Our team will review your application\n- We may reach out to schedule a brief conversation\n- If approved, you will be guided through our onboarding process\n\nThis process typically takes 5–7 business days. If you have questions, please contact us at info@clevelandbusinessmentors.org.\n\nWarm regards,\nThe Cleveland Business Mentors Team"
+      }
+    }
+  }
+]
