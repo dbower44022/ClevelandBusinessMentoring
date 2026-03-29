@@ -32,7 +32,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Document Production Step: Step 2 — Fundraising Domain PRD**
+**Document Production Step: Step 5 — YAML Generation**
 
 The following documents have been completed:
 
@@ -42,13 +42,15 @@ The following documents have been completed:
 | Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Complete v1.0 |
 | Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Complete v1.0 |
 | Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Complete v1.0 |
-| Fundraising Domain PRD | Not started | — |
-| Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | In Progress v1.2 — Mentoring, Mentor Recruitment, and Client Recruiting complete |
+| Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Complete v1.0 |
+| Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | Complete v2.0 — All four domains defined |
 | YAML program files | Not started | — |
 | Verification Spec | Not started | — |
 
-**The next required step is:** Produce the Fundraising Domain PRD,
-then update the Consolidated Design to complete all four domains.
+**The next required step is:** Review the Consolidated Design with
+stakeholders, resolve open issues, then proceed to YAML generation.
+See Appendix A of Consolidated Design for pending enum values that
+must be defined before YAML can be generated.
 
 ---
 
