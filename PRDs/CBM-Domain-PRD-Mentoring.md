@@ -577,7 +577,7 @@ assignment.
 > The stage of business development the client organization is currently
 > in. Used for mentor matching and funder reporting.
 
-**NAICS Sector** | Enum | Required | Phase 1
+**Industry Sector** | Enum | Required | Phase 1
 > Values: 20 top-level NAICS industry sectors. Drives NAICS Subsector
 > filter.
 >
@@ -585,11 +585,11 @@ assignment.
 > American Industry Classification System. Used for mentor matching and
 > impact reporting.
 
-**NAICS Subsector** | Enum | Required | Phase 1
+**Industry Subsector** | Enum | Required | Phase 1
 > Values: Approximately 100 subsectors, filtered by selected NAICS
 > Sector.
 >
-> The specific industry subsector within the selected NAICS Sector.
+> The specific industry subsector within the selected Industry Sector.
 > Provides more precise industry classification for matching and
 > reporting.
 

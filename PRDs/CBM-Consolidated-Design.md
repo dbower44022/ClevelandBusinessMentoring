@@ -103,7 +103,7 @@ that must be deployed.
 > The stage of business development the client organization is in.
 > Used for mentor matching and funder reporting.
 
-**NAICS Sector** | `cNaicsSector` | enum | Required | **[CUSTOM]**
+**Industry Sector** | `cNaicsSector` | enum | Required | **[CUSTOM]**
 > Source: MN-INTAKE-DAT-002
 >
 > Values: 20 top-level NAICS industry sectors (full list in Appendix A)
@@ -111,10 +111,10 @@ that must be deployed.
 > The primary industry sector of the client business. Used for mentor
 > matching and impact reporting. Drives the NAICS Subsector filter.
 
-**NAICS Subsector** | `cNaicsSubsector` | enum | Required | **[CUSTOM]**
+**Industry Subsector** | `cNaicsSubsector` | enum | Required | **[CUSTOM]**
 > Source: MN-INTAKE-DAT-002
 >
-> Values: Approximately 100 subsectors filtered by NAICS Sector
+> Values: Approximately 100 subsectors filtered by Industry Sector
 > (full list in Appendix A)
 >
 > The specific industry subsector. Conditional visibility: filtered
