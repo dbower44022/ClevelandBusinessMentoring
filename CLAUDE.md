@@ -32,7 +32,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Document Production Step: Step 3 — Consolidated Design update**
+**Document Production Step: Step 2 — Mentor Recruitment Domain PRD**
 
 The following documents have been completed:
 
@@ -43,12 +43,12 @@ The following documents have been completed:
 | Mentor Recruitment Domain PRD | Not started | — |
 | Client Recruiting Domain PRD | Not started | — |
 | Fundraising Domain PRD | Not started | — |
-| Consolidated Design | Not started | — |
+| Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | In Progress v1.0 — Mentoring entities complete |
 | YAML program files | Not started | — |
 | Verification Spec | Not started | — |
 
-**The next required step is:** Update the Consolidated Design from the
-Mentoring Domain PRD before starting the Mentor Recruitment Domain PRD.
+**The next required step is:** Produce the Mentor Recruitment Domain PRD,
+then update the Consolidated Design before starting Client Recruiting.
 
 ---
 
