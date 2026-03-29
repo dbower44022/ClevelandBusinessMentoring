@@ -1,8 +1,8 @@
 # Cleveland Business Mentors
 # Consolidated Design
 
-**Version:** 1.2
-**Status:** In Progress — Mentoring, Mentor Recruitment, and Client Recruiting Domains Complete
+**Version:** 2.0
+**Status:** Complete — All Four Domains Defined
 **Last Updated:** March 2026
 
 ---
@@ -28,8 +28,8 @@ the affected YAML is generated.
 
 | ID | Entity | Type | Domains | Status |
 |---|---|---|---|---|
-| CD-ENT-001 | Organization | Native (Account) | MN, MR, CR | Defined — MN and CR complete. Conflict resolved. |
-| CD-ENT-002 | Contact | Native (Contact) | MN, MR, CR | Defined — MN and MR complete. Conflict resolved. |
+| CD-ENT-001 | Organization | Native (Account) | MN, MR, CR, FU | Defined — All domains complete. Conflicts resolved. |
+| CD-ENT-002 | Contact | Native (Contact) | MN, MR, CR, FU | Defined — All domains complete. Conflicts resolved. |
 | CD-ENT-003 | Engagement | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-004 | Session | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-005 | Survey Response | Custom (Base) | MN | Defined — MN complete |
@@ -40,6 +40,10 @@ the affected YAML is generated.
 | CD-ENT-010 | Workshop | Custom (Event) | MN, CR | Defined — CR complete |
 | CD-ENT-011 | Workshop Registration | Custom (Base) | CR | Defined — CR complete |
 | CD-ENT-012 | Partner Activity | Custom (Base) | CR | Defined — CR complete |
+| CD-ENT-013 | Donation | Custom (Base) | FU | Defined — FU complete |
+| CD-ENT-014 | Pledge | Custom (Base) | FU | Defined — FU complete |
+| CD-ENT-015 | Grant | Custom (Base) | FU | Defined — FU complete |
+| CD-ENT-016 | Fundraising Campaign | Custom (Base) | FU | Defined — FU complete |
 
 **Entity Type Key:**
 - **Native (Account)** — extends the CRM platform's built-in Account
@@ -261,11 +265,11 @@ that must be deployed.
 **Organization Type (Account Type)** | `cOrganizationAccountType` | multiEnum | Required | **[CUSTOM]**
 > Source: CR-PARTNER-DAT-004
 >
-> Values: Client Organization, Partner Organization
+> Values: Client Organization, Partner Organization, Funder Organization
 >
-> Classifies the record and drives conditional visibility of
-> client-specific and partner-specific field panels. An organization
-> may hold both values simultaneously.
+> Classifies the record and drives conditional visibility of domain-
+> specific field panels. An organization may hold multiple values
+> simultaneously — e.g. a funder that is also a partner.
 
 **Partner Organization Type** | `cPartnerOrgType` | enum | Optional | **[CUSTOM]**
 > Source: CR-PARTNER-DAT-004
@@ -343,6 +347,40 @@ that must be deployed.
 > Source: CR-PARTNER-DAT-004
 >
 > Links to LinkedIn, Facebook, or other relevant social profiles.
+
+**Funder Type** | `cFunderType` | enum | Optional | **[CUSTOM]**
+> Source: FU-PROSPECT-DAT-002
+>
+> Values: Corporation, Foundation, Government Agency,
+> Community Foundation, Individual (Organization), Other
+>
+> Conditional visibility: shown when Organization Type includes
+> Funder Organization.
+
+**Funder Status** | `cFunderStatus` | enum | Optional | **[CUSTOM]**
+> Source: FU-PROSPECT-DAT-002
+>
+> Values: Prospect, Contacted, In Discussion, Committed, Active,
+> Lapsed, Closed
+>
+> Conditional visibility: shown when Organization Type includes
+> Funder Organization.
+
+**Primary Funder Contact** | `cPrimaryFunderContactId` | belongsTo | Optional | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Link to the primary Contact at this funder for grant and donation
+> communications. Conditional visibility: Funder Organization only.
+
+**Funder Lifetime Giving** | `cFunderLifetimeGiving` | currency | System-calculated | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Read-only. Total of all linked Donation and Grant Award records.
+
+**Funder Notes** | `cFunderNotes` | text | Optional | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Conditional visibility: Funder Organization only. Admin-only.
 
 ---
 
@@ -688,6 +726,53 @@ approved March 2026.
 >
 > Default: No. When Yes, this contact record serves dual roles —
 > Partner Contact and Mentor Contact. No duplicate record is created.
+
+**Is Donor** | `cIsDonor` | bool | Optional | **[CUSTOM]**
+> Source: FU-PROSPECT-DAT-002
+>
+> Default: No. Flags this contact as an individual donor. Drives
+> conditional visibility of donor-specific fields.
+
+**Donor Status** | `cDonorStatus` | enum | Optional | **[CUSTOM]**
+> Source: FU-PROSPECT-DAT-002
+>
+> Values: Prospect, Contacted, In Discussion, Committed, Active,
+> Lapsed, Closed
+>
+> Conditional visibility: shown when Is Donor = Yes.
+
+**Is Board Member** | `cIsBoardMember` | bool | Optional | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Default: No. Flags this contact as a current CBM board member.
+> Used to track board member giving separately.
+
+**Is Mentor Donor** | `cIsMentorDonor` | bool | Optional | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Default: No. Flags a mentor who has also made a donation. Used
+> to track mentor giving separately for stewardship reporting.
+
+**Lifetime Giving** | `cLifetimeGiving` | currency | System-calculated | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Read-only. Total of all linked Donation records.
+
+**Last Gift Date** | `cLastGiftDate` | date | System-calculated | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Read-only. Date of most recent linked Donation. Used for lapse
+> monitoring.
+
+**Last Gift Amount** | `cLastGiftAmount` | currency | System-calculated | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Read-only. Amount of most recent linked Donation.
+
+**Donor Notes** | `cDonorNotes` | text | Optional | **[CUSTOM]**
+> Source: FU-STEWARD-DAT-004
+>
+> Conditional visibility: shown when Is Donor = Yes. Admin-only.
 
 ---
 
@@ -1271,6 +1356,244 @@ matter expert involvement in an active engagement.
 
 ---
 
+### CD-ENT-013 — Donation
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Donation
+**Display Name (plural):** Donations
+**Source Domain:** FU (Fundraising)
+**Description:** Records a single completed gift from an individual or
+organization. Multiple donations from the same donor are tracked as
+separate records providing a complete giving history.
+
+#### Fields
+
+---
+
+**Donor Contact** | `cDonorContactId` | belongsTo | Conditional | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-002
+>
+> Required when donation is from an individual.
+
+**Donor Organization** | `cDonorOrganizationId` | belongsTo | Conditional | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-002
+>
+> Required when donation is from an organization.
+
+**Amount** | `cAmount` | currency | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Gift Date** | `cGiftDate` | date | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Gift Type** | `cGiftType` | enum | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+>
+> Values: Cash, Check, Online Payment, Credit Card, In-Kind, Other
+
+**Designation** | `cDesignation` | text | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Campaign** | `cCampaignId` | belongsTo | Optional | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-002
+
+**Pledge** | `cPledgeId` | belongsTo | Optional | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-002
+>
+> Link to the Pledge record this donation fulfills, if applicable.
+
+**Acknowledgment Sent** | `cAcknowledgmentSent` | bool | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+>
+> Default: No.
+
+**Acknowledgment Date** | `cAcknowledgmentDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Tax Receipt Required** | `cTaxReceiptRequired` | bool | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+>
+> Default: Yes.
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+---
+
+### CD-ENT-014 — Pledge
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Pledge
+**Display Name (plural):** Pledges
+**Source Domain:** FU (Fundraising)
+**Description:** Records a donor's commitment to give a specified amount
+over time. Individual payments are recorded as linked Donation records.
+
+#### Fields
+
+---
+
+**Donor Contact** | `cDonorContactId` | belongsTo | Conditional | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-003
+
+**Donor Organization** | `cDonorOrganizationId` | belongsTo | Conditional | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-003
+
+**Total Pledge Amount** | `cTotalPledgeAmount` | currency | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+
+**Pledge Date** | `cPledgeDate` | date | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+
+**Payment Schedule** | `cPaymentSchedule` | enum | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+>
+> Values: One-Time, Monthly, Quarterly, Annual, Custom
+
+**Start Date** | `cStartDate` | date | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+
+**End Date** | `cEndDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+
+**Fulfillment Status** | `cFulfillmentStatus` | enum | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+>
+> Values: Active, Fulfilled, Lapsed, Cancelled
+
+**Amount Fulfilled** | `cAmountFulfilled` | currency | System-calculated | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+>
+> Read-only. Total of all linked Donation records.
+
+**Amount Remaining** | `cAmountRemaining` | currency | System-calculated | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+>
+> Read-only. Total Pledge Amount minus Amount Fulfilled.
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-003
+
+---
+
+### CD-ENT-015 — Grant
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Grant
+**Display Name (plural):** Grants
+**Source Domain:** FU (Fundraising)
+**Description:** Records a funding opportunity from a grant-making
+institution. Tracks the full lifecycle from application through award,
+reporting, and closure. Automated alerts notify the Coordinator
+before reporting deadlines.
+
+#### Fields
+
+---
+
+**Funding Institution** | `cFundingInstitutionId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: FU-RECORD-DAT-004
+
+**Grant Name** | `cGrantName` | varchar | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Amount Requested** | `cAmountRequested` | currency | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Amount Awarded** | `cAmountAwarded` | currency | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+>
+> Populated when Status = Awarded.
+
+**Status** | `cStatus` | enum | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+>
+> Values: Prospect, Applied, Awarded, Reporting Due, Closed
+
+**Application Deadline** | `cApplicationDeadline` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Submission Date** | `cSubmissionDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Award Date** | `cAwardDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Grant Period Start** | `cGrantPeriodStart` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Grant Period End** | `cGrantPeriodEnd` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Reporting Deadline** | `cReportingDeadline` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+>
+> System triggers alert to Coordinator before this date.
+
+**Report Submitted** | `cReportSubmitted` | bool | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Report Submission Date** | `cReportSubmissionDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Renewal Date** | `cRenewalDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Purpose / Designation** | `cPurpose` | text | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-004
+
+---
+
+### CD-ENT-016 — Fundraising Campaign
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Fundraising Campaign
+**Display Name (plural):** Fundraising Campaigns
+**Source Domain:** FU (Fundraising)
+**Description:** Groups related donations under a named fundraising
+effort. Tracks progress toward a goal and enables analysis of giving
+by campaign.
+
+#### Fields
+
+---
+
+**Campaign Name** | `cCampaignName` | varchar | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Campaign Type** | `cCampaignType` | enum | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+>
+> Values: Annual Fund, Program Appeal, Event, Grant-Funded,
+> Corporate Sponsorship, Other
+
+**Goal Amount** | `cGoalAmount` | currency | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Start Date** | `cStartDate` | date | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**End Date** | `cEndDate` | date | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+**Status** | `cStatus` | enum | Required | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+>
+> Values: Planned, Active, Completed, Cancelled
+
+**Total Raised** | `cTotalRaised` | currency | System-calculated | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+>
+> Read-only. Total of all linked Donation records.
+
+**Description** | `cDescription` | text | Optional | **[CUSTOM]**
+> Source: FU-RECORD-DAT-002
+
+---
+
 ## 3. Relationships
 
 | ID | From Entity | To Entity | Type | Source |
@@ -1297,6 +1620,13 @@ matter expert involvement in an active engagement.
 | CD-REL-020 | Workshop | Organization (Partner Co-Sponsor) | Many-to-Many | CR-EVENTS |
 | CD-REL-021 | Contact (Partner) | Organization (Partner) | Many-to-One | CR-PARTNER |
 | CD-REL-022 | Partner Activity | Contact (Attendees) | Many-to-Many | CR-PARTNER |
+| CD-REL-023 | Contact (Donor) | Donation | One-to-Many | FU-RECORD |
+| CD-REL-024 | Organization (Funder) | Donation | One-to-Many | FU-RECORD |
+| CD-REL-025 | Organization (Funder) | Grant | One-to-Many | FU-RECORD |
+| CD-REL-026 | Contact (Donor) | Pledge | One-to-Many | FU-RECORD |
+| CD-REL-027 | Organization (Funder) | Pledge | One-to-Many | FU-RECORD |
+| CD-REL-028 | Pledge | Donation | One-to-Many | FU-RECORD |
+| CD-REL-029 | Fundraising Campaign | Donation | One-to-Many | FU-RECORD |
 
 ---
 
@@ -1307,6 +1637,7 @@ matter expert involvement in an active engagement.
 | Initial Consolidated Design created from Mentoring Domain PRD v1.0 | N/A — initial creation | March 2026 | Applied |
 | Updated with Mentor Recruitment Domain PRD v1.0 — added mentor-specific Contact fields, Dues and SME Request entities, resolved MN/MR Contact conflict | N/A — domain processing | March 2026 | Applied |
 | Updated with Client Recruiting Domain PRD v1.0 — renamed Organization entity, resolved MN/CR Organization conflict, added partner fields to Organization and Contact, added 5 new entities (CD-ENT-008 through 012), added 9 new relationships | N/A — domain processing | March 2026 | Applied |
+| Updated with Fundraising Domain PRD v1.0 — added funder fields to Organization and Contact, added 4 new entities (CD-ENT-013 through 016), added 7 new relationships. All four domains complete. | N/A — domain processing | March 2026 | Applied |
 
 ---
 
@@ -1325,6 +1656,7 @@ These are tracked as Open Issues in the Mentoring Domain PRD.
 | Fluent Languages | Contact (Mentor) | MR-ISS-002 |
 | How Did You Hear About CBM | Contact (Mentor) | MR-ISS-003 |
 | Workshop Topic / Category | Workshop | CR-ISS-001 |
+| Donor Giving Levels / Tiers | Contact (Donor) | FU-ISS-001 |
 
 Industry Sector and Subsector values are defined by the federal NAICS
 classification system and do not require CBM input. Full value lists
