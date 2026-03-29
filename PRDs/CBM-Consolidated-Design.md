@@ -1,8 +1,8 @@
 # Cleveland Business Mentors
 # Consolidated Design
 
-**Version:** 1.0
-**Status:** In Progress — Mentoring Domain Complete
+**Version:** 1.1
+**Status:** In Progress — Mentoring and Mentor Recruitment Domains Complete
 **Last Updated:** March 2026
 
 ---
@@ -29,10 +29,12 @@ the affected YAML is generated.
 | ID | Entity | Type | Domains | Status |
 |---|---|---|---|---|
 | CD-ENT-001 | Client Organization | Native (Account) | MN, CR | Defined — MN complete |
-| CD-ENT-002 | Client Contact | Native (Contact) | MN, MR, CR | Defined — MN complete |
+| CD-ENT-002 | Contact | Native (Contact) | MN, MR, CR | Defined — MN and MR complete. Conflict resolved. |
 | CD-ENT-003 | Engagement | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-004 | Session | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-005 | Survey Response | Custom (Base) | MN | Defined — MN complete |
+| CD-ENT-006 | Dues | Custom (Base) | MR | Defined — MR complete |
+| CD-ENT-007 | SME Request | Custom (Base) | MN, MR | Defined — MR complete |
 
 **Entity Type Key:**
 - **Native (Account)** — extends the CRM platform's built-in Account
@@ -243,24 +245,27 @@ that must be deployed.
 
 ---
 
-### CD-ENT-002 — Client Contact
+### CD-ENT-002 — Contact
 
 **Entity Type:** Native (Contact) — extends the built-in Contact entity
 **Display Name (singular):** Contact
 **Display Name (plural):** Contacts
-**Source Domain:** MN (Mentoring), MR (Mentor Recruitment — pending),
-CR (Client Recruiting — pending)
+**Source Domain:** MN (Mentoring), MR (Mentor Recruitment), CR (Client Recruiting — pending)
 **Description:** An individual person associated with a client
 organization or serving as a volunteer mentor. The Contact entity is
-shared across multiple domains. This definition covers the Client
-Contact fields defined by the Mentoring domain. Mentor-specific fields
-will be added when the Mentor Recruitment Domain PRD is processed.
+shared across multiple domains. A Contact Type field distinguishes
+Client Contacts from Mentor Contacts. All identity fields are shared;
+role-specific fields are conditionally displayed based on Contact Type.
 
-**Conflict Note:** The Contact entity is used by both the Mentoring
-domain (Client Contacts) and the Mentor Recruitment domain (Mentor
-Contacts). A Contact Type field distinguishes between them. Full
-conflict resolution will be completed when the Mentor Recruitment
-Domain PRD is processed.
+**Conflict Resolution — MN vs MR:** Both the Mentoring domain and the
+Mentor Recruitment domain use the Contact entity. MN requires Client
+Contact fields (Primary Contact, Role at Business, Zip Code). MR requires
+Mentor Contact fields (Mentor Status, expertise, capacity, onboarding
+fields, etc.). Resolution: both sets of fields are defined on the single
+Contact entity. A Contact Type field (Mentor / Client) drives conditional
+panel visibility so each contact type sees only their relevant fields.
+No field naming conflicts exist between the two domains. Resolution
+approved March 2026.
 
 #### Fields
 
@@ -315,6 +320,234 @@ Domain PRD is processed.
 >
 > Identifies this contact as the primary point of contact for the
 > client organization. Drives default communication routing.
+> Conditional visibility: shown only when Contact Type = Client.
+
+**Contact Type** | `cContactType` | enum | Required | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: Mentor, Client
+>
+> Distinguishes mentor contacts from client contacts. Set automatically
+> on record creation. Drives conditional visibility of mentor-specific
+> and client-specific field panels throughout the system.
+
+**Personal Email** | `cPersonalEmail` | email | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> The mentor's personal email address — not their CBM organizational
+> email. Used for onboarding communications and as a permanent address.
+
+**CBM Email Address** | `cCbmEmailAddress` | email | Optional | **[CUSTOM]** | Admin-populated
+> Source: MR-ONBOARD-DAT-005
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> The mentor's assigned CBM organizational email address.
+
+**LinkedIn Profile URL** | `cLinkedInUrl` | url | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Professional Title** | `cProfessionalTitle` | varchar | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> The mentor's current job title or professional role.
+
+**Current Employer** | `cCurrentEmployer` | varchar | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Currently Employed** | `cCurrentlyEmployed` | bool | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> Whether the mentor was employed at the time of application.
+
+**Years of Business Experience** | `cYearsOfExperience` | int | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Professional Bio / Work Experience** | `cProfessionalBio` | text | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> Used for mentor profiles and matching.
+
+**Industry Sectors** | `cIndustrySectors` | multiEnum | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: Same 20 top-level NAICS sectors as Industry Sector on
+> Client Organization. Must use identical values to enable matching.
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Mentoring Focus Areas** | `cMentoringFocusAreasMentor` | multiEnum | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: Same values as Mentoring Focus Areas on Client Organization
+> — see Open Issue MN-ISS-001.
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> Must use identical values to Client Organization field to enable
+> matching.
+
+**Skills and Expertise Tags** | `cSkillsTags` | multiEnum | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: To be defined — see Open Issue MR-ISS-001.
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Fluent Languages** | `cFluentLanguages` | multiEnum | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: To be defined — see Open Issue MR-ISS-002.
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Why Interested in Mentoring** | `cWhyInterestedInMentoring` | text | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**How Did You Hear About CBM** | `cHowHeardAboutCbm` | enum | Optional | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: To be defined — see Open Issue MR-ISS-003.
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Is Primary Mentor** | `cIsPrimaryMentor` | bool | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Is Co-Mentor** | `cIsCoMentor` | bool | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Is Subject Matter Expert** | `cIsSubjectMatterExpert` | bool | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Mentor Status** | `cMentorStatus` | enum | Required for Mentors | **[CUSTOM]**
+> Source: MR-APPLY-DAT-002
+>
+> Values: Submitted, In Review, Provisional, Active, Paused, Inactive,
+> Resigned, Departed, Declined
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+
+**Accepting New Clients** | `cAcceptingNewClients` | bool | Required for Mentors | **[CUSTOM]**
+> Source: MR-ONBOARD-DAT-006
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+> Mentor-editable.
+
+**Maximum Client Capacity** | `cMaxClientCapacity` | int | Required for Mentors | **[CUSTOM]**
+> Source: MR-ONBOARD-DAT-006
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+> Mentor-editable.
+
+**Current Active Clients** | `cCurrentActiveClients` | int | System-calculated | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-001
+>
+> Read-only. Count of Engagements where this mentor is Assigned Mentor
+> and Status is Active or Assigned.
+
+**Available Capacity** | `cAvailableCapacity` | int | System-calculated | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-001
+>
+> Read-only. Maximum Client Capacity minus Current Active Clients.
+
+**Board Position** | `cBoardPosition` | varchar | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-003
+>
+> Conditional visibility: shown when Contact Type = Mentor.
+>
+> Board title if the mentor serves on the CBM board.
+
+**Ethics Agreement Accepted** | `cEthicsAgreementAccepted` | bool | Optional | **[CUSTOM]** | Admin-only
+> Source: MR-ONBOARD-DAT-003
+>
+> Conditional visibility: Admin only.
+
+**Ethics Agreement Acceptance Date/Time** | `cEthicsAgreementDate` | datetime | Optional | **[CUSTOM]** | Admin-only
+> Source: MR-ONBOARD-DAT-003
+>
+> Conditional visibility: Admin only.
+
+**Background Check Completed** | `cBackgroundCheckCompleted` | bool | Optional | **[CUSTOM]** | Admin-only | Hidden from mentor
+> Source: MR-ONBOARD-DAT-004
+>
+> Hidden from mentor. Admin only.
+
+**Background Check Date** | `cBackgroundCheckDate` | date | Optional | **[CUSTOM]** | Admin-only | Hidden from mentor
+> Source: MR-ONBOARD-DAT-004
+>
+> Hidden from mentor. Admin only.
+
+**Terms and Conditions Accepted** | `cTermsAccepted` | bool | System-populated | **[CUSTOM]** | Admin-only
+> Source: MR-APPLY-DAT-002
+>
+> System-populated from application form. Read-only.
+
+**Terms and Conditions Acceptance Date/Time** | `cTermsAcceptedDate` | datetime | System-populated | **[CUSTOM]** | Admin-only
+> Source: MR-APPLY-DAT-002
+>
+> System-populated timestamp. Read-only.
+
+**Felony Conviction Disclosure** | `cFelonyDisclosure` | bool | System-populated | **[CUSTOM]** | Admin-only | Hidden from mentor
+> Source: MR-APPLY-DAT-002
+>
+> System-populated from application form. Hidden from mentor.
+
+**Training Completed** | `cTrainingCompleted` | bool | System-populated | **[CUSTOM]**
+> Source: MR-ONBOARD-DAT-002
+>
+> System-populated via LMS integration. Read-only. Mentor can view.
+
+**Training Completion Date** | `cTrainingCompletionDate` | date | System-populated | **[CUSTOM]**
+> Source: MR-ONBOARD-DAT-002
+>
+> System-populated via LMS integration. Read-only.
+
+**Dues Status** | `cDuesStatus` | enum | Optional | **[CUSTOM]** | Admin-only
+> Source: MR-MANAGE-DAT-005
+>
+> Values: Unpaid, Paid, Waived
+>
+> Conditional visibility: Admin only. Summary dues standing.
+
+**Dues Payment Date** | `cDuesPaymentDate` | date | Optional | **[CUSTOM]** | Admin-only
+> Source: MR-MANAGE-DAT-005
+>
+> Conditional visibility: Admin only.
+
+**Departure Reason** | `cDepartureReason` | enum | Optional | **[CUSTOM]** | Admin-only
+> Source: MR-DEPART-DAT-002
+>
+> Values: Relocated, Career Change, Time Constraints, Personal, Other
+>
+> Conditional visibility: shown only when Mentor Status = Departed.
+
+**Departure Date** | `cDepartureDate` | date | Optional | **[CUSTOM]** | Admin-only
+> Source: MR-DEPART-DAT-003
+>
+> Conditional visibility: shown only when Mentor Status = Departed.
 
 ---
 
@@ -592,6 +825,100 @@ the CRM linked to both the Engagement and triggering Session.
 
 ---
 
+### CD-ENT-006 — Dues
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Dues
+**Display Name (plural):** Dues
+**Source Domain:** MR (Mentor Recruitment)
+**Description:** One annual dues record per mentor per billing year.
+Provides complete payment history independent of the Dues Status
+summary field on the mentor Contact record.
+
+#### Fields
+
+---
+
+**Mentor Contact** | `contactId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: MR-MANAGE-DAT-004
+>
+> Link to the mentor Contact record this dues record belongs to.
+
+**Billing Year** | `cBillingYear` | int | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+>
+> The calendar year this dues record applies to.
+
+**Amount** | `cAmount` | currency | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+>
+> The dues amount invoiced for this billing year.
+
+**Due Date** | `cDueDate` | date | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+
+**Payment Status** | `cPaymentStatus` | enum | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+>
+> Values: Unpaid, Paid, Waived
+
+**Payment Date** | `cPaymentDate` | date | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+>
+> Not applicable when Payment Status = Waived.
+
+**Payment Method** | `cPaymentMethod` | enum | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+>
+> Values: Online Payment, Check, Waived
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-004
+
+---
+
+### CD-ENT-007 — SME Request
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** SME Request
+**Display Name (plural):** SME Requests
+**Source Domain:** MN (Mentoring), MR (Mentor Recruitment)
+**Description:** Tracks a request by a Primary Mentor for subject
+matter expert involvement in an active engagement.
+
+#### Fields
+
+---
+
+**Engagement** | `engagementId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: MR-MANAGE-DAT-002
+
+**Requesting Mentor** | `cRequestingMentorId` | belongsTo | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+
+**Expertise Needed** | `cExpertiseNeeded` | text | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+
+**Status** | `cStatus` | enum | Required | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+>
+> Values: Requested, SME Identified, Pending Acceptance, Active,
+> Completed, Declined
+
+**Assigned SME** | `cAssignedSmeId` | belongsTo | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+
+**Request Date** | `cRequestDate` | date | System-populated | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+
+**Completion Date** | `cCompletionDate` | date | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: MR-MANAGE-DAT-002
+
+---
+
 ## 3. Relationships
 
 | ID | From Entity | To Entity | Type | Source |
@@ -606,6 +933,9 @@ the CRM linked to both the Engagement and triggering Session.
 | CD-REL-008 | Engagement | Survey Response | One-to-Many | MN-SURVEY |
 | CD-REL-009 | Session | Contact (Mentor Attendees) | Many-to-Many | MN-ENGAGE |
 | CD-REL-010 | Session | Survey Response | One-to-One | MN-SURVEY |
+| CD-REL-011 | Contact (Mentor) | Dues | One-to-Many | MR-MANAGE |
+| CD-REL-012 | Engagement | SME Request | One-to-Many | MR-MANAGE |
+| CD-REL-013 | SME Request | Contact (Assigned SME) | Many-to-One | MR-MANAGE |
 
 ---
 
@@ -614,6 +944,7 @@ the CRM linked to both the Engagement and triggering Session.
 | Change | Proposal | Date | Status |
 |---|---|---|---|
 | Initial Consolidated Design created from Mentoring Domain PRD v1.0 | N/A — initial creation | March 2026 | Applied |
+| Updated with Mentor Recruitment Domain PRD v1.0 — added mentor-specific Contact fields, Dues and SME Request entities, resolved MN/MR Contact conflict | N/A — domain processing | March 2026 | Applied |
 
 ---
 
@@ -628,7 +959,10 @@ These are tracked as Open Issues in the Mentoring Domain PRD.
 | Mentoring Focus Areas | Client Organization | MN-ISS-001 |
 | Revenue Range | Client Organization | MN-ISS-003 |
 | Topics Covered | Session | MN-ISS-002 |
+| Skills and Expertise Tags | Contact (Mentor) | MR-ISS-001 |
+| Fluent Languages | Contact (Mentor) | MR-ISS-002 |
+| How Did You Hear About CBM | Contact (Mentor) | MR-ISS-003 |
 
-NAICS Sector and Subsector values are defined by the federal NAICS
+Industry Sector and Subsector values are defined by the federal NAICS
 classification system and do not require CBM input. Full value lists
 will be included in the YAML program files.
