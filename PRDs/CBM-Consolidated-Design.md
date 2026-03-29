@@ -1,8 +1,8 @@
 # Cleveland Business Mentors
 # Consolidated Design
 
-**Version:** 1.1
-**Status:** In Progress — Mentoring and Mentor Recruitment Domains Complete
+**Version:** 1.2
+**Status:** In Progress — Mentoring, Mentor Recruitment, and Client Recruiting Domains Complete
 **Last Updated:** March 2026
 
 ---
@@ -28,13 +28,18 @@ the affected YAML is generated.
 
 | ID | Entity | Type | Domains | Status |
 |---|---|---|---|---|
-| CD-ENT-001 | Client Organization | Native (Account) | MN, CR | Defined — MN complete |
+| CD-ENT-001 | Organization | Native (Account) | MN, MR, CR | Defined — MN and CR complete. Conflict resolved. |
 | CD-ENT-002 | Contact | Native (Contact) | MN, MR, CR | Defined — MN and MR complete. Conflict resolved. |
 | CD-ENT-003 | Engagement | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-004 | Session | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-005 | Survey Response | Custom (Base) | MN | Defined — MN complete |
 | CD-ENT-006 | Dues | Custom (Base) | MR | Defined — MR complete |
 | CD-ENT-007 | SME Request | Custom (Base) | MN, MR | Defined — MR complete |
+| CD-ENT-008 | Partner Agreement | Custom (Base) | CR | Defined — CR complete |
+| CD-ENT-009 | Client-Partner Association | Custom (Base) | CR | Defined — CR complete |
+| CD-ENT-010 | Workshop | Custom (Event) | MN, CR | Defined — CR complete |
+| CD-ENT-011 | Workshop Registration | Custom (Base) | CR | Defined — CR complete |
+| CD-ENT-012 | Partner Activity | Custom (Base) | CR | Defined — CR complete |
 
 **Entity Type Key:**
 - **Native (Account)** — extends the CRM platform's built-in Account
@@ -52,15 +57,25 @@ the affected YAML is generated.
 
 ---
 
-### CD-ENT-001 — Client Organization
+### CD-ENT-001 — Organization
 
 **Entity Type:** Native (Account) — extends the built-in Account entity
-**Display Name (singular):** Client Organization
-**Display Name (plural):** Client Organizations
-**Source Domain:** MN (Mentoring), CR (Client Recruiting — pending)
-**Description:** The business, nonprofit, or entrepreneurial venture
-being mentored. The anchor record to which all contacts, engagements,
-and related activity are linked. Records are retained permanently.
+**Display Name (singular):** Organization
+**Display Name (plural):** Organizations
+**Source Domain:** MN (Mentoring), MR (Mentor Recruitment), CR (Client Recruiting)
+**Description:** All organizations in the CBM system — client businesses,
+partner organizations, and any organization that may be both simultaneously.
+The anchor record for contacts, engagements, partner relationships, and
+related activity. Records are retained permanently.
+
+**Conflict Resolution — MN vs CR:** The Mentoring domain defines the
+Organization entity as a Client Organization. The Client Recruiting domain
+extends it to also represent Partner Organizations. Resolution: a single
+Organization entity carries all fields for both use cases. An Organization
+Type field (multi-select: Client Organization, Partner Organization) drives
+conditional visibility of client-specific and partner-specific field panels.
+An organization can be both types simultaneously. No field naming conflicts
+exist between the two domains. Resolution approved March 2026.
 
 #### Fields
 
@@ -242,6 +257,92 @@ that must be deployed.
 > Coordinator, and assigned mentors. Never collected on public forms.
 >
 > The actual federal Employer Identification Number.
+
+**Organization Type (Account Type)** | `cOrganizationAccountType` | multiEnum | Required | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Values: Client Organization, Partner Organization
+>
+> Classifies the record and drives conditional visibility of
+> client-specific and partner-specific field panels. An organization
+> may hold both values simultaneously.
+
+**Partner Organization Type** | `cPartnerOrgType` | enum | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Values: Chamber of Commerce, Small Business Development Center (SBDC),
+> Economic Development Agency, University / Academic Institution,
+> Bank / Financial Institution, Nonprofit / Community Organization,
+> Government Agency, Corporate Sponsor, Other
+>
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Partner Type** | `cPartnerType` | multiEnum | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Values: Referral Partner, Co-Delivery Partner,
+> Funding / Sponsorship Partner, Resource Partner
+>
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Partner Status** | `cPartnerStatus` | enum | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Values: Prospect, Active, Lapsed, Inactive
+>
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Partnership Start Date** | `cPartnershipStartDate` | date | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Required when Partner Status = Active.
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Assigned Liaison** | `cAssignedLiaisonId` | belongsTo | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Link to the CBM member Contact record responsible for this
+> partnership. Required for Active partners.
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Public Announcement Allowed** | `cPublicAnnouncementAllowed` | bool | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Default: No.
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Geographic Service Area** | `cGeographicServiceArea` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+> See Open Issue CR-ISS-002 for format decision (free text vs list).
+
+**Target Population** | `cTargetPopulation` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+> See Open Issue CR-ISS-003 for format decision.
+
+**Parent Organization** | `cParentOrganizationId` | belongsTo | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Link to another Organization record that is the parent. Used for
+> branches, chapters, or subsidiaries.
+> Conditional visibility: shown when Organization Type includes
+> Partner Organization.
+
+**Social Media** | `cSocialMedia` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-004
+>
+> Links to LinkedIn, Facebook, or other relevant social profiles.
 
 ---
 
@@ -549,6 +650,45 @@ approved March 2026.
 >
 > Conditional visibility: shown only when Mentor Status = Departed.
 
+**Preferred Name** | `cPreferredName` | varchar | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-005
+>
+> Already defined for Client Contact (MN) and Mentor Contact (MR).
+> No conflict — same field serves all contact types.
+
+**Birthdate** | `cBirthdate` | date | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-005
+>
+> The contact's date of birth. Used for relationship-building
+> outreach with partner contacts.
+
+**Partner Organization** | `cPartnerOrganizationId` | belongsTo | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-005
+>
+> Link to the Partner Organization record this contact is associated
+> with. Populated for Partner Contacts.
+
+**Title / Role at Partner** | `cTitleAtPartner` | varchar | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-005
+>
+> The contact's title or role at the partner organization.
+> Distinct from Role at Business (cRoleAtBusiness) used for
+> Client Contacts.
+
+**Primary Contact For** | `cPrimaryContactFor` | multiEnum | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-005
+>
+> Values: Referrals, Events, Billing, General
+>
+> Designates functions for which this contact is the primary
+> point of contact at the partner organization.
+
+**Is CBM Mentor** | `cIsCbmMentor` | bool | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-005
+>
+> Default: No. When Yes, this contact record serves dual roles —
+> Partner Contact and Mentor Contact. No duplicate record is created.
+
 ---
 
 ### CD-ENT-003 — Engagement
@@ -825,6 +965,218 @@ the CRM linked to both the Engagement and triggering Session.
 
 ---
 
+### CD-ENT-008 — Partner Agreement
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Partner Agreement
+**Display Name (plural):** Partner Agreements
+**Source Domain:** CR (Client Recruiting)
+**Description:** Records a formal written agreement between CBM and a
+partner organization. A partner may have more than one agreement on
+file. Agreement documents restricted to Partner Coordinator and
+Executive Member access.
+
+#### Fields
+
+---
+
+**Partner Organization** | `partnerOrgId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: CR-PARTNER-DAT-006
+
+**Agreement Type** | `cAgreementType` | enum | Required | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-006
+>
+> Values: Memorandum of Understanding (MOU), Partnership Agreement,
+> Letter of Intent, Other
+
+**Creation Date** | `cCreationDate` | date | Required | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-006
+
+**Expiration / Renewal Date** | `cExpirationDate` | date | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-006
+
+**Agreement Document** | `cAgreementDocument` | file | Required | **[CUSTOM]** | Restricted
+> Source: CR-PARTNER-DAT-006
+>
+> Restricted to Partner Coordinator and Executive Member access.
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-006
+
+---
+
+### CD-ENT-009 — Client-Partner Association
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Client-Partner Association
+**Display Name (plural):** Client-Partner Associations
+**Source Domain:** CR (Client Recruiting)
+**Description:** Links a Client Organization to a Partner Organization.
+Foundation for all partner analytics. A client may be associated with
+multiple partners simultaneously. Associations persist indefinitely.
+
+#### Fields
+
+---
+
+**Client Organization** | `clientOrgId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: CR-PARTNER-DAT-007
+
+**Partner Organization** | `partnerOrgId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: CR-PARTNER-DAT-007
+
+**Association Type** | `cAssociationType` | enum | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-007
+>
+> Values: Referred By, Serves Same Population, Program Participant,
+> Other
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-007
+
+---
+
+### CD-ENT-010 — Workshop
+
+**Entity Type:** Custom (Event)
+**Display Name (singular):** Workshop
+**Display Name (plural):** Workshops
+**Source Domain:** MN (Mentoring), CR (Client Recruiting)
+**Description:** A structured event — clinic, workshop, office hours,
+or other programming — offered by CBM. Serves both as a client
+recruiting mechanism and as ongoing engagement for existing clients.
+May be virtual or in-person. May be co-sponsored by partner
+organizations.
+
+#### Fields
+
+---
+
+**Title** | `cTitle` | varchar | Required | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+
+**Date/Time** | `cDateTime` | datetime | Required | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+
+**Format** | `cFormat` | enum | Required | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+>
+> Values: Virtual, In-Person, Hybrid
+
+**Topic / Category** | `cTopicCategory` | enum | Required | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+>
+> Values: To be defined by CBM leadership — see Open Issue CR-ISS-001
+
+**Presenter** | `cPresenterId` | belongsTo | Optional | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+>
+> Link to presenter Contact record where presenter is in the CRM.
+
+**Presenter Name (External)** | `cPresenterNameExternal` | varchar | Optional | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+>
+> Free-text for presenters not in the CRM.
+
+**Description** | `cDescription` | text | Optional | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+
+**Maximum Capacity** | `cMaxCapacity` | int | Optional | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+
+**Status** | `cStatus` | enum | Required | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-002
+>
+> Values: Scheduled, In Progress, Completed, Cancelled
+
+**Co-Sponsoring Partners** | `cCoSponsoringPartners` | hasMany | Optional | **[CUSTOM relationship]**
+> Source: CR-EVENTS-DAT-002
+>
+> Many-to-many relationship to Partner Organization records.
+
+---
+
+### CD-ENT-011 — Workshop Registration
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Workshop Registration
+**Display Name (plural):** Workshop Registrations
+**Source Domain:** CR (Client Recruiting)
+**Description:** Links a Contact to a Workshop they registered for or
+attended. Tracks registration and attendance status per participant.
+Creates new Contact records for registrants not already in the CRM.
+
+#### Fields
+
+---
+
+**Workshop** | `workshopId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: CR-EVENTS-DAT-003
+
+**Contact** | `contactId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: CR-EVENTS-DAT-003
+>
+> A new Contact record is created if the registrant is not in the CRM.
+
+**Registration Date** | `cRegistrationDate` | datetime | System-populated | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-003
+
+**Attendance Status** | `cAttendanceStatus` | enum | Required | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-004
+>
+> Values: Registered, Attended, No-Show, Cancelled
+>
+> Default: Registered on creation.
+
+**Source** | `cSource` | enum | Optional | **[CUSTOM]**
+> Source: CR-EVENTS-DAT-003
+>
+> Values: Website Form, Manual Entry, Partner Referral, Other
+
+---
+
+### CD-ENT-012 — Partner Activity
+
+**Entity Type:** Custom (Base)
+**Display Name (singular):** Partner Activity
+**Display Name (plural):** Partner Activities
+**Source Domain:** CR (Client Recruiting)
+**Description:** Records a joint event, collaborative program,
+co-developed content, or relationship management activity involving
+a partner organization.
+
+#### Fields
+
+---
+
+**Activity Name** | `cActivityName` | varchar | Required | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-008
+
+**Activity Type** | `cActivityType` | enum | Required | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-008
+>
+> Values: CBM-Hosted Event, Co-Hosted Event, Joint Workshop / Program,
+> Co-Developed Content, Meeting / Coordination Call, Other
+
+**Partner Organization** | `partnerOrgId` | belongsTo | Required | **[CUSTOM relationship]**
+> Source: CR-PARTNER-DAT-008
+
+**Date** | `cDate` | date | Required | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-008
+
+**Description** | `cDescription` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-008
+
+**Attendees** | `cAttendees` | hasMany | Optional | **[CUSTOM relationship]**
+> Source: CR-PARTNER-DAT-008
+>
+> Many-to-many relationship to Contact records.
+
+**Notes** | `cNotes` | text | Optional | **[CUSTOM]**
+> Source: CR-PARTNER-DAT-008
+
+---
+
 ### CD-ENT-006 — Dues
 
 **Entity Type:** Custom (Base)
@@ -936,6 +1288,15 @@ matter expert involvement in an active engagement.
 | CD-REL-011 | Contact (Mentor) | Dues | One-to-Many | MR-MANAGE |
 | CD-REL-012 | Engagement | SME Request | One-to-Many | MR-MANAGE |
 | CD-REL-013 | SME Request | Contact (Assigned SME) | Many-to-One | MR-MANAGE |
+| CD-REL-014 | Organization (Partner) | Partner Agreement | One-to-Many | CR-PARTNER |
+| CD-REL-015 | Organization (Client) | Client-Partner Association | One-to-Many | CR-PARTNER |
+| CD-REL-016 | Organization (Partner) | Client-Partner Association | One-to-Many | CR-PARTNER |
+| CD-REL-017 | Organization (Partner) | Partner Activity | One-to-Many | CR-PARTNER |
+| CD-REL-018 | Workshop | Workshop Registration | One-to-Many | CR-EVENTS |
+| CD-REL-019 | Contact | Workshop Registration | One-to-Many | CR-EVENTS |
+| CD-REL-020 | Workshop | Organization (Partner Co-Sponsor) | Many-to-Many | CR-EVENTS |
+| CD-REL-021 | Contact (Partner) | Organization (Partner) | Many-to-One | CR-PARTNER |
+| CD-REL-022 | Partner Activity | Contact (Attendees) | Many-to-Many | CR-PARTNER |
 
 ---
 
@@ -945,6 +1306,7 @@ matter expert involvement in an active engagement.
 |---|---|---|---|
 | Initial Consolidated Design created from Mentoring Domain PRD v1.0 | N/A — initial creation | March 2026 | Applied |
 | Updated with Mentor Recruitment Domain PRD v1.0 — added mentor-specific Contact fields, Dues and SME Request entities, resolved MN/MR Contact conflict | N/A — domain processing | March 2026 | Applied |
+| Updated with Client Recruiting Domain PRD v1.0 — renamed Organization entity, resolved MN/CR Organization conflict, added partner fields to Organization and Contact, added 5 new entities (CD-ENT-008 through 012), added 9 new relationships | N/A — domain processing | March 2026 | Applied |
 
 ---
 
@@ -962,6 +1324,7 @@ These are tracked as Open Issues in the Mentoring Domain PRD.
 | Skills and Expertise Tags | Contact (Mentor) | MR-ISS-001 |
 | Fluent Languages | Contact (Mentor) | MR-ISS-002 |
 | How Did You Hear About CBM | Contact (Mentor) | MR-ISS-003 |
+| Workshop Topic / Category | Workshop | CR-ISS-001 |
 
 Industry Sector and Subsector values are defined by the federal NAICS
 classification system and do not require CBM input. Full value lists
