@@ -102,15 +102,23 @@ function parseInline(text, baseOpts = {}) {
 
 function buildTable(lines) {
   const rows = [];
+  // Detect if this is a Field/Description two-column table
+  const firstDataLine = lines.find(l => !l.match(/^\|[-| ]+\|$/) && l.startsWith('|'));
+  const cells0 = firstDataLine ? firstDataLine.split('|').slice(1,-1).map(c=>c.trim()) : [];
+  const isTwoColFieldTable = cells0.length === 2 &&
+    (cells0[0] === 'Field' || cells0[0] === 'Field Name');
   for (const line of lines) {
     if (line.match(/^\|[-| ]+\|$/)) continue;
     const cells = line.split('|').slice(1, -1).map(c => c.trim());
     const isHdr = rows.length === 0;
-    const colW = Math.floor(9360 / Math.max(cells.length, 1));
+    // Field/Description tables: 25% field name, 75% description
+    const colWidths = isTwoColFieldTable && cells.length === 2
+      ? [2340, 7020]
+      : Array(Math.max(cells.length,1)).fill(Math.floor(9360 / Math.max(cells.length, 1)));
     rows.push(new TableRow({
       tableHeader: isHdr,
-      children: cells.map(cellText => new TableCell({
-        width: { size: colW, type: WidthType.DXA },
+      children: cells.map((cellText, ci) => new TableCell({
+        width: { size: colWidths[ci] || colWidths[0], type: WidthType.DXA },
         shading: { fill: isHdr ? NAVY : (rows.length % 2 === 0 ? LGREY : WHITE), type: ShadingType.CLEAR },
         margins: { top: 80, bottom: 80, left: 120, right: 120 },
         borders: {
@@ -127,9 +135,12 @@ function buildTable(lines) {
     }));
   }
   const colCount = rows[0]?.children?.length || 1;
+  const finalColWidths = isTwoColFieldTable && colCount === 2
+    ? [2340, 7020]
+    : Array(colCount).fill(Math.floor(9360 / colCount));
   return new Table({
     width: { size: 9360, type: WidthType.DXA },
-    columnWidths: Array(colCount).fill(Math.floor(9360 / colCount)),
+    columnWidths: finalColWidths,
     rows
   });
 }
