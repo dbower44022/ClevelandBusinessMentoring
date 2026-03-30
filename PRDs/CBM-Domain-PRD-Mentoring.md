@@ -11,76 +11,37 @@
 
 ## 1. Domain Overview
 
-The Mentoring domain is CBM's core program delivery function. It covers
-the complete lifecycle of a mentoring engagement — from the moment a
-prospective client submits a request for mentoring services through
-mentor assignment, active engagement management, satisfaction tracking,
-and formal closure.
+The Mentoring domain is CBM's core program delivery function. It covers the complete lifecycle of a mentoring engagement — from the moment a prospective client submits a request for mentoring services through mentor assignment, active engagement management, satisfaction tracking, and formal closure.
 
-Every other domain in CBM's operation ultimately exists to support this
-one. Client Recruiting generates the clients. Mentor Recruitment
-provides the mentors. Fundraising funds the organization that delivers
-the service. Mentoring is where the mission is actually fulfilled.
+Every other domain in CBM's operation ultimately exists to support this one. Client Recruiting generates the clients. Mentor Recruitment provides the mentors. Fundraising funds the organization that delivers the service. Mentoring is where the mission is actually fulfilled.
 
-The domain involves two primary external participants — the Client and
-the Mentor — supported by three internal administrative roles. The
-system must make it easy for mentors to do their job with minimal
-administrative burden, while giving administrators the visibility they
-need to monitor engagement health and intervene when relationships are
-at risk.
+The domain involves two primary external participants — the Client and the Mentor — supported by three internal administrative roles. The system must make it easy for mentors to do their job with minimal administrative burden, while giving administrators the visibility they need to monitor engagement health and intervene when relationships are at risk.
 
-A key design principle is that all client and mentor data created in
-this domain is permanent. Records are never deleted. Clients who return
-for a second engagement retain their full history. Mentors who depart
-and return retain their full history. This permanence supports both
-historical funder reporting and the organization's long-term
-institutional memory.
+A key design principle is that all client and mentor data created in this domain is permanent. Records are never deleted. Clients who return for a second engagement retain their full history. Mentors who depart and return retain their full history. This permanence supports both historical funder reporting and the organization's long-term institutional memory.
 
 ---
 
 ## 2. Personas
 
-The following personas from the Master PRD participate in the Mentoring
-domain. Their roles specific to this domain are described below.
+The following personas from the Master PRD participate in the Mentoring domain. Their roles specific to this domain are described below.
 
 **MST-PER-003 — Client Administrator**
-The primary operational administrator for the Mentoring domain. Reviews
-and processes client applications, monitors engagement health, follows
-up on inactive engagements, and coordinates with mentors and clients
-throughout the engagement lifecycle. The Client Administrator is the
-client's main point of contact within CBM.
+The primary operational administrator for the Mentoring domain. Reviews and processes client applications, monitors engagement health, follows up on inactive engagements, and coordinates with mentors and clients throughout the engagement lifecycle. The Client Administrator is the client's main point of contact within CBM.
 
 **MST-PER-004 — Client Assignment Coordinator**
-Responsible for matching approved clients with appropriate mentors.
-Searches the mentor roster, nominates candidates, manages the acceptance
-workflow, and activates new engagements. Works closely with the Client
-Administrator on intake and with the Mentor Administrator on mentor
-availability.
+Responsible for matching approved clients with appropriate mentors. Searches the mentor roster, nominates candidates, manages the acceptance workflow, and activates new engagements. Works closely with the Client Administrator on intake and with the Mentor Administrator on mentor availability.
 
 **MST-PER-005 — Mentor Administrator**
-Supports the Mentoring domain by maintaining mentor records, monitoring
-mentor capacity and availability, and assisting with the assignment
-process. Ensures mentors have the information and access they need to
-serve their clients effectively.
+Supports the Mentoring domain by maintaining mentor records, monitoring mentor capacity and availability, and assisting with the assignment process. Ensures mentors have the information and access they need to serve their clients effectively.
 
 **MST-PER-009 — Content and Event Administrator**
-Manages workshop and event records that clients may attend alongside
-their mentoring engagement. Tracks registration and attendance linked
-to client records so mentors have visibility into their clients'
-learning activities.
+Manages workshop and event records that clients may attend alongside their mentoring engagement. Tracks registration and attendance linked to client records so mentors have visibility into their clients' learning activities.
 
 **MST-PER-011 — Mentor**
-The volunteer professional delivering mentoring services. Accepts or
-declines assignment requests, introduces themselves to new clients,
-logs session notes and next steps after each meeting, sets the next
-session date, requests subject matter experts when needed, and manages
-their own profile and availability.
+The volunteer professional delivering mentoring services. Accepts or declines assignment requests, introduces themselves to new clients, logs session notes and next steps after each meeting, sets the next session date, requests subject matter experts when needed, and manages their own profile and availability.
 
 **MST-PER-013 — Client**
-The business, nonprofit, or entrepreneurial venture receiving mentoring
-services. Submits the initial mentoring request, completes supplemental
-intake information, participates in mentoring sessions, and responds to
-satisfaction surveys. Represented by one or more individual contacts.
+The business, nonprofit, or entrepreneurial venture receiving mentoring services. Submits the initial mentoring request, completes supplemental intake information, participates in mentoring sessions, and responds to satisfaction surveys. Represented by one or more individual contacts.
 
 ---
 
@@ -89,11 +50,7 @@ satisfaction surveys. Represented by one or more individual contacts.
 ### MN-INTAKE — Client Intake
 
 **Process Purpose and Trigger**
-The Client Intake process begins when a prospective client submits a
-mentoring request through the CBM public website. Its purpose is to
-capture the information needed to assess eligibility and identify an
-appropriate mentor, and to route the application to the Client
-Administrator for review.
+The Client Intake process begins when a prospective client submits a mentoring request through the CBM public website. Its purpose is to capture the information needed to assess eligibility and identify an appropriate mentor, and to route the application to the Client Administrator for review.
 
 **Personas Involved**
 - MST-PER-013 Client — submits the request
@@ -104,9 +61,7 @@ Administrator for review.
 1. The prospective client completes and submits the Phase 1 Mentoring
    Request form on the CBM public website.
 2. The system automatically creates three linked records: a Client
-   Organization record (the business), a Client Contact record (the
-   submitting individual, flagged as Primary Contact), and an Engagement
-   record with status Submitted.
+   Organization record (the business), a Client Contact record (the submitting individual, flagged as Primary Contact), and an Engagement record with status Submitted.
 3. The Client Administrator receives an automatic notification of the
    new submission.
 4. The Client Administrator reviews the submission for completeness and
@@ -114,18 +69,13 @@ Administrator for review.
 5. If eligible, the application proceeds to the Mentor Matching process
    (MN-MATCH).
 6. If not eligible, the Client Administrator updates the Engagement
-   status to Declined, records the reason, and notifies the applicant
-   directly. No automated notification is sent. The Client Organization
-   and Contact records are retained permanently.
+   status to Declined, records the reason, and notifies the applicant directly. No automated notification is sent. The Client Organization and Contact records are retained permanently.
 
-A structured eligibility screening workflow may be defined by CBM
-leadership in a future revision. The current process assumes a basic
-administrative review.
+A structured eligibility screening workflow may be defined by CBM leadership in a future revision. The current process assumes a basic administrative review.
 
 **System Requirements**
 - MN-INTAKE-REQ-001: The system must accept client mentoring requests
-  submitted through the public website and create linked Client
-  Organization, Client Contact, and Engagement records automatically
+  submitted through the public website and create linked Client Organization, Client Contact, and Engagement records automatically
 - MN-INTAKE-REQ-002: The submitting individual must be automatically
   flagged as the Primary Contact on the new Client Organization record
 - MN-INTAKE-REQ-003: The system must notify the Client Administrator
@@ -139,13 +89,11 @@ administrative review.
 
 **Process Data**
 - MN-INTAKE-DAT-001: Mentor roster — expertise, industry, availability,
-  and capacity — to inform eligibility assessment and readiness for
-  matching
+  and capacity — to inform eligibility assessment and readiness for matching
 
 **Data Collected**
 - MN-INTAKE-DAT-002: Client Organization — business name, website,
-  address, organization type, business stage, industry classification,
-  mentoring focus areas, mentoring needs description
+  address, organization type, business stage, industry classification, mentoring focus areas, mentoring needs description
 - MN-INTAKE-DAT-003: Client Contact — first name, last name, email,
   phone, zip code, primary contact flag
 - MN-INTAKE-DAT-004: Engagement — status, submission date, decline
@@ -156,10 +104,7 @@ administrative review.
 ### MN-MATCH — Mentor Matching
 
 **Process Purpose and Trigger**
-The Mentor Matching process begins after the Client Administrator has
-approved a client intake submission. Its purpose is to identify the
-most appropriate available mentor for the client and obtain the mentor's
-acceptance of the assignment.
+The Mentor Matching process begins after the Client Administrator has approved a client intake submission. Its purpose is to identify the most appropriate available mentor for the client and obtain the mentor's acceptance of the assignment.
 
 **Personas Involved**
 - MST-PER-004 Client Assignment Coordinator — searches, nominates, and
@@ -171,50 +116,36 @@ acceptance of the assignment.
 **Process Workflow**
 
 1. The Client Assignment Coordinator reviews the approved client
-   application — business description, industry, business stage,
-   mentoring focus areas, and mentoring needs.
+   application — business description, industry, business stage, mentoring focus areas, and mentoring needs.
 2. The Client Assignment Coordinator searches the active mentor roster,
-   filtering by industry expertise, mentoring focus areas, skills and
-   expertise tags, availability, capacity, and language where relevant.
+   filtering by industry expertise, mentoring focus areas, skills and expertise tags, availability, capacity, and language where relevant.
 3. The Client Assignment Coordinator selects a primary mentor and
    optionally one or more co-mentors or subject matter experts.
 4. The system verifies each nominated mentor is Active, currently
-   accepting new clients, and has available capacity before the
-   nomination is confirmed.
+   accepting new clients, and has available capacity before the nomination is confirmed.
 5. The Engagement status changes to Pending Acceptance.
 6. The system sends an automatic notification to the nominated primary
-   mentor with a summary of the client's intake information and a
-   request to accept or decline the assignment. A configurable
-   acceptance window applies (default: 48 hours).
+   mentor with a summary of the client's intake information and a request to accept or decline the assignment. A configurable acceptance window applies (default: 48 hours).
 7. If the mentor accepts: the Engagement status changes to Assigned and
    the Client Assignment Coordinator is notified.
 8. If the mentor declines: the Engagement status reverts to Submitted
-   and the Client Assignment Coordinator is notified to nominate a
-   different mentor. No explanation is required from the declining
-   mentor.
+   and the Client Assignment Coordinator is notified to nominate a different mentor. No explanation is required from the declining mentor.
 9. If no response is received within the acceptance window: the Client
-   Assignment Coordinator is alerted to follow up or nominate a
-   different mentor.
+   Assignment Coordinator is alerted to follow up or nominate a different mentor.
 10. Upon acceptance, the mentor sets the Meeting Cadence on the
     Engagement record.
 11. The mentor personally introduces themselves to the client via email.
-    The system provides email templates as a starting point. The
-    introduction is sent by the mentor — not auto-generated by the
-    system.
+    The system provides email templates as a starting point. The introduction is sent by the mentor — not auto-generated by the system.
 12. The delivery of the Phase 2 supplemental intake form is at the
-    mentor's discretion. The mentor may include the form link in the
-    introduction email or deploy it after the first session.
+    mentor's discretion. The mentor may include the form link in the introduction email or deploy it after the first session.
 
 **System Requirements**
 - MN-MATCH-REQ-001: The system must support searching and filtering
-  the mentor roster by industry expertise, mentoring focus areas,
-  skills and expertise tags, availability, capacity, and language
+  the mentor roster by industry expertise, mentoring focus areas, skills and expertise tags, availability, capacity, and language
 - MN-MATCH-REQ-002: The system must prevent nomination of a mentor
-  who is not Active, not accepting new clients, or has no available
-  capacity
+  who is not Active, not accepting new clients, or has no available capacity
 - MN-MATCH-REQ-003: The system must support assignment of a primary
-  mentor and optionally one or more co-mentors and subject matter
-  experts per engagement
+  mentor and optionally one or more co-mentors and subject matter experts per engagement
 - MN-MATCH-REQ-004: The system must notify the nominated mentor
   automatically with client intake summary and accept/decline options
 - MN-MATCH-REQ-005: The system must enforce a configurable acceptance
@@ -230,8 +161,7 @@ acceptance of the assignment.
 - MN-MATCH-DAT-001: Client application — business description,
   industry, business stage, mentoring focus areas, mentoring needs
 - MN-MATCH-DAT-002: Mentor roster — expertise, industry background,
-  mentoring focus areas, skills and expertise tags, availability,
-  capacity, language, current engagement load
+  mentoring focus areas, skills and expertise tags, availability, capacity, language, current engagement load
 
 **Data Collected**
 - MN-MATCH-DAT-003: Assignment record — assigned primary mentor,
@@ -246,11 +176,7 @@ acceptance of the assignment.
 ### MN-ENGAGE — Engagement Management
 
 **Process Purpose and Trigger**
-The Engagement Management process begins when the first session is
-logged against an Assigned engagement, automatically transitioning it
-to Active status. Its purpose is to support the ongoing delivery of
-mentoring services and give administrators the visibility to monitor
-engagement health.
+The Engagement Management process begins when the first session is logged against an Assigned engagement, automatically transitioning it to Active status. Its purpose is to support the ongoing delivery of mentoring services and give administrators the visibility to monitor engagement health.
 
 **Personas Involved**
 - MST-PER-011 Mentor — logs sessions, sets next session dates, manages
@@ -267,22 +193,17 @@ engagement health.
 1. The mentor logs the first session against the Assigned engagement.
    The Engagement status changes to Active automatically.
 2. After each subsequent session, the mentor creates a Session record
-   capturing the date, duration, session type, topics covered, mentor
-   notes, next steps, and the next session date.
+   capturing the date, duration, session type, topics covered, mentor notes, next steps, and the next session date.
 3. The system calculates and updates roll-up analytics on the Engagement
-   record — total sessions, total session hours, sessions in last 30
-   days, and last session date.
+   record — total sessions, total session hours, sessions in last 30 days, and last session date.
 4. When the mentor sets the Next Session Date on the Engagement or
-   Session record, the system automatically sends a calendar meeting
-   request to all engagement participants.
+   Session record, the system automatically sends a calendar meeting request to all engagement participants.
 5. After logging a session the mentor may review and send a system-
-   drafted session summary email to the client, populated from topics
-   covered, next steps, and next session date.
+   drafted session summary email to the client, populated from topics covered, next steps, and next session date.
 6. The mentor may request a subject matter expert at any time during an
    active engagement by creating an SME Request record.
 7. The Client Administrator monitors engagement activity and follows up
-   with inactive engagements as alerted by the inactivity monitoring
-   process (see MN-INACTIVE).
+   with inactive engagements as alerted by the inactivity monitoring process (see MN-INACTIVE).
 8. The mentor or Client Administrator may place an engagement On Hold
    at any time when a deliberate temporary pause is needed.
 
@@ -290,11 +211,9 @@ engagement health.
 - MN-ENGAGE-REQ-001: The system must transition Engagement status from
   Assigned to Active automatically when the first session is logged
 - MN-ENGAGE-REQ-002: The system must calculate and display roll-up
-  analytics on the Engagement record — total sessions, total session
-  hours, sessions in last 30 days, and last session date
+  analytics on the Engagement record — total sessions, total session hours, sessions in last 30 days, and last session date
 - MN-ENGAGE-REQ-003: The system must send an automatic calendar
-  meeting request to all engagement participants when a Next Session
-  Date is set or updated
+  meeting request to all engagement participants when a Next Session Date is set or updated
 - MN-ENGAGE-REQ-004: The system must generate a draft session summary
   email from session data for mentor review and approval before sending
 - MN-ENGAGE-REQ-005: The system must support subject matter expert
@@ -314,8 +233,7 @@ engagement health.
 
 **Data Collected**
 - MN-ENGAGE-DAT-004: Session records — date, duration, session type,
-  meeting location, topics covered, mentor notes, next steps, new
-  business started flag, next session date, mentor attendees
+  meeting location, topics covered, mentor notes, next steps, new business started flag, next session date, mentor attendees
 - MN-ENGAGE-DAT-005: SME Request records — subject matter needed,
   requesting mentor, SME assigned, status
 
@@ -324,10 +242,7 @@ engagement health.
 ### MN-INACTIVE — Inactivity Monitoring
 
 **Process Purpose and Trigger**
-The Inactivity Monitoring process runs continuously in the background
-against all Active engagements. Its purpose is to detect engagements
-where the mentoring relationship has gone quiet and alert administrators
-before the relationship is lost entirely.
+The Inactivity Monitoring process runs continuously in the background against all Active engagements. Its purpose is to detect engagements where the mentoring relationship has gone quiet and alert administrators before the relationship is lost entirely.
 
 **Personas Involved**
 - MST-PER-003 Client Administrator — receives alerts and follows up
@@ -337,27 +252,17 @@ before the relationship is lost entirely.
 **Process Workflow**
 
 1. The system monitors qualifying activity events daily against each
-   Active engagement's configured meeting cadence. Qualifying events
-   are: a session logged, an email sent or received linked to the
-   engagement, a call logged, or a future session scheduled.
+   Active engagement's configured meeting cadence. Qualifying events are: a session logged, an email sent or received linked to the engagement, a call logged, or a future session scheduled.
 2. When no qualifying activity is detected within the cadence-aware
-   threshold, the Engagement status changes to Dormant and the Client
-   Administrator receives an alert notification.
-   - Weekly cadence: Dormant after 14 days of inactivity
-   - Bi-Weekly cadence: Dormant after 21 days of inactivity
-   - Monthly cadence: Dormant after 45 days of inactivity
-   - As Needed cadence: Dormant after 60 days of inactivity
+   threshold, the Engagement status changes to Dormant and the Client Administrator receives an alert notification. - Weekly cadence: Dormant after 14 days of inactivity - Bi-Weekly cadence: Dormant after 21 days of inactivity - Monthly cadence: Dormant after 45 days of inactivity - As Needed cadence: Dormant after 60 days of inactivity
 3. The Client Administrator reviews the Dormant engagement and follows
    up with the mentor as appropriate.
 4. If activity resumes, the Engagement status reverts to Active
    automatically.
 5. If no activity for a further 60 days after becoming Dormant, the
-   Engagement status changes to Inactive and the Client Administrator
-   receives an alert.
+   Engagement status changes to Inactive and the Client Administrator receives an alert.
 6. If no activity for a further 90 days after becoming Inactive, the
-   Engagement status changes to Abandoned. The engagement is treated
-   as permanently closed and the Client Administrator receives a final
-   notification.
+   Engagement status changes to Abandoned. The engagement is treated as permanently closed and the Client Administrator receives a final notification.
 7. On Hold engagements are excluded from inactivity monitoring. The
    clock does not run while an Engagement is On Hold.
 
@@ -369,8 +274,7 @@ All thresholds are configurable system settings.
 - MN-INACTIVE-REQ-002: The system must apply cadence-aware Dormant
   thresholds based on the Meeting Cadence set on each Engagement
 - MN-INACTIVE-REQ-003: The system must automatically transition
-  Engagement status through Dormant → Inactive → Abandoned at
-  configured thresholds
+  Engagement status through Dormant → Inactive → Abandoned at configured thresholds
 - MN-INACTIVE-REQ-004: The system must alert the Client Administrator
   at each status transition
 - MN-INACTIVE-REQ-005: The system must revert Engagement status to
@@ -397,10 +301,7 @@ All thresholds are configurable system settings.
 ### MN-SURVEY — Client Satisfaction Tracking
 
 **Process Purpose and Trigger**
-The Client Satisfaction Tracking process is triggered automatically at
-defined points in the engagement lifecycle. Its purpose is to collect
-consistent client feedback on the mentoring relationship and make that
-feedback visible to administrators and mentors.
+The Client Satisfaction Tracking process is triggered automatically at defined points in the engagement lifecycle. Its purpose is to collect consistent client feedback on the mentoring relationship and make that feedback visible to administrators and mentors.
 
 **Personas Involved**
 - MST-PER-013 Client — receives and completes surveys
@@ -410,23 +311,15 @@ feedback visible to administrators and mentors.
 **Process Workflow**
 
 1. The system monitors session count and engagement status to detect
-   survey trigger conditions:
-   - After the 2nd session — first survey triggered
-   - Every 5 sessions thereafter (sessions 7, 12, 17, etc.)
-   - At Engagement Close — final survey triggered regardless of
-     session count
+   survey trigger conditions: - After the 2nd session — first survey triggered - Every 5 sessions thereafter (sessions 7, 12, 17, etc.) - At Engagement Close — final survey triggered regardless of session count
 2. When a trigger condition is detected, the system generates a
-   personalized survey link for the client and sends the survey to the
-   client's primary email address via the integrated survey tool. No
-   client login is required.
+   personalized survey link for the client and sends the survey to the client's primary email address via the integrated survey tool. No client login is required.
 3. The client completes the survey — NPS score, satisfaction ratings,
    and optional open-ended feedback.
 4. The completed survey response is posted back to the CRM by the
-   survey tool and stored as a Survey Response record linked to the
-   Engagement and, where applicable, the triggering session.
+   survey tool and stored as a Survey Response record linked to the Engagement and, where applicable, the triggering session.
 5. Survey responses are visible to the Client Administrator, Mentor
-   Administrator, and assigned mentors. No automatic notification is
-   sent to the mentor — they see responses on next login.
+   Administrator, and assigned mentors. No automatic notification is sent to the mentor — they see responses on next login.
 
 **System Requirements**
 - MN-SURVEY-REQ-001: The system must automatically detect survey
@@ -447,20 +340,14 @@ feedback visible to administrators and mentors.
 
 **Data Collected**
 - MN-SURVEY-DAT-002: Survey Response record — NPS score (0-10),
-  did CBM help (yes/no), would return to see this mentor (1-5),
-  mentor listened and understood needs (1-5), open feedback text,
-  survey trigger type, survey date
+  did CBM help (yes/no), would return to see this mentor (1-5), mentor listened and understood needs (1-5), open feedback text, survey trigger type, survey date
 
 ---
 
 ### MN-CLOSE — Engagement Closure
 
 **Process Purpose and Trigger**
-The Engagement Closure process is triggered either by a Client
-Administrator or mentor formally closing a completed engagement, or
-automatically by the system when an engagement reaches Abandoned status.
-Its purpose is to record the outcome of the engagement and preserve a
-complete historical record.
+The Engagement Closure process is triggered either by a Client Administrator or mentor formally closing a completed engagement, or automatically by the system when an engagement reaches Abandoned status. Its purpose is to record the outcome of the engagement and preserve a complete historical record.
 
 **Personas Involved**
 - MST-PER-003 Client Administrator — initiates formal closure and
@@ -479,8 +366,7 @@ Administrator or Mentor-initiated closure (Completed):
 4. The Close Date is system-populated with the current date.
 5. A final satisfaction survey is triggered automatically.
 6. The Engagement record becomes read-only for core fields. Notes,
-   comments, and documents may still be added post-close by the Client
-   Administrator or assigned Mentor.
+   comments, and documents may still be added post-close by the Client Administrator or assigned Mentor.
 
 System-initiated closure (Abandoned):
 1. The system automatically changes Engagement status to Abandoned
@@ -491,15 +377,11 @@ System-initiated closure (Abandoned):
 5. The Client Administrator receives a notification.
 6. The Engagement record becomes read-only for core fields.
 
-In both cases, all records — Engagement, Sessions, Survey Responses —
-are retained permanently. Closed Engagements are never reopened. If a
-former client returns for mentoring, a new Engagement is created linked
-to their existing records. Full history is preserved.
+In both cases, all records — Engagement, Sessions, Survey Responses — are retained permanently. Closed Engagements are never reopened. If a former client returns for mentoring, a new Engagement is created linked to their existing records. Full history is preserved.
 
 **System Requirements**
 - MN-CLOSE-REQ-001: The system must support formal closure of an
-  engagement by the Client Administrator or assigned Mentor with a
-  recorded close reason
+  engagement by the Client Administrator or assigned Mentor with a recorded close reason
 - MN-CLOSE-REQ-002: The system must automatically close an engagement
   with Abandoned status after the configured Inactive threshold
 - MN-CLOSE-REQ-003: The system must trigger a final satisfaction
@@ -528,29 +410,17 @@ to their existing records. Full history is preserved.
 
 ## 4. Data Reference
 
-This section defines all data collected and managed in the Mentoring
-domain. Each entity is described with its purpose, fields, business
-rules, and enum values. Descriptions are included for stakeholder
-review and serve as the direct source for implementation documentation.
+This section defines all data collected and managed in the Mentoring domain. Each entity is described with its purpose, fields, business rules, and enum values. Descriptions are included for stakeholder review and serve as the direct source for implementation documentation.
 
-Relationships between entities are described in plain business language
-in Section 4.6.
+Relationships between entities are described in plain business language in Section 4.6.
 
 ---
 
 ### 4.1 Client Organization
 
-The Client Organization represents the business, nonprofit, or
-entrepreneurial venture being mentored. It is the anchor record to
-which all contacts, engagements, and related activity are linked.
-Client Organization records are retained permanently and are never
-deleted, regardless of engagement outcome.
+The Client Organization represents the business, nonprofit, or entrepreneurial venture being mentored. It is the anchor record to which all contacts, engagements, and related activity are linked. Client Organization records are retained permanently and are never deleted, regardless of engagement outcome.
 
-Client Organization data is collected in two phases. Phase 1 fields
-are captured on the public intake form and must be sufficient to
-identify an appropriate mentor. Phase 2 fields are collected via a
-supplemental form deployed by the mentor at their discretion after
-assignment.
+Client Organization data is collected in two phases. Phase 1 fields are captured on the public intake form and must be sufficient to identify an appropriate mentor. Phase 2 fields are collected via a supplemental form deployed by the mentor at their discretion after assignment.
 
 ---
 
@@ -699,12 +569,7 @@ assignment.
 
 ### 4.2 Client Contact
 
-A Client Contact represents an individual person associated with a
-client organization. Multiple contacts may be linked to a single
-organization. The person who submits the Phase 1 intake form
-automatically becomes the first contact and is flagged as the Primary
-Contact. Additional contacts may be added by the Client Administrator
-or assigned mentor as the engagement progresses.
+A Client Contact represents an individual person associated with a client organization. Multiple contacts may be linked to a single organization. The person who submits the Phase 1 intake form automatically becomes the first contact and is flagged as the Primary Contact. Additional contacts may be added by the Client Administrator or assigned mentor as the engagement progresses.
 
 ---
 
@@ -748,14 +613,9 @@ or assigned mentor as the engagement progresses.
 
 ### 4.3 Engagement
 
-The Engagement represents the active mentoring relationship between
-CBM and a client organization. It is linked to a Client Organization
-and tracks the lifecycle, mentor assignments, session activity, and
-satisfaction survey history for the relationship.
+The Engagement represents the active mentoring relationship between CBM and a client organization. It is linked to a Client Organization and tracks the lifecycle, mentor assignments, session activity, and satisfaction survey history for the relationship.
 
-An organization may have more than one Engagement over time. Only one
-Engagement per organization should be in an active status at any given
-time. Closed Engagements are never deleted or reopened.
+An organization may have more than one Engagement over time. Only one Engagement per organization should be in an active status at any given time. Closed Engagements are never deleted or reopened.
 
 ---
 
@@ -846,15 +706,9 @@ time. Closed Engagements are never deleted or reopened.
 
 ### 4.4 Session
 
-A Session records each individual meeting between a mentor and client.
-Sessions are linked to an Engagement and drive the roll-up analytics
-on the Engagement record, the satisfaction survey trigger logic, and
-the inactivity monitoring clock.
+A Session records each individual meeting between a mentor and client. Sessions are linked to an Engagement and drive the roll-up analytics on the Engagement record, the satisfaction survey trigger logic, and the inactivity monitoring clock.
 
-At least one mentor contact must be listed as an attendee before a
-session record can be saved. Mentors are encouraged to complete the
-session record while on the call with the client so the next session
-date can be set in real time.
+At least one mentor contact must be listed as an attendee before a session record can be saved. Mentors are encouraged to complete the session record while on the call with the client so the next session date can be set in real time.
 
 ---
 
@@ -926,15 +780,9 @@ date can be set in real time.
 
 ### 4.5 Survey Response
 
-A Survey Response captures client satisfaction feedback at defined
-points in the engagement lifecycle. Surveys are triggered automatically
-— after the 2nd session, every 5 sessions thereafter, and at
-engagement close. Responses are linked to both the Engagement and
-the triggering Session where applicable.
+A Survey Response captures client satisfaction feedback at defined points in the engagement lifecycle. Surveys are triggered automatically — after the 2nd session, every 5 sessions thereafter, and at engagement close. Responses are linked to both the Engagement and the triggering Session where applicable.
 
-Survey responses are visible to the Client Administrator, Mentor
-Administrator, and assigned mentors. No automatic notification is
-sent to the mentor — they see responses on next login.
+Survey responses are visible to the Client Administrator, Mentor Administrator, and assigned mentors. No automatic notification is sent to the mentor — they see responses on next login.
 
 ---
 
@@ -979,47 +827,28 @@ sent to the mentor — they see responses on next login.
 
 ### 4.6 Entity Relationships
 
-The following describes how the entities in the Mentoring domain
-relate to each other in business terms.
+The following describes how the entities in the Mentoring domain relate to each other in business terms.
 
 **Client Organization → Client Contact**
-A Client Organization has one or more Client Contacts. Each Contact
-belongs to one Organization. The person who submits the intake form
-automatically becomes the first Contact. Additional contacts may be
-added as the engagement progresses. One Contact is designated as the
-Primary Contact.
+A Client Organization has one or more Client Contacts. Each Contact belongs to one Organization. The person who submits the intake form automatically becomes the first Contact. Additional contacts may be added as the engagement progresses. One Contact is designated as the Primary Contact.
 
 **Client Organization → Engagement**
-A Client Organization may have one or more Engagements over its
-lifetime. Each Engagement belongs to one Organization. Only one
-Engagement should be in an active status at any given time.
+A Client Organization may have one or more Engagements over its lifetime. Each Engagement belongs to one Organization. Only one Engagement should be in an active status at any given time.
 
 **Engagement → Mentor / Co-Mentor / Subject Matter Expert**
-An Engagement has exactly one Assigned Mentor. It may also have one
-or more Co-Mentors and one or more Subject Matter Experts. All are
-volunteer mentors linked from the Mentor population.
+An Engagement has exactly one Assigned Mentor. It may also have one or more Co-Mentors and one or more Subject Matter Experts. All are volunteer mentors linked from the Mentor population.
 
 **Engagement → Engagement Contacts**
-An Engagement may have one or more Client Contacts designated as
-active participants. These contacts receive meeting requests and
-session summary emails. If no contacts are designated, communications
-go to the Primary Contact on the linked Organization.
+An Engagement may have one or more Client Contacts designated as active participants. These contacts receive meeting requests and session summary emails. If no contacts are designated, communications go to the Primary Contact on the linked Organization.
 
 **Engagement → Session**
-An Engagement has zero or more Sessions. Each Session belongs to
-exactly one Engagement. Sessions drive the engagement's roll-up
-analytics, satisfaction survey triggers, and inactivity monitoring
-clock.
+An Engagement has zero or more Sessions. Each Session belongs to exactly one Engagement. Sessions drive the engagement's roll-up analytics, satisfaction survey triggers, and inactivity monitoring clock.
 
 **Engagement → Survey Response**
-An Engagement has zero or more Survey Responses. Each Survey Response
-belongs to exactly one Engagement. Responses are linked to the
-triggering Session where applicable.
+An Engagement has zero or more Survey Responses. Each Survey Response belongs to exactly one Engagement. Responses are linked to the triggering Session where applicable.
 
 **Session → Survey Response**
-A Session may trigger one Survey Response. The Survey Response links
-back to the triggering Session to provide traceability between the
-session milestone and the feedback received.
+A Session may trigger one Survey Response. The Survey Response links back to the triggering Session to provide traceability between the session milestone and the feedback received.
 
 
 ---
@@ -1051,10 +880,4 @@ session milestone and the feedback received.
 
 ## 7. Interview Transcript
 
-*This section will be populated with the verbatim Q&A record from
-requirements interview sessions conducted to produce this Domain PRD.
-The content of this version was derived from existing archived
-specification documents (CBM-PRD-CRM-Client.docx v1.8) rather than
-a live interview session. A formal interview session should be
-conducted with CBM stakeholders to validate and augment the
-requirements captured here.*
+*This section will be populated with the verbatim Q&A record from requirements interview sessions conducted to produce this Domain PRD. The content of this version was derived from existing archived specification documents (CBM-PRD-CRM-Client.docx v1.8) rather than a live interview session. A formal interview session should be conducted with CBM stakeholders to validate and augment the requirements captured here.*
