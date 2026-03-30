@@ -88,11 +88,11 @@ The following records and fields are created automatically when the intake form 
 | Business Name | The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. Text field. Optional. Phase 1. |
 | Website | The client business website address, if one exists. URL field. Optional. Phase 1. |
 | Address | The primary business address. Used for geographic reporting and service area tracking. Address field (street, city, state, zip). Optional. Phase 1. |
-| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
+| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Optional. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. |
-| Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
-| Industry Subsector | The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for mentor matching and reporting. Dropdown. Required. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. |
-| Mentoring Focus Areas | The specific areas where the client is seeking mentoring assistance. Primary matching criterion between clients and mentors. Multi-select dropdown. Required. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. |
+| Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Optional. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
+| Industry Subsector | The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for mentor matching and reporting. Dropdown. Optional. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. |
+| Mentoring Focus Areas | The specific areas where the client is seeking mentoring assistance. Primary matching criterion between clients and mentors. Multi-select dropdown. Optional. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. |
 | Mentoring Needs Description | The client's own description of what they are looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. Rich text field. Required. Phase 1. |
 
 *Client Contact*
@@ -103,7 +103,7 @@ The following records and fields are created automatically when the intake form 
 | Last Name | The contact's last name. Text field. Required. |
 | Email | The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. Email field. Required. |
 | Phone | The contact's primary phone number. Phone field. Optional. |
-| Zip Code | The contact's zip code. Used for geographic service area reporting and outreach targeting. Text field. Required. Phase 1. |
+| Zip Code | The contact's zip code. Used for geographic service area reporting and outreach targeting. Text field. Optional. Phase 1. |
 | Primary Contact | Yes/No checkbox. Required. Default: Yes for the first contact created. Identifies this contact as the primary point of contact for the client organization. |
 
 *Engagement*
@@ -159,11 +159,11 @@ The following Client Organization fields are reviewed by the Client Assignment C
 | Business Name | The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. Text field. Optional. Phase 1. |
 | Website | The client business website address, if one exists. URL field. Optional. Phase 1. |
 | Address | The primary business address. Used for geographic reporting and service area tracking. Address field (street, city, state, zip). Optional. Phase 1. |
-| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
+| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Optional. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. |
-| Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
-| Industry Subsector | The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for mentor matching and reporting. Dropdown. Required. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. |
-| Mentoring Focus Areas | The specific areas where the client is seeking mentoring assistance. Primary matching criterion between clients and mentors. Multi-select dropdown. Required. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. |
+| Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Optional. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
+| Industry Subsector | The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for mentor matching and reporting. Dropdown. Optional. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. |
+| Mentoring Focus Areas | The specific areas where the client is seeking mentoring assistance. Primary matching criterion between clients and mentors. Multi-select dropdown. Optional. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. |
 | Mentoring Needs Description | The client's own description of what they are looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. Rich text field. Required. Phase 1. |
 
 The following Mentor Contact fields are used to search, filter, and evaluate candidate mentors.
@@ -450,7 +450,7 @@ Client Organization data is collected in two phases. Phase 1 fields are captured
 | Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. Optional because applicants at the pre-startup stage may not yet have a business name. |
 | Website | URL field. Optional. Phase 1. The client business website address, if one exists. |
 | Address | The primary business address. Used for geographic reporting and service area tracking. Address field (street, city, state, zip). Optional. Phase 1. |
-| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
+| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Optional. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. |
 | Industry Sector | Dropdown. Required. Phase 1. Values: 20 top-level NAICS industry sectors. Drives NAICS Subsector filter. The primary industry sector of the client business based on the North American Industry Classification System. Used for mentor matching and impact reporting. |
 | Industry Subsector | Dropdown. Required. Phase 1. Values: Approximately 100 subsectors, filtered by selected NAICS Sector. The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for matching and reporting. |
@@ -490,7 +490,7 @@ A Client Contact represents an individual person associated with a client organi
 | Preferred Name | The name the contact prefers to be called. Used in communications and engagement materials when provided. Text field. Optional. |
 | Email | The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. Email field. Required. |
 | Phone | The contact's primary phone number. Phone field. Optional. |
-| Zip Code | The contact's zip code. Used for geographic service area reporting and outreach targeting. Text field. Required. Phase 1. |
+| Zip Code | The contact's zip code. Used for geographic service area reporting and outreach targeting. Text field. Optional. Phase 1. |
 | Role at Business | The contact's title or position within the client business — for example, Owner, Co-Founder, CEO, or Manager. Text field. Optional. |
 | Primary Contact | Yes/No checkbox. Required. Defaults to Yes for the first contact created on an organization.  Identifies this contact as the primary point of contact for the client organization. Automated communications default to the primary contact when no specific engagement contacts are designated. |
 ---
