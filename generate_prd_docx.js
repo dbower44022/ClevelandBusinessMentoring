@@ -204,8 +204,14 @@ function convertPRD(mdPath, outPath, diagramMap = {}) {
     }
     // Heading 3
     if (line.startsWith('### ') && !line.startsWith('#### ')) {
+      const h3text = line.slice(4).trim();
+      // Process section headings (e.g. "MN-INTAKE — Client Intake") get a page break before them
+      const isProcessHeading = /^[A-Z]{2,4}-[A-Z]+/.test(h3text);
+      if (isProcessHeading && allParas.length > 0) {
+        allParas.push(new Paragraph({ children: [new PageBreak()] }));
+      }
       allParas.push(new Paragraph({ heading: HeadingLevel.HEADING_3,
-        children: [new TextRun({ text: line.slice(4).trim(), font: 'Arial', size: 24, bold: true, color: BLUE })]
+        children: [new TextRun({ text: h3text, font: 'Arial', size: 24, bold: true, color: BLUE })]
       })); i++; continue;
     }
     // Heading 4

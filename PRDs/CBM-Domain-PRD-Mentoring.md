@@ -313,147 +313,35 @@ Client Organization data is collected in two phases. Phase 1 fields are captured
 
 ---
 
-**Business Name** | Text | Optional | Phase 1
-> The legal or operating name of the client business. Optional because
-> applicants at the pre-startup stage may not yet have a business name.
 
-**Website** | URL | Optional | Phase 1
-> The client business website address, if one exists.
-
-**Address** | Address | Optional | Phase 1 — street, city, state, zip
-> The primary business address. Used for geographic reporting and
-> service area tracking.
-
-**Organization Type** | Enum | Required | Phase 1
-> Values: For-Profit, Non-Profit
->
-> Whether the organization operates as a for-profit business or a
-> nonprofit. Drives funder reporting categories.
-
-**Business Stage** | Enum | Required | Phase 1
-> Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established
->
-> The stage of business development the client organization is currently
-> in. Used for mentor matching and funder reporting.
-
-**Industry Sector** | Enum | Required | Phase 1
-> Values: 20 top-level NAICS industry sectors. Drives NAICS Subsector
-> filter.
->
-> The primary industry sector of the client business based on the North
-> American Industry Classification System. Used for mentor matching and
-> impact reporting.
-
-**Industry Subsector** | Enum | Required | Phase 1
-> Values: Approximately 100 subsectors, filtered by selected NAICS
-> Sector.
->
-> The specific industry subsector within the selected Industry Sector.
-> Provides more precise industry classification for matching and
-> reporting.
-
-**Mentoring Focus Areas** | Multi-select | Required | Phase 1
-> Values: To be defined by CBM leadership — see Open Issue MN-ISS-001
->
-> The specific areas where the client is seeking mentoring assistance.
-> Used as a primary matching criterion between clients and mentors.
-> Values must be aligned with the corresponding field on the Mentor
-> profile.
-
-**Mentoring Needs Description** | Rich Text | Required | Phase 1
-> Free-form description of what the client is looking for in a
-> mentoring engagement. Reviewed by the Client Assignment Coordinator
-> during mentor matching.
-
-**Business Description** | Rich Text | Optional | Phase 2
-> A detailed description of what the business does, its history, and
-> founding story. Collected after mentor assignment to give the mentor
-> deeper context about the client.
-
-**Time in Operation** | Text | Optional | Phase 2
-> How long the business has been operating. Provides context for the
-> mentor about the client's experience level.
-
-**Current Team Size** | Integer | Optional | Phase 2
-> The number of current employees or team members. Helps the mentor
-> understand the scale and complexity of the business.
-
-**Revenue Range** | Enum | Optional | Phase 2
-> Values: To be defined by CBM leadership — see Open Issue MN-ISS-003
->
-> Approximate annual revenue range. Provides financial context without
-> requiring disclosure of exact figures.
-
-**Funding Situation** | Rich Text | Optional | Phase 2
-> Description of the client's current funding sources, funding needs,
-> or funding challenges.
-
-**Current Challenges** | Rich Text | Optional | Phase 2
-> The primary obstacles the business is currently facing. Helps the
-> mentor focus the engagement on the most pressing needs.
-
-**Goals and Objectives** | Rich Text | Optional | Phase 2
-> What the client wants to achieve through the mentoring engagement
-> overall.
-
-**Desired Outcomes (6–12 Months)** | Rich Text | Optional | Phase 2
-> Specific outcomes the client hopes to achieve within the near term.
-> Used to track progress and assess engagement success.
-
-**Previous Mentoring Experience** | Rich Text | Optional | Phase 2
-> Whether the client has worked with a mentor or advisor before, and
-> any relevant context about prior experiences.
-
-**Current Professional Advisors** | Multi-select | Optional | Phase 2
-> Values: Banker / Financial Institution, Attorney / Legal Counsel,
-> Accountant / CPA, IT Consultant, Insurance Agent,
-> Marketing / PR Consultant, Business Coach
->
-> The types of professional advisors the client is currently working
-> with. Helps the mentor avoid duplicating advice the client is already
-> receiving and identify gaps.
-
-**Registered with State** | Boolean | Optional | Phase 2
-> Whether the business has filed with the state as an official legal
-> entity.
-
-**State of Registration** | Enum | Optional | Phase 2
-> Values: All US states. Shown only when Registered with State = Yes.
->
-> The state where the business entity is registered.
-
-**Legal Business Structure** | Enum | Optional | Phase 2
-> Values: Sole Proprietor, Partnership, LLC, S-Corp, C-Corp,
-> Non-Profit 501(c)(3), Other. Shown only when Registered with
-> State = Yes.
->
-> The legal structure of the registered business entity.
-
-**EIN on File** | Boolean | Optional | Phase 2
-> Shown only when Registered with State = Yes.
->
-> Whether the business has obtained a federal Employer Identification
-> Number.
-
-**Date of Formation** | Date | Optional | Phase 2
-> Shown only when Registered with State = Yes.
->
-> The date the business entity was formally established with the state.
-
-**Registered Agent** | Boolean | Optional | Phase 2
-> Shown only when Registered with State = Yes.
->
-> Whether the business has a designated registered agent on file with
-> the state.
-
-**EIN Number** | Text | Optional | Restricted
-> Restricted field — visible to Client Administrator, Client Assignment
-> Coordinator, and assigned mentors only. Populated by mentor or admin,
-> never collected on the public intake form.
->
-> The actual federal Employer Identification Number. Entered by the
-> mentor if needed during the engagement.
-
+| Field | Description / Values |
+|---|---|
+| Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. Optional because applicants at the pre-startup stage may not yet have a business name. |
+| Website | URL field. Optional. Phase 1. The client business website address, if one exists. |
+| Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
+| Organization Type | Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. |
+| Business Stage | Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. |
+| Industry Sector | Dropdown. Required. Phase 1. Values: 20 top-level NAICS industry sectors. Drives NAICS Subsector filter. The primary industry sector of the client business based on the North American Industry Classification System. Used for mentor matching and impact reporting. |
+| Industry Subsector | Dropdown. Required. Phase 1. Values: Approximately 100 subsectors, filtered by selected NAICS Sector. The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for matching and reporting. |
+| Mentoring Focus Areas | Multi-select dropdown. Required. Phase 1. Values: To be defined by CBM leadership — see Open Issue MN-ISS-001. The specific areas where the client is seeking mentoring assistance. Used as a primary matching criterion between clients and mentors. Values must be aligned with the corresponding field on the Mentor profile. |
+| Mentoring Needs Description | Rich text field. Required. Phase 1. Free-form description of what the client is looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. |
+| Business Description | Rich text field. Optional. Phase 2. A detailed description of what the business does, its history, and founding story. Collected after mentor assignment to give the mentor deeper context about the client. |
+| Time in Operation | Text field. Optional. Phase 2. How long the business has been operating. Provides context for the mentor about the client's experience level. |
+| Current Team Size | Integer field. Optional. Phase 2. The number of current employees or team members. Helps the mentor understand the scale and complexity of the business. |
+| Revenue Range | Dropdown. Optional. Phase 2. Values: To be defined by CBM leadership — see Open Issue MN-ISS-003. Approximate annual revenue range. Provides financial context without requiring disclosure of exact figures. |
+| Funding Situation | Rich text field. Optional. Phase 2. Description of the client's current funding sources, funding needs, or funding challenges. |
+| Current Challenges | Rich text field. Optional. Phase 2. The primary obstacles the business is currently facing. Helps the mentor focus the engagement on the most pressing needs. |
+| Goals and Objectives | Rich text field. Optional. Phase 2. What the client wants to achieve through the mentoring engagement overall. |
+| Desired Outcomes (6–12 Months) | Rich text field. Optional. Phase 2. Specific outcomes the client hopes to achieve within the near term. Used to track progress and assess engagement success. |
+| Previous Mentoring Experience | Rich text field. Optional. Phase 2. Whether the client has worked with a mentor or advisor before, and any relevant context about prior experiences. |
+| Current Professional Advisors | Multi-select dropdown. Optional. Phase 2. Values: Banker / Financial Institution, Attorney / Legal Counsel, Accountant / CPA, IT Consultant, Insurance Agent, Marketing / PR Consultant, Business Coach. The types of professional advisors the client is currently working with. Helps the mentor avoid duplicating advice the client is already receiving and identify gaps. |
+| Registered with State | Yes/No checkbox. Optional. Phase 2. Whether the business has filed with the state as an official legal entity. |
+| State of Registration | Dropdown. Optional. Phase 2. Values: All US states. Shown only when Registered with State = Yes. The state where the business entity is registered. |
+| Legal Business Structure | Dropdown. Optional. Phase 2. Values: Sole Proprietor, Partnership, LLC, S-Corp, C-Corp, Non-Profit 501(c)(3), Other. Shown only when Registered with State = Yes. The legal structure of the registered business entity. |
+| EIN on File | Yes/No checkbox. Optional. Phase 2. Shown only when Registered with State = Yes.  Whether the business has obtained a federal Employer Identification Number. |
+| Date of Formation | Date field. Optional. Phase 2. Shown only when Registered with State = Yes.  The date the business entity was formally established with the state. |
+| Registered Agent | Yes/No checkbox. Optional. Phase 2. Shown only when Registered with State = Yes.  Whether the business has a designated registered agent on file with the state. |
+| EIN Number | Text field. Optional. Restricted. Restricted field — visible to Client Administrator, Client Assignment Coordinator, and assigned mentors only. Populated by mentor or admin, never collected on the public intake form.  The actual federal Employer Identification Number. Entered by the mentor if needed during the engagement. |
 ---
 
 ### 4.2 Client Contact
@@ -462,42 +350,18 @@ A Client Contact represents an individual person associated with a client organi
 
 ---
 
-**First Name** | Text | Required
-> The contact's first name.
 
-**Last Name** | Text | Required
-> The contact's last name.
-
-**Middle Name** | Text | Optional
-> The contact's middle name.
-
-**Preferred Name** | Text | Optional
-> The name the contact prefers to be called. Used in communications
-> and engagement materials when provided.
-
-**Email** | Email | Required
-> The contact's primary email address. Used for all CBM communications
-> including mentor introduction, meeting requests, and satisfaction
-> surveys.
-
-**Phone** | Phone | Optional
-> The contact's primary phone number.
-
-**Zip Code** | Text | Required | Phase 1
-> The contact's zip code. Used for geographic service area reporting
-> and outreach targeting.
-
-**Role at Business** | Text | Optional
-> The contact's title or position within the client business — for
-> example, Owner, Co-Founder, CEO, or Manager.
-
-**Primary Contact** | Boolean | Required
-> Defaults to Yes for the first contact created on an organization.
->
-> Identifies this contact as the primary point of contact for the
-> client organization. Automated communications default to the primary
-> contact when no specific engagement contacts are designated.
-
+| Field | Description / Values |
+|---|---|
+| First Name | Text field. Required. The contact's first name. |
+| Last Name | Text field. Required. The contact's last name. |
+| Middle Name | Text field. Optional. The contact's middle name. |
+| Preferred Name | Text field. Optional. The name the contact prefers to be called. Used in communications and engagement materials when provided. |
+| Email | Email field. Required. The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. |
+| Phone | Phone field. Optional. The contact's primary phone number. |
+| Zip Code | Text field. Required. Phase 1. The contact's zip code. Used for geographic service area reporting and outreach targeting. |
+| Role at Business | Text field. Optional. The contact's title or position within the client business — for example, Owner, Co-Founder, CEO, or Manager. |
+| Primary Contact | Yes/No checkbox. Required. Defaults to Yes for the first contact created on an organization.  Identifies this contact as the primary point of contact for the client organization. Automated communications default to the primary contact when no specific engagement contacts are designated. |
 ---
 
 ### 4.3 Engagement
@@ -508,89 +372,25 @@ An organization may have more than one Engagement over time. Only one Engagement
 
 ---
 
-**Client Organization** | Relationship | Required
-> The client organization this engagement is associated with.
 
-**Status** | Enum | Required
-> Values: Submitted, Declined, Pending Acceptance, Assigned, Active,
-> On-Hold, Dormant, Inactive, Abandoned, Completed
->
-> The current lifecycle stage of the mentoring engagement. Drives all
-> workflow automation including inactivity monitoring, survey triggers,
-> and notifications. See processes MN-INTAKE, MN-MATCH, MN-ENGAGE, and
-> MN-INACTIVE for status transition rules.
-
-**Assigned Mentor** | Relationship | Required when Assigned or later
-> The primary volunteer mentor assigned to this engagement. Set by the
-> Client Assignment Coordinator during the matching process.
-
-**Co-Mentors** | Relationship (many) | Optional
-> One or more volunteer mentors assigned in a supporting co-mentor
-> role. Multiple co-mentors may be active simultaneously.
-
-**Subject Matter Experts** | Relationship (many) | Optional
-> One or more volunteer mentors providing specialist expertise on
-> request. Distinct from co-mentors in that SMEs are engaged for
-> specific topics rather than ongoing support.
-
-**Engagement Contacts** | Relationship (many) | Optional
-> Defaults to Primary Contact if empty.
->
-> The specific individuals from the client organization actively
-> participating in this engagement. Determines who receives meeting
-> requests and session summary emails.
-
-**Meeting Cadence** | Enum | Required
-> Values: Weekly, Bi-Weekly, Monthly, As Needed
->
-> The expected frequency of mentor-client meetings. Drives the
-> cadence-aware inactivity monitoring thresholds for this engagement.
-
-**Next Session Date/Time** | Date/Time | Optional
-> Saving this field triggers an automatic calendar meeting request to
-> all engagement participants and resets the inactivity monitoring
-> clock.
->
-> The scheduled date and time of the next mentor-client meeting.
-
-**Start Date** | Date | System-populated
-> Populated automatically when status transitions to Active.
->
-> The date the engagement became active — when the first session was
-> logged.
-
-**Close Date** | Date | System-populated
-> Populated automatically on closure.
->
-> The date the engagement was formally closed.
-
-**Close Reason** | Enum | Required on closure
-> Values: Goals Achieved, Client Withdrew, Inactive / No Response,
-> Other. Automatically set to Inactive / No Response for
-> system-initiated Abandoned closures.
->
-> The reason the engagement was closed.
-
-**Total Sessions** | Integer | System-calculated | Read-only
-> The total number of sessions logged against this engagement.
-
-**Total Sessions (Last 30 Days)** | Integer | System-calculated | Read-only
-> The number of sessions logged in the last 30 days. Used alongside
-> Last Session Date to assess recent engagement activity.
-
-**Last Session Date** | Date | System-calculated | Read-only
-> The date of the most recently logged session.
-
-**Total Session Hours** | Decimal | System-calculated | Read-only
-> The total hours of mentoring delivered in this engagement. Calculated
-> from the Duration field across all linked Session records.
-
-**Business Outcomes** | Rich Text | Optional
-> Recorded at closure by the Client Administrator or mentor.
->
-> A description of the business outcomes and results the client
-> achieved during the engagement. Used for funder impact reporting.
-
+| Field | Description / Values |
+|---|---|
+| Client Organization | Relationship field. Required. The client organization this engagement is associated with. |
+| Status | Dropdown. Required. Values: Submitted, Declined, Pending Acceptance, Assigned, Active, On-Hold, Dormant, Inactive, Abandoned, Completed. The current lifecycle stage of the mentoring engagement. Drives all workflow automation including inactivity monitoring, survey triggers, and notifications. See processes MN-INTAKE, MN-MATCH, MN-ENGAGE, and MN-INACTIVE for status transition rules. |
+| Assigned Mentor | Relationship field. Required when status is Assigned or later. The primary volunteer mentor assigned to this engagement. Set by the Client Assignment Coordinator during the matching process. |
+| Co-Mentors | Many-to-many relationship panel. Optional. One or more volunteer mentors assigned in a supporting co-mentor role. Multiple co-mentors may be active simultaneously. |
+| Subject Matter Experts | Many-to-many relationship panel. Optional. One or more volunteer mentors providing specialist expertise on request. Distinct from co-mentors in that SMEs are engaged for specific topics rather than ongoing support. |
+| Engagement Contacts | Many-to-many relationship panel. Optional. Defaults to Primary Contact if empty.  The specific individuals from the client organization actively participating in this engagement. Determines who receives meeting requests and session summary emails. |
+| Meeting Cadence | Dropdown. Required. Values: Weekly, Bi-Weekly, Monthly, As Needed. The expected frequency of mentor-client meetings. Drives the cadence-aware inactivity monitoring thresholds for this engagement. |
+| Next Session Date/Time | Date/time field. Optional. Saving this field triggers an automatic calendar meeting request to all engagement participants and resets the inactivity monitoring clock.  The scheduled date and time of the next mentor-client meeting. |
+| Start Date | Date field. System-populated. Read-only. Populated automatically when status transitions to Active.  The date the engagement became active — when the first session was logged. |
+| Close Date | Date field. System-populated. Read-only. Populated automatically on closure.  The date the engagement was formally closed. |
+| Close Reason | Dropdown. Required on closure. Values: Goals Achieved, Client Withdrew, Inactive / No Response, Other. Automatically set to Inactive / No Response for system-initiated Abandoned closures. The reason the engagement was closed. |
+| Total Sessions | Integer field. System-calculated. Read-only. Read-only. The total number of sessions logged against this engagement. |
+| Total Sessions (Last 30 Days) | Integer field. System-calculated. Read-only. Read-only. The number of sessions logged in the last 30 days. Used alongside Last Session Date to assess recent engagement activity. |
+| Last Session Date | Date field. System-calculated. Read-only. Read-only. The date of the most recently logged session. |
+| Total Session Hours | Decimal field. System-calculated. Read-only. Read-only. The total hours of mentoring delivered in this engagement. Calculated from the Duration field across all linked Session records. |
+| Business Outcomes | Rich text field. Optional. Recorded at closure by the Client Administrator or mentor.  A description of the business outcomes and results the client achieved during the engagement. Used for funder impact reporting. |
 ---
 
 ### 4.4 Session
@@ -601,70 +401,21 @@ At least one mentor contact must be listed as an attendee before a session recor
 
 ---
 
-**Engagement** | Relationship | Required
-> The engagement this session belongs to.
 
-**Session Date/Time** | Date/Time | Required
-> The date and time the session occurred.
-
-**Duration** | Integer | Required | Recorded in minutes
-> The length of the session in minutes. Used to calculate Total Session
-> Hours on the Engagement record.
-
-**Session Type** | Enum | Required
-> Values: In-Person, Video Call, Phone Call
->
-> How the session was conducted. Drives conditional display of meeting
-> location fields.
-
-**Meeting Location Type** | Enum | Conditional
-> Values: CBM Office, Client's Place of Business, Other.
-> Required when Session Type = In-Person. Shown only when In-Person.
->
-> Where an in-person session took place.
-
-**Location Details** | Text | Optional
-> Shown only when Meeting Location Type = Other.
->
-> Free-text description of the meeting location.
-
-**Topics Covered** | Multi-select + Rich Text | Optional
-> Multi-select values to be defined by CBM leadership — see Open Issue
-> MN-ISS-002. Includes a free-text field for additional detail.
->
-> The topics discussed during the session.
-
-**Mentor Notes** | Rich Text | Optional | Restricted
-> Visible to Client Administrator, Mentor Administrator, and assigned
-> mentors only. Never visible to clients.
->
-> Private notes from the mentor about session content, observations,
-> and context.
-
-**Next Steps** | Rich Text | Optional
-> The agreed-upon actions and follow-up items coming out of the
-> session. May be included in the session summary email sent to the
-> client.
-
-**New Business Started** | Boolean | Optional
-> Whether this session resulted in the client starting a new business.
-> Tracked for funder impact reporting.
-
-**Next Session Date/Time** | Date/Time | Optional
-> When saved, automatically updates the Next Session Date/Time on the
-> linked Engagement record, triggering a meeting request to all
-> participants.
->
-> The scheduled date and time of the next meeting. Intended to be set
-> while the mentor has the client on the call.
-
-**Mentor Attendees** | Relationship (many) | Required
-> At least one mentor contact must be listed before the record can
-> be saved. The mentor who logs the session and the attendees listed
-> are independent — the logger need not be listed as an attendee.
->
-> The mentors who were physically present at the session.
-
+| Field | Description / Values |
+|---|---|
+| Engagement | Relationship field. Required. The engagement this session belongs to. |
+| Session Date/Time | Date/time field. Required. The date and time the session occurred. |
+| Duration | Integer field. Required. Recorded in minutes. The length of the session in minutes. Used to calculate Total Session Hours on the Engagement record. |
+| Session Type | Dropdown. Required. Values: In-Person, Video Call, Phone Call. How the session was conducted. Drives conditional display of meeting location fields. |
+| Meeting Location Type | Dropdown. Conditional. Values: CBM Office, Client's Place of Business, Other. Required when Session Type = In-Person. Shown only when In-Person. Where an in-person session took place. |
+| Location Details | Text field. Optional. Shown only when Meeting Location Type = Other.  Free-text description of the meeting location. |
+| Topics Covered | Multi-select dropdown with free-text notes field. Optional. Multi-select values to be defined by CBM leadership — see Open Issue MN-ISS-002. Includes a free-text field for additional detail.  The topics discussed during the session. |
+| Mentor Notes | Rich text field. Optional. Restricted. Visible to Client Administrator, Mentor Administrator, and assigned mentors only. Never visible to clients.  Private notes from the mentor about session content, observations, and context. |
+| Next Steps | Rich text field. Optional. The agreed-upon actions and follow-up items coming out of the session. May be included in the session summary email sent to the client. |
+| New Business Started | Yes/No checkbox. Optional. Whether this session resulted in the client starting a new business. Tracked for funder impact reporting. |
+| Next Session Date/Time | Date/time field. Optional. When saved, automatically updates the Next Session Date/Time on the linked Engagement record, triggering a meeting request to all participants.  The scheduled date and time of the next meeting. Intended to be set while the mentor has the client on the call. |
+| Mentor Attendees | Many-to-many relationship panel. Required. At least one mentor contact must be listed before the record can be saved. The mentor who logs the session and the attendees listed are independent — the logger need not be listed as an attendee.  The mentors who were physically present at the session. |
 ---
 
 ### 4.5 Survey Response
@@ -675,43 +426,18 @@ Survey responses are visible to the Client Administrator, Mentor Administrator, 
 
 ---
 
-**Engagement** | Relationship | Required
-> The engagement this survey response is associated with.
 
-**Session** | Relationship | Optional
-> The session that triggered this survey, if applicable. Not set for
-> engagement close surveys.
-
-**Survey Trigger** | Enum | System-populated | Read-only
-> Values: 2nd Session, Every 5 Sessions, Engagement Close
->
-> The event that triggered this survey. Provides context when reviewing
-> satisfaction trends over time.
-
-**Survey Date/Time** | Date/Time | System-populated | Read-only
-> The date and time the client submitted their survey response.
-
-**NPS Score** | Integer | Required | Scale 0–10
-> Standard Net Promoter Score question: How likely are you to recommend
-> CBM to a friend or colleague? Used to calculate CBM's overall NPS
-> and track satisfaction trends over time.
-
-**Did CBM Help You** | Boolean | Required | Yes / No
-> Whether the client felt CBM helped them. A simple binary measure of
-> program effectiveness.
-
-**Would Return to See This Mentor** | Integer | Required | Scale 1–5
-> The client's rating of whether they would want to work with the same
-> mentor again. Used to assess mentor effectiveness.
-
-**Mentor Listened and Understood** | Integer | Required | Scale 1–5
-> The client's rating of whether the mentor listened to and understood
-> their needs. A key indicator of mentoring relationship quality.
-
-**How Could CBM Better Meet Needs** | Rich Text | Optional
-> Free-form feedback from the client on how CBM could improve its
-> services. Reviewed by administrators for program improvement insights.
-
+| Field | Description / Values |
+|---|---|
+| Engagement | Relationship field. Required. The engagement this survey response is associated with. |
+| Session | Relationship field. Optional. The session that triggered this survey, if applicable. Not set for engagement close surveys. |
+| Survey Trigger | Dropdown. System-populated. Read-only. Read-only. Values: 2nd Session, Every 5 Sessions, Engagement Close. The event that triggered this survey. Provides context when reviewing satisfaction trends over time. |
+| Survey Date/Time | Date/time field. System-populated. Read-only. Read-only. The date and time the client submitted their survey response. |
+| NPS Score | Integer field. Required. Scale 0–10. Standard Net Promoter Score question: How likely are you to recommend CBM to a friend or colleague? Used to calculate CBM's overall NPS and track satisfaction trends over time. |
+| Did CBM Help You | Yes/No checkbox. Required. Yes / No. Whether the client felt CBM helped them. A simple binary measure of program effectiveness. |
+| Would Return to See This Mentor | Integer field. Required. Scale 1–5. The client's rating of whether they would want to work with the same mentor again. Used to assess mentor effectiveness. |
+| Mentor Listened and Understood | Integer field. Required. Scale 1–5. The client's rating of whether the mentor listened to and understood their needs. A key indicator of mentoring relationship quality. |
+| How Could CBM Better Meet Needs | Rich text field. Optional. Free-form feedback from the client on how CBM could improve its services. Reviewed by administrators for program improvement insights. |
 ---
 
 ### 4.6 Entity Relationships
