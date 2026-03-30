@@ -12,6 +12,12 @@ Process section in the CRM Builder CLAUDE.md:
 https://github.com/dbower44022/crmbuilder/blob/main/CLAUDE.md
 ```
 
+The full process specification is:
+
+```
+https://github.com/dbower44022/crmbuilder/blob/main/PRDs/application/CRM-Builder-Document-Production-Process.docx
+```
+
 That document defines the required sequence for producing all CRM
 implementation documents. Following it is mandatory. Do not skip steps
 or produce documents out of sequence.
@@ -32,25 +38,38 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Document Production Step: Step 5 — YAML Generation**
+**Process status: Transitioning to new document production process.**
 
-The following documents have been completed:
+The previous round of document production used an older process that
+has been replaced. The documents below were produced under that process.
+They contain substantial requirements content that serves as source
+material, but they need to be reworked under the new process to ensure
+consistent field-level detail across all domains.
 
-| Document | File | Status |
+### Existing Documents (produced under old process)
+
+| Document | File | Notes |
 |---|---|---|
-| Master PRD | `PRDs/CBM-Master-PRD.md` | Complete v1.0 |
-| Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Complete v1.0 |
-| Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Complete v1.0 |
-| Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Complete v1.0 |
-| Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Complete v1.0 |
-| Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | Complete v2.0 — All four domains defined |
-| YAML program files | Not started | — |
-| Verification Spec | Not started | — |
+| Master PRD | `PRDs/CBM-Master-PRD.md` | Markdown, v1.0 — needs conversion to Word and review |
+| Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — has field-level detail |
+| Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — summary-level data, needs enrichment |
+| Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — summary-level data, needs enrichment |
+| Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Markdown, v1.0 — summary-level data, needs enrichment |
+| Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | Markdown, v2.0 — eliminated as separate document in new process |
 
-**The next required step is:** Review the Consolidated Design with
-stakeholders, resolve open issues, then proceed to YAML generation.
-See Appendix A of Consolidated Design for pending enum values that
-must be defined before YAML can be generated.
+### Legacy Documents
+
+All documents from prior iterations are in `PRDs/Archive/`. These are
+source material only — never reference them as current requirements.
+
+### Next Step
+
+Decide how to transition the existing CBM documents into the new
+process. Options include:
+- Reworking existing content through the new process phases
+- Using existing documents as source material for fresh process
+  conversations
+- A hybrid approach depending on domain completeness
 
 ---
 
@@ -65,18 +84,29 @@ must be defined before YAML can be generated.
 
 ---
 
-## Repository Structure
+## Target Repository Structure (new process)
 
 ```
 PRDs/
-├── CBM-Master-PRD.md           ← Level 1 Master PRD
-├── CBM-Domain-PRD-Mentoring.md ← Level 2 Domain PRD (MN)
-├── CBM-Consolidated-Design.md  ← Level 3 (not yet created)
-└── Archive/                    ← All legacy documents (do not use)
+├── CBM-Master-PRD.docx            ← Master PRD (Word)
+├── MN/
+│   ├── MN-INTAKE.docx             ← Process document
+│   ├── MN-MATCH.docx
+│   ├── MN-ENGAGE.docx
+│   ├── MN-CLOSE.docx
+│   ├── MN-INACTIVE.docx
+│   ├── MN-SURVEY.docx
+│   └── CBM-Domain-PRD-Mentoring.docx  ← Reconciled Domain PRD
+├── MR/
+│   └── ...
+├── CR/
+│   └── ...
+├── FU/
+│   └── ...
+└── Archive/                       ← Legacy documents (do not use)
 
-programs/                       ← YAML program files (not yet created)
-
-Implementation Docs/            ← Verification Spec (not yet created)
+programs/                          ← YAML program files
+Implementation Docs/               ← Verification Spec
 ```
 
 ---
@@ -104,11 +134,11 @@ Implementation Docs/            ← Verification Spec (not yet created)
 ## Important Rules for This Implementation
 
 - Never mention specific product names (EspoCRM, WordPress, Moodle,
-  Constant Contact, DigitalOcean, etc.) in Level 1 or Level 2 PRD
-  documents. These are implementation details only.
+  Constant Contact, DigitalOcean, etc.) in Master PRDs, process
+  documents, or Domain PRDs. These are implementation details only.
+- All documents are produced as Word (.docx) files. No Markdown
+  source files under the new process.
 - All legacy documents are in `PRDs/Archive/` — never reference them
   as current requirements. They are source material only.
-- The Consolidated Design must be updated after each Domain PRD before
-  the next Domain PRD is started.
 - Update this CLAUDE.md file to reflect current implementation state
   at the end of every work session.
