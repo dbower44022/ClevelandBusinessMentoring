@@ -76,18 +76,7 @@ A structured eligibility screening workflow may be defined by CBM leadership in 
 - MN-INTAKE-REQ-006: Client Organization and Contact records must be retained permanently regardless of Engagement outcome
 
 **Process Data**
-The following fields from the Mentor Contact record must be available to assess eligibility and readiness for matching.
-
-| Field | Description / Values |
-|---|---|
-| Industry Sectors | The industry sectors in which the mentor has professional experience. Must use the same values as the Industry Sector field on the Client Organization to enable mentor-client matching. Multi-select dropdown. Required. |
-| Mentoring Focus Areas | The specific areas where the mentor is able to provide guidance to clients. Must align with the Mentoring Focus Areas field on the Client Organization to enable matching. Multi-select dropdown. Required. |
-| Skills and Expertise Tags | Finer-grained expertise tags that support advanced mentor-client matching beyond industry sector and focus areas. Multi-select dropdown. Optional. Values to be defined by CBM leadership — see Open Issue MR-ISS-001. |
-| Fluent Languages | Languages the mentor is fluent in. Used to match clients who prefer to work in a language other than English. Multi-select dropdown. Optional. |
-| Mentor Status | The current lifecycle stage of the mentor's relationship with CBM. Only Active mentors are eligible for new client assignments. Dropdown. Required. Values: Submitted, In Review, Provisional, Active, Paused, Inactive, Resigned, Departed, Declined. |
-| Accepting New Clients | Whether the mentor is currently available for new client assignments. Must be Yes for a nomination to proceed. Yes/No checkbox. Required. |
-| Maximum Client Capacity | The maximum number of simultaneous active client engagements this mentor will accept. Integer field. Required. |
-| Available Capacity | The number of additional client engagements this mentor can currently accept. Must be greater than zero for a nomination to proceed. Integer field. System-calculated. Read-only. |
+The Client Intake process does not require pre-existing data beyond what is submitted on the intake form. The submitted application itself is the data the Client Administrator reviews to assess eligibility.
 
 **Data Collected**
 The following records and fields are created automatically when the intake form is submitted.
@@ -96,9 +85,9 @@ The following records and fields are created automatically when the intake form 
 
 | Field | Description / Values |
 |---|---|
-| Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. |
-| Website | URL field. Optional. Phase 1. The client business website address. |
-| Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
+| Business Name | The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. Text field. Optional. Phase 1. |
+| Website | The client business website address, if one exists. URL field. Optional. Phase 1. |
+| Address | The primary business address. Used for geographic reporting and service area tracking. Address field (street, city, state, zip). Optional. Phase 1. |
 | Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. |
 | Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
@@ -110,11 +99,11 @@ The following records and fields are created automatically when the intake form 
 
 | Field | Description / Values |
 |---|---|
-| First Name | Text field. Required. The contact's first name. |
-| Last Name | Text field. Required. The contact's last name. |
-| Email | Email field. Required. The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. |
-| Phone | Phone field. Optional. The contact's primary phone number. |
-| Zip Code | Text field. Required. Phase 1. The contact's zip code. Used for geographic service area reporting and outreach targeting. |
+| First Name | The contact's first name. Text field. Required. |
+| Last Name | The contact's last name. Text field. Required. |
+| Email | The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. Email field. Required. |
+| Phone | The contact's primary phone number. Phone field. Optional. |
+| Zip Code | The contact's zip code. Used for geographic service area reporting and outreach targeting. Text field. Required. Phase 1. |
 | Primary Contact | Yes/No checkbox. Required. Default: Yes for the first contact created. Identifies this contact as the primary point of contact for the client organization. |
 
 *Engagement*
@@ -167,9 +156,9 @@ The following Client Organization fields are reviewed by the Client Assignment C
 
 | Field | Description / Values |
 |---|---|
-| Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. |
-| Website | URL field. Optional. Phase 1. The client business website address. |
-| Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
+| Business Name | The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. Text field. Optional. Phase 1. |
+| Website | The client business website address, if one exists. URL field. Optional. Phase 1. |
+| Address | The primary business address. Used for geographic reporting and service area tracking. Address field (street, city, state, zip). Optional. Phase 1. |
 | Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. |
 | Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
@@ -460,30 +449,30 @@ Client Organization data is collected in two phases. Phase 1 fields are captured
 |---|---|
 | Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. Optional because applicants at the pre-startup stage may not yet have a business name. |
 | Website | URL field. Optional. Phase 1. The client business website address, if one exists. |
-| Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
+| Address | The primary business address. Used for geographic reporting and service area tracking. Address field (street, city, state, zip). Optional. Phase 1. |
 | Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. |
 | Industry Sector | Dropdown. Required. Phase 1. Values: 20 top-level NAICS industry sectors. Drives NAICS Subsector filter. The primary industry sector of the client business based on the North American Industry Classification System. Used for mentor matching and impact reporting. |
 | Industry Subsector | Dropdown. Required. Phase 1. Values: Approximately 100 subsectors, filtered by selected NAICS Sector. The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for matching and reporting. |
 | Mentoring Focus Areas | Multi-select dropdown. Required. Phase 1. Values: To be defined by CBM leadership — see Open Issue MN-ISS-001. The specific areas where the client is seeking mentoring assistance. Used as a primary matching criterion between clients and mentors. Values must be aligned with the corresponding field on the Mentor profile. |
 | Mentoring Needs Description | The client's own description of what they are looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. Rich text field. Required. Phase 1. |
-| Business Description | Rich text field. Optional. Phase 2. A detailed description of what the business does, its history, and founding story. Collected after mentor assignment to give the mentor deeper context about the client. |
-| Time in Operation | Text field. Optional. Phase 2. How long the business has been operating. Provides context for the mentor about the client's experience level. |
-| Current Team Size | Integer field. Optional. Phase 2. The number of current employees or team members. Helps the mentor understand the scale and complexity of the business. |
-| Revenue Range | Dropdown. Optional. Phase 2. Values: To be defined by CBM leadership — see Open Issue MN-ISS-003. Approximate annual revenue range. Provides financial context without requiring disclosure of exact figures. |
-| Funding Situation | Rich text field. Optional. Phase 2. Description of the client's current funding sources, funding needs, or funding challenges. |
-| Current Challenges | Rich text field. Optional. Phase 2. The primary obstacles the business is currently facing. Helps the mentor focus the engagement on the most pressing needs. |
-| Goals and Objectives | Rich text field. Optional. Phase 2. What the client wants to achieve through the mentoring engagement overall. |
-| Desired Outcomes (6–12 Months) | Rich text field. Optional. Phase 2. Specific outcomes the client hopes to achieve within the near term. Used to track progress and assess engagement success. |
-| Previous Mentoring Experience | Rich text field. Optional. Phase 2. Whether the client has worked with a mentor or advisor before, and any relevant context about prior experiences. |
+| Business Description | A detailed description of what the business does, its history, and founding story. Collected after mentor assignment to give the mentor deeper context about the client. Rich text field. Optional. Phase 2. |
+| Time in Operation | How long the business has been operating. Provides context for the mentor about the client's experience level. Text field. Optional. Phase 2. |
+| Current Team Size | The number of current employees or team members. Helps the mentor understand the scale and complexity of the business. Integer field. Optional. Phase 2. |
+| Revenue Range | Approximate annual revenue range. Provides financial context without requiring disclosure of exact figures. Dropdown. Optional. Phase 2. Values to be defined by CBM leadership — see Open Issue MN-ISS-003. |
+| Funding Situation | Description of the client's current funding sources, funding needs, or funding challenges. Rich text field. Optional. Phase 2. |
+| Current Challenges | The primary obstacles the business is currently facing. Helps the mentor focus the engagement on the most pressing needs. Rich text field. Optional. Phase 2. |
+| Goals and Objectives | What the client wants to achieve through the mentoring engagement overall. Rich text field. Optional. Phase 2. |
+| Desired Outcomes (6–12 Months) | Specific outcomes the client hopes to achieve within the near term. Used to track progress and assess engagement success. Rich text field. Optional. Phase 2. |
+| Previous Mentoring Experience | Whether the client has worked with a mentor or advisor before, and any relevant context about those experiences. Rich text field. Optional. Phase 2. |
 | Current Professional Advisors | Multi-select dropdown. Optional. Phase 2. Values: Banker / Financial Institution, Attorney / Legal Counsel, Accountant / CPA, IT Consultant, Insurance Agent, Marketing / PR Consultant, Business Coach. The types of professional advisors the client is currently working with. Helps the mentor avoid duplicating advice the client is already receiving and identify gaps. |
-| Registered with State | Yes/No checkbox. Optional. Phase 2. Whether the business has filed with the state as an official legal entity. |
+| Registered with State | Whether the business has filed with the state as an official legal entity. Yes/No checkbox. Optional. Phase 2. |
 | State of Registration | Dropdown. Optional. Phase 2. Values: All US states. Shown only when Registered with State = Yes. The state where the business entity is registered. |
 | Legal Business Structure | Dropdown. Optional. Phase 2. Values: Sole Proprietor, Partnership, LLC, S-Corp, C-Corp, Non-Profit 501(c)(3), Other. Shown only when Registered with State = Yes. The legal structure of the registered business entity. |
-| EIN on File | Yes/No checkbox. Optional. Phase 2. Shown only when Registered with State = Yes.  Whether the business has obtained a federal Employer Identification Number. |
-| Date of Formation | Date field. Optional. Phase 2. Shown only when Registered with State = Yes.  The date the business entity was formally established with the state. |
-| Registered Agent | Yes/No checkbox. Optional. Phase 2. Shown only when Registered with State = Yes.  Whether the business has a designated registered agent on file with the state. |
-| EIN Number | Text field. Optional. Restricted. Restricted field — visible to Client Administrator, Client Assignment Coordinator, and assigned mentors only. Populated by mentor or admin, never collected on the public intake form.  The actual federal Employer Identification Number. Entered by the mentor if needed during the engagement. |
+| EIN on File | Whether the business has obtained a federal Employer Identification Number. Yes/No checkbox. Optional. Phase 2. Shown only when Registered with State = Yes. |
+| Date of Formation | The date the business entity was formally established with the state. Date field. Optional. Phase 2. Shown only when Registered with State = Yes. |
+| Registered Agent | Whether the business has a designated registered agent on file with the state. Yes/No checkbox. Optional. Phase 2. Shown only when Registered with State = Yes. |
+| EIN Number | The actual federal Employer Identification Number. Entered by the mentor if needed during the engagement. Visible to Client Administrator, Client Assignment Coordinator, and assigned mentors only — never collected on the public intake form. Text field. Optional. Restricted. |
 ---
 
 ### 4.2 Client Contact
@@ -495,14 +484,14 @@ A Client Contact represents an individual person associated with a client organi
 
 | Field | Description / Values |
 |---|---|
-| First Name | Text field. Required. The contact's first name. |
-| Last Name | Text field. Required. The contact's last name. |
-| Middle Name | Text field. Optional. The contact's middle name. |
-| Preferred Name | Text field. Optional. The name the contact prefers to be called. Used in communications and engagement materials when provided. |
-| Email | Email field. Required. The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. |
-| Phone | Phone field. Optional. The contact's primary phone number. |
-| Zip Code | Text field. Required. Phase 1. The contact's zip code. Used for geographic service area reporting and outreach targeting. |
-| Role at Business | Text field. Optional. The contact's title or position within the client business — for example, Owner, Co-Founder, CEO, or Manager. |
+| First Name | The contact's first name. Text field. Required. |
+| Last Name | The contact's last name. Text field. Required. |
+| Middle Name | The contact's middle name. Text field. Optional. |
+| Preferred Name | The name the contact prefers to be called. Used in communications and engagement materials when provided. Text field. Optional. |
+| Email | The contact's primary email address. Used for all CBM communications including mentor introduction, meeting requests, and satisfaction surveys. Email field. Required. |
+| Phone | The contact's primary phone number. Phone field. Optional. |
+| Zip Code | The contact's zip code. Used for geographic service area reporting and outreach targeting. Text field. Required. Phase 1. |
+| Role at Business | The contact's title or position within the client business — for example, Owner, Co-Founder, CEO, or Manager. Text field. Optional. |
 | Primary Contact | Yes/No checkbox. Required. Defaults to Yes for the first contact created on an organization.  Identifies this contact as the primary point of contact for the client organization. Automated communications default to the primary contact when no specific engagement contacts are designated. |
 ---
 
