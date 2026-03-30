@@ -93,8 +93,8 @@ PRDs/
 │   ├── MN-INTAKE.docx             ← Process document
 │   ├── MN-MATCH.docx
 │   ├── MN-ENGAGE.docx
-│   ├── MN-CLOSE.docx
 │   ├── MN-INACTIVE.docx
+│   ├── MN-CLOSE.docx
 │   ├── MN-SURVEY.docx
 │   └── CBM-Domain-PRD-Mentoring.docx  ← Reconciled Domain PRD
 ├── MR/
