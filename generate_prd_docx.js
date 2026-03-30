@@ -256,6 +256,7 @@ function convertPRD(mdPath, outPath, diagramMap = {}) {
       i++;
 
       if (isWorkflow) {
+        const workflowNumRef = ++numRef; // unique ref for this workflow — restarts at 1
         // Collect all workflow content until next bold section label or heading
         const workflowParas = [];
         while (i < lines.length) {
@@ -265,7 +266,7 @@ function convertPRD(mdPath, outPath, diagramMap = {}) {
           if (wl.startsWith('#')) break;
           if (wl.match(/^\d+\. /)) {
             workflowParas.push(new Paragraph({
-              numbering: { reference: 'numbers_' + numRef, level: 0 },
+              numbering: { reference: 'numbers_' + workflowNumRef, level: 0 },
               children: parseInline(wl.replace(/^\d+\. /, '').trim()),
               spacing: { before: 40, after: 40 }
             })); i++; continue;
