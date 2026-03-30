@@ -80,14 +80,14 @@ The following fields from the Mentor Contact record must be available to assess 
 
 | Field | Description / Values |
 |---|---|
-| Industry Sectors | Multi-select dropdown. Required. The industry sectors in which the mentor has experience. Must use the same values as Industry Sector on the Client Organization to enable matching. |
-| Mentoring Focus Areas | Multi-select dropdown. Required. The specific areas where the mentor is able to provide guidance. Must align with Client Organization Mentoring Focus Areas to enable matching. |
-| Skills and Expertise Tags | Multi-select dropdown. Optional. Finer-grained expertise tags supporting advanced mentor-client matching. |
-| Fluent Languages | Multi-select dropdown. Optional. Languages the mentor is fluent in. Used to match clients who prefer to work in a language other than English. |
-| Mentor Status | Dropdown. Required. Values: Submitted, In Review, Provisional, Active, Paused, Inactive, Resigned, Departed, Declined. Only Active mentors are eligible for assignment. |
-| Accepting New Clients | Yes/No checkbox. Required. Whether the mentor is currently available for new client assignments. Must be Yes for nomination to proceed. |
-| Maximum Client Capacity | Integer field. Required. The maximum number of simultaneous active client engagements this mentor will accept. |
-| Available Capacity | Integer field. System-calculated. Read-only. Maximum Client Capacity minus Current Active Clients. Must be greater than zero for nomination to proceed. |
+| Industry Sectors | The industry sectors in which the mentor has professional experience. Must use the same values as the Industry Sector field on the Client Organization to enable mentor-client matching. Multi-select dropdown. Required. |
+| Mentoring Focus Areas | The specific areas where the mentor is able to provide guidance to clients. Must align with the Mentoring Focus Areas field on the Client Organization to enable matching. Multi-select dropdown. Required. |
+| Skills and Expertise Tags | Finer-grained expertise tags that support advanced mentor-client matching beyond industry sector and focus areas. Multi-select dropdown. Optional. Values to be defined by CBM leadership — see Open Issue MR-ISS-001. |
+| Fluent Languages | Languages the mentor is fluent in. Used to match clients who prefer to work in a language other than English. Multi-select dropdown. Optional. |
+| Mentor Status | The current lifecycle stage of the mentor's relationship with CBM. Only Active mentors are eligible for new client assignments. Dropdown. Required. Values: Submitted, In Review, Provisional, Active, Paused, Inactive, Resigned, Departed, Declined. |
+| Accepting New Clients | Whether the mentor is currently available for new client assignments. Must be Yes for a nomination to proceed. Yes/No checkbox. Required. |
+| Maximum Client Capacity | The maximum number of simultaneous active client engagements this mentor will accept. Integer field. Required. |
+| Available Capacity | The number of additional client engagements this mentor can currently accept. Must be greater than zero for a nomination to proceed. Integer field. System-calculated. Read-only. |
 
 **Data Collected**
 The following records and fields are created automatically when the intake form is submitted.
@@ -99,12 +99,12 @@ The following records and fields are created automatically when the intake form 
 | Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. |
 | Website | URL field. Optional. Phase 1. The client business website address. |
 | Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
-| Organization Type | Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. |
-| Business Stage | Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. The stage of business development. Used for mentor matching and funder reporting. |
-| Industry Sector | Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. The primary industry sector of the client business. Used for mentor matching and impact reporting. Drives the Industry Subsector filter. |
-| Industry Subsector | Dropdown. Required. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. Provides more precise industry classification for matching and reporting. |
-| Mentoring Focus Areas | Multi-select dropdown. Required. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. The specific areas where the client seeks mentoring assistance. Primary matching criterion. |
-| Mentoring Needs Description | Rich text field. Required. Phase 1. Free-form description of what the client is looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. |
+| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
+| Business Stage | The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. |
+| Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
+| Industry Subsector | The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for mentor matching and reporting. Dropdown. Required. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. |
+| Mentoring Focus Areas | The specific areas where the client is seeking mentoring assistance. Primary matching criterion between clients and mentors. Multi-select dropdown. Required. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. |
+| Mentoring Needs Description | The client's own description of what they are looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. Rich text field. Required. Phase 1. |
 
 *Client Contact*
 
@@ -170,37 +170,37 @@ The following Client Organization fields are reviewed by the Client Assignment C
 | Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. May be blank for pre-startup applicants who have not yet named their business. |
 | Website | URL field. Optional. Phase 1. The client business website address. |
 | Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
-| Organization Type | Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. |
-| Business Stage | Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. The stage of business development. Used for mentor matching and funder reporting. |
-| Industry Sector | Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. The primary industry sector of the client business. Used for mentor matching and impact reporting. Drives the Industry Subsector filter. |
-| Industry Subsector | Dropdown. Required. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. Provides more precise industry classification for matching and reporting. |
-| Mentoring Focus Areas | Multi-select dropdown. Required. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. The specific areas where the client seeks mentoring assistance. Primary matching criterion. |
-| Mentoring Needs Description | Rich text field. Required. Phase 1. Free-form description of what the client is looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. |
+| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
+| Business Stage | The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. |
+| Industry Sector | The primary industry sector of the client business, based on the North American Industry Classification System. Used for mentor matching and impact reporting. Dropdown. Required. Phase 1. 20 top-level NAICS industry sectors. Drives the Industry Subsector filter. |
+| Industry Subsector | The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for mentor matching and reporting. Dropdown. Required. Phase 1. Approximately 100 subsectors filtered by selected Industry Sector. |
+| Mentoring Focus Areas | The specific areas where the client is seeking mentoring assistance. Primary matching criterion between clients and mentors. Multi-select dropdown. Required. Phase 1. Values to be defined by CBM leadership — see Open Issue MN-ISS-001. |
+| Mentoring Needs Description | The client's own description of what they are looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. Rich text field. Required. Phase 1. |
 
 The following Mentor Contact fields are used to search, filter, and evaluate candidate mentors.
 
 | Field | Description / Values |
 |---|---|
-| Industry Sectors | Multi-select dropdown. Required. The industry sectors in which the mentor has experience. Must use the same values as Industry Sector on the Client Organization to enable matching. |
-| Mentoring Focus Areas | Multi-select dropdown. Required. The specific areas where the mentor is able to provide guidance. Must align with Client Organization Mentoring Focus Areas to enable matching. |
-| Skills and Expertise Tags | Multi-select dropdown. Optional. Finer-grained expertise tags supporting advanced mentor-client matching. |
-| Fluent Languages | Multi-select dropdown. Optional. Languages the mentor is fluent in. Used to match clients who prefer to work in a language other than English. |
-| Mentor Status | Dropdown. Required. Values: Submitted, In Review, Provisional, Active, Paused, Inactive, Resigned, Departed, Declined. Only Active mentors are eligible for assignment. |
-| Accepting New Clients | Yes/No checkbox. Required. Whether the mentor is currently available for new client assignments. Must be Yes for nomination to proceed. |
-| Maximum Client Capacity | Integer field. Required. The maximum number of simultaneous active client engagements this mentor will accept. |
-| Available Capacity | Integer field. System-calculated. Read-only. Maximum Client Capacity minus Current Active Clients. Must be greater than zero for nomination to proceed. |
+| Industry Sectors | The industry sectors in which the mentor has professional experience. Must use the same values as the Industry Sector field on the Client Organization to enable mentor-client matching. Multi-select dropdown. Required. |
+| Mentoring Focus Areas | The specific areas where the mentor is able to provide guidance to clients. Must align with the Mentoring Focus Areas field on the Client Organization to enable matching. Multi-select dropdown. Required. |
+| Skills and Expertise Tags | Finer-grained expertise tags that support advanced mentor-client matching beyond industry sector and focus areas. Multi-select dropdown. Optional. Values to be defined by CBM leadership — see Open Issue MR-ISS-001. |
+| Fluent Languages | Languages the mentor is fluent in. Used to match clients who prefer to work in a language other than English. Multi-select dropdown. Optional. |
+| Mentor Status | The current lifecycle stage of the mentor's relationship with CBM. Only Active mentors are eligible for new client assignments. Dropdown. Required. Values: Submitted, In Review, Provisional, Active, Paused, Inactive, Resigned, Departed, Declined. |
+| Accepting New Clients | Whether the mentor is currently available for new client assignments. Must be Yes for a nomination to proceed. Yes/No checkbox. Required. |
+| Maximum Client Capacity | The maximum number of simultaneous active client engagements this mentor will accept. Integer field. Required. |
+| Available Capacity | The number of additional client engagements this mentor can currently accept. Must be greater than zero for a nomination to proceed. Integer field. System-calculated. Read-only. |
 
 **Data Collected**
 The following Engagement fields are populated when a mentor accepts an assignment.
 
 | Field | Description / Values |
 |---|---|
-| Assigned Mentor | Relationship field. Required when status is Assigned or later. Link to the primary mentor Contact record. Set by the Client Assignment Coordinator during the matching process. |
-| Co-Mentors | Many-to-many relationship panel. Optional. Links to Co-Mentor Contact records. Multiple co-mentors may be assigned simultaneously. |
-| Subject Matter Experts | Many-to-many relationship panel. Optional. Links to SME Contact records assigned for specialist expertise. |
-| Meeting Cadence | Dropdown. Required. Values: Weekly, Bi-Weekly, Monthly, As Needed. Set by mentor at assignment. Drives cadence-aware inactivity monitoring thresholds. |
+| Assigned Mentor | The primary volunteer mentor assigned to this engagement. Set by the Client Assignment Coordinator during the matching process. Relationship field. Required when status is Assigned or later. |
+| Co-Mentors | One or more volunteer mentors assigned in a supporting co-mentor role alongside the Primary Mentor. Multiple co-mentors may be active simultaneously. Many-to-many relationship. Optional. |
+| Subject Matter Experts | One or more volunteer mentors providing specialist expertise on request for specific topics within the engagement. Many-to-many relationship. Optional. |
+| Meeting Cadence | The expected frequency of mentor-client meetings. Set by the mentor at assignment. Drives the cadence-aware inactivity monitoring thresholds for this engagement. Dropdown. Required. Values: Weekly, Bi-Weekly, Monthly, As Needed. |
 | Status | Dropdown. Required. Transitions from Submitted → Pending Acceptance → Assigned as the matching process progresses. |
-| Engagement Contacts | Many-to-many relationship panel. Optional. The specific individuals from the client organization actively participating in this engagement. Defaults to Primary Contact if empty. |
+| Engagement Contacts | The specific individuals from the client organization actively participating in this engagement. Determines who receives meeting requests and session summary emails. Defaults to Primary Contact if empty. Many-to-many relationship. Optional. |
 
 ---
 
@@ -241,12 +241,12 @@ The following Engagement fields must be populated before active engagement manag
 
 | Field | Description / Values |
 |---|---|
-| Assigned Mentor | Relationship field. Required when status is Assigned or later. Link to the primary mentor Contact record. Set by the Client Assignment Coordinator during the matching process. |
-| Co-Mentors | Many-to-many relationship panel. Optional. Links to Co-Mentor Contact records. Multiple co-mentors may be assigned simultaneously. |
-| Subject Matter Experts | Many-to-many relationship panel. Optional. Links to SME Contact records assigned for specialist expertise. |
-| Meeting Cadence | Dropdown. Required. Values: Weekly, Bi-Weekly, Monthly, As Needed. Set by mentor at assignment. Drives cadence-aware inactivity monitoring thresholds. |
+| Assigned Mentor | The primary volunteer mentor assigned to this engagement. Set by the Client Assignment Coordinator during the matching process. Relationship field. Required when status is Assigned or later. |
+| Co-Mentors | One or more volunteer mentors assigned in a supporting co-mentor role alongside the Primary Mentor. Multiple co-mentors may be active simultaneously. Many-to-many relationship. Optional. |
+| Subject Matter Experts | One or more volunteer mentors providing specialist expertise on request for specific topics within the engagement. Many-to-many relationship. Optional. |
+| Meeting Cadence | The expected frequency of mentor-client meetings. Set by the mentor at assignment. Drives the cadence-aware inactivity monitoring thresholds for this engagement. Dropdown. Required. Values: Weekly, Bi-Weekly, Monthly, As Needed. |
 | Status | Dropdown. Required. Transitions from Submitted → Pending Acceptance → Assigned as the matching process progresses. |
-| Engagement Contacts | Many-to-many relationship panel. Optional. The specific individuals from the client organization actively participating in this engagement. Defaults to Primary Contact if empty. |
+| Engagement Contacts | The specific individuals from the client organization actively participating in this engagement. Determines who receives meeting requests and session summary emails. Defaults to Primary Contact if empty. Many-to-many relationship. Optional. |
 
 **Data Collected**
 The following Session fields are recorded by the mentor after each meeting.
@@ -263,7 +263,7 @@ The following Session fields are recorded by the mentor after each meeting.
 | Next Steps | Rich text field. Optional. The agreed-upon actions and follow-up items from the session. May be included in the session summary email. |
 | New Business Started | Yes/No checkbox. Optional. Whether this session resulted in the client starting a new business. Tracked for funder impact reporting. |
 | Next Session Date/Time | Date/time field. Optional. When saved, automatically updates the Next Session Date/Time on the linked Engagement record and triggers a meeting request to all participants. |
-| Mentor Attendees | Many-to-many relationship panel. Required. At least one mentor contact must be listed before the record can be saved. |
+| Mentor Attendees | The mentors who were physically present at the session. At least one mentor must be listed before the Session record can be saved. Many-to-many relationship. Required. |
 
 The following Engagement analytics fields are updated automatically as sessions are logged.
 
@@ -273,7 +273,7 @@ The following Engagement analytics fields are updated automatically as sessions 
 | Total Sessions (Last 30 Days) | Integer field. System-calculated. Read-only. Count of sessions in the last 30 days. Used by inactivity monitoring. |
 | Last Session Date | Date field. System-calculated. Read-only. The date of the most recently logged session. |
 | Total Session Hours | Decimal field. System-calculated. Read-only. Sum of Duration across all linked Session records, expressed in hours. |
-| Next Session Date/Time | Date/time field. Optional. The scheduled date and time of the next mentor-client meeting. Triggers a meeting request and resets the inactivity monitoring clock when saved. |
+| Next Session Date/Time | The scheduled date and time of the next mentor-client meeting. When saved, automatically sends a calendar meeting request to all participants and resets the inactivity monitoring clock. Date/time field. Optional. |
 | Status | Dropdown. Required. Transitions from Assigned → Active when the first session is logged. |
 
 ---
@@ -461,12 +461,12 @@ Client Organization data is collected in two phases. Phase 1 fields are captured
 | Business Name | Text field. Optional. Phase 1. The legal or operating name of the client business. Optional because applicants at the pre-startup stage may not yet have a business name. |
 | Website | URL field. Optional. Phase 1. The client business website address, if one exists. |
 | Address | Address field (street, city, state, zip). Optional. Phase 1. The primary business address. Used for geographic reporting and service area tracking. |
-| Organization Type | Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. |
+| Organization Type | Whether the organization operates as a for-profit business or a nonprofit. Drives funder reporting categories. Dropdown. Required. Phase 1. Values: For-Profit, Non-Profit. |
 | Business Stage | Dropdown. Required. Phase 1. Values: Pre-Startup, Startup, Early Stage, Growth Stage, Established. The stage of business development the client organization is currently in. Used for mentor matching and funder reporting. |
 | Industry Sector | Dropdown. Required. Phase 1. Values: 20 top-level NAICS industry sectors. Drives NAICS Subsector filter. The primary industry sector of the client business based on the North American Industry Classification System. Used for mentor matching and impact reporting. |
 | Industry Subsector | Dropdown. Required. Phase 1. Values: Approximately 100 subsectors, filtered by selected NAICS Sector. The specific industry subsector within the selected Industry Sector. Provides more precise industry classification for matching and reporting. |
 | Mentoring Focus Areas | Multi-select dropdown. Required. Phase 1. Values: To be defined by CBM leadership — see Open Issue MN-ISS-001. The specific areas where the client is seeking mentoring assistance. Used as a primary matching criterion between clients and mentors. Values must be aligned with the corresponding field on the Mentor profile. |
-| Mentoring Needs Description | Rich text field. Required. Phase 1. Free-form description of what the client is looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. |
+| Mentoring Needs Description | The client's own description of what they are looking for in a mentoring engagement. Reviewed by the Client Assignment Coordinator during mentor matching. Rich text field. Required. Phase 1. |
 | Business Description | Rich text field. Optional. Phase 2. A detailed description of what the business does, its history, and founding story. Collected after mentor assignment to give the mentor deeper context about the client. |
 | Time in Operation | Text field. Optional. Phase 2. How long the business has been operating. Provides context for the mentor about the client's experience level. |
 | Current Team Size | Integer field. Optional. Phase 2. The number of current employees or team members. Helps the mentor understand the scale and complexity of the business. |
@@ -517,12 +517,12 @@ An organization may have more than one Engagement over time. Only one Engagement
 
 | Field | Description / Values |
 |---|---|
-| Client Organization | Relationship field. Required. The client organization this engagement is associated with. |
+| Client Organization | The client organization this engagement is associated with. Relationship field. Required. |
 | Status | Dropdown. Required. Values: Submitted, Declined, Pending Acceptance, Assigned, Active, On-Hold, Dormant, Inactive, Abandoned, Completed. The current lifecycle stage of the mentoring engagement. Drives all workflow automation including inactivity monitoring, survey triggers, and notifications. See processes MN-INTAKE, MN-MATCH, MN-ENGAGE, and MN-INACTIVE for status transition rules. |
-| Assigned Mentor | Relationship field. Required when status is Assigned or later. The primary volunteer mentor assigned to this engagement. Set by the Client Assignment Coordinator during the matching process. |
-| Co-Mentors | Many-to-many relationship panel. Optional. One or more volunteer mentors assigned in a supporting co-mentor role. Multiple co-mentors may be active simultaneously. |
-| Subject Matter Experts | Many-to-many relationship panel. Optional. One or more volunteer mentors providing specialist expertise on request. Distinct from co-mentors in that SMEs are engaged for specific topics rather than ongoing support. |
-| Engagement Contacts | Many-to-many relationship panel. Optional. Defaults to Primary Contact if empty.  The specific individuals from the client organization actively participating in this engagement. Determines who receives meeting requests and session summary emails. |
+| Assigned Mentor | The primary volunteer mentor assigned to this engagement. Set by the Client Assignment Coordinator during the matching process. Relationship field. Required when status is Assigned or later. |
+| Co-Mentors | One or more volunteer mentors assigned in a supporting co-mentor role alongside the Primary Mentor. Multiple co-mentors may be active simultaneously. Many-to-many relationship. Optional. |
+| Subject Matter Experts | One or more volunteer mentors providing specialist expertise on request for specific topics. Distinct from co-mentors in that SMEs are engaged for a specific need rather than ongoing support. Many-to-many relationship. Optional. |
+| Engagement Contacts | The specific individuals from the client organization actively participating in this engagement. Determines who receives meeting requests and session summary emails. Defaults to Primary Contact if empty. Many-to-many relationship. Optional. |
 | Meeting Cadence | Dropdown. Required. Values: Weekly, Bi-Weekly, Monthly, As Needed. The expected frequency of mentor-client meetings. Drives the cadence-aware inactivity monitoring thresholds for this engagement. |
 | Next Session Date/Time | Date/time field. Optional. Saving this field triggers an automatic calendar meeting request to all engagement participants and resets the inactivity monitoring clock.  The scheduled date and time of the next mentor-client meeting. |
 | Start Date | Date field. System-populated. Read-only. Populated automatically when status transitions to Active.  The date the engagement became active — when the first session was logged. |
@@ -546,7 +546,7 @@ At least one mentor contact must be listed as an attendee before a session recor
 
 | Field | Description / Values |
 |---|---|
-| Engagement | Relationship field. Required. The engagement this session belongs to. |
+| Engagement | The engagement this session belongs to. Relationship field. Required. |
 | Session Date/Time | Date/time field. Required. The date and time the session occurred. |
 | Duration | Integer field. Required. Recorded in minutes. The length of the session in minutes. Used to calculate Total Session Hours on the Engagement record. |
 | Session Type | Dropdown. Required. Values: In-Person, Video Call, Phone Call. How the session was conducted. Drives conditional display of meeting location fields. |
@@ -557,7 +557,7 @@ At least one mentor contact must be listed as an attendee before a session recor
 | Next Steps | Rich text field. Optional. The agreed-upon actions and follow-up items coming out of the session. May be included in the session summary email sent to the client. |
 | New Business Started | Yes/No checkbox. Optional. Whether this session resulted in the client starting a new business. Tracked for funder impact reporting. |
 | Next Session Date/Time | Date/time field. Optional. When saved, automatically updates the Next Session Date/Time on the linked Engagement record, triggering a meeting request to all participants.  The scheduled date and time of the next meeting. Intended to be set while the mentor has the client on the call. |
-| Mentor Attendees | Many-to-many relationship panel. Required. At least one mentor contact must be listed before the record can be saved. The mentor who logs the session and the attendees listed are independent — the logger need not be listed as an attendee.  The mentors who were physically present at the session. |
+| Mentor Attendees | The mentors who were physically present at the session. At least one mentor must be listed before the Session record can be saved. The mentor who logs the session and those listed as attendees are independent — the logger need not be listed. Many-to-many relationship. Required. |
 ---
 
 ### 4.5 Survey Response
@@ -571,8 +571,8 @@ Survey responses are visible to the Client Administrator, Mentor Administrator, 
 
 | Field | Description / Values |
 |---|---|
-| Engagement | Relationship field. Required. The engagement this survey response is associated with. |
-| Session | Relationship field. Optional. The session that triggered this survey, if applicable. Not set for engagement close surveys. |
+| Engagement | The engagement this survey response is associated with. Relationship field. Required. |
+| Session | The session that triggered this survey, if applicable. Not set for engagement close surveys. Relationship field. Optional. |
 | Survey Trigger | Dropdown. System-populated. Read-only. Read-only. Values: 2nd Session, Every 5 Sessions, Engagement Close. The event that triggered this survey. Provides context when reviewing satisfaction trends over time. |
 | Survey Date/Time | Date/time field. System-populated. Read-only. Read-only. The date and time the client submitted their survey response. |
 | NPS Score | Integer field. Required. Scale 0–10. Standard Net Promoter Score question: How likely are you to recommend CBM to a friend or colleague? Used to calculate CBM's overall NPS and track satisfaction trends over time. |
@@ -612,26 +612,26 @@ A Session may trigger one Survey Response. The Survey Response links back to the
 
 ## 5. Decisions Made
 
-| ID | Decision | Rationale | Date |
+| Decision | Rationale | Date |
 |---|---|---|---|
-| MN-DEC-001 | Client Organization and Contact records are retained permanently regardless of Engagement outcome | Supports historical funder reporting and the possibility of clients returning for future engagements | March 2026 |
-| MN-DEC-002 | Engagement data model uses a two-phase intake approach — Phase 1 collected at submission, Phase 2 deployed by mentor at their discretion | Phase 1 captures enough to identify a mentor; Phase 2 collects deeper business context that is more meaningful after the mentor relationship is established | March 2026 |
-| MN-DEC-003 | Inactivity monitoring uses cadence-aware thresholds based on the Meeting Cadence field rather than fixed thresholds | A weekly-cadence engagement going quiet for 45 days is very different from a monthly-cadence engagement doing the same — fixed thresholds would generate false positives for less frequent cadences | March 2026 |
-| MN-DEC-004 | Closed engagements are never reopened — returning clients receive a new Engagement linked to existing records | Preserves the integrity of historical engagement records and provides a clean separation between engagement cycles | March 2026 |
-| MN-DEC-005 | Satisfaction surveys are triggered automatically at the 2nd session, every 5 sessions thereafter, and at engagement close | Provides consistent feedback at meaningful milestones without survey fatigue | March 2026 |
-| MN-DEC-006 | The mentor introduction to the client is personal and mentor-authored — not auto-generated by the system | Establishes the human relationship from the first interaction; templates are provided as a starting point only | March 2026 |
+| Client Organization and Contact records are retained permanently regardless of Engagement outcome | Supports historical funder reporting and the possibility of clients returning for future engagements | March 2026 |
+| Engagement data model uses a two-phase intake approach — Phase 1 collected at submission, Phase 2 deployed by mentor at their discretion | Phase 1 captures enough to identify a mentor; Phase 2 collects deeper business context that is more meaningful after the mentor relationship is established | March 2026 |
+| Inactivity monitoring uses cadence-aware thresholds based on the Meeting Cadence field rather than fixed thresholds | A weekly-cadence engagement going quiet for 45 days is very different from a monthly-cadence engagement doing the same — fixed thresholds would generate false positives for less frequent cadences | March 2026 |
+| Closed engagements are never reopened — returning clients receive a new Engagement linked to existing records | Preserves the integrity of historical engagement records and provides a clean separation between engagement cycles | March 2026 |
+| Satisfaction surveys are triggered automatically at the 2nd session, every 5 sessions thereafter, and at engagement close | Provides consistent feedback at meaningful milestones without survey fatigue | March 2026 |
+| The mentor introduction to the client is personal and mentor-authored — not auto-generated by the system | Establishes the human relationship from the first interaction; templates are provided as a starting point only | March 2026 |
 
 ---
 
 ## 6. Open Issues
 
-| ID | Issue | Owner | Target |
+| Issue | Owner | Target |
 |---|---|---|---|
-| MN-ISS-001 | Mentoring Focus Areas dropdown values have not yet been defined by CBM leadership | CBM Leadership | Before go-live |
-| MN-ISS-002 | Session Topics Covered multi-select values have not yet been defined | CBM Leadership | Before go-live |
-| MN-ISS-003 | Revenue Range dropdown values for Phase 2 intake have not been defined | CBM Leadership | Before go-live |
-| MN-ISS-004 | Formal eligibility screening criteria for client intake review (Step 4 of MN-INTAKE) have not been defined — current process assumes basic administrative review only | CBM Leadership | Before go-live |
-| MN-ISS-005 | The specific survey tool to be integrated for satisfaction survey delivery has not been selected | Tech Admin | Before go-live |
+| Mentoring Focus Areas dropdown values have not yet been defined by CBM leadership | CBM Leadership | Before go-live |
+| Session Topics Covered multi-select values have not yet been defined | CBM Leadership | Before go-live |
+| Revenue Range dropdown values for Phase 2 intake have not been defined | CBM Leadership | Before go-live |
+| Formal eligibility screening criteria for client intake review (Step 4 of MN-INTAKE) have not been defined — current process assumes basic administrative review only | CBM Leadership | Before go-live |
+| The specific survey tool to be integrated for satisfaction survey delivery has not been selected | Tech Admin | Before go-live |
 
 ---
 
