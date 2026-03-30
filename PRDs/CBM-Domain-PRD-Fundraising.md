@@ -1,58 +1,30 @@
 # Cleveland Business Mentors
 # Domain PRD: Fundraising
 
-**Version:** 1.0
-**Status:** Draft
-**Last Updated:** 03-29-26 21:45
-**Domain Code:** FU
+**Version:** 1.0 **Status:** Draft **Last Updated:** 03-29-26 21:45 **Domain Code:** FU
 **Depends On:** CBM-Master-PRD.md
 
 ---
 
 ## 1. Domain Overview
 
-The Fundraising domain manages CBM's relationships with the donors,
-sponsors, and funding institutions that provide operational funding for
-the organization. It covers the full lifecycle of each funding
-relationship — from identifying prospective funders through securing
-commitments, recording contributions, stewarding active relationships,
-and reporting on program impact.
+The Fundraising domain manages CBM's relationships with the donors, sponsors, and funding institutions that provide operational funding for the organization. It covers the full lifecycle of each funding relationship — from identifying prospective funders through securing commitments, recording contributions, stewarding active relationships, and reporting on program impact.
 
-CBM's Year 1 fundraising profile is intentionally modest — a small
-number of individual donors, one or two foundation grants, and basic
-acknowledgment and stewardship. The data model is designed to support
-this starting point while being extensible as the organization grows
-its fundraising program.
+CBM's Year 1 fundraising profile is intentionally modest — a small number of individual donors, one or two foundation grants, and basic acknowledgment and stewardship. The data model is designed to support this starting point while being extensible as the organization grows its fundraising program.
 
-Funders fall into two broad categories. Individual donors are people
-who give personal contributions — they may be board members, mentors,
-community supporters, or event attendees who choose to support CBM
-financially. Organizational funders are companies, foundations,
-government agencies, and other institutions that provide grants,
-sponsorships, or corporate contributions.
+Funders fall into two broad categories. Individual donors are people who give personal contributions — they may be board members, mentors, community supporters, or event attendees who choose to support CBM financially. Organizational funders are companies, foundations, government agencies, and other institutions that provide grants, sponsorships, or corporate contributions.
 
-The CRM is the single source of truth for all donor and funder
-relationships. It tracks giving history, communication history,
-pledge fulfillment, grant deadlines, and reporting obligations in one
-place so that any authorized staff member can pick up a funder
-relationship without losing context.
+The CRM is the single source of truth for all donor and funder relationships. It tracks giving history, communication history, pledge fulfillment, grant deadlines, and reporting obligations in one place so that any authorized staff member can pick up a funder relationship without losing context.
 
 ---
 
 ## 2. Personas
 
 **MST-PER-010 — Donor / Sponsor Coordinator**
-Owns the Fundraising domain end to end. Manages the full funder
-lifecycle — prospecting, cultivation, solicitation, acknowledgment,
-stewardship, and reporting. Maintains all donor and funder records,
-records contributions, tracks grant obligations, and produces
-fundraising analytics for board and management review.
+Owns the Fundraising domain end to end. Manages the full funder lifecycle — prospecting, cultivation, solicitation, acknowledgment, stewardship, and reporting. Maintains all donor and funder records, records contributions, tracks grant obligations, and produces fundraising analytics for board and management review.
 
 **MST-PER-002 — Executive Member**
-Reviews fundraising dashboards, grant pipeline summaries, and donor
-analytics for board-level oversight. Has full read visibility into
-all fundraising records but does not manage day-to-day donor
-relationships.
+Reviews fundraising dashboards, grant pipeline summaries, and donor analytics for board-level oversight. Has full read visibility into all fundraising records but does not manage day-to-day donor relationships.
 
 ---
 
@@ -61,65 +33,40 @@ relationships.
 ### FU-PROSPECT — Donor and Sponsor Prospecting
 
 **Process Purpose and Trigger**
-The Prospecting process identifies and cultivates relationships with
-potential donors, sponsors, and funding institutions before a formal
-solicitation is made. It is triggered when CBM identifies a prospective
-funder — whether an individual, a corporation, or a grant-making
-foundation — worth pursuing.
+The Prospecting process identifies and cultivates relationships with potential donors, sponsors, and funding institutions before a formal solicitation is made. It is triggered when CBM identifies a prospective funder — whether an individual, a corporation, or a grant-making foundation — worth pursuing.
 
 **Personas Involved**
 - MST-PER-010 Donor / Sponsor Coordinator — manages the pipeline
-- MST-PER-002 Executive Member — may identify prospects through board
-  and community networks
+- MST-PER-002 Executive Member — may identify prospects through board and community networks
 
 **Process Workflow**
 
-1. The Donor / Sponsor Coordinator identifies a prospective funder and
-   creates a Donor / Funder record with status Prospect.
-2. The Coordinator records initial research — giving capacity, areas of
-   interest, connection to CBM's mission, and any existing relationship
-   with CBM board members or mentors.
-3. Outreach and cultivation activities are logged against the record —
-   emails, calls, meetings, and event invitations.
-4. As the relationship progresses, the status is updated through the
-   prospect lifecycle — Prospect, Contacted, In Discussion, Committed.
-5. When a prospect makes a commitment, the record transitions to Active
-   and a contribution record is created (see FU-RECORD).
+1. The Donor / Sponsor Coordinator identifies a prospective funder and creates a Donor / Funder record with status Prospect.
+2. The Coordinator records initial research — giving capacity, areas of interest, connection to CBM's mission, and any existing relationship with CBM board members or mentors.
+3. Outreach and cultivation activities are logged against the record — emails, calls, meetings, and event invitations.
+4. As the relationship progresses, the status is updated through the prospect lifecycle — Prospect, Contacted, In Discussion, Committed.
+5. When a prospect makes a commitment, the record transitions to Active and a contribution record is created (see FU-RECORD).
 
 **System Requirements**
-- FU-PROSPECT-REQ-001: The system must support creation and management
-  of donor and funder prospect records for both individuals and
-  organizations
-- FU-PROSPECT-REQ-002: The system must track prospect status through
-  the full lifecycle — Prospect, Contacted, In Discussion, Committed,
-  Active, Lapsed, Closed
-- FU-PROSPECT-REQ-003: The system must track all communications with
-  prospects across all CBM personnel
-- FU-PROSPECT-REQ-004: The system must support recording of prospecting
-  notes and next steps on each record
-- FU-PROSPECT-REQ-005: The system must support filtering and searching
-  donors by type, status, giving level, campaign, and geography
+- FU-PROSPECT-REQ-001: The system must support creation and management of donor and funder prospect records for both individuals and organizations
+- FU-PROSPECT-REQ-002: The system must track prospect status through the full lifecycle — Prospect, Contacted, In Discussion, Committed, Active, Lapsed, Closed
+- FU-PROSPECT-REQ-003: The system must track all communications with prospects across all CBM personnel
+- FU-PROSPECT-REQ-004: The system must support recording of prospecting notes and next steps on each record
+- FU-PROSPECT-REQ-005: The system must support filtering and searching donors by type, status, giving level, campaign, and geography
 
 **Process Data**
-- FU-PROSPECT-DAT-001: Board member and mentor records — to identify
-  existing relationships that can be leveraged for introductions
+- FU-PROSPECT-DAT-001: Board member and mentor records — to identify existing relationships that can be leveraged for introductions
 
 **Data Collected**
-- FU-PROSPECT-DAT-002: Donor / Funder record — name, type, contact
-  information, status, prospect notes
-- FU-PROSPECT-DAT-003: Communication history — outreach activities
-  linked to the donor record
+- FU-PROSPECT-DAT-002: Donor / Funder record — name, type, contact information, status, prospect notes
+- FU-PROSPECT-DAT-003: Communication history — outreach activities linked to the donor record
 
 ---
 
 ### FU-RECORD — Contribution Recording
 
 **Process Purpose and Trigger**
-The Contribution Recording process captures all incoming funding —
-donations, grants, sponsorships, and pledges — with accurate records
-for acknowledgment, tax receipt generation, financial reporting, and
-grant compliance. It is triggered when a contribution is received or
-a pledge is made.
+The Contribution Recording process captures all incoming funding — donations, grants, sponsorships, and pledges — with accurate records for acknowledgment, tax receipt generation, financial reporting, and grant compliance. It is triggered when a contribution is received or a pledge is made.
 
 **Personas Involved**
 - MST-PER-010 Donor / Sponsor Coordinator — records all contributions
@@ -127,203 +74,119 @@ a pledge is made.
 **Process Workflow**
 
 *Individual Donations*
-1. The Coordinator receives notification of a donation — via check,
-   online payment, or direct communication.
-2. A Donation record is created linked to the donor's Contact record,
-   recording the amount, date, payment method, designation, and
-   associated campaign if applicable.
+1. The Coordinator receives notification of a donation — via check, online payment, or direct communication.
+2. A Donation record is created linked to the donor's Contact record, recording the amount, date, payment method, designation, and associated campaign if applicable.
 3. A donor acknowledgment record is generated for tax receipt purposes.
-4. The acknowledgment letter is sent to the donor via the organizational
-   email system.
+4. The acknowledgment letter is sent to the donor via the organizational email system.
 
 *Pledges*
-5. When a donor makes a pledge commitment, a Pledge record is created
-   with the total pledge amount, payment schedule, and start date.
-6. As pledge payments are received, individual Donation records are
-   created and linked to the Pledge record, tracking fulfillment
-   progress against the total commitment.
+5. When a donor makes a pledge commitment, a Pledge record is created with the total pledge amount, payment schedule, and start date.
+6. As pledge payments are received, individual Donation records are created and linked to the Pledge record, tracking fulfillment progress against the total commitment.
 
 *Grants*
-7. When a grant application is submitted, a Grant record is created
-   with the funding institution, amount requested, submission date,
-   and application deadline.
-8. The Grant record is updated as it progresses through the lifecycle —
-   Applied, Awarded, Reporting Due, Closed.
-9. When a grant is awarded, the award amount, award date, grant period,
-   reporting requirements, and reporting deadlines are recorded.
-10. The Coordinator receives automated reminders before reporting
-    deadlines to ensure compliance obligations are met.
+7. When a grant application is submitted, a Grant record is created with the funding institution, amount requested, submission date, and application deadline.
+8. The Grant record is updated as it progresses through the lifecycle — Applied, Awarded, Reporting Due, Closed.
+9. When a grant is awarded, the award amount, award date, grant period, reporting requirements, and reporting deadlines are recorded.
+10. The Coordinator receives automated reminders before reporting deadlines to ensure compliance obligations are met.
 
 *Sponsorships*
-11. When a corporate or organizational sponsorship is agreed upon, a
-    Sponsorship record is created with the sponsor, amount, terms,
-    associated program or event, and any recognition obligations.
+11. When a corporate or organizational sponsorship is agreed upon, a Sponsorship record is created with the sponsor, amount, terms, associated program or event, and any recognition obligations.
 
 **System Requirements**
-- FU-RECORD-REQ-001: The system must record individual donations with
-  donor, date, amount, payment method, designation, and campaign
-- FU-RECORD-REQ-002: The system must generate donor acknowledgment
-  records for tax receipt purposes
-- FU-RECORD-REQ-003: The system must track pledge commitments with
-  amount, payment schedule, and fulfillment status
-- FU-RECORD-REQ-004: The system must record grants with funding
-  institution, amount, application status, award date, reporting
-  requirements, and renewal dates
-- FU-RECORD-REQ-005: The system must alert the Coordinator before
-  grant reporting deadlines
-- FU-RECORD-REQ-006: The system must record sponsorship commitments
-  with sponsor, amount, terms, and associated program or event
-- FU-RECORD-REQ-007: The system must link contributions to fundraising
-  campaigns where applicable
-- FU-RECORD-REQ-008: The system must track recurring donations with
-  frequency, amount, start date, and status
-- FU-RECORD-REQ-009: The system must support storing donor documents —
-  grant letters, agreements, and supporting materials
+- FU-RECORD-REQ-001: The system must record individual donations with donor, date, amount, payment method, designation, and campaign
+- FU-RECORD-REQ-002: The system must generate donor acknowledgment records for tax receipt purposes
+- FU-RECORD-REQ-003: The system must track pledge commitments with amount, payment schedule, and fulfillment status
+- FU-RECORD-REQ-004: The system must record grants with funding institution, amount, application status, award date, reporting requirements, and renewal dates
+- FU-RECORD-REQ-005: The system must alert the Coordinator before grant reporting deadlines
+- FU-RECORD-REQ-006: The system must record sponsorship commitments with sponsor, amount, terms, and associated program or event
+- FU-RECORD-REQ-007: The system must link contributions to fundraising campaigns where applicable
+- FU-RECORD-REQ-008: The system must track recurring donations with frequency, amount, start date, and status
+- FU-RECORD-REQ-009: The system must support storing donor documents — grant letters, agreements, and supporting materials
 
 **Process Data**
-- FU-RECORD-DAT-001: Donor / Funder records — to link contributions to
-  the correct donor or funder
+- FU-RECORD-DAT-001: Donor / Funder records — to link contributions to the correct donor or funder
 
 **Data Collected**
-- FU-RECORD-DAT-002: Donation records — donor, date, amount, type,
-  payment method, designation, campaign
-- FU-RECORD-DAT-003: Pledge records — total amount, payment schedule,
-  fulfillment status
-- FU-RECORD-DAT-004: Grant records — funder, amount, status, dates,
-  reporting requirements
-- FU-RECORD-DAT-005: Sponsorship records — sponsor, amount, terms,
-  associated program or event
+- FU-RECORD-DAT-002: Donation records — donor, date, amount, type, payment method, designation, campaign
+- FU-RECORD-DAT-003: Pledge records — total amount, payment schedule, fulfillment status
+- FU-RECORD-DAT-004: Grant records — funder, amount, status, dates, reporting requirements
+- FU-RECORD-DAT-005: Sponsorship records — sponsor, amount, terms, associated program or event
 
 ---
 
 ### FU-STEWARD — Donor and Sponsor Stewardship
 
 **Process Purpose and Trigger**
-The Stewardship process maintains active, healthy relationships with
-committed donors and sponsors through regular communication, impact
-reporting, and recognition. It is ongoing for all Active donors and
-funders and is triggered after each contribution is received and at
-regular intervals throughout the year.
+The Stewardship process maintains active, healthy relationships with committed donors and sponsors through regular communication, impact reporting, and recognition. It is ongoing for all Active donors and funders and is triggered after each contribution is received and at regular intervals throughout the year.
 
 **Personas Involved**
-- MST-PER-010 Donor / Sponsor Coordinator — manages stewardship
-  communications and reporting
-- MST-PER-002 Executive Member — may participate in high-value donor
-  relationships and board-level funder communications
+- MST-PER-010 Donor / Sponsor Coordinator — manages stewardship communications and reporting
+- MST-PER-002 Executive Member — may participate in high-value donor relationships and board-level funder communications
 
 **Process Workflow**
 
-1. The Coordinator maintains complete profiles for all active donors
-   and funders — contact information, giving history, communication
-   preferences, and lifetime value.
-2. Acknowledgment communications are sent promptly after each
-   contribution is received.
-3. The Coordinator logs all stewardship communications — thank-you
-   letters, impact reports, invitations, and personal outreach —
-   against the donor record.
-4. Board member and mentor giving is tracked separately within the
-   system to support board stewardship reporting and recognize the
-   dual role these individuals play.
-5. For organizational donors and funders with multiple contacts, one
-   contact is designated as the primary for each type of communication.
-6. If a donor lapses — no giving for a defined period — the Coordinator
-   receives an alert to conduct re-engagement outreach.
+1. The Coordinator maintains complete profiles for all active donors and funders — contact information, giving history, communication preferences, and lifetime value.
+2. Acknowledgment communications are sent promptly after each contribution is received.
+3. The Coordinator logs all stewardship communications — thank-you letters, impact reports, invitations, and personal outreach — against the donor record.
+4. Board member and mentor giving is tracked separately within the system to support board stewardship reporting and recognize the dual role these individuals play.
+5. For organizational donors and funders with multiple contacts, one contact is designated as the primary for each type of communication.
+6. If a donor lapses — no giving for a defined period — the Coordinator receives an alert to conduct re-engagement outreach.
 
 **System Requirements**
-- FU-STEWARD-REQ-001: The system must store complete donor and funder
-  profiles including contact information, giving history, communication
-  history, and lifetime value
-- FU-STEWARD-REQ-002: The system must track multiple contacts per
-  organizational donor with one designated as primary
-- FU-STEWARD-REQ-003: The system must track all communications with
-  donors and funders across all CBM personnel
-- FU-STEWARD-REQ-004: The system must track board member and mentor
-  giving separately for internal stewardship reporting
-- FU-STEWARD-REQ-005: The system must support administrator notes on
-  individual donor and funder records
-- FU-STEWARD-REQ-006: The system must alert the Coordinator when an
-  active donor has lapsed beyond a configurable period without giving
+- FU-STEWARD-REQ-001: The system must store complete donor and funder profiles including contact information, giving history, communication history, and lifetime value
+- FU-STEWARD-REQ-002: The system must track multiple contacts per organizational donor with one designated as primary
+- FU-STEWARD-REQ-003: The system must track all communications with donors and funders across all CBM personnel
+- FU-STEWARD-REQ-004: The system must track board member and mentor giving separately for internal stewardship reporting
+- FU-STEWARD-REQ-005: The system must support administrator notes on individual donor and funder records
+- FU-STEWARD-REQ-006: The system must alert the Coordinator when an active donor has lapsed beyond a configurable period without giving
 
 **Process Data**
-- FU-STEWARD-DAT-001: Donor giving history — to personalize
-  stewardship communications and calculate lifetime value
-- FU-STEWARD-DAT-002: Program impact data — engagement counts,
-  session hours, client outcomes — to support impact reporting
-  to funders
+- FU-STEWARD-DAT-001: Donor giving history — to personalize stewardship communications and calculate lifetime value
+- FU-STEWARD-DAT-002: Program impact data — engagement counts, session hours, client outcomes — to support impact reporting to funders
 
 **Data Collected**
-- FU-STEWARD-DAT-003: Stewardship communication records — linked to
-  donor records
-- FU-STEWARD-DAT-004: Updated donor profiles — preferences,
-  relationship notes, lifetime value
+- FU-STEWARD-DAT-003: Stewardship communication records — linked to donor records
+- FU-STEWARD-DAT-004: Updated donor profiles — preferences, relationship notes, lifetime value
 
 ---
 
 ### FU-REPORT — Fundraising Reporting
 
 **Process Purpose and Trigger**
-The Fundraising Reporting process produces accurate analytics for
-internal management and board oversight, as well as donor-facing
-impact reports and grant compliance reports. It is triggered on a
-regular cadence and on demand.
+The Fundraising Reporting process produces accurate analytics for internal management and board oversight, as well as donor-facing impact reports and grant compliance reports. It is triggered on a regular cadence and on demand.
 
 **Personas Involved**
-- MST-PER-010 Donor / Sponsor Coordinator — generates and delivers
-  reports
-- MST-PER-002 Executive Member — reviews board-level fundraising
-  summaries
+- MST-PER-010 Donor / Sponsor Coordinator — generates and delivers reports
+- MST-PER-002 Executive Member — reviews board-level fundraising summaries
 
 **Process Workflow**
 
-1. The Coordinator generates fundraising analytics from the CRM —
-   giving history, campaign performance, donor count, total giving,
-   grant pipeline value, and trends.
-2. Monthly board reports are produced combining CRM fundraising data
-   with program metrics for board review.
-3. Grant compliance reports are produced at reporting deadlines,
-   drawing on program impact data from the Mentoring domain —
-   client outcomes, session hours, mentor contributions — to
-   demonstrate program effectiveness to funders.
-4. Individual donor giving summaries are produced annually for tax
-   receipt and stewardship purposes.
-5. The Coordinator monitors the grant pipeline for upcoming deadlines
-   and reporting obligations.
+1. The Coordinator generates fundraising analytics from the CRM — giving history, campaign performance, donor count, total giving, grant pipeline value, and trends.
+2. Monthly board reports are produced combining CRM fundraising data with program metrics for board review.
+3. Grant compliance reports are produced at reporting deadlines, drawing on program impact data from the Mentoring domain — client outcomes, session hours, mentor contributions — to demonstrate program effectiveness to funders.
+4. Individual donor giving summaries are produced annually for tax receipt and stewardship purposes.
+5. The Coordinator monitors the grant pipeline for upcoming deadlines and reporting obligations.
 
 **System Requirements**
-- FU-REPORT-REQ-001: The system must produce donor and funding analytics
-  — giving history, campaign performance, donor count, total giving,
-  and lifetime value trends
-- FU-REPORT-REQ-002: The system must track fundraising campaign
-  progress against goals
-- FU-REPORT-REQ-003: The system must provide filtering and reporting
-  by donor type, campaign, date range, and designation
-- FU-REPORT-REQ-004: The system must provide executive-level
-  fundraising summaries for board oversight
-- FU-REPORT-REQ-005: The system must produce individual donor giving
-  summaries for annual tax receipt purposes
-- FU-REPORT-REQ-006: The system must track the grant pipeline with
-  status, amounts, and upcoming deadlines in a summary dashboard view
+- FU-REPORT-REQ-001: The system must produce donor and funding analytics — giving history, campaign performance, donor count, total giving, and lifetime value trends
+- FU-REPORT-REQ-002: The system must track fundraising campaign progress against goals
+- FU-REPORT-REQ-003: The system must provide filtering and reporting by donor type, campaign, date range, and designation
+- FU-REPORT-REQ-004: The system must provide executive-level fundraising summaries for board oversight
+- FU-REPORT-REQ-005: The system must produce individual donor giving summaries for annual tax receipt purposes
+- FU-REPORT-REQ-006: The system must track the grant pipeline with status, amounts, and upcoming deadlines in a summary dashboard view
 
 **Process Data**
-- FU-REPORT-DAT-001: Engagement, session, and outcome data from the
-  Mentoring domain — to support grant compliance and impact reports
-- FU-REPORT-DAT-002: All donation, pledge, grant, and sponsorship
-  records — to produce giving analytics
+- FU-REPORT-DAT-001: Engagement, session, and outcome data from the Mentoring domain — to support grant compliance and impact reports
+- FU-REPORT-DAT-002: All donation, pledge, grant, and sponsorship records — to produce giving analytics
 
 **Data Collected**
-- FU-REPORT-DAT-003: No new data collected — reporting draws on
-  existing records
+- FU-REPORT-DAT-003: No new data collected — reporting draws on existing records
 
 ---
 
 ## 4. Data Reference
 
-This section defines all data collected and managed in the Fundraising
-domain. Individual donors are tracked as Contact records using the
-shared Contact entity. Organizational donors and funders are tracked
-as Organization records using the shared Organization entity —
-distinguished by an Organization Type field in the same pattern used
-for Client Organizations and Partner Organizations.
+This section defines all data collected and managed in the Fundraising domain. Individual donors are tracked as Contact records using the shared Contact entity. Organizational donors and funders are tracked as Organization records using the shared Organization entity — distinguished by an Organization Type field in the same pattern used for Client Organizations and Partner Organizations.
 
 Relationships between entities are described in Section 4.6.
 
@@ -331,10 +194,7 @@ Relationships between entities are described in Section 4.6.
 
 ### 4.1 Donor Contact (Individual Donor Fields)
 
-Individual donors are tracked as Contact records. They may also be
-CBM Mentors or board members. The Contact entity is shared across all
-domains — the fields below are specific to or relevant for the
-Fundraising domain.
+Individual donors are tracked as Contact records. They may also be CBM Mentors or board members. The Contact entity is shared across all domains — the fields below are specific to or relevant for the Fundraising domain.
 
 ---
 
@@ -384,11 +244,7 @@ Fundraising domain.
 
 ### 4.2 Funder Organization (Organizational Funder Fields)
 
-Organizational donors, grant-making foundations, corporate sponsors,
-and government funders are tracked as Organization records. They use
-the same shared Organization entity as Client Organizations and
-Partner Organizations, distinguished by an Organization Type value
-of Funder Organization.
+Organizational donors, grant-making foundations, corporate sponsors, and government funders are tracked as Organization records. They use the same shared Organization entity as Client Organizations and Partner Organizations, distinguished by an Organization Type value of Funder Organization.
 
 ---
 
@@ -434,10 +290,7 @@ of Funder Organization.
 
 ### 4.3 Donation
 
-A Donation records a single completed gift from an individual or
-organization. Linked to the donor's Contact or Organization record.
-Multiple donations from the same donor are tracked as separate records
-providing a complete giving history.
+A Donation records a single completed gift from an individual or organization. Linked to the donor's Contact or Organization record. Multiple donations from the same donor are tracked as separate records providing a complete giving history.
 
 ---
 
@@ -491,9 +344,7 @@ providing a complete giving history.
 
 ### 4.4 Pledge
 
-A Pledge records a donor's commitment to give a specified amount over
-time. Individual payments against the pledge are recorded as linked
-Donation records.
+A Pledge records a donor's commitment to give a specified amount over time. Individual payments against the pledge are recorded as linked Donation records.
 
 ---
 
@@ -541,9 +392,7 @@ Donation records.
 
 ### 4.5 Grant
 
-A Grant records a funding opportunity from a foundation, government
-agency, or other grant-making institution. Tracks the full grant
-lifecycle from application through award, reporting, and closure.
+A Grant records a funding opportunity from a foundation, government agency, or other grant-making institution. Tracks the full grant lifecycle from application through award, reporting, and closure.
 
 ---
 
@@ -603,10 +452,7 @@ lifecycle from application through award, reporting, and closure.
 
 ### 4.6 Fundraising Campaign
 
-A Fundraising Campaign groups related donations under a named
-fundraising effort — for example, an annual fund drive, a specific
-program appeal, or a capital campaign. Campaigns allow CBM to track
-progress toward a fundraising goal and analyze giving by campaign.
+A Fundraising Campaign groups related donations under a named fundraising effort — for example, an annual fund drive, a specific program appeal, or a capital campaign. Campaigns allow CBM to track progress toward a fundraising goal and analyze giving by campaign.
 
 ---
 
@@ -640,29 +486,22 @@ progress toward a fundraising goal and analyze giving by campaign.
 ### 4.7 Entity Relationships
 
 **Donor Contact → Donation**
-An individual donor Contact may have one or more Donations over time.
-Each Donation belongs to one donor (individual or organizational).
+An individual donor Contact may have one or more Donations over time. Each Donation belongs to one donor (individual or organizational).
 
 **Funder Organization → Donation**
-An organizational donor or funder Organization may have one or more
-Donations over time.
+An organizational donor or funder Organization may have one or more Donations over time.
 
 **Funder Organization → Grant**
-A funding institution Organization may have one or more Grant records.
-Each Grant belongs to one funding institution.
+A funding institution Organization may have one or more Grant records. Each Grant belongs to one funding institution.
 
 **Donor Contact → Pledge**
-A donor Contact may have one or more Pledges. Each Pledge belongs to
-one donor.
+A donor Contact may have one or more Pledges. Each Pledge belongs to one donor.
 
 **Pledge → Donation**
-A Pledge may have one or more Donations linked to it representing
-installment payments. Each installment Donation is linked back to
-the parent Pledge.
+A Pledge may have one or more Donations linked to it representing installment payments. Each installment Donation is linked back to the parent Pledge.
 
 **Fundraising Campaign → Donation**
-A Campaign may have one or more Donations linked to it. Each Donation
-may optionally be linked to one Campaign.
+A Campaign may have one or more Donations linked to it. Each Donation may optionally be linked to one Campaign.
 
 ---
 
@@ -693,13 +532,4 @@ may optionally be linked to one Campaign.
 
 ## 7. Interview Transcript
 
-*This section will be populated with the verbatim Q&A record from
-requirements interview sessions conducted to produce this Domain PRD.
-The content of this version was derived from existing archived
-specification documents (CBM-PRD-Volunteer-Donor-Documents-Reporting-
-Security.docx Section 10 and CBM-PRD-CRM.docx Section 3.6) rather
-than a live interview session. The Fundraising domain is the least
-developed of the four domains in the existing documentation — a
-formal stakeholder interview session is recommended before
-implementation begins to ensure the requirements fully reflect
-CBM's fundraising program needs.*
+*This section will be populated with the verbatim Q&A record from requirements interview sessions conducted to produce this Domain PRD. The content of this version was derived from existing archived specification documents (CBM-PRD-Volunteer-Donor-Documents-Reporting- Security.docx Section 10 and CBM-PRD-CRM.docx Section 3.6) rather than a live interview session. The Fundraising domain is the least developed of the four domains in the existing documentation — a formal stakeholder interview session is recommended before implementation begins to ensure the requirements fully reflect CBM's fundraising program needs.*

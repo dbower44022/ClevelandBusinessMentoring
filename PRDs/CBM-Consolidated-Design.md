@@ -1,26 +1,18 @@
 # Cleveland Business Mentors
 # Consolidated Design
 
-**Version:** 2.0
-**Status:** Complete — All Four Domains Defined
+**Version:** 2.0 **Status:** Complete — All Four Domains Defined
 **Last Updated:** 03-29-26 21:45
 
 ---
 
 ## Important Notes
 
-This document is maintained by the implementation team. It is not a
-stakeholder document. Do not distribute to stakeholders — they receive
-the Master PRD and Domain PRDs.
+This document is maintained by the implementation team. It is not a stakeholder document. Do not distribute to stakeholders — they receive the Master PRD and Domain PRDs.
 
-This document is the single authoritative source for YAML generation.
-Every entity and field definition here must trace back to a Domain PRD.
-Nothing is added to this document that is not required by at least one
-Domain PRD.
+This document is the single authoritative source for YAML generation. Every entity and field definition here must trace back to a Domain PRD. Nothing is added to this document that is not required by at least one Domain PRD.
 
-Conflicts between domains are resolved here and recorded in the
-Conflict Notes column. All conflict resolutions must be approved before
-the affected YAML is generated.
+Conflicts between domains are resolved here and recorded in the Conflict Notes column. All conflict resolutions must be approved before the affected YAML is generated.
 
 ---
 
@@ -46,14 +38,9 @@ the affected YAML is generated.
 | CD-ENT-016 | Fundraising Campaign | Custom (Base) | FU | Defined — FU complete |
 
 **Entity Type Key:**
-- **Native (Account)** — extends the CRM platform's built-in Account
-  entity. Native fields already exist; only custom fields require
-  deployment.
-- **Native (Contact)** — extends the CRM platform's built-in Contact
-  entity. Native fields already exist; only custom fields require
-  deployment.
-- **Custom (Base)** — a new custom entity created from scratch.
-  All fields require deployment.
+- **Native (Account)** — extends the CRM platform's built-in Account entity. Native fields already exist; only custom fields require deployment.
+- **Native (Contact)** — extends the CRM platform's built-in Contact entity. Native fields already exist; only custom fields require deployment.
+- **Custom (Base)** — a new custom entity created from scratch. All fields require deployment.
 
 ---
 
@@ -63,29 +50,13 @@ the affected YAML is generated.
 
 ### CD-ENT-001 — Organization
 
-**Entity Type:** Native (Account) — extends the built-in Account entity
-**Display Name (singular):** Organization
-**Display Name (plural):** Organizations
-**Source Domain:** MN (Mentoring), MR (Mentor Recruitment), CR (Client Recruiting)
-**Description:** All organizations in the CBM system — client businesses,
-partner organizations, and any organization that may be both simultaneously.
-The anchor record for contacts, engagements, partner relationships, and
-related activity. Records are retained permanently.
+**Entity Type:** Native (Account) — extends the built-in Account entity **Display Name (singular):** Organization **Display Name (plural):** Organizations **Source Domain:** MN (Mentoring), MR (Mentor Recruitment), CR (Client Recruiting) **Description:** All organizations in the CBM system — client businesses, partner organizations, and any organization that may be both simultaneously. The anchor record for contacts, engagements, partner relationships, and related activity. Records are retained permanently.
 
-**Conflict Resolution — MN vs CR:** The Mentoring domain defines the
-Organization entity as a Client Organization. The Client Recruiting domain
-extends it to also represent Partner Organizations. Resolution: a single
-Organization entity carries all fields for both use cases. An Organization
-Type field (multi-select: Client Organization, Partner Organization) drives
-conditional visibility of client-specific and partner-specific field panels.
-An organization can be both types simultaneously. No field naming conflicts
-exist between the two domains. Resolution approved March 2026.
+**Conflict Resolution — MN vs CR:** The Mentoring domain defines the Organization entity as a Client Organization. The Client Recruiting domain extends it to also represent Partner Organizations. Resolution: a single Organization entity carries all fields for both use cases. An Organization Type field (multi-select: Client Organization, Partner Organization) drives conditional visibility of client-specific and partner-specific field panels. An organization can be both types simultaneously. No field naming conflicts exist between the two domains. Resolution approved March 2026.
 
 #### Fields
 
-Fields marked **[NATIVE]** already exist on the built-in Account entity
-and do not require deployment. Fields marked **[CUSTOM]** are additions
-that must be deployed.
+Fields marked **[NATIVE]** already exist on the built-in Account entity and do not require deployment. Fields marked **[CUSTOM]** are additions that must be deployed.
 
 ---
 
@@ -386,25 +357,9 @@ that must be deployed.
 
 ### CD-ENT-002 — Contact
 
-**Entity Type:** Native (Contact) — extends the built-in Contact entity
-**Display Name (singular):** Contact
-**Display Name (plural):** Contacts
-**Source Domain:** MN (Mentoring), MR (Mentor Recruitment), CR (Client Recruiting — pending)
-**Description:** An individual person associated with a client
-organization or serving as a volunteer mentor. The Contact entity is
-shared across multiple domains. A Contact Type field distinguishes
-Client Contacts from Mentor Contacts. All identity fields are shared;
-role-specific fields are conditionally displayed based on Contact Type.
+**Entity Type:** Native (Contact) — extends the built-in Contact entity **Display Name (singular):** Contact **Display Name (plural):** Contacts **Source Domain:** MN (Mentoring), MR (Mentor Recruitment), CR (Client Recruiting — pending) **Description:** An individual person associated with a client organization or serving as a volunteer mentor. The Contact entity is shared across multiple domains. A Contact Type field distinguishes Client Contacts from Mentor Contacts. All identity fields are shared; role-specific fields are conditionally displayed based on Contact Type.
 
-**Conflict Resolution — MN vs MR:** Both the Mentoring domain and the
-Mentor Recruitment domain use the Contact entity. MN requires Client
-Contact fields (Primary Contact, Role at Business, Zip Code). MR requires
-Mentor Contact fields (Mentor Status, expertise, capacity, onboarding
-fields, etc.). Resolution: both sets of fields are defined on the single
-Contact entity. A Contact Type field (Mentor / Client) drives conditional
-panel visibility so each contact type sees only their relevant fields.
-No field naming conflicts exist between the two domains. Resolution
-approved March 2026.
+**Conflict Resolution — MN vs MR:** Both the Mentoring domain and the Mentor Recruitment domain use the Contact entity. MN requires Client Contact fields (Primary Contact, Role at Business, Zip Code). MR requires Mentor Contact fields (Mentor Status, expertise, capacity, onboarding fields, etc.). Resolution: both sets of fields are defined on the single Contact entity. A Contact Type field (Mentor / Client) drives conditional panel visibility so each contact type sees only their relevant fields. No field naming conflicts exist between the two domains. Resolution approved March 2026.
 
 #### Fields
 
@@ -778,14 +733,7 @@ approved March 2026.
 
 ### CD-ENT-003 — Engagement
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Engagement
-**Display Name (plural):** Engagements
-**Source Domain:** MN (Mentoring)
-**Description:** The active mentoring relationship between CBM and a
-client organization. Tracks lifecycle, mentor assignments, session
-activity, and satisfaction survey history. Records are retained
-permanently and never deleted or reopened after closure.
+**Entity Type:** Custom (Base) **Display Name (singular):** Engagement **Display Name (plural):** Engagements **Source Domain:** MN (Mentoring) **Description:** The active mentoring relationship between CBM and a client organization. Tracks lifecycle, mentor assignments, session activity, and satisfaction survey history. Records are retained permanently and never deleted or reopened after closure.
 
 #### Fields
 
@@ -891,14 +839,7 @@ permanently and never deleted or reopened after closure.
 
 ### CD-ENT-004 — Session
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Session
-**Display Name (plural):** Sessions
-**Source Domain:** MN (Mentoring)
-**Description:** Records each individual meeting between a mentor and
-client. Linked to an Engagement. Drives roll-up analytics, satisfaction
-survey triggers, and inactivity monitoring. At least one mentor
-attendee required before record can be saved.
+**Entity Type:** Custom (Base) **Display Name (singular):** Session **Display Name (plural):** Sessions **Source Domain:** MN (Mentoring) **Description:** Records each individual meeting between a mentor and client. Linked to an Engagement. Drives roll-up analytics, satisfaction survey triggers, and inactivity monitoring. At least one mentor attendee required before record can be saved.
 
 #### Fields
 
@@ -985,15 +926,7 @@ attendee required before record can be saved.
 
 ### CD-ENT-005 — Survey Response
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Survey Response
-**Display Name (plural):** Survey Responses
-**Source Domain:** MN (Mentoring)
-**Description:** Captures client satisfaction feedback at defined
-points in the engagement lifecycle. Triggered automatically after
-the 2nd session, every 5 sessions thereafter, and at engagement
-close. Delivered via integrated survey tool. Responses stored in
-the CRM linked to both the Engagement and triggering Session.
+**Entity Type:** Custom (Base) **Display Name (singular):** Survey Response **Display Name (plural):** Survey Responses **Source Domain:** MN (Mentoring) **Description:** Captures client satisfaction feedback at defined points in the engagement lifecycle. Triggered automatically after the 2nd session, every 5 sessions thereafter, and at engagement close. Delivered via integrated survey tool. Responses stored in the CRM linked to both the Engagement and triggering Session.
 
 #### Fields
 
@@ -1052,14 +985,7 @@ the CRM linked to both the Engagement and triggering Session.
 
 ### CD-ENT-008 — Partner Agreement
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Partner Agreement
-**Display Name (plural):** Partner Agreements
-**Source Domain:** CR (Client Recruiting)
-**Description:** Records a formal written agreement between CBM and a
-partner organization. A partner may have more than one agreement on
-file. Agreement documents restricted to Partner Coordinator and
-Executive Member access.
+**Entity Type:** Custom (Base) **Display Name (singular):** Partner Agreement **Display Name (plural):** Partner Agreements **Source Domain:** CR (Client Recruiting) **Description:** Records a formal written agreement between CBM and a partner organization. A partner may have more than one agreement on file. Agreement documents restricted to Partner Coordinator and Executive Member access.
 
 #### Fields
 
@@ -1092,13 +1018,7 @@ Executive Member access.
 
 ### CD-ENT-009 — Client-Partner Association
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Client-Partner Association
-**Display Name (plural):** Client-Partner Associations
-**Source Domain:** CR (Client Recruiting)
-**Description:** Links a Client Organization to a Partner Organization.
-Foundation for all partner analytics. A client may be associated with
-multiple partners simultaneously. Associations persist indefinitely.
+**Entity Type:** Custom (Base) **Display Name (singular):** Client-Partner Association **Display Name (plural):** Client-Partner Associations **Source Domain:** CR (Client Recruiting) **Description:** Links a Client Organization to a Partner Organization. Foundation for all partner analytics. A client may be associated with multiple partners simultaneously. Associations persist indefinitely.
 
 #### Fields
 
@@ -1123,15 +1043,7 @@ multiple partners simultaneously. Associations persist indefinitely.
 
 ### CD-ENT-010 — Workshop
 
-**Entity Type:** Custom (Event)
-**Display Name (singular):** Workshop
-**Display Name (plural):** Workshops
-**Source Domain:** MN (Mentoring), CR (Client Recruiting)
-**Description:** A structured event — clinic, workshop, office hours,
-or other programming — offered by CBM. Serves both as a client
-recruiting mechanism and as ongoing engagement for existing clients.
-May be virtual or in-person. May be co-sponsored by partner
-organizations.
+**Entity Type:** Custom (Event) **Display Name (singular):** Workshop **Display Name (plural):** Workshops **Source Domain:** MN (Mentoring), CR (Client Recruiting) **Description:** A structured event — clinic, workshop, office hours, or other programming — offered by CBM. Serves both as a client recruiting mechanism and as ongoing engagement for existing clients. May be virtual or in-person. May be co-sponsored by partner organizations.
 
 #### Fields
 
@@ -1183,13 +1095,7 @@ organizations.
 
 ### CD-ENT-011 — Workshop Registration
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Workshop Registration
-**Display Name (plural):** Workshop Registrations
-**Source Domain:** CR (Client Recruiting)
-**Description:** Links a Contact to a Workshop they registered for or
-attended. Tracks registration and attendance status per participant.
-Creates new Contact records for registrants not already in the CRM.
+**Entity Type:** Custom (Base) **Display Name (singular):** Workshop Registration **Display Name (plural):** Workshop Registrations **Source Domain:** CR (Client Recruiting) **Description:** Links a Contact to a Workshop they registered for or attended. Tracks registration and attendance status per participant. Creates new Contact records for registrants not already in the CRM.
 
 #### Fields
 
@@ -1222,13 +1128,7 @@ Creates new Contact records for registrants not already in the CRM.
 
 ### CD-ENT-012 — Partner Activity
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Partner Activity
-**Display Name (plural):** Partner Activities
-**Source Domain:** CR (Client Recruiting)
-**Description:** Records a joint event, collaborative program,
-co-developed content, or relationship management activity involving
-a partner organization.
+**Entity Type:** Custom (Base) **Display Name (singular):** Partner Activity **Display Name (plural):** Partner Activities **Source Domain:** CR (Client Recruiting) **Description:** Records a joint event, collaborative program, co-developed content, or relationship management activity involving a partner organization.
 
 #### Fields
 
@@ -1264,13 +1164,7 @@ a partner organization.
 
 ### CD-ENT-006 — Dues
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Dues
-**Display Name (plural):** Dues
-**Source Domain:** MR (Mentor Recruitment)
-**Description:** One annual dues record per mentor per billing year.
-Provides complete payment history independent of the Dues Status
-summary field on the mentor Contact record.
+**Entity Type:** Custom (Base) **Display Name (singular):** Dues **Display Name (plural):** Dues **Source Domain:** MR (Mentor Recruitment) **Description:** One annual dues record per mentor per billing year. Provides complete payment history independent of the Dues Status summary field on the mentor Contact record.
 
 #### Fields
 
@@ -1316,12 +1210,7 @@ summary field on the mentor Contact record.
 
 ### CD-ENT-007 — SME Request
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** SME Request
-**Display Name (plural):** SME Requests
-**Source Domain:** MN (Mentoring), MR (Mentor Recruitment)
-**Description:** Tracks a request by a Primary Mentor for subject
-matter expert involvement in an active engagement.
+**Entity Type:** Custom (Base) **Display Name (singular):** SME Request **Display Name (plural):** SME Requests **Source Domain:** MN (Mentoring), MR (Mentor Recruitment) **Description:** Tracks a request by a Primary Mentor for subject matter expert involvement in an active engagement.
 
 #### Fields
 
@@ -1358,13 +1247,7 @@ matter expert involvement in an active engagement.
 
 ### CD-ENT-013 — Donation
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Donation
-**Display Name (plural):** Donations
-**Source Domain:** FU (Fundraising)
-**Description:** Records a single completed gift from an individual or
-organization. Multiple donations from the same donor are tracked as
-separate records providing a complete giving history.
+**Entity Type:** Custom (Base) **Display Name (singular):** Donation **Display Name (plural):** Donations **Source Domain:** FU (Fundraising) **Description:** Records a single completed gift from an individual or organization. Multiple donations from the same donor are tracked as separate records providing a complete giving history.
 
 #### Fields
 
@@ -1422,12 +1305,7 @@ separate records providing a complete giving history.
 
 ### CD-ENT-014 — Pledge
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Pledge
-**Display Name (plural):** Pledges
-**Source Domain:** FU (Fundraising)
-**Description:** Records a donor's commitment to give a specified amount
-over time. Individual payments are recorded as linked Donation records.
+**Entity Type:** Custom (Base) **Display Name (singular):** Pledge **Display Name (plural):** Pledges **Source Domain:** FU (Fundraising) **Description:** Records a donor's commitment to give a specified amount over time. Individual payments are recorded as linked Donation records.
 
 #### Fields
 
@@ -1478,14 +1356,7 @@ over time. Individual payments are recorded as linked Donation records.
 
 ### CD-ENT-015 — Grant
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Grant
-**Display Name (plural):** Grants
-**Source Domain:** FU (Fundraising)
-**Description:** Records a funding opportunity from a grant-making
-institution. Tracks the full lifecycle from application through award,
-reporting, and closure. Automated alerts notify the Coordinator
-before reporting deadlines.
+**Entity Type:** Custom (Base) **Display Name (singular):** Grant **Display Name (plural):** Grants **Source Domain:** FU (Fundraising) **Description:** Records a funding opportunity from a grant-making institution. Tracks the full lifecycle from application through award, reporting, and closure. Automated alerts notify the Coordinator before reporting deadlines.
 
 #### Fields
 
@@ -1549,13 +1420,7 @@ before reporting deadlines.
 
 ### CD-ENT-016 — Fundraising Campaign
 
-**Entity Type:** Custom (Base)
-**Display Name (singular):** Fundraising Campaign
-**Display Name (plural):** Fundraising Campaigns
-**Source Domain:** FU (Fundraising)
-**Description:** Groups related donations under a named fundraising
-effort. Tracks progress toward a goal and enables analysis of giving
-by campaign.
+**Entity Type:** Custom (Base) **Display Name (singular):** Fundraising Campaign **Display Name (plural):** Fundraising Campaigns **Source Domain:** FU (Fundraising) **Description:** Groups related donations under a named fundraising effort. Tracks progress toward a goal and enables analysis of giving by campaign.
 
 #### Fields
 
@@ -1643,9 +1508,7 @@ by campaign.
 
 ## Appendix A — Enum Values Pending Definition
 
-The following enum fields have values that must be defined by CBM
-leadership before YAML can be generated for the affected entities.
-These are tracked as Open Issues in the Mentoring Domain PRD.
+The following enum fields have values that must be defined by CBM leadership before YAML can be generated for the affected entities. These are tracked as Open Issues in the Mentoring Domain PRD.
 
 | Field | Entity | Issue ID |
 |---|---|---|
@@ -1658,6 +1521,4 @@ These are tracked as Open Issues in the Mentoring Domain PRD.
 | Workshop Topic / Category | Workshop | CR-ISS-001 |
 | Donor Giving Levels / Tiers | Contact (Donor) | FU-ISS-001 |
 
-Industry Sector and Subsector values are defined by the federal NAICS
-classification system and do not require CBM input. Full value lists
-will be included in the YAML program files.
+Industry Sector and Subsector values are defined by the federal NAICS classification system and do not require CBM input. Full value lists will be included in the YAML program files.
