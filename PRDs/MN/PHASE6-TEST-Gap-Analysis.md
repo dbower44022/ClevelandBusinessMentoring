@@ -61,9 +61,64 @@ Domain PRD Section 6.
 
 ---
 
-## Conclusion
+## Entity Test: Client Contact
 
-The Mentoring Domain PRD passes the Phase 6 readiness test for the
-Engagement entity. The Data Reference provides sufficient information
-for YAML generation. All gaps are either appropriately deferred to the
-implementation phase or are already tracked as open issues.
+Tested: 04-01-26
+
+### Summary
+
+The Client Contact test revealed structural gaps that the Engagement test
+did not surface. These are not content gaps — the business requirements
+are correct — but entity mapping gaps between PRD entities and CRM entities
+that block YAML generation.
+
+### Structural Gaps (Require Resolution Before YAML Generation)
+
+| # | Gap | Description | Resolution |
+|---|-----|-------------|------------|
+| A | **Shared entity model not documented** | The PRD treats "Client Contact" as a separate entity, but the CRM uses a single Contact entity with a contactType field (Client, Mentor, Partner, Administrator). The PRD has no mention of this shared model. | Create an Entity Inventory document that maps PRD entity names to actual CRM entities. |
+| B | **Native vs. custom fields not distinguished** | Contact is a Person-type entity with built-in fields (firstName, lastName, emailAddress, phoneNumber). The PRD lists these as if they need to be created. The YAML generator needs to know which fields already exist. | Entity PRDs must identify which fields are native and which are custom. |
+| C | **Cross-domain field sharing not indicated** | Some "Client Contact" fields (e.g., LinkedIn Profile) already exist on the Contact entity for Mentor and Partner types. The PRD doesn't indicate whether a field is shared or type-specific. | Entity PRDs must consolidate fields across all domains that use the entity and mark shared vs. type-specific. |
+| D | **Dynamic logic visibility not specified** | The existing CRM uses contactType to show/hide type-specific fields. The PRD doesn't document which fields should be shown only for Client-type contacts. | Entity PRDs must define dynamic logic visibility rules per contact type. |
+| E | **contactType field not documented** | The mechanism by which a "Client Contact" is created (setting contactType = "Client") is not in the Mentoring Domain PRD. | Entity Inventory establishes the contactType pattern. Entity PRDs define the values. |
+| F | **Zip Code vs. native address ambiguity** | The PRD defines Zip Code as a standalone varchar field, but the Person-type entity has built-in address components. Unclear whether this is a standalone field or should use the native address. | Entity PRD for Contact must clarify the relationship between Zip Code and the native address fields. |
+
+### Resolution Approach
+
+Create Entity Definition artifacts retroactively:
+
+1. **Entity Inventory** — a single document mapping PRD entity names to
+   actual CRM entities (native vs. custom, entity type, contactType values).
+
+2. **Entity PRDs** — one per actual CRM entity, consolidating:
+   - Native vs. custom field designation
+   - Fields shared across types vs. type-specific
+   - Dynamic logic visibility rules
+   - PRD field name to implementation field name mapping
+   - All domains that contribute fields to this entity
+
+Estimated effort: one conversation per CRM entity (3-4 entities for the
+Mentoring domain: Contact, Account, Engagement, Session).
+
+The Domain PRD and process documents remain unchanged — they are the
+business requirements view. The Entity PRDs become the implementation
+mapping view that YAML generation reads from.
+
+---
+
+## Overall Conclusion
+
+**Engagement entity:** Passes Phase 6 readiness. Domain PRD Data Reference
+has sufficient detail. All gaps are implementation-level decisions or
+known open issues.
+
+**Client Contact entity:** Does NOT pass Phase 6 readiness. Structural gaps
+in entity mapping prevent YAML generation. Entity Definition artifacts
+(Phase 2) must be created before YAML generation can proceed for entities
+that map to shared CRM entities (Contact, Account).
+
+**Recommendation:** Complete Entity Definition (Phase 2) retroactively
+before proceeding to YAML generation (Phase 6) for any domain. Custom
+entities (Engagement, Session) can proceed to YAML generation from the
+Domain PRD alone. Shared/native entities (Contact, Account) require
+Entity PRDs as an additional input.
