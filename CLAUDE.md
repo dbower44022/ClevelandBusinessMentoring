@@ -38,11 +38,13 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: Mentoring domain process documents complete; other domains pending.**
+**Process status: Entity Discovery (Phase 2a) complete; Entity PRDs (Phase 2b) next.**
 
-The Mentoring (MN) domain has five completed process documents produced
-under the new document production process. Other domains remain in
-transition from the old process.
+The Mentoring (MN) domain has five completed process documents and a
+reconciled Domain PRD produced under the new document production
+process. Entity Discovery has been completed retroactively, producing
+the Entity Inventory. Other domains remain in transition from the
+old process.
 
 ### Mentoring Domain Process Documents (new process)
 
@@ -64,14 +66,34 @@ This is distinct from the organization-level Primary Contact on
 Client Contact.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
-document, workflow diagrams for all processes, and Domain Reconciliation.
+document, workflow diagrams for all processes.
+
+### Entity Inventory (Phase 2a)
+
+| Document | File | Version |
+|---|---|---|
+| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.0 |
+
+Maps 21 business entity concepts to 9 CRM entities (2 native, 7 custom).
+Key design decisions: Contact uses multiEnum contactType (Client, Mentor,
+Partner, Administrator, Presenter, Donor, Member); Account uses multiEnum
+accountType (Client, Partner, Donor/Sponsor); Contribution consolidates
+Donation, Sponsorship, Grant, and Pledge with an enum contributionType
+discriminator. Prospect is a lifecycle state, not a contactType value.
+8 open issues documented for downstream resolution.
+
+### Mentoring Domain PRD (Phase 4)
+
+| Document | File | Version |
+|---|---|---|
+| Mentoring Domain PRD | `PRDs/MN/CBM-Domain-PRD-Mentoring.docx` | v1.0 |
 
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
 |---|---|---|
 | Master PRD | `PRDs/CBM-Master-PRD.md` | Markdown, v1.0 — needs conversion to Word and review |
-| Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by process documents above |
+| Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by Word version at PRDs/MN/CBM-Domain-PRD-Mentoring.docx |
 | Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Markdown, v1.0 — summary-level data, needs enrichment |
@@ -84,9 +106,9 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
+- Produce Entity PRDs (Phase 2b) — priority order: Contact, Account, Engagement, Session, then remaining entities
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all five MN processes
-- Conduct Mentoring Domain Reconciliation
 - Begin Mentor Recruitment (MR) domain process documents
 - Convert Master PRD from Markdown to Word
 
@@ -108,6 +130,9 @@ source material only — never reference them as current requirements.
 ```
 PRDs/
 ├── CBM-Master-PRD.docx            ← Master PRD (Word)
+├── CBM-Entity-Inventory.docx      ← Entity Inventory (Phase 2a)
+├── entities/                      ← Entity PRDs (Phase 2b, one per CRM entity)
+│   └── ...
 ├── MN/
 │   ├── MN-INTAKE.docx             ← Process document
 │   ├── MN-MATCH.docx
@@ -153,8 +178,10 @@ Implementation Docs/               ← Verification Spec
 ## Important Rules for This Implementation
 
 - Never mention specific product names (EspoCRM, WordPress, Moodle,
-  Constant Contact, DigitalOcean, etc.) in Master PRDs, process
-  documents, or Domain PRDs. These are implementation details only.
+  Constant Contact, DigitalOcean, etc.) in Master PRDs, Entity PRDs,
+  process documents, or Domain PRDs. These are implementation details
+  only. Exception: the Entity Inventory is an implementation bridging
+  document where product names are permitted.
 - All documents are produced as Word (.docx) files. No Markdown
   source files under the new process.
 - All legacy documents are in `PRDs/Archive/` — never reference them
