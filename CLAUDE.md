@@ -38,20 +38,40 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: Transitioning to new document production process.**
+**Process status: Mentoring domain process documents complete; other domains pending.**
 
-The previous round of document production used an older process that
-has been replaced. The documents below were produced under that process.
-They contain substantial requirements content that serves as source
-material, but they need to be reworked under the new process to ensure
-consistent field-level detail across all domains.
+The Mentoring (MN) domain has five completed process documents produced
+under the new document production process. Other domains remain in
+transition from the old process.
+
+### Mentoring Domain Process Documents (new process)
+
+| Document | File | Version |
+|---|---|---|
+| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.1 |
+| Mentor Matching | `PRDs/MN/MN-MATCH.docx` | v2.1 |
+| Engagement Management | `PRDs/MN/MN-ENGAGE.docx` | v2.3 |
+| Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
+| Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
+
+**Latest structural change (04-01-26):** Added Primary Engagement
+Contact field to the Engagement entity across all five documents. This
+field identifies the single client contact who is the primary point of
+contact for a specific engagement. All system-generated client-facing
+communications follow a TO/CC pattern: addressed TO the Primary
+Engagement Contact, with other Engagement Contacts (if any) as CC.
+This is distinct from the organization-level Primary Contact on
+Client Contact.
+
+**Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
+document, workflow diagrams for all processes, and Domain Reconciliation.
 
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
 |---|---|---|
 | Master PRD | `PRDs/CBM-Master-PRD.md` | Markdown, v1.0 — needs conversion to Word and review |
-| Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — has field-level detail |
+| Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by process documents above |
 | Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Markdown, v1.0 — summary-level data, needs enrichment |
@@ -62,14 +82,13 @@ consistent field-level detail across all domains.
 All documents from prior iterations are in `PRDs/Archive/`. These are
 source material only — never reference them as current requirements.
 
-### Next Step
+### Next Steps
 
-Decide how to transition the existing CBM documents into the new
-process. Options include:
-- Reworking existing content through the new process phases
-- Using existing documents as source material for fresh process
-  conversations
-- A hybrid approach depending on domain completeness
+- Define Client Satisfaction Tracking (MN-SURVEY) process document
+- Create workflow diagrams for all five MN processes
+- Conduct Mentoring Domain Reconciliation
+- Begin Mentor Recruitment (MR) domain process documents
+- Convert Master PRD from Markdown to Word
 
 ---
 
