@@ -38,14 +38,17 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: Entity PRDs (Phase 2b) in progress — Contact, Account, Engagement, and Session complete.**
+**Process status: MR domain process documents (Phase 3) in progress — MR-RECRUIT complete.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
 process. Entity Discovery has been completed retroactively, producing
 the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
 Session) are complete — all MN-domain entities are now fully defined.
-Other domains remain in transition from the old process.
+
+The Mentor Recruitment (MR) domain has begun Phase 3 process definition.
+MR-RECRUIT is complete. Four process documents remain: MR-APPLY,
+MR-ONBOARD, MR-MANAGE, MR-DEPART.
 
 ### Mentoring Domain Process Documents (new process)
 
@@ -57,20 +60,29 @@ Other domains remain in transition from the old process.
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-02-26):** Session Entity PRD v1.0
-completed. Key decisions: native dateStart maps to Session Date/Time
-(SES-DEC-001), dateEnd calculated from dateStart + duration
-(SES-DEC-002), native status with 7 custom values (SES-DEC-003),
-name auto-generated as {Engagement Name} — {Session Date}
-(SES-DEC-004), nextSessionDateTime on Session is user input while
-Engagement's is workflow roll-up (SES-DEC-005), session summary
-includes notes when populated with no toggle (SES-DEC-006),
-self-referential rescheduledFromSession link (SES-DEC-007), native
-parent link for Engagement relationship (SES-DEC-008), two separate
-manyToMany relationships for attendees (SES-DEC-009).
+**Latest structural change (04-02-26):** MR-RECRUIT v1.0 completed —
+first MR domain process document. Key decisions: Prospect is the initial
+Mentor Status for outreach-generated contacts; v1.0 uses manual
+export/import for marketing system integration with automated sync as a
+future enhancement; contact merge capability deferred to MR-APPLY;
+new applicationDeclineReason field agreed for MR-APPLY.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
+
+### Mentor Recruitment Domain Process Documents (new process)
+
+| Document | File | Version |
+|---|---|---|
+| Mentor Recruitment | `PRDs/MR/MR-RECRUIT.docx` | v1.0 |
+| Mentor Application | `PRDs/MR/MR-APPLY.docx` | Not started |
+| Mentor Onboarding | `PRDs/MR/MR-ONBOARD.docx` | Not started |
+| Mentor Management | `PRDs/MR/MR-MANAGE.docx` | Not started |
+| Mentor Departure | `PRDs/MR/MR-DEPART.docx` | Not started |
+
+**Remaining MR work:** Four process documents (MR-APPLY, MR-ONBOARD,
+MR-MANAGE, MR-DEPART), then MR Domain Reconciliation (Phase 4), then
+Entity PRDs for Dues and SME Request entities.
 
 ### Entity Inventory (Phase 2a)
 
@@ -172,10 +184,13 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Produce Entity PRDs (Phase 2b) — Contact, Account, Engagement, and Session complete; remaining entities depend on CR and FU domain process documents
+- Complete MR domain process documents (MR-APPLY, MR-ONBOARD, MR-MANAGE, MR-DEPART)
+- MR Domain Reconciliation (Phase 4) — synthesize 5 MR process documents into MR Domain PRD
+- Produce Entity PRDs for Dues and SME Request entities (defined inline during MR process documents)
+- Update Entity Inventory to include Dues and SME Request entities
+- Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
-- Create workflow diagrams for all five MN processes
-- Begin Mentor Recruitment (MR) domain process documents
+- Create workflow diagrams for all MN and MR processes
 - Convert Master PRD from Markdown to Word
 
 ---
