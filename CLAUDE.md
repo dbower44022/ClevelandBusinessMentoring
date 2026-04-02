@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR domain process documents (Phase 3) in progress — MR-RECRUIT and MR-APPLY complete.**
+**Process status: MR domain process documents (Phase 3) in progress — MR-RECRUIT, MR-APPLY, and MR-ONBOARD complete.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -47,8 +47,8 @@ the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
 Session) are complete — all MN-domain entities are now fully defined.
 
 The Mentor Recruitment (MR) domain has begun Phase 3 process definition.
-MR-RECRUIT and MR-APPLY are complete. Three process documents remain:
-MR-ONBOARD, MR-MANAGE, MR-DEPART.
+MR-RECRUIT, MR-APPLY, and MR-ONBOARD are complete. Two process documents remain:
+MR-MANAGE, MR-DEPART.
 
 ### Mentoring Domain Process Documents (new process)
 
@@ -60,15 +60,17 @@ MR-ONBOARD, MR-MANAGE, MR-DEPART.
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-02-26):** MR-APPLY v1.0 completed —
-second MR domain process document. Key decisions: In Review is an
-intermediate status between Submitted and Provisional/Declined;
-duplicate detection uses email only with three outcomes (create new,
-update prospect, reject conflict); conflict rejections display an error
-to the submitter and notify the Mentor Administrator; contact merge is
-a fully manual process; applicationDeclineReason field confirmed as
-Contact Entity PRD update; preferredName added to application form;
-phone number is required; single review view with status filters.
+**Latest structural change (04-02-26):** MR-ONBOARD v1.0 completed —
+third MR domain process document. Key decisions: onboarding steps 2-6
+run in parallel with one dependency (ethics agreement before background
+check because it contains consent); background check at Mentor
+Administrator discretion (resolves MR-ISS-005); ethics agreement is an
+external process recorded in CRM by admin; no system validation gates
+for activation; trainingCompleted allows manual admin override (Contact
+Entity PRD update needed); isPrimaryMentor defaults to Yes at
+activation; Provisional → Declined is valid with two new
+applicationDeclineReason values (Unresponsive, Candidate Withdrew);
+no onboarding progress view or deadline enforcement.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -79,12 +81,12 @@ document, workflow diagrams for all processes.
 |---|---|---|
 | Mentor Recruitment | `PRDs/MR/MR-RECRUIT.docx` | v1.0 |
 | Mentor Application | `PRDs/MR/MR-APPLY.docx` | v1.0 |
-| Mentor Onboarding | `PRDs/MR/MR-ONBOARD.docx` | Not started |
+| Mentor Onboarding | `PRDs/MR/MR-ONBOARD.docx` | v1.0 |
 | Mentor Management | `PRDs/MR/MR-MANAGE.docx` | Not started |
 | Mentor Departure | `PRDs/MR/MR-DEPART.docx` | Not started |
 
-**Remaining MR work:** Three process documents (MR-ONBOARD,
-MR-MANAGE, MR-DEPART), then MR Domain Reconciliation (Phase 4), then
+**Remaining MR work:** Two process documents (MR-MANAGE,
+MR-DEPART), then MR Domain Reconciliation (Phase 4), then
 Entity PRDs for Dues and SME Request entities.
 
 ### Entity Inventory (Phase 2a)
@@ -187,7 +189,7 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Complete MR domain process documents (MR-ONBOARD, MR-MANAGE, MR-DEPART)
+- Complete MR domain process documents (MR-MANAGE, MR-DEPART)
 - MR Domain Reconciliation (Phase 4) — synthesize 5 MR process documents into MR Domain PRD
 - Produce Entity PRDs for Dues and SME Request entities (defined inline during MR process documents)
 - Update Entity Inventory to include Dues and SME Request entities
