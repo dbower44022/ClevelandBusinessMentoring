@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: Entity PRDs (Phase 2b) in progress — Contact and Account complete.**
+**Process status: Entity PRDs (Phase 2b) in progress — Contact, Account, and Engagement complete.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -56,12 +56,13 @@ Other domains remain in transition from the old process.
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-02-26):** Account Entity PRD v1.0
-completed. Key decisions: assignedLiaison as separate Partner-specific
-Contact link (ACT-DEC-002), parentOrganization shared across all account
-types (ACT-DEC-003), type-specific wysiwyg notes fields with role-based
-security (ACT-DEC-005), Primary Contact implemented as bool on
-Contact-Account relationship middle table (ACT-DEC-001).
+**Latest structural change (04-02-26):** Engagement Entity PRD v1.0
+completed. Key decisions: name auto-generated as {Client}-{Mentor}-{Year}
+(ENG-DEC-001), native description hidden (ENG-DEC-002), session roll-up
+fields are workflow-updated stored fields (ENG-DEC-003), no Client
+Satisfaction Rating field — deferred to MN-SURVEY (ENG-DEC-004), single
+engagementNotes field with no separate Closure Notes (ENG-DEC-005),
+On-Hold is a status value not a flag (ENG-DEC-006).
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -86,6 +87,7 @@ discriminator. Prospect is a lifecycle state, not a contactType value.
 |---|---|---|
 | Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.0 |
 | Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.0 |
+| Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.0 |
 
 Contact is the most complex entity — native Person type, spans all four
 domains, 7 contactType values (multiEnum). 16 native fields documented,
@@ -109,7 +111,19 @@ shared across all types; type-specific wysiwyg notes fields with
 role-based security; primaryFunderContact dropped in favor of
 relationship-level Primary Contact.
 
-**Next Entity PRDs:** Engagement, Session, then remaining entities.
+Engagement is a single-domain custom entity — Custom Base type, owned
+exclusively by the Mentoring (MN) domain. 2 native fields (name
+auto-generated, description hidden), 19 custom fields across 6
+functional groups (lifecycle, mentoring context, notes, session
+roll-up analytics, closure, outcomes). 6 relationships (4 to Contact,
+1 to Account, 1 to Session). Status-driven dynamic logic (no
+discriminator). 4 open issues (Mentoring Focus Areas values TBD, Close
+Reason values TBD, additional outcome metrics TBD, survey response
+tracking deferred). Key decisions: name auto-generated as
+{Client}-{Mentor}-{Year}; session roll-ups are workflow-updated stored
+fields; no Client Satisfaction Rating; On-Hold is a status value.
+
+**Next Entity PRDs:** Session, then remaining entities.
 
 ### Mentoring Domain PRD (Phase 4)
 
@@ -135,7 +149,7 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Produce Entity PRDs (Phase 2b) — Contact and Account complete; next: Engagement, Session, then remaining entities
+- Produce Entity PRDs (Phase 2b) — Contact, Account, and Engagement complete; next: Session, then remaining entities
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all five MN processes
 - Begin Mentor Recruitment (MR) domain process documents
