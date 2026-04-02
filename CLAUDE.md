@@ -38,13 +38,13 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: Entity Discovery (Phase 2a) complete; Entity PRDs (Phase 2b) next.**
+**Process status: Entity PRDs (Phase 2b) in progress — Contact complete.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
 process. Entity Discovery has been completed retroactively, producing
-the Entity Inventory. Other domains remain in transition from the
-old process.
+the Entity Inventory. The first Entity PRD (Contact) is complete.
+Other domains remain in transition from the old process.
 
 ### Mentoring Domain Process Documents (new process)
 
@@ -82,6 +82,24 @@ Donation, Sponsorship, Grant, and Pledge with an enum contributionType
 discriminator. Prospect is a lifecycle state, not a contactType value.
 8 open issues documented for downstream resolution.
 
+### Entity PRDs (Phase 2b)
+
+| Document | File | Version |
+|---|---|---|
+| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.0 |
+
+Contact is the most complex entity — native Person type, spans all four
+domains, 7 contactType values (multiEnum). 16 native fields documented,
+38 custom fields (6 shared, 1 CBM internal, 31 Mentor-specific). 10
+relationships. Dynamic logic visibility rules by contactType. 8 open
+issues (3 lifecycle fields deferred to CR/FU domains, 4 TBD value lists,
+1 incomplete domain coverage). Key decisions: Primary Contact moved to
+Account-Contact relationship; personalEmail/cbmEmailAddress as separate
+custom fields; termsAndConditionsAccepted shared for portal readiness;
+boardPosition visible for CBM internal types only.
+
+**Next Entity PRDs:** Account, Engagement, Session, then remaining entities.
+
 ### Mentoring Domain PRD (Phase 4)
 
 | Document | File | Version |
@@ -106,7 +124,7 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Produce Entity PRDs (Phase 2b) — priority order: Contact, Account, Engagement, Session, then remaining entities
+- Produce Entity PRDs (Phase 2b) — Contact complete; next: Account, Engagement, Session, then remaining entities
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all five MN processes
 - Begin Mentor Recruitment (MR) domain process documents
