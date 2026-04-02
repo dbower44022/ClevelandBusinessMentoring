@@ -38,12 +38,13 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: Entity PRDs (Phase 2b) in progress — Contact, Account, and Engagement complete.**
+**Process status: Entity PRDs (Phase 2b) in progress — Contact, Account, Engagement, and Session complete.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
 process. Entity Discovery has been completed retroactively, producing
-the Entity Inventory. Two Entity PRDs (Contact, Account) are complete.
+the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
+Session) are complete — all MN-domain entities are now fully defined.
 Other domains remain in transition from the old process.
 
 ### Mentoring Domain Process Documents (new process)
@@ -56,13 +57,17 @@ Other domains remain in transition from the old process.
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-02-26):** Engagement Entity PRD v1.0
-completed. Key decisions: name auto-generated as {Client}-{Mentor}-{Year}
-(ENG-DEC-001), native description hidden (ENG-DEC-002), session roll-up
-fields are workflow-updated stored fields (ENG-DEC-003), no Client
-Satisfaction Rating field — deferred to MN-SURVEY (ENG-DEC-004), single
-engagementNotes field with no separate Closure Notes (ENG-DEC-005),
-On-Hold is a status value not a flag (ENG-DEC-006).
+**Latest structural change (04-02-26):** Session Entity PRD v1.0
+completed. Key decisions: native dateStart maps to Session Date/Time
+(SES-DEC-001), dateEnd calculated from dateStart + duration
+(SES-DEC-002), native status with 7 custom values (SES-DEC-003),
+name auto-generated as {Engagement Name} — {Session Date}
+(SES-DEC-004), nextSessionDateTime on Session is user input while
+Engagement's is workflow roll-up (SES-DEC-005), session summary
+includes notes when populated with no toggle (SES-DEC-006),
+self-referential rescheduledFromSession link (SES-DEC-007), native
+parent link for Engagement relationship (SES-DEC-008), two separate
+manyToMany relationships for attendees (SES-DEC-009).
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -88,6 +93,7 @@ discriminator. Prospect is a lifecycle state, not a contactType value.
 | Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.0 |
 | Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.0 |
 | Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.0 |
+| Session Entity PRD | `PRDs/entities/Session-Entity-PRD.docx` | v1.0 |
 
 Contact is the most complex entity — native Person type, spans all four
 domains, 7 contactType values (multiEnum). 16 native fields documented,
@@ -123,7 +129,24 @@ tracking deferred). Key decisions: name auto-generated as
 {Client}-{Mentor}-{Year}; session roll-ups are workflow-updated stored
 fields; no Client Satisfaction Rating; On-Hold is a status value.
 
-**Next Entity PRDs:** Session, then remaining entities.
+Session is a single-domain custom entity — Custom Event type, owned
+exclusively by the Mentoring (MN) domain. 10 native fields (name
+auto-generated as {Engagement Name} — {Session Date}, dateStart,
+dateEnd calculated, duration, status with 7 custom values, parent
+link to Engagement, description, createdAt, modifiedAt, assignedUser).
+8 custom fields across 3 functional groups (session details, notes
+and follow-up, rescheduling). 4 relationships (Engagement via native
+parent, 2 manyToMany to Contact for attendees, self-referential
+rescheduling link). Value-based dynamic logic (no discriminator). 1
+open issue (Topics Covered values TBD). Key decisions: native Event
+fields used for dateStart/duration/status; dateEnd calculated;
+session summary includes notes when populated with no toggle; two
+separate attendee relationships; native parent for Engagement link.
+
+**Next Entity PRDs:** Remaining entities outside MN domain (Partnership
+Agreement, Event, Event Registration, Contribution, Fundraising
+Campaign). These depend on CR and FU domain process documents, which
+have not yet been completed.
 
 ### Mentoring Domain PRD (Phase 4)
 
@@ -149,7 +172,7 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Produce Entity PRDs (Phase 2b) — Contact, Account, and Engagement complete; next: Session, then remaining entities
+- Produce Entity PRDs (Phase 2b) — Contact, Account, Engagement, and Session complete; remaining entities depend on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all five MN processes
 - Begin Mentor Recruitment (MR) domain process documents
