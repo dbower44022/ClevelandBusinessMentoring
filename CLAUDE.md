@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR domain process documents (Phase 4) in progress — MR-RECRUIT, MR-APPLY, MR-ONBOARD, and MR-MANAGE complete.**
+**Process status: MR domain process documents (Phase 4) complete — all five MR process documents finished. Next: MR Domain Reconciliation (Phase 5).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -46,9 +46,9 @@ process. Entity Discovery has been completed retroactively, producing
 the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
 Session) are complete — all MN-domain entities are now fully defined.
 
-The Mentor Recruitment (MR) domain has begun Phase 4 process definition.
-MR-RECRUIT, MR-APPLY, MR-ONBOARD, and MR-MANAGE are complete. One process
-document remains: MR-DEPART.
+The Mentor Recruitment (MR) domain has completed Phase 4 process definition.
+All five process documents (MR-RECRUIT, MR-APPLY, MR-ONBOARD, MR-MANAGE,
+MR-DEPART) are finished. The next step is MR Domain Reconciliation (Phase 5).
 
 ### Mentoring Domain Process Documents (new process)
 
@@ -60,20 +60,17 @@ document remains: MR-DEPART.
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-02-26):** MR-MANAGE v1.0 completed —
-fourth MR domain process document. Key decisions: MR-MANAGE is a
-continuous process with six concurrent activity groups (not linear);
-MR-MANAGE owns Active ↔ Paused and Active ↔ Inactive transitions,
-MR-DEPART owns Resigned and Departed only; mentor-level inactivity
-alert fires for any Active mentor with no completed session in 60 days
-(default, configurable by System Administrator) regardless of
-engagement status; no approval gate on mentor self-service edits;
-admin can override any mentor field; all three role eligibility flags
-can be Yes simultaneously; three new mentor-level analytics fields
-(totalLifetimeSessions, totalMentoringHours, totalSessionsLast30Days);
-Dues entity defined inline (not yet in Entity Inventory); dues billing
-business rules all TBD; Master PRD needs cross-domain platform services
-section (Notes, Email, Calendaring, Discussion Threads).
+**Latest structural change (04-03-26):** MR-DEPART v1.0 completed —
+fifth and final MR domain process document. Key decisions: MR-DEPART
+is one process with three distinct paths (voluntary resignation,
+administrative departure, reactivation from Departed); departure is
+immediate (does not wait for engagement reassignment); cbmEmailAddress
+is retained on Contact record after departure (changed from legacy);
+departureReason and departureDate apply to both Resigned and Departed
+(Contact Entity PRD visibility rule update needed); no reactivation
+date field; compliance record currency assessment at admin judgment
+(no defined expiration periods); MN-MATCH needs new trigger for
+departure-driven engagement reassignment.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -86,11 +83,10 @@ document, workflow diagrams for all processes.
 | Mentor Application | `PRDs/MR/MR-APPLY.docx` | v1.0 |
 | Mentor Onboarding | `PRDs/MR/MR-ONBOARD.docx` | v1.0 |
 | Mentor Management | `PRDs/MR/MR-MANAGE.docx` | v1.0 |
-| Mentor Departure | `PRDs/MR/MR-DEPART.docx` | Not started |
+| Mentor Departure | `PRDs/MR/MR-DEPART.docx` | v1.0 |
 
-**Remaining MR work:** One process document (MR-DEPART),
-then MR Domain Reconciliation (Phase 5), then
-Entity PRDs for Dues and SME Request entities.
+**Remaining MR work:** MR Domain Reconciliation (Phase 5),
+then Entity PRDs for Dues and SME Request entities.
 
 ### Entity Inventory (Phase 2a)
 
@@ -192,10 +188,11 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Complete MR domain process documents (MR-DEPART)
 - MR Domain Reconciliation (Phase 5) — synthesize 5 MR process documents into MR Domain PRD
 - Produce Entity PRDs for Dues and SME Request entities (defined inline during MR process documents)
 - Update Entity Inventory to include Dues and SME Request entities
+- Update Contact Entity PRD departure field visibility (mentorStatus in [Resigned, Departed]) — identified during MR-DEPART
+- Update MN-MATCH to add departure-driven engagement reassignment trigger — identified during MR-DEPART
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
