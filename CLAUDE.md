@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR domain process documents (Phase 4) complete — all five MR process documents finished. Next: MR Domain Reconciliation (Phase 5).**
+**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. Next: Dues Entity PRD, Entity Inventory update, pending updates to prior documents.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -46,9 +46,12 @@ process. Entity Discovery has been completed retroactively, producing
 the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
 Session) are complete — all MN-domain entities are now fully defined.
 
-The Mentor Recruitment (MR) domain has completed Phase 4 process definition.
-All five process documents (MR-RECRUIT, MR-APPLY, MR-ONBOARD, MR-MANAGE,
-MR-DEPART) are finished. The next step is MR Domain Reconciliation (Phase 5).
+The Mentor Recruitment (MR) domain has completed Phase 5 domain
+reconciliation. All five process documents and the reconciled MR Domain
+PRD are finished. Two reconciliation decisions were made: reactivation
+is available from both Resigned and Departed status (MR-RECON-DEC-001),
+and applicationDeclineReason uses a reconciled 7-value enum
+(MR-RECON-DEC-002). SME Request entity was removed from process scope.
 
 ### Mentoring Domain Process Documents (new process)
 
@@ -60,17 +63,14 @@ MR-DEPART) are finished. The next step is MR Domain Reconciliation (Phase 5).
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-03-26):** MR-DEPART v1.0 completed —
-fifth and final MR domain process document. Key decisions: MR-DEPART
-is one process with three distinct paths (voluntary resignation,
-administrative departure, reactivation from Departed); departure is
-immediate (does not wait for engagement reassignment); cbmEmailAddress
-is retained on Contact record after departure (changed from legacy);
-departureReason and departureDate apply to both Resigned and Departed
-(Contact Entity PRD visibility rule update needed); no reactivation
-date field; compliance record currency assessment at admin judgment
-(no defined expiration periods); MN-MATCH needs new trigger for
-departure-driven engagement reassignment.
+**Latest structural change (04-03-26):** MR Domain PRD v1.0 completed —
+reconciled from 5 process documents. Two reconciliation decisions:
+reactivation available from both Resigned and Departed (MR-RECON-DEC-001);
+applicationDeclineReason reconciled to 7 values (MR-RECON-DEC-002).
+Mechanical corrections: Engagement Status values corrected to canonical
+MN domain set, cross-reference IDs corrected, TBD issue IDs standardized.
+SME Request entity excluded (removed from scope). 31 decisions, 13 open
+issues documented.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -85,8 +85,9 @@ document, workflow diagrams for all processes.
 | Mentor Management | `PRDs/MR/MR-MANAGE.docx` | v1.0 |
 | Mentor Departure | `PRDs/MR/MR-DEPART.docx` | v1.0 |
 
-**Remaining MR work:** MR Domain Reconciliation (Phase 5),
-then Entity PRDs for Dues and SME Request entities.
+**Remaining MR work:** Dues Entity PRD, Entity Inventory update (add
+Dues entity), then apply pending updates to prior documents (Contact
+Entity PRD, MR-APPLY, MN-MATCH, Master PRD).
 
 ### Entity Inventory (Phase 2a)
 
@@ -170,13 +171,24 @@ have not yet been completed.
 |---|---|---|
 | Mentoring Domain PRD | `PRDs/MN/CBM-Domain-PRD-Mentoring.docx` | v1.0 |
 
+### Mentor Recruitment Domain PRD (Phase 5)
+
+| Document | File | Version |
+|---|---|---|
+| Mentor Recruitment Domain PRD | `PRDs/MR/CBM-Domain-PRD-MentorRecruitment.docx` | v1.0 |
+
+Reconciled from 5 process documents. 2 reconciliation decisions
+(Resigned reactivation, 7-value applicationDeclineReason). 31 total
+decisions, 13 open issues. ~45 Contact fields, 8 Dues fields, 3
+referenced entities from other domains. SME Request entity excluded.
+
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
 |---|---|---|
 | Master PRD | `PRDs/CBM-Master-PRD.md` | Markdown, v1.0 — needs conversion to Word and review |
 | Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by Word version at PRDs/MN/CBM-Domain-PRD-Mentoring.docx |
-| Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — summary-level data, needs enrichment |
+| Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — superseded by Word version at PRDs/MR/CBM-Domain-PRD-MentorRecruitment.docx |
 | Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | Markdown, v2.0 — eliminated as separate document in new process |
@@ -188,17 +200,18 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- MR Domain Reconciliation (Phase 5) — synthesize 5 MR process documents into MR Domain PRD
-- Produce Entity PRDs for Dues and SME Request entities (defined inline during MR process documents)
-- Update Entity Inventory to include Dues and SME Request entities
-- Update Contact Entity PRD departure field visibility (mentorStatus in [Resigned, Departed]) — identified during MR-DEPART
-- Update MN-MATCH to add departure-driven engagement reassignment trigger — identified during MR-DEPART
+- Produce Dues Entity PRD (defined inline during MR-MANAGE)
+- Update Entity Inventory to include Dues entity
+- Apply pending updates to prior documents:
+  - Contact Entity PRD: add applicationDeclineReason field (7 values), update departure field visibility (mentorStatus in [Resigned, Departed]), change trainingCompleted editability to allow manual admin override, add mentor-level analytics fields (totalLifetimeSessions, totalMentoringHours, totalSessionsLast30Days)
+  - MR-APPLY: update applicationDeclineReason enum to 7 values
+  - MN-MATCH: add departure-driven engagement reassignment trigger
+  - Master PRD: add cross-domain platform services section (Notes, Email, Calendaring, Discussion Threads)
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
 - Convert Master PRD from Markdown to Word
-- Add cross-domain platform services section to Master PRD (Notes, Email, Calendaring, Discussion Threads) — identified during MR-MANAGE
-- Update Contact Entity PRD to add mentor-level analytics fields (totalLifetimeSessions, totalMentoringHours, totalSessionsLast30Days) — identified during MR-MANAGE
+- Begin CR (Client Recruiting) domain process documents (Phase 4)
 
 ---
 
