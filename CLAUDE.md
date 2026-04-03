@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR domain process documents (Phase 3) in progress — MR-RECRUIT, MR-APPLY, MR-ONBOARD, and MR-MANAGE complete.**
+**Process status: MR domain process documents (Phase 4) in progress — MR-RECRUIT, MR-APPLY, MR-ONBOARD, and MR-MANAGE complete.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -46,7 +46,7 @@ process. Entity Discovery has been completed retroactively, producing
 the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
 Session) are complete — all MN-domain entities are now fully defined.
 
-The Mentor Recruitment (MR) domain has begun Phase 3 process definition.
+The Mentor Recruitment (MR) domain has begun Phase 4 process definition.
 MR-RECRUIT, MR-APPLY, MR-ONBOARD, and MR-MANAGE are complete. One process
 document remains: MR-DEPART.
 
@@ -89,7 +89,7 @@ document, workflow diagrams for all processes.
 | Mentor Departure | `PRDs/MR/MR-DEPART.docx` | Not started |
 
 **Remaining MR work:** One process document (MR-DEPART),
-then MR Domain Reconciliation (Phase 4), then
+then MR Domain Reconciliation (Phase 5), then
 Entity PRDs for Dues and SME Request entities.
 
 ### Entity Inventory (Phase 2a)
@@ -168,7 +168,7 @@ Agreement, Event, Event Registration, Contribution, Fundraising
 Campaign). These depend on CR and FU domain process documents, which
 have not yet been completed.
 
-### Mentoring Domain PRD (Phase 4)
+### Mentoring Domain PRD (Phase 5)
 
 | Document | File | Version |
 |---|---|---|
@@ -193,7 +193,7 @@ source material only — never reference them as current requirements.
 ### Next Steps
 
 - Complete MR domain process documents (MR-DEPART)
-- MR Domain Reconciliation (Phase 4) — synthesize 5 MR process documents into MR Domain PRD
+- MR Domain Reconciliation (Phase 5) — synthesize 5 MR process documents into MR Domain PRD
 - Produce Entity PRDs for Dues and SME Request entities (defined inline during MR process documents)
 - Update Entity Inventory to include Dues and SME Request entities
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
