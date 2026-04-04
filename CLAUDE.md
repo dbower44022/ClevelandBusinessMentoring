@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. Next: Dues Entity PRD, Entity Inventory update, pending updates to prior documents.**
+**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. CR domain restructured with sub-domains (Master PRD v2.2). Next: Dues Entity PRD, Entity Inventory update, pending updates to prior documents, then CR Domain Overview and Sub-Domain Overviews.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -63,14 +63,16 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-03-26):** MR Domain PRD v1.0 completed —
-reconciled from 5 process documents. Two reconciliation decisions:
-reactivation available from both Resigned and Departed (MR-RECON-DEC-001);
-applicationDeclineReason reconciled to 7 values (MR-RECON-DEC-002).
-Mechanical corrections: Engagement Status values corrected to canonical
-MN domain set, cross-reference IDs corrected, TBD issue IDs standardized.
-SME Request entity excluded (removed from scope). 31 decisions, 13 open
-issues documented.
+**Latest structural change (04-04-26):** Master PRD v2.2 — CR domain
+restructured from 3 flat processes (CR-OUTREACH, CR-PARTNER, CR-EVENTS)
+to 4 sub-domains (CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE).
+Sub-domains are an optional framework tier defined in Document Production
+Process v1.7. Decision rule: sub-domains are appropriate when autonomous
+process areas share a common purpose and benefit from unified oversight.
+CR-EVENTS expanded to include virtual events and webinars. CR-REACTIVATE
+is new (alumni re-engagement, incomplete applications, warm lead recovery).
+Process Tier Summary table updated; individual process inventories deferred
+to Domain/Sub-Domain Overview phases.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -207,11 +209,14 @@ source material only — never reference them as current requirements.
   - MR-APPLY: update applicationDeclineReason enum to 7 values
   - MN-MATCH: add departure-driven engagement reassignment trigger
   - Master PRD: add cross-domain platform services section (Notes, Email, Calendaring, Discussion Threads)
+- CR Domain Overview (Phase 3) — parent domain overview covering sub-domain structure, shared audience strategy, and cross-sub-domain oversight
+- CR Sub-Domain Overviews (Phase 3) — one per sub-domain: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
+- CR Process Definition (Phase 5) — processes within each sub-domain (inventories defined during Sub-Domain Overview)
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
-- Convert Master PRD from Markdown to Word
-- Begin CR (Client Recruiting) domain process documents (Phase 4)
+- Convert Master PRD from Markdown to Word (note: Master PRD is already Word as of v2.1)
+- Begin FU (Fundraising) domain process documents (Phase 4)
 
 ---
 
@@ -222,6 +227,10 @@ source material only — never reference them as current requirements.
 | MN | Mentoring |
 | MR | Mentor Recruitment |
 | CR | Client Recruiting |
+| CR-PARTNER | Client Recruiting — Partner Relationship Management (sub-domain) |
+| CR-MARKETING | Client Recruiting — Outreach and Marketing (sub-domain) |
+| CR-EVENTS | Client Recruiting — Workshops and Event Management (sub-domain) |
+| CR-REACTIVATE | Client Recruiting — Client Reactivation and Recovery (sub-domain) |
 | FU | Fundraising |
 
 ---
@@ -245,7 +254,24 @@ PRDs/
 ├── MR/
 │   └── ...
 ├── CR/
-│   └── ...
+│   ├── CBM-Domain-Overview-ClientRecruiting.docx
+│   ├── CBM-Domain-PRD-ClientRecruiting.docx
+│   ├── PARTNER/
+│   │   ├── CBM-SubDomain-Overview-Partner.docx
+│   │   ├── CR-PARTNER-*.docx          ← Process documents
+│   │   └── CBM-SubDomain-PRD-Partner.docx
+│   ├── MARKETING/
+│   │   ├── CBM-SubDomain-Overview-Marketing.docx
+│   │   ├── CR-MARKETING-*.docx        ← Process documents
+│   │   └── CBM-SubDomain-PRD-Marketing.docx
+│   ├── EVENTS/
+│   │   ├── CBM-SubDomain-Overview-Events.docx
+│   │   ├── CR-EVENTS-*.docx           ← Process documents
+│   │   └── CBM-SubDomain-PRD-Events.docx
+│   └── REACTIVATE/
+│       ├── CBM-SubDomain-Overview-Reactivate.docx
+│       ├── CR-REACTIVATE-*.docx       ← Process documents
+│       └── CBM-SubDomain-PRD-Reactivate.docx
 ├── FU/
 │   └── ...
 └── Archive/                       ← Legacy documents (do not use)
