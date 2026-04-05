@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. CR domain restructured with sub-domains (Master PRD v2.2). Notes Service process document (NOTES-MANAGE v1.0) complete (Phase 4). Next: Dues Entity PRD, Entity Inventory update, pending updates to prior documents, then CR Domain Overview and Sub-Domain Overviews.**
+**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. CR domain restructured with sub-domains (Master PRD v2.2). Notes Service process document (NOTES-MANAGE v1.0) complete (Phase 4). All pending updates to prior documents applied 04-05-26. Next: Dues Entity PRD, Entity Inventory update, then CR Domain Overview and Sub-Domain Overviews.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -222,11 +222,11 @@ source material only — never reference them as current requirements.
 - Produce Dues Entity PRD (defined inline during MR-MANAGE)
 - Update Entity Inventory to include Dues entity
 - Apply pending updates to prior documents:
-  - Contact Entity PRD: add applicationDeclineReason field (7 values), update departure field visibility (mentorStatus in [Resigned, Departed]), change trainingCompleted editability to allow manual admin override, add mentor-level analytics fields (totalLifetimeSessions, totalMentoringHours, totalSessionsLast30Days)
-  - MR-APPLY: update applicationDeclineReason enum to 7 values
-  - MN-MATCH: add departure-driven engagement reassignment trigger
-  - Master PRD: add cross-domain platform services section (Notes, Email, Calendaring, Discussion Threads)
-  - MR-MANAGE: close MR-MANAGE-ISS-003 (Notes Service now defined as NOTES-MANAGE v1.0)
+  - ~~Contact Entity PRD: add applicationDeclineReason field (7 values), update departure field visibility (mentorStatus in [Resigned, Departed]), change trainingCompleted editability to allow manual admin override, add mentor-level analytics fields (totalLifetimeSessions, totalMentoringHours, totalSessionsLast30Days)~~ DONE 04-05-26
+  - ~~MR-APPLY: update applicationDeclineReason enum to 7 values~~ DONE 04-05-26
+  - ~~MN-MATCH: add departure-driven engagement reassignment trigger~~ DONE 04-05-26
+  - ~~Master PRD: add cross-domain platform services section (Notes, Email, Calendaring, Discussion Threads)~~ Already in v2.2
+  - ~~MR-MANAGE: close MR-MANAGE-ISS-003 (Notes Service now defined as NOTES-MANAGE v1.0)~~ DONE 04-05-26
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
 - CR Domain Overview (Phase 3) — parent domain overview covering sub-domain structure, shared audience strategy, and cross-sub-domain oversight
 - CR Sub-Domain Overviews (Phase 3) — one per sub-domain: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
