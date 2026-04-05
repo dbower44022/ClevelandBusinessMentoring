@@ -58,14 +58,19 @@ and applicationDeclineReason uses a reconciled 7-value enum
 
 | Document | File | Version |
 |---|---|---|
-| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.1 |
-| Mentor Matching | `PRDs/MN/MN-MATCH.docx` | v2.1 |
+| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.2 |
+| Mentor Matching | `PRDs/MN/MN-MATCH.docx` | v2.2 |
 | Engagement Management | `PRDs/MN/MN-ENGAGE.docx` | v2.3 |
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-05-26):** CR Domain Overview v1.0 complete.
-7 processes defined across 4 sub-domains. Session prompts committed for
+**Latest structural change (04-05-26):** MN-INTAKE v2.2 adds data source
+notation to all fields, record linking detail, Account Type/Contact Type
+discriminators, Engagement Name formula, Requested Mentor preference field,
+derived Account name for blank Business Name (REQ-008, REQ-009), and
+client lifecycle status dependency (ISS-002). MN-MATCH v2.2 adds Requested
+Mentor review step and REQ-009. CR Domain Overview v1.0 complete.
+7 CR processes defined across 4 sub-domains. Session prompts committed for
 all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) identified as
 7th CR persona — Master PRD update pending.
 
