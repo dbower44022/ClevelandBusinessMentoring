@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. CR Domain Overview v1.0 complete (Phase 3). 7 processes defined across 4 sub-domains: CR-PARTNER (2), CR-MARKETING (2), CR-EVENTS (2), CR-REACTIVATE (1). Session prompts committed for all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) added as 7th CR persona (Master PRD v2.3 updated). Next: CR Sub-Domain Overviews (CR-PARTNER first), or remaining Cross-Domain Services (Email, Calendar, Survey).**
+**Process status: All MR domain work complete. CR-PARTNER Sub-Domain Overview v1.0 complete (Phase 3). 10 Account Partner fields validated, no Partner-specific Contact fields needed, CON-ISS-002 resolved, referringPartner link on Engagement identified. Session prompts committed for CR-PARTNER-PROSPECT and CR-PARTNER-MANAGE. Next: CR-PARTNER-PROSPECT process definition, then CR-PARTNER-MANAGE, then CR-MARKETING Sub-Domain Overview.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -64,15 +64,13 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-05-26):** MN-INTAKE v2.2 adds data source
-notation to all fields, record linking detail, Account Type/Contact Type
-discriminators, Engagement Name formula, Requested Mentor preference field,
-derived Account name for blank Business Name (REQ-008, REQ-009), and
-client lifecycle status dependency (ISS-002). MN-MATCH v2.2 adds Requested
-Mentor review step and REQ-009. CR Domain Overview v1.0 complete.
-7 CR processes defined across 4 sub-domains. Session prompts committed for
-all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) added as 7th CR
-persona (Master PRD v2.3 updated).
+**Latest structural change (04-05-26):** CR-PARTNER Sub-Domain Overview v1.0
+complete. 10 Account Partner fields validated (no changes). No Partner-specific
+Contact fields needed. CON-ISS-002 resolved — partner lifecycle tracked at
+Account level. Partnership Agreement anticipated fields confirmed (6 fields).
+New referringPartner link field identified for Engagement Entity PRD. Quarterly
+partner analytics reports established (7 metrics). Session prompts committed
+for CR-PARTNER-PROSPECT and CR-PARTNER-MANAGE process definitions.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -239,6 +237,33 @@ Session prompts committed for all 4 Sub-Domain Overview sessions:
 - `PRDs/CR/EVENTS/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-EVENTS.md`
 - `PRDs/CR/REACTIVATE/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-REACTIVATE.md`
 
+### CR-PARTNER Sub-Domain Overview (Phase 3)
+
+| Document | File | Version |
+|---|---|---|
+| CR-PARTNER Sub-Domain Overview | `PRDs/CR/PARTNER/CBM-SubDomain-Overview-Partner.docx` | v1.0 |
+
+Scopes the CR-PARTNER sub-domain for process definition. 2 processes
+(CR-PARTNER-PROSPECT, CR-PARTNER-MANAGE) in dependency order. 4 personas
+with process participation mapped. 10 Account Partner-specific fields
+validated (no changes). No Partner-specific Contact fields needed —
+CON-ISS-002 resolved (partner lifecycle tracked at Account level).
+Partnership Agreement anticipated fields confirmed (6 fields). New
+referringPartner link field identified for Engagement entity (set by
+mentor after first session, basis for partner analytics). Quarterly
+formal partner analytics reports with 7 metrics: referral count, active
+clients, new clients in last 30 days, total sessions, total hours, NPS
+scores, impact metrics. Two referral tracking mechanisms: client
+self-reported howDidYouHearAboutCbm on Contact, mentor-set
+referringPartner on Engagement.
+
+Updates needed: Contact Entity PRD (close CON-ISS-002), Engagement
+Entity PRD (add referringPartner field).
+
+Session prompts committed for both CR-PARTNER process definitions:
+- `PRDs/CR/PARTNER/SESSION-PROMPT-CR-PARTNER-PROSPECT.md`
+- `PRDs/CR/PARTNER/SESSION-PROMPT-CR-PARTNER-MANAGE.md`
+
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
@@ -257,13 +282,16 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- CR Sub-Domain Overviews (Phase 3) — one per sub-domain in order: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
-- CR Process Definition (Phase 4) — 7 processes within sub-domains, production order: CR-PARTNER-PROSPECT → CR-PARTNER-MANAGE → CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
+- CR-PARTNER Process Definition (Phase 5) — CR-PARTNER-PROSPECT first, then CR-PARTNER-MANAGE
+- CR Sub-Domain Overviews (Phase 3) — remaining: CR-MARKETING, CR-EVENTS, CR-REACTIVATE
+- CR Process Definition (Phase 5) — remaining after CR-PARTNER: CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
+- Update Contact Entity PRD: close CON-ISS-002 (partner lifecycle at Account level)
+- Update Engagement Entity PRD: add referringPartner link field
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
-- Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
+- Produce remaining Entity PRDs (Phase 2b) — Partnership Agreement can proceed after CR-PARTNER processes; Event, Event Registration, Contribution depend on further CR/FU process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
-- Begin FU (Fundraising) domain process documents (Phase 4)
+- Begin FU (Fundraising) domain process documents (Phase 5)
 
 ---
 
