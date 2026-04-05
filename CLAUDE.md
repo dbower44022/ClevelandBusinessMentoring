@@ -38,13 +38,14 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. CR domain restructured with sub-domains (Master PRD v2.2). Notes Service process document (NOTES-MANAGE v1.0) complete (Phase 4). All pending updates to prior documents applied 04-05-26. Next: Dues Entity PRD, Entity Inventory update, then CR Domain Overview and Sub-Domain Overviews.**
+**Process status: All MR domain work complete. Dues Entity PRD v1.0 produced. Entity Inventory v1.2 updated (13 entities, 25 concepts). Contact Entity PRD v1.1 updated (duesRenewalDate added). CR domain restructured with sub-domains (Master PRD v2.2). Notes Service process document (NOTES-MANAGE v1.0) complete (Phase 4). Next: CR Domain Overview and Sub-Domain Overviews, or remaining Cross-Domain Services (Email, Calendar, Survey).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
 process. Entity Discovery has been completed retroactively, producing
-the Entity Inventory. Four Entity PRDs (Contact, Account, Engagement,
-Session) are complete — all MN-domain entities are now fully defined.
+the Entity Inventory. Five Entity PRDs (Contact, Account, Engagement,
+Session, Dues) are complete — all MN-domain and MR-domain entities
+are now fully defined.
 
 The Mentor Recruitment (MR) domain has completed Phase 5 domain
 reconciliation. All five process documents and the reconciled MR Domain
@@ -87,36 +88,36 @@ document, workflow diagrams for all processes.
 | Mentor Management | `PRDs/MR/MR-MANAGE.docx` | v1.0 |
 | Mentor Departure | `PRDs/MR/MR-DEPART.docx` | v1.0 |
 
-**Remaining MR work:** Dues Entity PRD, Entity Inventory update (add
-Dues entity), then apply pending updates to prior documents (Contact
-Entity PRD, MR-APPLY, MN-MATCH, Master PRD).
+**Remaining MR work:** None. All MR domain deliverables complete.
 
 ### Entity Inventory (Phase 2a)
 
 | Document | File | Version |
 |---|---|---|
-| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.0 |
+| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.2 |
 
-Maps 21 business entity concepts to 9 CRM entities (2 native, 7 custom).
+Maps 25 business entity concepts to 13 CRM entities (2 native, 8 custom, 3 TBD).
 Key design decisions: Contact uses multiEnum contactType (Client, Mentor,
 Partner, Administrator, Presenter, Donor, Member); Account uses multiEnum
 accountType (Client, Partner, Donor/Sponsor); Contribution consolidates
 Donation, Sponsorship, Grant, and Pledge with an enum contributionType
-discriminator. Prospect is a lifecycle state, not a contactType value.
+discriminator; Dues is a single-domain Custom Base entity for MR.
+Prospect is a lifecycle state, not a contactType value.
 8 open issues documented for downstream resolution.
 
 ### Entity PRDs (Phase 2b)
 
 | Document | File | Version |
 |---|---|---|
-| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.0 |
+| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.1 |
 | Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.0 |
 | Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.0 |
 | Session Entity PRD | `PRDs/entities/Session-Entity-PRD.docx` | v1.0 |
+| Dues Entity PRD | `PRDs/entities/Dues-Entity-PRD.docx` | v1.0 |
 
 Contact is the most complex entity — native Person type, spans all four
 domains, 7 contactType values (multiEnum). 16 native fields documented,
-38 custom fields (6 shared, 1 CBM internal, 31 Mentor-specific). 10
+39 custom fields (6 shared, 1 CBM internal, 32 Mentor-specific). 10
 relationships. Dynamic logic visibility rules by contactType. 8 open
 issues (3 lifecycle fields deferred to CR/FU domains, 4 TBD value lists,
 1 incomplete domain coverage). Key decisions: Primary Contact moved to
@@ -162,10 +163,23 @@ fields used for dateStart/duration/status; dateEnd calculated;
 session summary includes notes when populated with no toggle; two
 separate attendee relationships; native parent for Engagement link.
 
-**Next Entity PRDs:** Remaining entities outside MN domain (Partnership
-Agreement, Event, Event Registration, Contribution, Fundraising
-Campaign). These depend on CR and FU domain process documents, which
-have not yet been completed.
+Dues is a single-domain custom entity — Custom Base type, owned
+exclusively by the Mentor Recruitment (MR) domain. 4 native fields
+(name auto-generated as {Mentor Name} — {Billing Year}, createdAt,
+modifiedAt, assignedUser). 7 custom fields across 3 functional
+groups (billing, payment, notes). 1 relationship (Contact via
+manyToOne). Value-based dynamic logic (paymentStatus drives
+paymentDate and paymentMethod visibility). No open issues — all 5
+carrying-forward issues from MR-MANAGE resolved. Key decisions:
+Custom Base type; anniversary-based billing cycle with
+duesRenewalDate on Contact; uniform dues amount; 30-day grace
+period; no consequences for non-payment; all Active mentors pay;
+paymentMethod "Waived" removed (dynamic logic hides instead).
+
+**Next Entity PRDs:** Remaining entities outside MN and MR domains
+(Partnership Agreement, Event, Event Registration, Contribution,
+Fundraising Campaign). These depend on CR and FU domain process
+documents, which have not yet been completed.
 
 ### Mentoring Domain PRD (Phase 5)
 
@@ -219,14 +233,6 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Produce Dues Entity PRD (defined inline during MR-MANAGE)
-- Update Entity Inventory to include Dues entity
-- Apply pending updates to prior documents:
-  - ~~Contact Entity PRD: add applicationDeclineReason field (7 values), update departure field visibility (mentorStatus in [Resigned, Departed]), change trainingCompleted editability to allow manual admin override, add mentor-level analytics fields (totalLifetimeSessions, totalMentoringHours, totalSessionsLast30Days)~~ DONE 04-05-26
-  - ~~MR-APPLY: update applicationDeclineReason enum to 7 values~~ DONE 04-05-26
-  - ~~MN-MATCH: add departure-driven engagement reassignment trigger~~ DONE 04-05-26
-  - ~~Master PRD: add cross-domain platform services section (Notes, Email, Calendaring, Discussion Threads)~~ Already in v2.2
-  - ~~MR-MANAGE: close MR-MANAGE-ISS-003 (Notes Service now defined as NOTES-MANAGE v1.0)~~ DONE 04-05-26
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
 - CR Domain Overview (Phase 3) — parent domain overview covering sub-domain structure, shared audience strategy, and cross-sub-domain oversight
 - CR Sub-Domain Overviews (Phase 3) — one per sub-domain: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
@@ -234,7 +240,6 @@ source material only — never reference them as current requirements.
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
-- Convert Master PRD from Markdown to Word (note: Master PRD is already Word as of v2.1)
 - Begin FU (Fundraising) domain process documents (Phase 4)
 
 ---
