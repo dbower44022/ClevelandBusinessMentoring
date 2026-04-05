@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. Dues Entity PRD v1.0 produced. Entity Inventory v1.2 updated (13 entities, 25 concepts). Contact Entity PRD v1.1 updated (duesRenewalDate added). CR domain restructured with sub-domains (Master PRD v2.2). Notes Service process document (NOTES-MANAGE v1.0) complete (Phase 4). Next: CR Domain Overview and Sub-Domain Overviews, or remaining Cross-Domain Services (Email, Calendar, Survey).**
+**Process status: All MR domain work complete. CR Domain Overview v1.0 complete (Phase 3). 7 processes defined across 4 sub-domains: CR-PARTNER (2), CR-MARKETING (2), CR-EVENTS (2), CR-REACTIVATE (1). Session prompts committed for all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) added as 7th CR persona (Master PRD update pending). Next: CR Sub-Domain Overviews (CR-PARTNER first), or remaining Cross-Domain Services (Email, Calendar, Survey).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -64,16 +64,10 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-04-26):** Master PRD v2.2 — CR domain
-restructured from 3 flat processes (CR-OUTREACH, CR-PARTNER, CR-EVENTS)
-to 4 sub-domains (CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE).
-Sub-domains are an optional framework tier defined in Document Production
-Process v1.7. Decision rule: sub-domains are appropriate when autonomous
-process areas share a common purpose and benefit from unified oversight.
-CR-EVENTS expanded to include virtual events and webinars. CR-REACTIVATE
-is new (alumni re-engagement, incomplete applications, warm lead recovery).
-Process Tier Summary table updated; individual process inventories deferred
-to Domain/Sub-Domain Overview phases.
+**Latest structural change (04-05-26):** CR Domain Overview v1.0 complete.
+7 processes defined across 4 sub-domains. Session prompts committed for
+all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) identified as
+7th CR persona — Master PRD update pending.
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -215,6 +209,31 @@ wysiwyg fields unchanged. Closes MR-MANAGE-ISS-003.
 
 **Remaining services:** Email Service, Calendar Service, Survey Service.
 
+### Client Recruiting Domain Overview (Phase 3)
+
+| Document | File | Version |
+|---|---|---|
+| CR Domain Overview | `PRDs/CR/CBM-Domain-Overview-ClientRecruiting.docx` | v1.0 |
+
+Defines 7 processes across 4 sub-domains: CR-PARTNER (CR-PARTNER-PROSPECT,
+CR-PARTNER-MANAGE), CR-MARKETING (CR-MARKETING-CONTACTS,
+CR-MARKETING-CAMPAIGNS), CR-EVENTS (CR-EVENTS-MANAGE, CR-EVENTS-CONVERT),
+CR-REACTIVATE (CR-REACTIVATE-OUTREACH). 7 personas including MST-PER-013
+(Client) — Master PRD update pending to add Client to CR persona list.
+Production order: CR-PARTNER first (Core tier), then CR-MARKETING, then
+CR-EVENTS, then CR-REACTIVATE last (receives from all other sub-domains).
+Cross-sub-domain handoffs mapped. Shared audience strategy defined (channel
+effectiveness comparison, outreach coordination, gap targeting). No new
+open issues — all relevant issues carried forward from upstream documents
+(CON-ISS-001, CON-ISS-002, CON-ISS-004, CON-ISS-008, ACT-ISS-001,
+ACT-ISS-002, ACT-ISS-004).
+
+Session prompts committed for all 4 Sub-Domain Overview sessions:
+- `PRDs/CR/PARTNER/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-PARTNER.md`
+- `PRDs/CR/MARKETING/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-MARKETING.md`
+- `PRDs/CR/EVENTS/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-EVENTS.md`
+- `PRDs/CR/REACTIVATE/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-REACTIVATE.md`
+
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
@@ -222,7 +241,7 @@ wysiwyg fields unchanged. Closes MR-MANAGE-ISS-003.
 | Master PRD | `PRDs/CBM-Master-PRD.md` | Markdown, v1.0 — needs conversion to Word and review |
 | Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by Word version at PRDs/MN/CBM-Domain-PRD-Mentoring.docx |
 | Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — superseded by Word version at PRDs/MR/CBM-Domain-PRD-MentorRecruitment.docx |
-| Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — summary-level data, needs enrichment |
+| Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — legacy source material, superseded by CR Domain Overview |
 | Fundraising Domain PRD | `PRDs/CBM-Domain-PRD-Fundraising.md` | Markdown, v1.0 — summary-level data, needs enrichment |
 | Consolidated Design | `PRDs/CBM-Consolidated-Design.md` | Markdown, v2.0 — eliminated as separate document in new process |
 
@@ -233,10 +252,10 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
+- CR Sub-Domain Overviews (Phase 3) — one per sub-domain in order: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
+- CR Process Definition (Phase 4) — 7 processes within sub-domains, production order: CR-PARTNER-PROSPECT → CR-PARTNER-MANAGE → CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
-- CR Domain Overview (Phase 3) — parent domain overview covering sub-domain structure, shared audience strategy, and cross-sub-domain oversight
-- CR Sub-Domain Overviews (Phase 3) — one per sub-domain: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
-- CR Process Definition (Phase 5) — processes within each sub-domain (inventories defined during Sub-Domain Overview)
+- Update Master PRD: add MST-PER-013 (Client) to CR domain persona list
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
