@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. CR domain restructured with sub-domains (Master PRD v2.2). Next: Dues Entity PRD, Entity Inventory update, pending updates to prior documents, then CR Domain Overview and Sub-Domain Overviews.**
+**Process status: MR Domain Reconciliation (Phase 5) complete. MR Domain PRD v1.0 produced. CR domain restructured with sub-domains (Master PRD v2.2). Notes Service process document (NOTES-MANAGE v1.0) complete (Phase 4). Next: Dues Entity PRD, Entity Inventory update, pending updates to prior documents, then CR Domain Overview and Sub-Domain Overviews.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -184,6 +184,23 @@ Reconciled from 5 process documents. 2 reconciliation decisions
 decisions, 13 open issues. ~45 Contact fields, 8 Dues fields, 3
 referenced entities from other domains. SME Request entity excluded.
 
+### Cross-Domain Services (Phase 4)
+
+| Document | File | Version |
+|---|---|---|
+| Notes Service | `PRDs/services/NOTES/NOTES-MANAGE.docx` | v1.0 |
+
+Notes Service defines a general-purpose note stream for all domains.
+7 requirements, 6 supported entity types (Contact, Account, Engagement,
+Session, Event, Fundraising Campaign). Notes are timestamped, attributed,
+editable with edit history, and permanent (no deletion). Access follows
+parent record — no per-note visibility restrictions. Internal
+administrator notes remain as dedicated fields in domain process
+documents. MN-ENGAGE Session Notes and Engagement Notes remain as inline
+wysiwyg fields unchanged. Closes MR-MANAGE-ISS-003.
+
+**Remaining services:** Email Service, Calendar Service, Survey Service.
+
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
@@ -209,6 +226,8 @@ source material only — never reference them as current requirements.
   - MR-APPLY: update applicationDeclineReason enum to 7 values
   - MN-MATCH: add departure-driven engagement reassignment trigger
   - Master PRD: add cross-domain platform services section (Notes, Email, Calendaring, Discussion Threads)
+  - MR-MANAGE: close MR-MANAGE-ISS-003 (Notes Service now defined as NOTES-MANAGE v1.0)
+- Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
 - CR Domain Overview (Phase 3) — parent domain overview covering sub-domain structure, shared audience strategy, and cross-sub-domain oversight
 - CR Sub-Domain Overviews (Phase 3) — one per sub-domain: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
 - CR Process Definition (Phase 5) — processes within each sub-domain (inventories defined during Sub-Domain Overview)
@@ -274,6 +293,12 @@ PRDs/
 │       └── CBM-SubDomain-PRD-Reactivate.docx
 ├── FU/
 │   └── ...
+├── services/
+│   ├── NOTES/
+│   │   └── NOTES-MANAGE.docx         ← Notes Service process document
+│   ├── EMAIL/                         ← Email Service (future)
+│   ├── CALENDAR/                      ← Calendar Service (future)
+│   └── SURVEY/                        ← Survey Service (future)
 └── Archive/                       ← Legacy documents (do not use)
 
 programs/                          ← YAML program files
