@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. CR Domain Overview v1.0 complete (Phase 3). 7 processes defined across 4 sub-domains: CR-PARTNER (2), CR-MARKETING (2), CR-EVENTS (2), CR-REACTIVATE (1). Session prompts committed for all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) added as 7th CR persona (Master PRD update pending). Next: CR Sub-Domain Overviews (CR-PARTNER first), or remaining Cross-Domain Services (Email, Calendar, Survey).**
+**Process status: All MR domain work complete. CR Domain Overview v1.0 complete (Phase 3). 7 processes defined across 4 sub-domains: CR-PARTNER (2), CR-MARKETING (2), CR-EVENTS (2), CR-REACTIVATE (1). Session prompts committed for all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) added as 7th CR persona (Master PRD v2.3 updated). Next: CR Sub-Domain Overviews (CR-PARTNER first), or remaining Cross-Domain Services (Email, Calendar, Survey).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -71,8 +71,8 @@ derived Account name for blank Business Name (REQ-008, REQ-009), and
 client lifecycle status dependency (ISS-002). MN-MATCH v2.2 adds Requested
 Mentor review step and REQ-009. CR Domain Overview v1.0 complete.
 7 CR processes defined across 4 sub-domains. Session prompts committed for
-all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) identified as
-7th CR persona — Master PRD update pending.
+all 4 Sub-Domain Overview sessions. MST-PER-013 (Client) added as 7th CR
+persona (Master PRD v2.3 updated).
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -224,7 +224,7 @@ Defines 7 processes across 4 sub-domains: CR-PARTNER (CR-PARTNER-PROSPECT,
 CR-PARTNER-MANAGE), CR-MARKETING (CR-MARKETING-CONTACTS,
 CR-MARKETING-CAMPAIGNS), CR-EVENTS (CR-EVENTS-MANAGE, CR-EVENTS-CONVERT),
 CR-REACTIVATE (CR-REACTIVATE-OUTREACH). 7 personas including MST-PER-013
-(Client) — Master PRD update pending to add Client to CR persona list.
+(Client) — added to Master PRD v2.3 CR persona list.
 Production order: CR-PARTNER first (Core tier), then CR-MARKETING, then
 CR-EVENTS, then CR-REACTIVATE last (receives from all other sub-domains).
 Cross-sub-domain handoffs mapped. Shared audience strategy defined (channel
@@ -260,7 +260,6 @@ source material only — never reference them as current requirements.
 - CR Sub-Domain Overviews (Phase 3) — one per sub-domain in order: CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE
 - CR Process Definition (Phase 4) — 7 processes within sub-domains, production order: CR-PARTNER-PROSPECT → CR-PARTNER-MANAGE → CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
-- Update Master PRD: add MST-PER-013 (Client) to CR domain persona list
 - Produce remaining Entity PRDs (Phase 2b) — depends on CR and FU domain process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
