@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. CR-PARTNER Sub-Domain Overview v1.0 complete (Phase 3). 10 Account Partner fields validated, no Partner-specific Contact fields needed, CON-ISS-002 resolved, referringPartner link on Engagement identified. Session prompts committed for CR-PARTNER-PROSPECT and CR-PARTNER-MANAGE. Next: CR-PARTNER-PROSPECT process definition, then CR-PARTNER-MANAGE, then CR-MARKETING Sub-Domain Overview.**
+**Process status: All MR domain work complete. CR-PARTNER-PROSPECT process document v1.0 complete (Phase 5). 9 requirements, 23 data items across 3 entities (Account, Contact, Partnership Agreement). No open issues, no new updates to prior documents. Next: CR-PARTNER-MANAGE process definition, then CR-MARKETING Sub-Domain Overview.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -64,13 +64,20 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-05-26):** CR-PARTNER Sub-Domain Overview v1.0
-complete. 10 Account Partner fields validated (no changes). No Partner-specific
-Contact fields needed. CON-ISS-002 resolved — partner lifecycle tracked at
-Account level. Partnership Agreement anticipated fields confirmed (6 fields).
-New referringPartner link field identified for Engagement Entity PRD. Quarterly
-partner analytics reports established (7 metrics). Session prompts committed
-for CR-PARTNER-PROSPECT and CR-PARTNER-MANAGE process definitions.
+**Latest structural change (04-06-26):** CR-PARTNER-PROSPECT process document v1.0
+complete. 9 system requirements (REQ-001 through REQ-009). 23 data items across 3
+entities: Account (11 fields), Contact (6 fields), Partnership Agreement (6 fields).
+Partner Coordinator is sole operator. No open issues. No new updates to prior
+documents. Workflow: 9 steps from prospect identification through activation. Three
+end states: Active (normal), Inactive (not pursued), Waiting (remain Prospect).
+All Account Partner fields matched Entity PRD exactly. Partnership Agreement fields
+matched Sub-Domain Overview anticipated fields.
+
+### CR-PARTNER Process Documents (Phase 5)
+
+| Document | File | Version |
+|---|---|---|
+| Partner Prospecting and Activation | `PRDs/CR/PARTNER/CR-PARTNER-PROSPECT.docx` | v1.0 |
 
 **Remaining MN work:** Client Satisfaction Tracking (MN-SURVEY) process
 document, workflow diagrams for all processes.
@@ -282,9 +289,9 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- CR-PARTNER Process Definition (Phase 5) — CR-PARTNER-PROSPECT first, then CR-PARTNER-MANAGE
+- CR-PARTNER-MANAGE Process Definition (Phase 5) — next process in CR-PARTNER sub-domain
 - CR Sub-Domain Overviews (Phase 3) — remaining: CR-MARKETING, CR-EVENTS, CR-REACTIVATE
-- CR Process Definition (Phase 5) — remaining after CR-PARTNER: CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
+- CR Process Definition (Phase 5) — remaining after CR-PARTNER-MANAGE: CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
 - Update Contact Entity PRD: close CON-ISS-002 (partner lifecycle at Account level)
 - Update Engagement Entity PRD: add referringPartner link field
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
