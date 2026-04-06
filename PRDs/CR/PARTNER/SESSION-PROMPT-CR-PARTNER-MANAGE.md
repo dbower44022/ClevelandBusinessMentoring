@@ -2,7 +2,7 @@
 
 ## Context
 
-I'm working on the CBM CRM implementation. The CR-PARTNER Sub-Domain Overview v1.0 is complete and the CR-PARTNER-PROSPECT process document has been produced. This session produces the CR-PARTNER-MANAGE process document — the second and final process in the CR-PARTNER sub-domain.
+I'm working on the CBM CRM implementation. The CR-PARTNER Sub-Domain Overview v1.0 is complete and the CR-PARTNER-PROSPECT process document v1.0 has been produced. This session produces the CR-PARTNER-MANAGE process document — the second and final process in the CR-PARTNER sub-domain.
 
 Before doing any work, please:
 
@@ -18,6 +18,44 @@ Covers ongoing management of active partner relationships — liaison activities
 
 All historical data — referrals, activities, communications, agreements, and analytics — is retained permanently regardless of status changes. Partner analytics are delivered as formal quarterly reports supplemented by informal verbal summaries during regular liaison touchpoints.
 
+## What CR-PARTNER-PROSPECT Established
+
+CR-PARTNER-PROSPECT v1.0 defines the records and fields this process operates on. Key context:
+
+**Account (Partner) — 11 fields created by CR-PARTNER-PROSPECT:**
+- accountType (multiEnum, includes Partner)
+- partnerOrganizationType (enum, 9 values: Chamber of Commerce, SBDC, Economic Development Agency, University/Academic Institution, Bank/Financial Institution, Nonprofit/Community Organization, Government Agency, Corporate Sponsor, Other)
+- partnerType (multiEnum, 4 values: Referral Partner, Co-Delivery Partner, Funding/Sponsorship Partner, Resource Partner)
+- partnerStatus (enum, 4 values: Prospect, Active, Lapsed, Inactive) — Prospect = actively being pursued; Active = partnership established; Inactive = decided not to proceed or deactivated; Lapsed is reserved for CR-PARTNER-MANAGE
+- partnershipStartDate (date, set at activation)
+- assignedLiaison (link to Contact, set at activation, required for Active partners)
+- publicAnnouncementAllowed (bool, default No)
+- geographicServiceArea (text, optional)
+- targetPopulation (text, optional)
+- partnerNotes (wysiwyg, restricted to Partner Coordinator and above, hidden from Mentors)
+
+**Contact (Partner) — 6 fields, all native/shared:**
+- contactType (multiEnum, includes Partner; dual roles like Partner+Mentor supported)
+- firstName, lastName, emailAddress, phoneNumber, title
+
+**Partnership Agreement — 6 fields:**
+- Partner Organization (relationship to Account, required)
+- Agreement Type (enum: MOU, Partnership Agreement, Letter of Intent, Other)
+- Creation Date (date, required)
+- Expiration / Renewal Date (date, optional)
+- Agreement Document (file, required, restricted to Partner Coordinator and Executive Member)
+- Notes (wysiwyg, optional)
+
+**Key decisions from CR-PARTNER-PROSPECT:**
+- Partner Coordinator is sole operator for prospecting; no approval gates
+- Activation requires mutual agreement to work together — formal written agreement is optional (Partner Coordinator's judgment)
+- No dedicated inactivation reason field — partnerNotes captures the reason
+- Inactive can transition back to Prospect for revisiting
+- No notifications sent at activation
+- No supporting data from other entities referenced during prospecting
+
+**9 system requirements (CR-PARTNER-PROSPECT-REQ-001 through REQ-009)** and **23 data items (CR-PARTNER-PROSPECT-DAT-001 through DAT-023)** — no open issues.
+
 ## Personas
 
 | ID | Persona | Role in This Process |
@@ -31,10 +69,10 @@ All historical data — referrals, activities, communications, agreements, and a
 
 | CRM Entity | Type | Entity PRD | Role in This Process |
 | --- | --- | --- | --- |
-| Account | Native Company | v1.0 | Reads/updates Partner organization records. partnerStatus changes (Active → Lapsed → Inactive, reactivation). 10 Partner-specific fields. |
+| Account | Native Company | v1.0 | Reads/updates Partner organization records. partnerStatus changes (Active → Lapsed → Inactive, reactivation). 10 Partner-specific fields defined in Entity PRD, all validated in CR-PARTNER-PROSPECT. |
 | Contact | Native Person | v1.1 | Reads/updates Partner contact records. contactType = Partner. No Partner-specific custom fields. |
-| Partnership Agreement | Custom Base | Deferred | Reads/creates agreement records. Renewal tracking for active agreements. |
-| Engagement | Custom Base | v1.0 | Reads — referral attribution via referringPartner link. Basis for partner analytics. |
+| Partnership Agreement | Custom Base | Deferred | Reads/creates agreement records. Renewal tracking for active agreements. 6 fields defined in CR-PARTNER-PROSPECT. |
+| Engagement | Custom Base | v1.0 | Reads — referral attribution via referringPartner link (new field, not yet in Entity PRD). Basis for partner analytics. |
 
 ## Key Questions to Address
 
@@ -58,14 +96,14 @@ All historical data — referrals, activities, communications, agreements, and a
 
 ## Prior Process Documents
 
-Upload the CR-PARTNER-PROSPECT process document completed in the prior session. This provides the field definitions, status values, and entity patterns that CR-PARTNER-MANAGE builds on.
+CR-PARTNER-PROSPECT v1.0 is the only prior process document in this sub-domain. It defines all the records and field values this process operates on. Upload it with this prompt.
 
 ## Documents to Upload
 
 Upload the following documents with this prompt:
 
 1. **CBM-SubDomain-Overview-Partner.docx** — the CR-PARTNER Sub-Domain Overview (from `PRDs/CR/PARTNER/` in CBM repo)
-2. **CR-PARTNER-PROSPECT.docx** — the Partner Prospecting and Activation process document (from `PRDs/CR/PARTNER/` in CBM repo)
+2. **CR-PARTNER-PROSPECT.docx** — the Partner Prospecting and Activation process document v1.0 (from `PRDs/CR/PARTNER/` in CBM repo)
 
 ## Output
 
