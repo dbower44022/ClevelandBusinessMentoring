@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. Both CR-PARTNER process documents complete (Phase 5): CR-PARTNER-PROSPECT v1.0 and CR-PARTNER-MANAGE v1.0. CR-PARTNER sub-domain process definition is finished. Next: CR-MARKETING Sub-Domain Overview (Phase 3).**
+**Process status: All MR domain work complete. Both CR-PARTNER process documents complete (Phase 5): CR-PARTNER-PROSPECT v1.0 and CR-PARTNER-MANAGE v1.0. CR-PARTNER sub-domain process definition is finished. All four pending document updates from CR-PARTNER work are now complete (Sub-Domain Overview v1.1, Account Entity PRD v1.1, Contact Entity PRD v1.2, Engagement Entity PRD v1.1). Next: CR-MARKETING Sub-Domain Overview (Phase 3).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -64,7 +64,29 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-07-26):** CR-PARTNER-MANAGE process document v1.0
+**Latest structural change (04-07-26):** Four pending document updates from CR-PARTNER
+work all completed. (1) CR-PARTNER Sub-Domain Overview v1.0 → v1.1: analytics metric
+list expanded from 7 to 8 categories adding mentor count (total + new) in Sections 3.3,
+4.5, 4.6; transcript Decision callout retains v1.0 wording with editor note flagging
+the v1.1 supersession. (2) Account Entity PRD v1.0 → v1.1: partnerStatus description
+softened from "should always be accompanied by a note" to "may be accompanied by a
+note at the Partner Coordinator's discretion" per CR-PARTNER-MANAGE-REQ-013;
+funderStatus has no parallel language and required no change. (3) Contact Entity
+PRD v1.1 → v1.2: CON-ISS-002 closed in three locations (Section 3.x Partner contact
+type, Section 5.5 Partner dynamic logic note, Section 9 Open Issues table marked
+CLOSED in place); partner lifecycle is tracked at Account level via partnerStatus,
+no Partner-specific lifecycle field needed on Contact; hedge retained for non-
+lifecycle Partner fields that may emerge during remaining CR domain process work.
+(4) Engagement Entity PRD v1.0 → v1.1: referringPartner link field added in new
+Section 3.7 Referral Attribution functional group; Contributing Domains expanded to
+include CR; entity overview prose softened from "single-domain custom entity owned
+exclusively by Mentoring (MN)" to "primarily owned"; Section 4 relationships table
+gains Referring Partner → Engagement row; Section 6 Layout Guidance gains Referral
+Attribution Panel; Section 7 Implementation Note 9 documents the dual write path
+(mentor primary, Partner Coordinator exception). Engagement entity now has 20 custom
+fields across 7 functional groups (was 19 across 6).
+
+**Prior structural change (04-07-26):** CR-PARTNER-MANAGE process document v1.0
 complete. 18 system requirements (REQ-001 through REQ-018). 49 data items across
 7 entities: Engagement (8 fields including referringPartner read), Session (4
 fields), Contact (4 fields for mentor affiliation reads + 7 fields for partner
@@ -143,9 +165,9 @@ Prospect is a lifecycle state, not a contactType value.
 
 | Document | File | Version |
 |---|---|---|
-| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.1 |
-| Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.0 |
-| Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.0 |
+| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.2 |
+| Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.1 |
+| Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.1 |
 | Session Entity PRD | `PRDs/entities/Session-Entity-PRD.docx` | v1.0 |
 | Dues Entity PRD | `PRDs/entities/Dues-Entity-PRD.docx` | v1.0 |
 
@@ -171,17 +193,22 @@ shared across all types; type-specific wysiwyg notes fields with
 role-based security; primaryFunderContact dropped in favor of
 relationship-level Primary Contact.
 
-Engagement is a single-domain custom entity — Custom Base type, owned
-exclusively by the Mentoring (MN) domain. 2 native fields (name
-auto-generated, description hidden), 19 custom fields across 6
-functional groups (lifecycle, mentoring context, notes, session
-roll-up analytics, closure, outcomes). 6 relationships (4 to Contact,
-1 to Account, 1 to Session). Status-driven dynamic logic (no
-discriminator). 4 open issues (Mentoring Focus Areas values TBD, Close
-Reason values TBD, additional outcome metrics TBD, survey response
-tracking deferred). Key decisions: name auto-generated as
+Engagement is primarily a Mentoring (MN) domain entity — Custom Base
+type — with one field contributed by Client Recruiting (CR). 2 native
+fields (name auto-generated, description hidden), 20 custom fields
+across 7 functional groups (lifecycle, mentoring context, notes, session
+roll-up analytics, closure, outcomes, referral attribution). 7
+relationships (4 to Contact, 1 to Account for client organization, 1
+to Session, 1 to Account for referring partner). Status-driven dynamic
+logic (no discriminator). 4 open issues (Mentoring Focus Areas values
+TBD, Close Reason values TBD, additional outcome metrics TBD, survey
+response tracking deferred). Key decisions: name auto-generated as
 {Client}-{Mentor}-{Year}; session roll-ups are workflow-updated stored
 fields; no Client Satisfaction Rating; On-Hold is a status value.
+referringPartner field (added v1.1) records partner referral
+attribution for partner-level analytics; primary write path is the
+assigned mentor after the first session, with an exception write path
+for the Partner Coordinator (correction, missed attribution).
 
 Session is a single-domain custom entity — Custom Event type, owned
 exclusively by the Mentoring (MN) domain. 10 native fields (name
@@ -278,7 +305,7 @@ Session prompts committed for all 4 Sub-Domain Overview sessions:
 
 | Document | File | Version |
 |---|---|---|
-| CR-PARTNER Sub-Domain Overview | `PRDs/CR/PARTNER/CBM-SubDomain-Overview-Partner.docx` | v1.0 |
+| CR-PARTNER Sub-Domain Overview | `PRDs/CR/PARTNER/CBM-SubDomain-Overview-Partner.docx` | v1.1 |
 
 Scopes the CR-PARTNER sub-domain for process definition. 2 processes
 (CR-PARTNER-PROSPECT, CR-PARTNER-MANAGE) in dependency order. 4 personas
@@ -288,14 +315,17 @@ CON-ISS-002 resolved (partner lifecycle tracked at Account level).
 Partnership Agreement anticipated fields confirmed (6 fields). New
 referringPartner link field identified for Engagement entity (set by
 mentor after first session, basis for partner analytics). Quarterly
-formal partner analytics reports with 7 metrics: referral count, active
-clients, new clients in last 30 days, total sessions, total hours, NPS
-scores, impact metrics. Two referral tracking mechanisms: client
-self-reported howDidYouHearAboutCbm on Contact, mentor-set
-referringPartner on Engagement.
+formal partner analytics reports with 8 metrics (per v1.1 update):
+referral count, active clients, new clients in last 30 days, total
+sessions, total hours, NPS scores, impact metrics, and mentor count
+(total affiliated and new this period). Two referral tracking
+mechanisms: client self-reported howDidYouHearAboutCbm on Contact,
+mentor-set referringPartner on Engagement.
 
-Updates needed: Contact Entity PRD (close CON-ISS-002), Engagement
-Entity PRD (add referringPartner field).
+Updates applied (v1.1, 04-07-26): mentor count metric added per
+CR-PARTNER-MANAGE session. Carry-forward updates also complete:
+Contact Entity PRD CON-ISS-002 closed (v1.2); Engagement Entity PRD
+referringPartner field added (v1.1).
 
 Session prompts committed for both CR-PARTNER process definitions:
 - `PRDs/CR/PARTNER/SESSION-PROMPT-CR-PARTNER-PROSPECT.md`
@@ -322,10 +352,6 @@ source material only — never reference them as current requirements.
 - CR-MARKETING Sub-Domain Overview (Phase 3) — next CR domain action; session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-MARKETING.md`
 - CR Sub-Domain Overviews (Phase 3) — remaining: CR-MARKETING, CR-EVENTS, CR-REACTIVATE
 - CR Process Definition (Phase 5) — remaining after CR-PARTNER: CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
-- Update Contact Entity PRD: close CON-ISS-002 (partner lifecycle at Account level)
-- Update Engagement Entity PRD: add referringPartner link field; note Partner Coordinator exception edit access (per CR-PARTNER-MANAGE-REQ-004)
-- Update CR-PARTNER Sub-Domain Overview: expand analytics metrics list to 8 categories adding mentor count (total + new this period) in Sections 3.3, 4.5, and 4.6
-- Update Account Entity PRD: soften partnerStatus description so notes on status changes are explicitly at Partner Coordinator discretion (per CR-PARTNER-MANAGE-REQ-013)
 - Produce Partnership Agreement Entity PRD (Phase 2b) — both CR-PARTNER process documents now complete, dependency satisfied
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
 - Produce remaining Entity PRDs (Phase 2b) — Event, Event Registration, Contribution depend on further CR/FU process documents
