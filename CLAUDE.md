@@ -201,14 +201,19 @@ document, workflow diagrams for all processes.
 |---|---|---|
 | Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.3 |
 
-Maps 25 business entity concepts to 13 CRM entities (2 native, 8 custom, 3 TBD).
+Maps 28 business entity concepts to 16 CRM entities (2 native, 11 custom, 3 TBD).
 Key design decisions: Contact uses multiEnum contactType (Client, Mentor,
 Partner, Administrator, Presenter, Donor, Member); Account uses multiEnum
 accountType (Client, Partner, Donor/Sponsor); Contribution consolidates
 Donation, Sponsorship, Grant, and Pledge with an enum contributionType
-discriminator; Dues is a single-domain Custom Base entity for MR.
-Prospect is a lifecycle state, not a contactType value.
-8 open issues documented for downstream resolution.
+discriminator; Dues is a single-domain Custom Base entity for MR. Prospect
+is tracked as a lifecycle state on Contact (not as a contactType value) —
+client prospects use Contact.prospectStatus (added v1.3 by CR-MARKETING
+SDO), mentor prospects use the existing mentorStatus. CR-MARKETING SDO v1.0
+added three new custom entities owned by CR: Marketing Campaign, Campaign
+Group, and Campaign Engagement (all Custom Base, deferred to Phase 2b
+Entity PRDs). 8 open issues documented (6 currently open; EI-ISS-004 and
+EI-ISS-007 closed by CR-MARKETING SDO).
 
 ### Entity PRDs (Phase 2b)
 
