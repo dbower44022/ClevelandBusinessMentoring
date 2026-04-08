@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. Both CR-PARTNER process documents complete (Phase 5): CR-PARTNER-PROSPECT v1.0 and CR-PARTNER-MANAGE v1.0. CR-PARTNER sub-domain process definition is finished. All four pending document updates from CR-PARTNER work are now complete (Sub-Domain Overview v1.1, Account Entity PRD v1.1, Contact Entity PRD v1.2, Engagement Entity PRD v1.1). Next: CR-MARKETING Sub-Domain Overview (Phase 3).**
+**Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING Sub-Domain Overview v1.0 complete. All six carry-forward updates from CR-MARKETING SDO applied: Master PRD v2.4, Contact Entity PRD v1.3, Account Entity PRD v1.2, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.3. Three new custom entities surfaced for deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement. Next: CR-MARKETING-CONTACTS process definition (Phase 5).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -349,10 +349,14 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- CR-MARKETING Sub-Domain Overview (Phase 3) — next CR domain action; session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-SUBDOMAIN-OVERVIEW-MARKETING.md`
-- CR Sub-Domain Overviews (Phase 3) — remaining: CR-MARKETING, CR-EVENTS, CR-REACTIVATE
-- CR Process Definition (Phase 5) — remaining after CR-PARTNER: CR-MARKETING-CONTACTS → CR-MARKETING-CAMPAIGNS → CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
+- CR-MARKETING-CONTACTS process definition (Phase 5) — next CR domain action; session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-CR-MARKETING-CONTACTS.md`
+- CR-MARKETING-CAMPAIGNS process definition (Phase 5) — follows CR-MARKETING-CONTACTS; session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-CR-MARKETING-CAMPAIGNS.md`
+- CR Sub-Domain Overviews (Phase 3) — remaining: CR-EVENTS, CR-REACTIVATE
+- CR Process Definition (Phase 5) — remaining after CR-MARKETING: CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
+- Stakeholder input needed to resolve CR-MARKETING-ISS-001 (geographic targeting model) and CR-MARKETING-ISS-002 (media and PR tracking model) before those aspects of CR-MARKETING-CONTACTS and CR-MARKETING-CAMPAIGNS can be fully specified
+- CBM leadership input needed for CR-MARKETING-ISS-003 (prospectStatus value list) and CR-MARKETING-ISS-004 (clientStatus value list)
 - Produce Partnership Agreement Entity PRD (Phase 2b) — both CR-PARTNER process documents now complete, dependency satisfied
+- Produce Marketing Campaign, Campaign Group, and Campaign Engagement Entity PRDs (Phase 2b) — depend on CR-MARKETING-CAMPAIGNS process definition
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
 - Produce remaining Entity PRDs (Phase 2b) — Event, Event Registration, Contribution depend on further CR/FU process documents
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
