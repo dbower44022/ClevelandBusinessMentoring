@@ -331,6 +331,74 @@ Session prompts committed for both CR-PARTNER process definitions:
 - `PRDs/CR/PARTNER/SESSION-PROMPT-CR-PARTNER-PROSPECT.md`
 - `PRDs/CR/PARTNER/SESSION-PROMPT-CR-PARTNER-MANAGE.md`
 
+### CR-MARKETING Sub-Domain Overview (Phase 3)
+
+| Document | File | Version |
+|---|---|---|
+| CR-MARKETING Sub-Domain Overview | `PRDs/CR/MARKETING/CBM-SubDomain-Overview-Marketing.docx` | v1.0 |
+
+Scopes the CR-MARKETING sub-domain for process definition. 2 processes
+(CR-MARKETING-CONTACTS, CR-MARKETING-CAMPAIGNS) in dependency order.
+3 personas (Client Recruiter primary; Partner Coordinator supporting;
+Client as audience). Major architectural decisions locked:
+
+- **Prospect contact lifecycle model.** Prospects ARE Contact records
+  in the CRM. Two-field model: Contact.prospectStatus tracks the
+  marketing-funnel state of an individual person; Account.clientStatus
+  tracks the client-relationship state of a company. The two fields
+  answer different questions and cannot drift. Handoff at MN-INTAKE:
+  when a prospect applies, Account.clientStatus moves Prospect →
+  Applicant and Contact.prospectStatus moves to Converted.
+- **Universal Contact-Creation Rules.** Five rules apply CRM-wide
+  to every Contact-creation pathway across all domains. Optional
+  company fields on every form; hardcoded contactType per form;
+  CSV import contactType assignment; type-specific creation logic;
+  contactType-agnostic Account matching via website → exact name →
+  manual/new precedence ladder.
+- **Marketing platform integration.** Strict one-way CRM → marketing
+  platform sync with three narrow exceptions: opt-out signals, per-
+  recipient engagement history, and Campaign aggregate metrics. SMS
+  is in scope as a delivery channel (brings TCPA compliance alongside
+  CAN-SPAM). Per-channel opt-out flags (emailOptOut, smsOptOut).
+  Hybrid sync triggers: scheduled + manual on-demand outbound,
+  near-real-time inbound for opt-outs.
+- **Campaign tracking model.** A Campaign is a single outbound send;
+  optional Campaign Group entity supports coordinated multi-touch
+  efforts. Hybrid Pattern D origination: CRM owns metadata and
+  planning; marketing platform owns content. Per-Contact-per-Campaign
+  Campaign Engagement records + aggregate roll-up fields on Contact.
+- **Application source attribution.** 10-value howDidYouHearAboutCbm
+  enum finalized (closes CON-ISS-008), mapped to CR sub-domains for
+  channel effectiveness rollup. Two-field design: structured enum
+  for reporting plus free-text sourceAttributionDetails for
+  supplementary detail. Layered authority policy for writes.
+
+3 new custom entities surfaced for deferred Phase 2b Entity PRDs:
+Marketing Campaign, Campaign Group, Campaign Engagement (all custom
+Base, owned by CR). Session prompts committed for both process
+definitions at `PRDs/CR/MARKETING/SESSION-PROMPT-CR-MARKETING-CONTACTS.md`
+and `PRDs/CR/MARKETING/SESSION-PROMPT-CR-MARKETING-CAMPAIGNS.md`.
+
+4 new open issues: CR-MARKETING-ISS-001 (geographic targeting model,
+stakeholder input needed); CR-MARKETING-ISS-002 (media and PR tracking
+model, stakeholder input needed); CR-MARKETING-ISS-003 (prospectStatus
+value list, CBM leadership input needed); CR-MARKETING-ISS-004
+(clientStatus value list, CBM leadership input needed). ACT-ISS-004
+(geographic service area format) superseded in scope by
+CR-MARKETING-ISS-001.
+
+All six carry-forward updates to upstream documents are complete:
+Master PRD v2.4 (Section 5.4 Universal Contact-Creation Rules);
+Contact Entity PRD v1.3 (Section 3.5 Marketing and Source Attribution
+Fields, finalized howDidYouHearAboutCbm enum, closes CON-ISS-001 and
+CON-ISS-008); Account Entity PRD v1.2 (clientStatus field, website
+implementation note, closes ACT-ISS-001); MN-INTAKE v2.3 (four new
+requirements REQ-010 through REQ-013 for prospect-to-applicant
+handoff, closes MN-INTAKE-ISS-002); CR Domain Overview v1.1 (open
+issues table updates and carry-forward tracking); Entity Inventory
+v1.3 (three new CR-MARKETING entities added, closes EI-ISS-004 and
+EI-ISS-007).
+
 ### Existing Documents (produced under old process)
 
 | Document | File | Notes |
