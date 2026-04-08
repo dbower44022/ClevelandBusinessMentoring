@@ -227,25 +227,37 @@ EI-ISS-007 closed by CR-MARKETING SDO).
 
 Contact is the most complex entity — native Person type, spans all four
 domains, 7 contactType values (multiEnum). 16 native fields documented,
-39 custom fields (6 shared, 1 CBM internal, 32 Mentor-specific). 10
-relationships. Dynamic logic visibility rules by contactType. 8 open
-issues (3 lifecycle fields deferred to CR/FU domains, 4 TBD value lists,
-1 incomplete domain coverage). Key decisions: Primary Contact moved to
-Account-Contact relationship; personalEmail/cbmEmailAddress as separate
-custom fields; termsAndConditionsAccepted shared for portal readiness;
-boardPosition visible for CBM internal types only.
+47 custom fields (6 shared, 1 CBM internal, 32 Mentor-specific, 8
+Marketing and Source Attribution fields added by CR-MARKETING SDO v1.0).
+10 relationships. Dynamic logic visibility rules by contactType. 6 open
+issues (2 donor/FU lifecycle deferrals, 3 TBD value lists, 1 incomplete
+domain coverage) — CON-ISS-001 closed by prospectStatus; CON-ISS-008
+closed by the 10-value howDidYouHearAboutCbm enum finalization. Key
+decisions: Primary Contact moved to Account-Contact relationship;
+personalEmail/cbmEmailAddress as separate custom fields;
+termsAndConditionsAccepted shared for portal readiness; boardPosition
+visible for CBM internal types only; prospectStatus tracks marketing-
+funnel state on Contact paired with Account.clientStatus; per-channel
+opt-out flags (emailOptOut, smsOptOut); marketing engagement roll-up
+fields workflow-updated from Campaign Engagement records.
 
 Account is the second cross-domain shared entity — native Company type,
 spans MN, CR, FU domains, 3 accountType values (multiEnum). 19 native
-fields documented, 21 custom fields (3 shared, 5 Client-specific, 9
-Partner-specific, 4 Donor/Sponsor-specific). 8 relationships including
-Primary Contact bool on Contact-Account middle table. 4 open issues
-(client lifecycle field deferred, incomplete domain coverage, NAICS
-subsector values TBD, geographic service area format TBD). Key
-decisions: assignedLiaison as separate Contact link; parentOrganization
-shared across all types; type-specific wysiwyg notes fields with
-role-based security; primaryFunderContact dropped in favor of
-relationship-level Primary Contact.
+fields documented, 22 custom fields (3 shared, 6 Client-specific
+including clientStatus added by CR-MARKETING SDO v1.0, 9 Partner-
+specific, 4 Donor/Sponsor-specific). 8 relationships including
+Primary Contact bool on Contact-Account middle table. 3 open issues
+(incomplete domain coverage, NAICS subsector values TBD, geographic
+service area format TBD — the latter superseded in scope by
+CR-MARKETING-ISS-001). ACT-ISS-001 closed by the clientStatus field.
+Key decisions: assignedLiaison as separate Contact link;
+parentOrganization shared across all types; type-specific wysiwyg
+notes fields with role-based security; primaryFunderContact dropped
+in favor of relationship-level Primary Contact; clientStatus tracks
+client-relationship state at the Account level (paired with
+Contact.prospectStatus for marketing-funnel state); native website
+field is the primary signal for prospect-Contact-to-Account matching
+under the Universal Contact-Creation Rules.
 
 Engagement is primarily a Mentoring (MN) domain entity — Custom Base
 type — with one field contributed by Client Recruiting (CR). 2 native
