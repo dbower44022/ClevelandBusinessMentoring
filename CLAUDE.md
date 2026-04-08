@@ -58,13 +58,62 @@ and applicationDeclineReason uses a reconciled 7-value enum
 
 | Document | File | Version |
 |---|---|---|
-| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.2 |
+| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.3 |
 | Mentor Matching | `PRDs/MN/MN-MATCH.docx` | v2.2 |
 | Engagement Management | `PRDs/MN/MN-ENGAGE.docx` | v2.3 |
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-07-26):** Four pending document updates from CR-PARTNER
+**Latest structural change (04-08-26):** CR-MARKETING Sub-Domain Overview v1.0
+complete plus all six carry-forward updates applied. (1) Sub-Domain Overview
+establishes the prospect contact lifecycle model (prospects ARE Contact records;
+two-field lifecycle: Contact.prospectStatus for marketing-funnel state and
+Account.clientStatus for client-relationship state); the Universal Contact-
+Creation Rules (5 rules applying CRM-wide to every Contact-creation pathway);
+marketing platform integration (strict one-way CRM → platform sync with three
+narrow exceptions: opt-outs, per-recipient engagement history, Campaign
+aggregate metrics); SMS in scope as a delivery channel alongside email, with
+per-channel opt-out flags (emailOptOut, smsOptOut); Campaign tracking model
+(Campaign = single send, optional Campaign Group for coordinated efforts,
+Pattern D hybrid origination where CRM owns metadata and planning while
+marketing platform owns content); 10-value howDidYouHearAboutCbm enum finalized
+with sub-domain rollup mapping for channel effectiveness reporting; layered
+authority policy for source attribution writes. (2) Master PRD v2.3 → v2.4:
+Section 5.4 added referencing the Universal Contact-Creation Rules as a
+CRM-wide principle. (3) Contact Entity PRD v1.2 → v1.3: Section 3.5 Marketing
+and Source Attribution Fields added with 8 new fields (prospectStatus,
+sourceAttributionDetails, emailOptOut, smsOptOut, lastMarketingEngagement,
+totalCampaignsSent, totalOpens, totalClicks); howDidYouHearAboutCbm enum
+finalized as 10 values; CON-ISS-001 (client lifecycle field) and CON-ISS-008
+(howDidYouHearAboutCbm values) closed; 5 new decisions CON-DEC-010 through
+CON-DEC-014. (4) Account Entity PRD v1.1 → v1.2: clientStatus field added to
+Section 3.2 Client-Specific Fields with TBD value list pending CBM leadership;
+native website field documented as primary matching signal in Section 7
+Implementation Notes; ACT-ISS-001 closed; ACT-ISS-004 marked as superseded in
+scope by CR-MARKETING-ISS-001; 3 new decisions ACT-DEC-009 through ACT-DEC-011.
+(5) MN-INTAKE v2.2 → v2.3: four new requirements REQ-010 through REQ-013
+specify the prospect-to-applicant handoff (prospect Contact lookup by email,
+Account.clientStatus transition, Contact.prospectStatus transition, layered
+authority policy for howDidYouHearAboutCbm writes); MN-INTAKE-ISS-002 closed;
+Section 10 Updates to Prior Documents gains carry-forward subsection. (6) CR
+Domain Overview v1.0 → v1.1: Depends On list updated to reference new upstream
+versions; Section 4.7 Open Issues Carried Forward updated with CON-ISS-001,
+CON-ISS-008, ACT-ISS-001 closures and ACT-ISS-004 supersession note; Section 5
+Updates to Prior Documents expanded with 5 new carry-forward entries. (7)
+Entity Inventory v1.2 → v1.3: 3 new entities added (Marketing Campaign,
+Campaign Group, Campaign Engagement — all custom Base, CR-owned); Section 4
+Custom Entity Summary gains sub-sections 4.9, 4.10, 4.11; Section 5 Cross-
+Domain Entity Matrix gains 3 new rows; entity counts updated from 13 (2
+native, 8 custom, 3 TBD) to 16 (2 native, 11 custom, 3 TBD); EI-ISS-004 and
+EI-ISS-007 closed. 4 new open issues created by the Sub-Domain Overview:
+CR-MARKETING-ISS-001 (geographic targeting model, deferred to stakeholder
+input); CR-MARKETING-ISS-002 (media and PR tracking model, deferred to
+stakeholder input); CR-MARKETING-ISS-003 (prospectStatus value list, TBD
+CBM leadership); CR-MARKETING-ISS-004 (clientStatus value list, TBD CBM
+leadership). Session prompts committed for both CR-MARKETING process
+definitions.
+
+**Prior structural change (04-07-26):** Four pending document updates from CR-PARTNER
 work all completed. (1) CR-PARTNER Sub-Domain Overview v1.0 → v1.1: analytics metric
 list expanded from 7 to 8 categories adding mentor count (total + new) in Sections 3.3,
 4.5, 4.6; transcript Decision callout retains v1.0 wording with editor note flagging
@@ -150,7 +199,7 @@ document, workflow diagrams for all processes.
 
 | Document | File | Version |
 |---|---|---|
-| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.2 |
+| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.3 |
 
 Maps 25 business entity concepts to 13 CRM entities (2 native, 8 custom, 3 TBD).
 Key design decisions: Contact uses multiEnum contactType (Client, Mentor,
@@ -165,8 +214,8 @@ Prospect is a lifecycle state, not a contactType value.
 
 | Document | File | Version |
 |---|---|---|
-| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.2 |
-| Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.1 |
+| Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.3 |
+| Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.2 |
 | Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.1 |
 | Session Entity PRD | `PRDs/entities/Session-Entity-PRD.docx` | v1.0 |
 | Dues Entity PRD | `PRDs/entities/Dues-Entity-PRD.docx` | v1.0 |
@@ -280,7 +329,7 @@ wysiwyg fields unchanged. Closes MR-MANAGE-ISS-003.
 
 | Document | File | Version |
 |---|---|---|
-| CR Domain Overview | `PRDs/CR/CBM-Domain-Overview-ClientRecruiting.docx` | v1.0 |
+| CR Domain Overview | `PRDs/CR/CBM-Domain-Overview-ClientRecruiting.docx` | v1.1 |
 
 Defines 7 processes across 4 sub-domains: CR-PARTNER (CR-PARTNER-PROSPECT,
 CR-PARTNER-MANAGE), CR-MARKETING (CR-MARKETING-CONTACTS,
@@ -403,7 +452,7 @@ EI-ISS-007).
 
 | Document | File | Notes |
 |---|---|---|
-| Master PRD | `PRDs/CBM-Master-PRD.docx` | Word, v2.3 |
+| Master PRD | `PRDs/CBM-Master-PRD.docx` | Word, v2.4 |
 | Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by Word version at PRDs/MN/CBM-Domain-PRD-Mentoring.docx |
 | Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — superseded by Word version at PRDs/MR/CBM-Domain-PRD-MentorRecruitment.docx |
 | Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — legacy source material, superseded by CR Domain Overview |
