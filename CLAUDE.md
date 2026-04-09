@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING Sub-Domain Overview v1.0 complete. All six carry-forward updates from CR-MARKETING SDO applied: Master PRD v2.4, Contact Entity PRD v1.3, Account Entity PRD v1.2, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.3. Three new custom entities surfaced for deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement. Next: CR-MARKETING-CONTACTS process definition (Phase 5).**
+**Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING Sub-Domain Overview v1.1 complete (v1.1 removes the exact-name-match step from the Account precedence ladder). All six carry-forward updates from CR-MARKETING SDO applied. Account precedence ladder scope change applied across the document set: CR-MARKETING SDO v1.1, Master PRD v2.5, Account Entity PRD v1.3. Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.3, Account Entity PRD v1.3, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.3. Three new custom entities surfaced for deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement. Next: CR-MARKETING-CONTACTS process definition (Phase 5), resuming at Section 4.1 Question 4.**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -64,7 +64,9 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-08-26):** CR-MARKETING Sub-Domain Overview v1.0
+**Latest structural change (04-09-26):** Account precedence ladder simplified from three steps to two across the document set. The exact-company-name-match step has been removed from the ladder everywhere it appears. The new ladder is: (1) website domain match — automatic linking when the normalized website domain matches an existing Account's native website field; (2) manual or new — if no website match, the system creates a new Account with no name-based or fuzzy-match suggestions during creation. The Client Recruiter handles any resulting duplicate Accounts via routine data hygiene using the CRM's native search and list tools. Reasoning: automatically linking a Contact to the wrong company is a confidentiality and data-integrity risk that outweighs the cleanup cost of occasional duplicate Accounts — two unrelated firms can legitimately share a name, and the system cannot distinguish them without the website signal. Three documents bumped: (1) CR-MARKETING Sub-Domain Overview v1.0 → v1.1: Section 4.3 intro and ladder table restructured, Section 4.4 Rule 5 ladder phrase shortened with Mentor example clarified, Section 8 Interview Transcript editor's note appended after the original Decision callout (callout itself preserved verbatim), Depends On list refreshed to current versions (Master PRD v2.5, Entity Inventory v1.3, Contact Entity PRD v1.3, Account Entity PRD v1.3). (2) Master PRD v2.4 → v2.5: Universal Contact-Creation Rules summary Rule 5 bullet ladder phrase shortened with clarifying sentence noting the website is the only signal trusted for automatic linking. (3) Account Entity PRD v1.2 → v1.3: Section 7 Implementation Notes ladder narrative replaced; ACT-DEC-011 decision record rewritten to describe the two-step ladder explicitly; both reference upstream CR-MARKETING Sub-Domain Overview v1.1.
+
+**Prior structural change (04-08-26):** CR-MARKETING Sub-Domain Overview v1.0
 complete plus all six carry-forward updates applied. (1) Sub-Domain Overview
 establishes the prospect contact lifecycle model (prospects ARE Contact records;
 two-field lifecycle: Contact.prospectStatus for marketing-funnel state and
@@ -220,7 +222,7 @@ EI-ISS-007 closed by CR-MARKETING SDO).
 | Document | File | Version |
 |---|---|---|
 | Contact Entity PRD | `PRDs/entities/Contact-Entity-PRD.docx` | v1.3 |
-| Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.2 |
+| Account Entity PRD | `PRDs/entities/Account-Entity-PRD.docx` | v1.3 |
 | Engagement Entity PRD | `PRDs/entities/Engagement-Entity-PRD.docx` | v1.1 |
 | Session Entity PRD | `PRDs/entities/Session-Entity-PRD.docx` | v1.0 |
 | Dues Entity PRD | `PRDs/entities/Dues-Entity-PRD.docx` | v1.0 |
@@ -401,7 +403,7 @@ Session prompts committed for both CR-PARTNER process definitions:
 
 | Document | File | Version |
 |---|---|---|
-| CR-MARKETING Sub-Domain Overview | `PRDs/CR/MARKETING/CBM-SubDomain-Overview-Marketing.docx` | v1.0 |
+| CR-MARKETING Sub-Domain Overview | `PRDs/CR/MARKETING/CBM-SubDomain-Overview-Marketing.docx` | v1.1 |
 
 Scopes the CR-MARKETING sub-domain for process definition. 2 processes
 (CR-MARKETING-CONTACTS, CR-MARKETING-CAMPAIGNS) in dependency order.
@@ -419,8 +421,9 @@ Client as audience). Major architectural decisions locked:
   to every Contact-creation pathway across all domains. Optional
   company fields on every form; hardcoded contactType per form;
   CSV import contactType assignment; type-specific creation logic;
-  contactType-agnostic Account matching via website → exact name →
-  manual/new precedence ladder.
+  contactType-agnostic Account matching via website → manual/new
+  precedence ladder (exact-name-match step removed in 04-09-26 scope
+  change; see latest structural change entry above).
 - **Marketing platform integration.** Strict one-way CRM → marketing
   platform sync with three narrow exceptions: opt-out signals, per-
   recipient engagement history, and Campaign aggregate metrics. SMS
@@ -469,7 +472,7 @@ EI-ISS-007).
 
 | Document | File | Notes |
 |---|---|---|
-| Master PRD | `PRDs/CBM-Master-PRD.docx` | Word, v2.4 |
+| Master PRD | `PRDs/CBM-Master-PRD.docx` | Word, v2.5 |
 | Mentoring Domain PRD | `PRDs/CBM-Domain-PRD-Mentoring.md` | Markdown, v1.0 — superseded by Word version at PRDs/MN/CBM-Domain-PRD-Mentoring.docx |
 | Mentor Recruitment Domain PRD | `PRDs/CBM-Domain-PRD-MentorRecruitment.md` | Markdown, v1.0 — superseded by Word version at PRDs/MR/CBM-Domain-PRD-MentorRecruitment.docx |
 | Client Recruiting Domain PRD | `PRDs/CBM-Domain-PRD-ClientRecruiting.md` | Markdown, v1.0 — legacy source material, superseded by CR Domain Overview |
