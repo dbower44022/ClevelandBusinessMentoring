@@ -38,7 +38,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING-CONTACTS process document v1.0 complete. Account precedence ladder scope change applied across the document set (04-09-26). Two carry-forward updates from CR-MARKETING-CONTACTS pending: Entity Inventory v1.3 → v1.4 (add Segment entity) and CR-MARKETING SDO v1.1 → v1.2 (add Segment to deferred Entity PRDs list). Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.3, Account Entity PRD v1.3, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.3, CR-MARKETING SDO v1.1. Four deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement, Segment. Next: apply carry-forward items, then CR-MARKETING-CAMPAIGNS process definition (Phase 5).**
+**Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING-CONTACTS process document v1.0 complete. Account precedence ladder scope change applied across the document set (04-09-26). CR-MARKETING-CONTACTS carry-forward updates applied (04-09-26): Entity Inventory v1.4 (Segment entity added) and CR-MARKETING SDO v1.2 (Segment in deferred Entity PRDs list, Depends On updated). Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.3, Account Entity PRD v1.3, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.4, CR-MARKETING SDO v1.2. Four deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement, Segment. Next: CR-MARKETING-CAMPAIGNS process definition (Phase 5).**
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
@@ -64,7 +64,7 @@ and applicationDeclineReason uses a reconciled 7-value enum
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
 | Engagement Closure | `PRDs/MN/MN-CLOSE.docx` | v1.1 |
 
-**Latest structural change (04-09-26):** CR-MARKETING-CONTACTS process document v1.0 complete. First process document in the CR-MARKETING sub-domain. Defines marketing contact management as a continuous activity composed of nine activity areas: web inquiry form handling, marketing list import, single-record manual entry, multi-contact-per-company detection, prospect contact lifecycle management, data hygiene, segmentation, sync preparation, and reporting and pipeline visibility. Client Recruiter (MST-PER-007) sole operator. 60 system requirements (REQ-001 through REQ-060). 52 data items (DAT-001 through DAT-052): 22 read-only references across Contact, Account, and three reference enum value lists; 30 created/updated items across Contact (13 fields), Account (8 items), and the new Segment custom entity (9 items). Segment is a new custom entity owned by CR with two types (Dynamic and Static) per REQ-041; it will be added to the Entity Inventory (v1.3 → v1.4) and will receive a deferred Phase 2b Entity PRD alongside Marketing Campaign, Campaign Group, and Campaign Engagement. 4 open issues: ISS-001 (prospectStatus values, inherited from CR-MARKETING-ISS-003), ISS-002 (clientStatus values, inherited from CR-MARKETING-ISS-004), ISS-003 (geographic segmentation, inherited from CR-MARKETING-ISS-001), ISS-004 (hard-bounce threshold, newly surfaced, depends on marketing platform selection). Two carry-forward updates pending: Entity Inventory v1.3 → v1.4 (add Segment) and CR-MARKETING SDO v1.1 → v1.2 (add Segment to deferred Entity PRDs list). Key design decisions: silent web-inquiry creation (Option D); update-only-if-blank on email-match (Option C); four-stage import wizard; informational-not-blocking multi-contact-per-company detection; relaxed email requirement for manual entry only; manual prospectStatus transitions with no time-based auto-transitions; two first-class segment types (Dynamic and Static); four-step pre-flight sync preparation.
+**Latest structural change (04-09-26):** CR-MARKETING-CONTACTS process document v1.0 complete. First process document in the CR-MARKETING sub-domain. Defines marketing contact management as a continuous activity composed of nine activity areas: web inquiry form handling, marketing list import, single-record manual entry, multi-contact-per-company detection, prospect contact lifecycle management, data hygiene, segmentation, sync preparation, and reporting and pipeline visibility. Client Recruiter (MST-PER-007) sole operator. 60 system requirements (REQ-001 through REQ-060). 52 data items (DAT-001 through DAT-052): 22 read-only references across Contact, Account, and three reference enum value lists; 30 created/updated items across Contact (13 fields), Account (8 items), and the new Segment custom entity (9 items). Segment is a new custom entity owned by CR with two types (Dynamic and Static) per REQ-041; it will be added to the Entity Inventory (v1.3 → v1.4) and will receive a deferred Phase 2b Entity PRD alongside Marketing Campaign, Campaign Group, and Campaign Engagement. 4 open issues: ISS-001 (prospectStatus values, inherited from CR-MARKETING-ISS-003), ISS-002 (clientStatus values, inherited from CR-MARKETING-ISS-004), ISS-003 (geographic segmentation, inherited from CR-MARKETING-ISS-001), ISS-004 (hard-bounce threshold, newly surfaced, depends on marketing platform selection). Two carry-forward updates applied (04-09-26): Entity Inventory v1.3 → v1.4 (Segment added) and CR-MARKETING SDO v1.1 → v1.2 (Segment in deferred Entity PRDs list, Depends On updated). Key design decisions: silent web-inquiry creation (Option D); update-only-if-blank on email-match (Option C); four-stage import wizard; informational-not-blocking multi-contact-per-company detection; relaxed email requirement for manual entry only; manual prospectStatus transitions with no time-based auto-transitions; two first-class segment types (Dynamic and Static); four-step pre-flight sync preparation.
 
 **Prior structural change (04-09-26):** Account precedence ladder simplified from three steps to two across the document set. The exact-company-name-match step has been removed from the ladder everywhere it appears. The new ladder is: (1) website domain match — automatic linking when the normalized website domain matches an existing Account's native website field; (2) manual or new — if no website match, the system creates a new Account with no name-based or fuzzy-match suggestions during creation. The Client Recruiter handles any resulting duplicate Accounts via routine data hygiene using the CRM's native search and list tools. Reasoning: automatically linking a Contact to the wrong company is a confidentiality and data-integrity risk that outweighs the cleanup cost of occasional duplicate Accounts — two unrelated firms can legitimately share a name, and the system cannot distinguish them without the website signal. Three documents bumped: (1) CR-MARKETING Sub-Domain Overview v1.0 → v1.1: Section 4.3 intro and ladder table restructured, Section 4.4 Rule 5 ladder phrase shortened with Mentor example clarified, Section 8 Interview Transcript editor's note appended after the original Decision callout (callout itself preserved verbatim), Depends On list refreshed to current versions (Master PRD v2.5, Entity Inventory v1.3, Contact Entity PRD v1.3, Account Entity PRD v1.3). (2) Master PRD v2.4 → v2.5: Universal Contact-Creation Rules summary Rule 5 bullet ladder phrase shortened with clarifying sentence noting the website is the only signal trusted for automatic linking. (3) Account Entity PRD v1.2 → v1.3: Section 7 Implementation Notes ladder narrative replaced; ACT-DEC-011 decision record rewritten to describe the two-step ladder explicitly; both reference upstream CR-MARKETING Sub-Domain Overview v1.1.
 
@@ -203,9 +203,9 @@ document, workflow diagrams for all processes.
 
 | Document | File | Version |
 |---|---|---|
-| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.3 |
+| Entity Inventory | `PRDs/CBM-Entity-Inventory.docx` | v1.4 |
 
-Maps 28 business entity concepts to 16 CRM entities (2 native, 11 custom, 3 TBD).
+Maps 28 business entity concepts to 17 CRM entities (2 native, 12 custom, 3 TBD).
 Key design decisions: Contact uses multiEnum contactType (Client, Mentor,
 Partner, Administrator, Presenter, Donor, Member); Account uses multiEnum
 accountType (Client, Partner, Donor/Sponsor); Contribution consolidates
@@ -405,7 +405,7 @@ Session prompts committed for both CR-PARTNER process definitions:
 
 | Document | File | Version |
 |---|---|---|
-| CR-MARKETING Sub-Domain Overview | `PRDs/CR/MARKETING/CBM-SubDomain-Overview-Marketing.docx` | v1.1 |
+| CR-MARKETING Sub-Domain Overview | `PRDs/CR/MARKETING/CBM-SubDomain-Overview-Marketing.docx` | v1.2 |
 
 Scopes the CR-MARKETING sub-domain for process definition. 2 processes
 (CR-MARKETING-CONTACTS, CR-MARKETING-CAMPAIGNS) in dependency order.
@@ -481,12 +481,12 @@ CR-MARKETING-CONTACTS v1.0 complete. 60 system requirements, 52 data
 items across Contact, Account, and Segment entities. Continuous
 activity-area structure with nine activity areas. Client Recruiter
 sole operator. Segment entity introduced as a new custom entity
-(Dynamic and Static types per REQ-041). Two carry-forward updates
-pending: Entity Inventory v1.3 → v1.4 (add Segment) and CR-MARKETING
-SDO v1.1 → v1.2 (add Segment to deferred Entity PRDs list).
+(Dynamic and Static types per REQ-041). Carry-forward updates applied
+(04-09-26): Entity Inventory v1.4 (Segment added) and CR-MARKETING
+SDO v1.2 (Segment in deferred Entity PRDs list, Depends On updated).
 
 **Remaining CR-MARKETING work:** CR-MARKETING-CAMPAIGNS process
-definition, plus the two pending carry-forward updates above.
+definition.
 Session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-CR-MARKETING-CAMPAIGNS.md`.
 
 ### Existing Documents (produced under old process)
@@ -507,7 +507,6 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Apply CR-MARKETING-CONTACTS carry-forward updates: Entity Inventory v1.3 → v1.4 (add Segment entity) and CR-MARKETING SDO v1.1 → v1.2 (add Segment to deferred Entity PRDs list); session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-CARRY-FORWARD-CR-MARKETING-CONTACTS.md`
 - CR-MARKETING-CAMPAIGNS process definition (Phase 5) — second and final CR-MARKETING process document; session prompt at `PRDs/CR/MARKETING/SESSION-PROMPT-CR-MARKETING-CAMPAIGNS.md`
 - CR Sub-Domain Overviews (Phase 3) — remaining: CR-EVENTS, CR-REACTIVATE
 - CR Process Definition (Phase 5) — remaining after CR-MARKETING: CR-EVENTS-MANAGE → CR-EVENTS-CONVERT → CR-REACTIVATE-OUTREACH
