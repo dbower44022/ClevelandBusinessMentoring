@@ -1,0 +1,178 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentor Recruitment (MR) domain — Dues entity definition and the
+  Contact ↔ Dues relationship. Defines one annual dues obligation per
+  mentor per billing year. Owned exclusively by the MR domain.
+
+# Source: Dues Entity PRD v1.0 (04-05-26 22:00),
+#         MR Domain PRD v1.0 (04-03-26 23:00), Section 4 "Entity: Dues"
+#         and process document MR-MANAGE.
+
+entities:
+
+  # ---------------------------------------------------------------
+  # Custom entity — Dues
+  # ---------------------------------------------------------------
+
+  Dues:
+    description: >
+      One annual dues obligation for a single mentor. One record is
+      created per mentor per billing year. Provides a complete payment
+      history independent of the summary duesStatus and duesPaymentDate
+      fields on the mentor Contact record. Single-domain entity owned
+      exclusively by Mentor Recruitment (MR). All fields defined in
+      MR-MANAGE process document. See Dues Entity PRD v1.0.
+    action: create
+    type: Base
+    labelSingular: "Dues"
+    labelPlural: "Dues"
+    stream: false
+
+    fields:
+
+      # --- Billing Fields (Section 3.1) ---
+
+      - name: billingYear
+        type: int
+        label: "Billing Year"
+        description: >
+          The calendar year this dues record applies to (e.g., 2026).
+          One Dues record exists per mentor per billing year. Used in
+          the auto-generated name field. See PRD MR-MANAGE-DAT-029.
+        category: "Billing"
+        required: true
+
+      - name: amount
+        type: currency
+        label: "Amount"
+        description: >
+          The dues amount invoiced for this billing year. The amount
+          is uniform across all mentors and does not change year to
+          year. See PRD MR-MANAGE-DAT-030.
+        category: "Billing"
+        required: true
+
+      - name: dueDate
+        type: date
+        label: "Due Date"
+        description: >
+          The date by which payment is expected. Set based on the
+          mentor's activation anniversary (duesRenewalDate on the
+          Contact record). See PRD MR-MANAGE-DAT-031.
+        category: "Billing"
+        required: true
+
+      # --- Payment Fields (Section 3.2) ---
+
+      - name: paymentStatus
+        type: enum
+        label: "Payment Status"
+        description: >
+          The current payment status for this dues record. Updated by
+          the Mentor Administrator when payment is received or a
+          waiver is granted. See PRD MR-MANAGE-DAT-032.
+        category: "Billing"
+        required: true
+        default: "Unpaid"
+        audited: true
+        options:
+          - "Unpaid"
+          - "Paid"
+          - "Waived"
+        style:
+          "Unpaid": "warning"
+          "Paid": "success"
+          "Waived": "default"
+
+      - name: paymentDate
+        type: date
+        label: "Payment Date"
+        description: >
+          The date payment was received. Required when paymentStatus =
+          Paid. Field-level visibility (show only when paymentStatus =
+          Paid) is configured manually post-deployment — see
+          MANUAL-CONFIG.md. See PRD MR-MANAGE-DAT-033.
+        category: "Billing"
+        required: false
+
+      - name: paymentMethod
+        type: enum
+        label: "Payment Method"
+        description: >
+          How the dues were paid. Required when paymentStatus = Paid.
+          Field-level visibility (hide when paymentStatus = Waived) is
+          configured manually post-deployment — see MANUAL-CONFIG.md.
+          See PRD MR-MANAGE-DAT-034.
+        category: "Billing"
+        required: false
+        options:
+          - "Online Payment"
+          - "Check"
+
+      # --- Notes (Section 3.3) ---
+
+      - name: notes
+        type: text
+        label: "Notes"
+        description: >
+          Additional notes about this dues record (e.g., waiver
+          rationale, payment arrangement details). Visible to Mentor
+          Administrator only — field-level access control is
+          configured manually post-deployment. See PRD
+          MR-MANAGE-DAT-035.
+        category: "Notes"
+        required: false
+
+    layout:
+      detail:
+        panels:
+          - label: "Billing"
+            description: >
+              Billing obligation and payment tracking for this dues
+              record. Source: Dues Entity PRD Section 6.
+            tabs:
+              - label: "Billing"
+                category: "Billing"
+          - label: "Notes"
+            description: >
+              Administrative notes on this dues record. Source: Dues
+              Entity PRD Section 6.
+            tabs:
+              - label: "Notes"
+                category: "Notes"
+      list:
+        columns:
+          - field: name
+            width: 30
+          - field: billingYear
+            width: 12
+          - field: amount
+            width: 14
+          - field: dueDate
+            width: 14
+          - field: paymentStatus
+            width: 15
+          - field: paymentDate
+            width: 15
+
+# ---------------------------------------------------------------
+# Relationship — Dues ↔ Contact
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: duesToMentor
+    description: >
+      Links Dues records to the mentor Contact who paid them.
+      Many Dues records belong to one Contact (manyToOne from the
+      Dues side; oneToMany from the Contact side). See PRD
+      MR-MANAGE-DAT-028 and Dues Entity PRD Section 4.
+    entity: Dues
+    entityForeign: Contact
+    linkType: manyToOne
+    link: mentor
+    linkForeign: duesRecords
+    label: "Mentor"
+    labelForeign: "Dues Records"
+    audited: false

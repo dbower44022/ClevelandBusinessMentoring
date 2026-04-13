@@ -1,0 +1,887 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentor Recruitment (MR) domain — custom field additions to the
+  native Contact entity. Covers the full mentor lifecycle: prospect
+  tracking, application, onboarding, active management, analytics,
+  dues summary, and departure. Fields are organized into twelve
+  panels matching Section 4 of the Mentor Recruitment Domain Product
+  Requirements Document.
+
+# Source: Mentor Recruitment Domain Product Requirements Document
+#         v1.0 (04-03-26 23:00), Section 4 "Entity: Contact (Mentor)"
+#         Contact Entity Product Requirements Document v1.3
+#         (04-08-26 16:24) for field-name reconciliation and shared
+#         field definitions.
+
+entities:
+
+  Contact:
+    description: >
+      Native Person-type entity. The single repository for all
+      individuals known to CBM. This file defines the custom fields
+      contributed by the Mentor Recruitment domain. Native fields
+      (firstName, lastName, emailAddress, phoneNumber, title,
+      addresses, etc.) are not created here — they exist by virtue of
+      the Person entity type. Fields contributed by other domains
+      (Mentoring, Client Recruiting, Fundraising) are defined in
+      those domains' YAML files. See Contact Entity Product
+      Requirements Document v1.3.
+
+    fields:
+
+      # --- Section 4.1 — Identity and Contact Information ---
+
+      - name: contactType
+        type: multiEnum
+        label: "Contact Type"
+        description: >
+          Discriminator field for the Contact entity. Determines
+          which type-specific fields and panels are visible. A
+          Contact may hold any combination of values. Set based on
+          how the Contact enters the system. See Entity Inventory
+          EI-2a.
+        category: "Identity and Contact Information"
+        required: true
+        audited: true
+        options:
+          - "Client"
+          - "Mentor"
+          - "Partner"
+          - "Administrator"
+          - "Presenter"
+          - "Donor"
+          - "Member"
+        style:
+          "Client": "primary"
+          "Mentor": "success"
+          "Partner": "info"
+          "Administrator": "warning"
+          "Presenter": "default"
+          "Donor": "default"
+          "Member": "default"
+
+      - name: preferredName
+        type: varchar
+        label: "Preferred Name"
+        description: >
+          The name the contact prefers to be called. Used in
+          communications when provided. See PRD MR-APPLY-DAT-006.
+        category: "Identity and Contact Information"
+        required: false
+
+      - name: personalEmail
+        type: email
+        label: "Personal Email"
+        description: >
+          The applicant's personal email address. Used for
+          confirmation email and all pre-activation communications.
+          Separate from the native emailAddress field and from
+          cbmEmailAddress. See PRD MR-APPLY-DAT-007.
+        category: "Identity and Contact Information"
+        required: true
+
+      - name: cbmEmailAddress
+        type: email
+        label: "CBM Email Address"
+        description: >
+          The mentor's assigned CBM organizational email address.
+          Populated by the Mentor Administrator during onboarding.
+          Email account provisioned externally. Retained after
+          departure as historical data. See PRD MR-ONBOARD-DAT-008.
+        category: "Identity and Contact Information"
+        required: false
+
+      - name: linkedInProfile
+        type: url
+        label: "LinkedIn Profile"
+        description: >
+          The contact's LinkedIn profile URL. Provides professional
+          background context. See PRD MR-APPLY-DAT-009.
+        category: "Identity and Contact Information"
+        required: false
+
+      # --- Section 4.2 — Professional Background ---
+
+      # Note: `title` is a native Person-type field and is not
+      # recreated here. It is placed in the Professional Background
+      # panel via layout below.
+
+      - name: currentEmployer
+        type: varchar
+        label: "Current Employer"
+        description: >
+          Name of the contact's current employer or organization.
+          Collected at application, mentor-editable after activation.
+          Displayed in the mentor directory. See PRD
+          MR-APPLY-DAT-010.
+        category: "Professional Background"
+        required: false
+
+      - name: currentlyEmployed
+        type: bool
+        label: "Currently Employed"
+        description: >
+          Whether the applicant is employed at the time of
+          application. Point-in-time snapshot. See PRD
+          MR-APPLY-DAT-011.
+        category: "Professional Background"
+        required: false
+
+      - name: yearsOfBusinessExperience
+        type: int
+        label: "Years of Business Experience"
+        description: >
+          Total years of professional business experience. Collected
+          at application, mentor-editable after activation. Displayed
+          in the mentor directory. See PRD MR-APPLY-DAT-012.
+        category: "Professional Background"
+        required: false
+
+      - name: professionalBio
+        type: wysiwyg
+        label: "Professional Bio"
+        description: >
+          Free-form description of professional background and work
+          experience. Collected at application, mentor-editable after
+          activation. Displayed in the mentor directory. See PRD
+          MR-APPLY-DAT-013.
+        category: "Professional Background"
+        required: false
+
+      # --- Section 4.3 — Expertise and Matching ---
+
+      - name: industrySectors
+        type: multiEnum
+        label: "Industry Sectors"
+        description: >
+          Industry sectors where the mentor has experience. Primary
+          matching criterion. Values are the 20 top-level NAICS
+          sectors and must align with the industrySector field on
+          Account. See PRD MR-APPLY-DAT-014. NAICS option list
+          adopted from archived legacy YAML — see EXCEPTIONS.md.
+        category: "Expertise and Matching"
+        required: true
+        options:
+          - "Agriculture, Forestry, Fishing and Hunting"
+          - "Mining, Quarrying, and Oil and Gas Extraction"
+          - "Utilities"
+          - "Construction"
+          - "Manufacturing"
+          - "Wholesale Trade"
+          - "Retail Trade"
+          - "Transportation and Warehousing"
+          - "Information"
+          - "Finance and Insurance"
+          - "Real Estate and Rental and Leasing"
+          - "Professional, Scientific, and Technical Services"
+          - "Management of Companies and Enterprises"
+          - "Administrative and Support and Waste Management"
+          - "Educational Services"
+          - "Health Care and Social Assistance"
+          - "Arts, Entertainment, and Recreation"
+          - "Accommodation and Food Services"
+          - "Other Services (except Public Administration)"
+          - "Public Administration"
+
+      - name: mentoringFocusAreas
+        type: multiEnum
+        label: "Mentoring Focus Areas"
+        description: >
+          Specific areas where the mentor provides guidance. Primary
+          matching criterion. Values must align with the
+          Engagement-level Mentoring Focus Areas field and the
+          Account Mentoring Focus Areas field. Collected at
+          application, mentor-editable after activation. See PRD
+          MR-APPLY-DAT-015.
+        category: "Expertise and Matching"
+        required: true
+        options:
+          - "Accounting & Tax Services"
+          - "Advertising, Design, & Marketing"
+          - "Agriculture"
+          - "Animal & Veterinary Services"
+          - "Architecture, Engineering, & Related Services"
+          - "Arts, Entertainment, & Recreation"
+          - "Auto Repair & Mechanic"
+          - "Beauty, Cosmetics & Salon Services"
+          - "Business Consulting & Coaching"
+          - "Childcare"
+          - "Commercial & Residential Services"
+          - "Construction"
+          - "Counseling & Therapy"
+          - "Distribution & Transportation of Goods"
+          - "Education"
+          - "Farming & Livestock"
+          - "Fine Arts, Artisan, & Craft Work"
+          - "Fishing & Hunting"
+          - "Food & Beverage"
+          - "Forestry"
+          - "Funeral & Death Care Services"
+          - "Information Technology"
+          - "Manufacturing"
+          - "Media & Publishing"
+          - "Mining, Quarry, & Utilities"
+          - "Nonprofit"
+          - "Personal Care Services"
+          - "Photography & Video Services"
+          - "Professional Services"
+          - "Public Relations & Communications"
+          - "Real Estate"
+          - "Recruiting & Staffing"
+          - "Rental & Leasing"
+          - "Restaurant & Bar"
+          - "Retail"
+          - "Social Assistance & Family Services"
+          - "Transportation"
+          - "Travel, Hospitality, & Tourism"
+          - "Warehousing"
+          - "Waste Management & Disposal"
+          - "Website Development"
+          - "Wellness, Healthcare, & Home Health"
+
+      # Note: field name reconciled to Contact Entity PRD v1.3 —
+      # "skillsExpertiseTags" rather than Mentor Recruitment Domain
+      # PRD's "skillsAndExpertiseTags". See EXCEPTIONS.md.
+      - name: skillsExpertiseTags
+        type: multiEnum
+        label: "Skills and Expertise Tags"
+        description: >
+          Finer-grained expertise tags beyond industry sector and
+          focus areas. Supports advanced mentor-client matching.
+          Collected at application, mentor-editable after activation.
+          See PRD MR-APPLY-DAT-016.
+        category: "Expertise and Matching"
+        required: false
+        options:
+          - "Accounting & Finance"
+          - "Advertising"
+          - "Bookkeeping"
+          - "Branding"
+          - "Budgeting"
+          - "Business Structure"
+          - "Cash Flow"
+          - "Communications Tech"
+          - "Contracts"
+          - "Cybersecurity"
+          - "Digital Marketing"
+          - "Disaster Prep & Recovery"
+          - "Ecommerce"
+          - "Financial Literacy"
+          - "Franchising"
+          - "Funding/Loans"
+          - "Government Contracting"
+          - "Government Regulations"
+          - "Hardware & Equipment"
+          - "Human Resources"
+          - "Import & Export"
+          - "Intellectual Property"
+          - "Legal"
+          - "Management & Operations"
+          - "Marketing"
+          - "Marketing Strategy"
+          - "PR/Media"
+          - "Pricing"
+          - "Social Media"
+          - "Supply Chain Management"
+          - "Tax Planning"
+          - "Technology"
+          - "Websites"
+
+      - name: fluentLanguages
+        type: multiEnum
+        label: "Fluent Languages"
+        description: >
+          Languages the mentor is fluent in. Used to match clients
+          who prefer to work in a language other than English.
+          Collected at application, mentor-editable after activation.
+          See PRD MR-APPLY-DAT-017.
+        category: "Expertise and Matching"
+        required: false
+        options:
+          - "American Sign Language"
+          - "Arabic"
+          - "Bengali"
+          - "Cantonese"
+          - "Chinese"
+          - "Czech"
+          - "Danish"
+          - "Dutch"
+          - "English"
+          - "French"
+          - "German"
+          - "Greek"
+          - "Gujarati"
+          - "Hebrew"
+          - "Hindi"
+          - "Hungarian"
+          - "Indonesian"
+          - "Italian"
+          - "Japanese"
+          - "Korean"
+          - "Lithuanian"
+          - "Malay"
+          - "Mandarin"
+          - "Marathi"
+          - "Norwegian"
+          - "Pashto"
+          - "Polish"
+          - "Portuguese"
+          - "Punjabi"
+          - "Russian"
+          - "Spanish"
+          - "Swedish"
+          - "Tagalog"
+          - "Telugu"
+          - "Urdu"
+          - "Other"
+
+      # --- Section 4.4 — Motivation and Referral ---
+
+      - name: whyInterestedInMentoring
+        type: wysiwyg
+        label: "Why Interested in Mentoring"
+        description: >
+          The mentor's stated motivation for joining CBM as a
+          volunteer mentor. Collected at application, mentor-editable
+          after activation. Not displayed in the mentor directory.
+          See PRD MR-APPLY-DAT-018.
+        category: "Motivation and Referral"
+        required: false
+
+      # Note: field name reconciled to Contact Entity PRD v1.3 —
+      # "howDidYouHearAboutCbm" (lowercase bm) rather than Mentor
+      # Recruitment Domain PRD's "howDidYouHearAboutCBM". Option
+      # list is an 8-value list superseding both the Mentor
+      # Recruitment Domain PRD's TBD marker and the 10-value list
+      # in the Contact Entity PRD v1.3. See EXCEPTIONS.md.
+      - name: howDidYouHearAboutCbm
+        type: enum
+        label: "How Did You Hear About CBM"
+        description: >
+          How the contact learned about CBM's mentoring program.
+          Referral source recorded at point of first contact or at
+          application. Supports outreach channel effectiveness
+          reporting. See PRD MR-RECRUIT-DAT-006.
+        category: "Motivation and Referral"
+        required: false
+        options:
+          - "Partner Referral"
+          - "Social Media"
+          - "CBM Email"
+          - "Workshop or Event"
+          - "Search Engine"
+          - "News or Media"
+          - "Personal Referral"
+          - "Other"
+
+      # --- Section 4.5 — Application and Compliance ---
+
+      - name: felonyConvictionDisclosure
+        type: bool
+        label: "Felony Conviction Disclosure"
+        description: >
+          Whether the applicant discloses a felony conviction.
+          System-populated from the application form. Admin-only;
+          hidden from the mentor after submission. May inform the
+          Mentor Administrator's decision on whether to require a
+          background check during onboarding. Field-level access
+          control configured post-deployment — see MANUAL-CONFIG.md.
+          See PRD MR-APPLY-DAT-020.
+        category: "Application and Compliance"
+        required: true
+
+      - name: termsAndConditionsAccepted
+        type: bool
+        label: "Terms and Conditions Accepted"
+        description: >
+          System-set to Yes at application submission. Admin-only;
+          read-only for contacts. See PRD MR-APPLY-DAT-021.
+        category: "Application and Compliance"
+        required: true
+        default: "true"
+        readOnly: true
+
+      - name: termsAndConditionsAcceptanceDateTime
+        type: datetime
+        label: "Terms and Conditions Acceptance Date/Time"
+        description: >
+          System-recorded timestamp of terms and conditions
+          acceptance at submission. Admin-only; read-only for
+          contacts. See PRD MR-APPLY-DAT-022.
+        category: "Application and Compliance"
+        required: true
+        readOnly: true
+
+      - name: applicationDeclineReason
+        type: enum
+        label: "Application Decline Reason"
+        description: >
+          Reason the mentor application was declined. Required when
+          mentorStatus = Declined (conditional-required is configured
+          post-deployment — see MANUAL-CONFIG.md). Visible only when
+          mentorStatus = Declined (field-level dynamic logic
+          configured post-deployment). Admin-only. Used during both
+          application and onboarding decline. Reconciled to 7 values.
+          See PRD MR-APPLY-DAT-024.
+        category: "Application and Compliance"
+        required: false
+        options:
+          - "Insufficient Experience"
+          - "Incomplete Application"
+          - "Failed Background Check"
+          - "Conflict of Interest"
+          - "Unresponsive"
+          - "Candidate Withdrew"
+          - "Other"
+
+      - name: trainingCompleted
+        type: bool
+        label: "Training Completed"
+        description: >
+          Whether the mentor has completed required training modules.
+          System-populated via learning management system integration
+          or manually set by the Mentor Administrator as a fallback.
+          Referenced for compliance verification and reactivation
+          assessment. See PRD MR-ONBOARD-DAT-002.
+        category: "Application and Compliance"
+        required: true
+
+      - name: trainingCompletionDate
+        type: date
+        label: "Training Completion Date"
+        description: >
+          Date required training was completed. System-populated via
+          learning management system integration or manually set.
+          Paired with trainingCompleted. See PRD MR-ONBOARD-DAT-003.
+        category: "Application and Compliance"
+        required: true
+
+      - name: ethicsAgreementAccepted
+        type: bool
+        label: "Ethics Agreement Accepted"
+        description: >
+          Whether the mentor has accepted the current CBM ethics
+          agreement. Set by the Mentor Administrator after the
+          mentor completes the external acceptance process.
+          Admin-only, read-only for mentors. Field-level access
+          control configured post-deployment. See PRD
+          MR-ONBOARD-DAT-004.
+        category: "Application and Compliance"
+        required: true
+
+      - name: ethicsAgreementAcceptanceDateTime
+        type: datetime
+        label: "Ethics Agreement Acceptance Date/Time"
+        description: >
+          Date and time of the mentor's ethics agreement acceptance.
+          Set by the Mentor Administrator. Admin-only. See PRD
+          MR-ONBOARD-DAT-005.
+        category: "Application and Compliance"
+        required: true
+
+      - name: backgroundCheckCompleted
+        type: bool
+        label: "Background Check Completed"
+        description: >
+          Whether a background check has been completed.
+          Conditional-required (only populated when the Mentor
+          Administrator determines a background check is required) —
+          conditional logic configured post-deployment. Admin-only,
+          hidden from mentors (field-level access control configured
+          post-deployment). Requires ethics agreement acceptance
+          first. See PRD MR-ONBOARD-DAT-006.
+        category: "Application and Compliance"
+        required: false
+
+      - name: backgroundCheckDate
+        type: date
+        label: "Background Check Date"
+        description: >
+          Date the background check was completed. Conditional —
+          only populated when a background check is conducted.
+          Admin-only, hidden from mentors. See PRD
+          MR-ONBOARD-DAT-007.
+        category: "Application and Compliance"
+        required: false
+
+      # --- Section 4.6 — Lifecycle and Status ---
+
+      - name: mentorStatus
+        type: enum
+        label: "Mentor Status"
+        description: >
+          The current lifecycle stage of the mentor. Central field
+          spanning all five Mentor Recruitment processes. Transitions
+          are managed across MR-RECRUIT (Prospect creation),
+          MR-APPLY (Submitted / In Review / Provisional / Declined),
+          MR-ONBOARD (Provisional → Active or Declined), MR-MANAGE
+          (Active ↔ Paused, Active ↔ Inactive), and MR-DEPART
+          (Active / Paused / Inactive → Resigned or Departed, and
+          Resigned / Departed → Active or Provisional for
+          reactivation). Audited. See PRD MR-RECRUIT-DAT-005.
+        category: "Lifecycle and Status"
+        required: true
+        audited: true
+        options:
+          - "Prospect"
+          - "Submitted"
+          - "In Review"
+          - "Provisional"
+          - "Active"
+          - "Paused"
+          - "Inactive"
+          - "Resigned"
+          - "Departed"
+          - "Declined"
+        style:
+          "Prospect": "default"
+          "Submitted": "info"
+          "In Review": "info"
+          "Provisional": "warning"
+          "Active": "success"
+          "Paused": "warning"
+          "Inactive": "default"
+          "Resigned": "danger"
+          "Departed": "danger"
+          "Declined": "danger"
+
+      - name: departureReason
+        type: enum
+        label: "Departure Reason"
+        description: >
+          Reason the mentor exited CBM. Set by the Mentor
+          Administrator at departure. Cleared on reactivation.
+          Visible when mentorStatus is Resigned or Departed
+          (field-level dynamic logic configured post-deployment).
+          See PRD MR-DEPART-DAT-002.
+        category: "Lifecycle and Status"
+        required: false
+        options:
+          - "Relocated"
+          - "Career Change"
+          - "Time Constraints"
+          - "Personal"
+          - "Other"
+
+      - name: departureDate
+        type: date
+        label: "Departure Date"
+        description: >
+          Date the mentor departed. Set by the Mentor Administrator
+          at departure. Cleared on reactivation. Visible when
+          mentorStatus is Resigned or Departed. See PRD
+          MR-DEPART-DAT-003.
+        category: "Lifecycle and Status"
+        required: false
+
+      # --- Section 4.7 — Role Eligibility ---
+
+      - name: isPrimaryMentor
+        type: bool
+        label: "Is Primary Mentor"
+        description: >
+          Whether this mentor is eligible for primary mentor
+          assignments. Automatically set to Yes when mentorStatus is
+          changed to Active during onboarding. Adjustable by the
+          Mentor Administrator in Mentor Management. See PRD
+          MR-ONBOARD-DAT-013.
+        category: "Role Eligibility"
+        required: true
+
+      - name: isCoMentor
+        type: bool
+        label: "Is Co-Mentor"
+        description: >
+          Whether this mentor is eligible for co-mentor assignments.
+          Set by the Mentor Administrator based on discussion with
+          the mentor. Not set during onboarding. See PRD
+          MR-MANAGE-DAT-015.
+        category: "Role Eligibility"
+        required: true
+
+      - name: isSubjectMatterExpert
+        type: bool
+        label: "Is Subject Matter Expert"
+        description: >
+          Whether this mentor is eligible for subject matter expert
+          assignments. Set by the Mentor Administrator based on
+          discussion with the mentor. Not set during onboarding. See
+          PRD MR-MANAGE-DAT-016.
+        category: "Role Eligibility"
+        required: true
+
+      # --- Section 4.8 — Capacity and Availability ---
+
+      - name: maximumClientCapacity
+        type: int
+        label: "Maximum Client Capacity"
+        description: >
+          Maximum number of simultaneous active client engagements.
+          Initially set by Mentor Administrator during onboarding.
+          Mentor-editable after activation. Admin-overridable. See
+          PRD MR-ONBOARD-DAT-009.
+        category: "Capacity and Availability"
+        required: true
+
+      - name: acceptingNewClients
+        type: bool
+        label: "Accepting New Clients"
+        description: >
+          Whether the mentor is available for new client assignments.
+          Set to Yes during onboarding. Set to No automatically when
+          status changes to Paused or Inactive (workflow configured
+          post-deployment). Mentor-editable when Active.
+          Admin-overridable. See PRD MR-ONBOARD-DAT-010.
+        category: "Capacity and Availability"
+        required: true
+
+      - name: currentActiveClients
+        type: int
+        label: "Current Active Clients"
+        description: >
+          Count of engagements where this mentor is the Assigned
+          Mentor and Engagement Status is Active or Assigned.
+          System-calculated (formula configured post-deployment —
+          see MANUAL-CONFIG.md), read-only. See PRD
+          MR-MANAGE-DAT-019.
+        category: "Capacity and Availability"
+        required: false
+        readOnly: true
+
+      - name: availableCapacity
+        type: int
+        label: "Available Capacity"
+        description: >
+          Maximum Client Capacity minus Current Active Clients.
+          System-calculated (formula configured post-deployment),
+          read-only. See PRD MR-MANAGE-DAT-020.
+        category: "Capacity and Availability"
+        required: false
+        readOnly: true
+
+      # --- Section 4.9 — Mentor Analytics ---
+
+      - name: totalLifetimeSessions
+        type: int
+        label: "Total Lifetime Sessions"
+        description: >
+          Count of all completed sessions across all of this
+          mentor's engagements. System-calculated (formula
+          configured post-deployment), read-only. Visible in list
+          views and detail pages. See PRD MR-MANAGE-DAT-021.
+        category: "Mentor Analytics"
+        required: false
+        readOnly: true
+
+      - name: totalMentoringHours
+        type: float
+        label: "Total Mentoring Hours"
+        description: >
+          Sum of all session hours across all of this mentor's
+          engagements. System-calculated (formula configured
+          post-deployment), read-only. Visible in list views and
+          detail pages. See PRD MR-MANAGE-DAT-022.
+        category: "Mentor Analytics"
+        required: false
+        readOnly: true
+
+      - name: totalSessionsLast30Days
+        type: int
+        label: "Total Sessions (Last 30 Days)"
+        description: >
+          Count of completed sessions in the last 30 days across all
+          of this mentor's engagements. System-calculated (formula
+          configured post-deployment), read-only. Used by the
+          inactivity alert. Visible in list views and detail pages.
+          See PRD MR-MANAGE-DAT-023.
+        category: "Mentor Analytics"
+        required: false
+        readOnly: true
+
+      # --- Section 4.10 — Board and Organizational ---
+
+      - name: boardPosition
+        type: varchar
+        label: "Board Position"
+        description: >
+          The mentor's title or role on the CBM board (e.g., Board
+          Chair, Treasurer). Visible for CBM organizational member
+          types. Populated by the Mentor Administrator. See PRD
+          MR-MANAGE-DAT-025.
+        category: "Board and Organizational"
+        required: false
+
+      # --- Section 4.11 — Dues Summary ---
+
+      - name: duesStatus
+        type: enum
+        label: "Dues Status"
+        description: >
+          Summary field on the Contact record reflecting the
+          mentor's current-year dues standing. Set by the Mentor
+          Administrator. Maintained independently of individual Dues
+          records (see Dues entity). Admin-only, read-only for
+          mentors (field-level access control configured
+          post-deployment). See PRD MR-MANAGE-DAT-026.
+        category: "Dues Summary"
+        required: false
+        options:
+          - "Unpaid"
+          - "Paid"
+          - "Waived"
+        style:
+          "Unpaid": "warning"
+          "Paid": "success"
+          "Waived": "default"
+
+      - name: duesPaymentDate
+        type: date
+        label: "Dues Payment Date"
+        description: >
+          Date of most recent dues payment. Not applicable when
+          duesStatus = Waived. Admin-only. See PRD MR-MANAGE-DAT-027.
+        category: "Dues Summary"
+        required: false
+
+      # --- Section 4.12 — Campaign Tracking ---
+
+      - name: campaignEngagementNotes
+        type: text
+        label: "Campaign Engagement Notes"
+        description: >
+          Campaign engagement history recorded manually as notes on
+          the prospect contact record. Includes emails sent, opened,
+          clicked, and follow-up activity. Recorded after each
+          campaign execution. Automated sync is a planned future
+          enhancement (see MR-RECRUIT-ISS-002). See PRD
+          MR-RECRUIT-DAT-010.
+        category: "Campaign Tracking"
+        required: false
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Identity and Contact Information"
+            description: >
+              Core identity fields: contactType (discriminator),
+              name fields (native plus preferredName), email
+              addresses (native emailAddress plus personalEmail and
+              cbmEmailAddress), phone (native), linkedInProfile.
+              Mentor Recruitment Domain PRD Section 4.1.
+            rows:
+              - [contactType, null]
+              - [firstName, lastName]
+              - [preferredName, null]
+              - [emailAddress, personalEmail]
+              - [cbmEmailAddress, phoneNumber]
+              - [linkedInProfile, null]
+
+          - label: "Professional Background"
+            description: >
+              Professional Background panel. Mentor Recruitment
+              Domain PRD Section 4.2.
+            rows:
+              - [title, currentEmployer]
+              - [currentlyEmployed, yearsOfBusinessExperience]
+              - [professionalBio]
+
+          - label: "Expertise and Matching"
+            description: >
+              Matching-criteria fields. Mentor Recruitment Domain
+              PRD Section 4.3.
+            tabs:
+              - label: "Expertise and Matching"
+                category: "Expertise and Matching"
+
+          - label: "Motivation and Referral"
+            description: >
+              Mentor Recruitment Domain PRD Section 4.4.
+            tabs:
+              - label: "Motivation and Referral"
+                category: "Motivation and Referral"
+
+          - label: "Application and Compliance"
+            description: >
+              Application and compliance fields. Several fields
+              require field-level access control configured
+              post-deployment. Mentor Recruitment Domain PRD
+              Section 4.5.
+            tabs:
+              - label: "Application and Compliance"
+                category: "Application and Compliance"
+
+          - label: "Lifecycle and Status"
+            description: >
+              Mentor status and departure fields. Mentor Recruitment
+              Domain PRD Section 4.6.
+            tabs:
+              - label: "Lifecycle and Status"
+                category: "Lifecycle and Status"
+
+          - label: "Role Eligibility"
+            description: >
+              Assignment-eligibility booleans. Mentor Recruitment
+              Domain PRD Section 4.7.
+            tabs:
+              - label: "Role Eligibility"
+                category: "Role Eligibility"
+
+          - label: "Capacity and Availability"
+            description: >
+              Mentor capacity tracking. Mentor Recruitment Domain
+              PRD Section 4.8.
+            tabs:
+              - label: "Capacity and Availability"
+                category: "Capacity and Availability"
+
+          - label: "Mentor Analytics"
+            description: >
+              System-calculated activity analytics. Mentor
+              Recruitment Domain PRD Section 4.9.
+            tabs:
+              - label: "Mentor Analytics"
+                category: "Mentor Analytics"
+
+          - label: "Board and Organizational"
+            description: >
+              Board role. Mentor Recruitment Domain PRD
+              Section 4.10.
+            tabs:
+              - label: "Board and Organizational"
+                category: "Board and Organizational"
+
+          - label: "Dues Summary"
+            description: >
+              Contact-level summary of current-year dues. Individual
+              Dues records are managed on the Dues entity. Mentor
+              Recruitment Domain PRD Section 4.11.
+            tabs:
+              - label: "Dues Summary"
+                category: "Dues Summary"
+
+          - label: "Campaign Tracking"
+            description: >
+              Manually-recorded campaign engagement history for
+              prospect contacts. Mentor Recruitment Domain PRD
+              Section 4.12.
+            tabs:
+              - label: "Campaign Tracking"
+                category: "Campaign Tracking"
+
+      list:
+        columns:
+          - field: name
+            width: 22
+          - field: contactType
+            width: 14
+          - field: mentorStatus
+            width: 12
+          - field: emailAddress
+            width: 22
+          - field: personalEmail
+            width: 18
+          - field: acceptingNewClients
+            width: 12
