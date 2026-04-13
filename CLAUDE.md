@@ -48,6 +48,19 @@ Northeast Ohio.
 
 **Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING sub-domain process definition finished (both process documents v1.0). CR-EVENTS Sub-Domain Overview v1.0 complete (04-13-26). Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.3, Account Entity PRD v1.3, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.4, CR-MARKETING SDO v1.2, CR-EVENTS SDO v1.0. Six deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement, Segment, Event, Event Registration. Two carry-forward updates pending from CR-EVENTS SDO: Contact Entity PRD v1.3 → v1.4 (add presenterBio and presenterTopics; update Section 5.7 narrative) and CR Domain Overview v1.1 → v1.2 (add CR-EVENTS-ISS-001 to Section 4.7 open issues table). Next: CR-EVENTS-MANAGE process definition (Phase 4).**
 
+**Process validation pilot (04-13-26):** The MR domain is now the
+subject of a methodology pilot running Phases 9 → 11 → 12 → 13
+(YAML Generation → Deployment → Configuration → Verification) to
+validate that the document production methodology actually produces a
+deployable CRM. Pilot scope, decisions, and findings are logged in
+`PRDs/pilot/PILOT-FINDINGS.md`. Three decisions recorded this session:
+(1) Cross-Domain Service PRDs deliberately skipped for MR; (2) Manual
+Configuration List formalized as a Phase 9 output; (3) legacy
+`programs/` directory to be archived before Phase 9 conversation
+begins. The Phase 9 Interview Guide
+(`crmbuilder/PRDs/process/interviews/guide-yaml-generation.md`, v1.0)
+was authored during this session.
+
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production
 process. Entity Discovery has been completed retroactively, producing
