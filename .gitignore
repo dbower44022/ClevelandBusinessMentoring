@@ -24,3 +24,5 @@ __pycache__/
 *.docx#
 
 reports/.gitkeep
+
+*.db
