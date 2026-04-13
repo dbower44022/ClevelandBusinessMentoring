@@ -48,18 +48,53 @@ Northeast Ohio.
 
 **Process status: All MR domain work complete. CR-PARTNER sub-domain process definition finished (both process documents v1.0). CR-MARKETING sub-domain process definition finished (both process documents v1.0). CR-EVENTS Sub-Domain Overview v1.0 complete. CR-EVENTS-MANAGE process document v1.0 complete (04-13-26). Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.3, Account Entity PRD v1.3, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.4, CR-MARKETING SDO v1.2, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0. Six deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement, Segment, Event, Event Registration. Two carry-forward updates pending from CR-EVENTS SDO: Contact Entity PRD v1.3 → v1.4 (add presenterBio and presenterTopics; update Section 5.7 narrative) and CR Domain Overview v1.1 → v1.2 (add CR-EVENTS-ISS-001 to Section 4.7 open issues table). Next: CR-EVENTS-CONVERT process definition (Phase 4).**
 
-**Process validation pilot (04-13-26):** The MR domain is now the
+**Process validation pilot (04-13-26):** The MR domain is the
 subject of a methodology pilot running Phases 9 → 11 → 12 → 13
 (YAML Generation → Deployment → Configuration → Verification) to
 validate that the document production methodology actually produces a
 deployable CRM. Pilot scope, decisions, and findings are logged in
-`PRDs/pilot/PILOT-FINDINGS.md`. Three decisions recorded this session:
-(1) Cross-Domain Service PRDs deliberately skipped for MR; (2) Manual
-Configuration List formalized as a Phase 9 output; (3) legacy
-`programs/` directory to be archived before Phase 9 conversation
-begins. The Phase 9 Interview Guide
+`PRDs/pilot/PILOT-FINDINGS.md`.
+
+**Phase 9 complete (04-13-26).** Four artifacts produced and
+committed to `programs/MR/`: `MR-Dues.yaml` (Dues entity, 7 custom
+fields, one Contact-Dues relationship), `MR-Contact.yaml` (42
+Contact custom fields across 12 panels), `EXCEPTIONS.md` (5
+exceptions — all on Contact enum value lists and two field-name
+reconciliations between the Mentor Recruitment Domain PRD v1.0 and
+the Contact Entity PRD v1.3), and `MANUAL-CONFIG.md` (38 items
+across 10 categories for post-deployment hand-off to Phase 12).
+Three methodology findings added to `PILOT-FINDINGS.md`: Finding 4
+(YAML schema v1.0 cannot express several commonly-required CRM
+constructs), Finding 5 (unresolved open issues on required fields
+blocked clean Phase 9 execution), and Finding 6
+(`howDidYouHearAboutCbm` scope change has downstream impact outside
+the MR domain). Finding 2 status updated from "Confirmed — must be
+formalized" to "Confirmed — Phase 9 Interview Guide authored and
+exercised." Finding 3 (legacy programs archive) marked Resolved.
+
+**Follow-up documents pending from MR Phase 9.** Contact Entity PRD
+v1.3 → v1.4 (adopt 8-value `howDidYouHearAboutCbm` list; enumerate
+`mentoringFocusAreas`, `skillsExpertiseTags`, and `fluentLanguages`
+option lists; rename `skillsAndExpertiseTags` to
+`skillsExpertiseTags`). CR-MARKETING Sub-Domain Overview v1.2 → v1.3
+(revise channel-rollup design for the collapsed 8-value list).
+Account Entity PRD v1.3 → v1.4 (enumerate the 20 NAICS sectors on
+`industrySector`). Mentor Recruitment Domain PRD v1.0 → v1.1
+(rename two fields; resolve CON-ISS-005 through CON-ISS-008 with
+values supplied in the Phase 9 conversation).
+
+**Next step in the pilot:** Phase 11 (CRM Deployment) — provision an
+instance of the target CRM. Outside Claude.ai. After Phase 11, Phase
+12 applies the YAML and works through `MANUAL-CONFIG.md`.
+
+Three earlier methodology decisions recorded during the Phase 9
+Interview Guide authoring session on 04-13-26: (1) Cross-Domain
+Service PRDs deliberately skipped for MR (Finding 1); (2) Manual
+Configuration List formalized as a Phase 9 output (Finding 2); (3)
+legacy `programs/` directory archived before Phase 9 conversation
+(Finding 3, Resolved). The Phase 9 Interview Guide
 (`crmbuilder/PRDs/process/interviews/guide-yaml-generation.md`, v1.0)
-was authored during this session.
+was authored during the same session that ran Phase 9 for MR.
 
 The Mentoring (MN) domain has five completed process documents and a
 reconciled Domain PRD produced under the new document production

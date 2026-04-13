@@ -72,7 +72,9 @@ the absent Service PRDs.
 
 **Recorded:** 04-13-26
 **Phase affected:** Phase 9 (YAML Generation), methodology change
-**Status:** Confirmed — must be formalized in Phase 9 Interview Guide
+**Status:** Confirmed (04-13-26) — Phase 9 Interview Guide authored and
+exercised in the MR pilot conversation. Manual Configuration List
+format shipped. Completeness still to be verified in Phase 12.
 
 **Observation.** The legacy `programs/` directory (authored under the
 pre-domain-methodology process) contains YAML files that open with
@@ -156,4 +158,157 @@ If Confirmed: where the methodology change is being made.]
 
 ---
 
-**Last Updated:** 04-13-26 14:30
+### Finding 4 — YAML schema v1.0 cannot express several commonly-required CRM constructs
+
+**Recorded:** 04-13-26
+**Phase affected:** Phase 9 (YAML Generation); may drive schema
+revisions in CRM Builder itself
+**Status:** Open — outcome to be recorded after Phase 12
+
+**Observation.** During the MR Phase 9 conversation, five classes of
+configuration came up as required by the Mentor Recruitment Domain
+Product Requirements Document but unrepresentable in the YAML schema
+v1.0 as it currently stands:
+
+1. Field-level dynamic logic visibility. The schema supports
+   `dynamicLogicVisible` on panels but not on individual fields. Four
+   field-level visibility rules from the Mentor Recruitment domain
+   were shifted to Manual Configuration as a result (`paymentDate`,
+   `paymentMethod`, `applicationDeclineReason`, `departureReason` and
+   `departureDate`).
+
+2. Field-level access control. The schema has no construct for
+   role-based or type-based field-level visibility or edit
+   permissions. Ten Contact fields are marked Admin-only in the
+   Product Requirements Documents and another ten are
+   mentor-editable only when `mentorStatus = Active`. All twenty
+   ended up in Manual Configuration.
+
+3. Conditional-required. The schema supports only static
+   `required: true | false`. Four fields in the Mentor Recruitment
+   domain are conditionally required (required only when another
+   field holds a specific value). All four ended up in Manual
+   Configuration.
+
+4. Calculated-field formulas. The schema allows `readOnly: true` but
+   does not define the formula that populates a calculated field.
+   Six formulas (five on Contact, one on Dues) ended up in Manual
+   Configuration.
+
+5. Duplicate-detection rules. The schema has no construct for
+   duplicate-detection rules. One rule (Contact on `personalEmail`)
+   ended up in Manual Configuration.
+
+**Decision / Implication.** Phase 9 continues to produce the YAML
+plus Manual Configuration List as the Phase 9 output. If the volume
+of Manual Configuration items is sustainably high across the pilot
+domains, it points toward extending the YAML schema to express some
+of these constructs natively. The schema extensions most likely to
+pay off are field-level dynamic logic and conditional-required —
+both are syntactically close to what already exists in the schema.
+Field-level access control is more ambitious (would require a Roles
+construct in YAML) and may be better left as Manual Configuration.
+
+**Outcome to record.** After Phase 12 (MR configuration complete),
+count how many Manual Configuration items landed in each of the
+five classes above. If one or two classes dominate the volume, that
+is the candidate for schema extension ahead of the next domain's
+Phase 9 run.
+
+---
+
+### Finding 5 — Unresolved open issues on required fields blocked clean Phase 9 execution
+
+**Recorded:** 04-13-26
+**Phase affected:** Phase 7 (Domain Reconciliation) criteria for
+"complete"; Phase 9 (YAML Generation)
+**Status:** Open — methodology observation, recommended rule change
+pending further pilot data
+
+**Observation.** The Mentor Recruitment Domain Product Requirements
+Document v1.0 was marked complete at the end of Phase 7 domain
+reconciliation on 04-03-26. Section 4 of that document marks four
+enum or multiEnum fields as having values "TBD — see CON-ISS-XXX"
+(CON-ISS-005, CON-ISS-006, CON-ISS-007, CON-ISS-008) where three of
+those fields are required. A fifth field — `industrySectors`,
+required — had values described as "20 NAICS sectors (aligned with
+Client Organization)" without enumeration.
+
+When the MR Phase 9 conversation ran, all five of these missing
+value lists became Stop-and-Ask exceptions. The exceptions were
+resolved in-session by a combination of user-supplied values,
+reference to the archived legacy YAML, and a value-list scope change
+superseding the Contact Entity PRD v1.3. Five exceptions were logged
+in `programs/MR/EXCEPTIONS.md`.
+
+**Decision / Implication.** The methodology currently allows a
+domain to pass Phase 7 reconciliation with unresolved open issues
+affecting required-field option lists. This pushes the resolution
+work into Phase 9, where it appears as Stop-and-Ask exceptions and
+slows the conversation. A recommended rule change: Phase 7
+reconciliation is not complete until every required field on every
+entity in the domain has either its option list enumerated or an
+explicit note that the field is deferred out of the domain's scope.
+
+**Outcome to record.** After more domains run Phase 9, check whether
+this rule change would have prevented the Stop-and-Ask exceptions on
+those domains too. If a consistent pattern shows up, propose the
+rule change to the process document as a Phase 7 completion
+criterion.
+
+---
+
+### Finding 6 — `howDidYouHearAboutCbm` scope change has downstream impact outside the MR domain
+
+**Recorded:** 04-13-26
+**Phase affected:** Phase 9 exception handling; Contact Entity PRD
+v1.3; CR-MARKETING Sub-Domain Overview v1.2
+**Status:** Open — upstream PRD updates and CR-MARKETING
+channel-effectiveness design revisions required before those
+domains run Phase 9
+
+**Observation.** During MR Phase 9, the user supplied an 8-value
+list for `howDidYouHearAboutCbm` (Partner Referral, Social Media,
+CBM Email, Workshop or Event, Search Engine, News or Media, Personal
+Referral, Other). This superseded:
+
+- The Mentor Recruitment Domain PRD v1.0's TBD marker (expected);
+- The 10-value list in the Contact Entity Product Requirements
+  Document v1.3 (unexpected — this was previously finalized);
+- The CR-MARKETING Sub-Domain Overview v1.2's documented channel-
+  rollup logic that depended on the old 10-value list (Partner
+  Referral → CR-PARTNER; Workshop or Event → CR-EVENTS; Email
+  Marketing / Social Media / Search Engine / CBM Website / News or
+  Media → CR-MARKETING; Returning Client → CR-REACTIVATE; Personal
+  Referral and Other → organic).
+
+The new 8-value list removes "CBM Website" and "Returning Client"
+entirely, renames "Email Marketing" to "CBM Email," and collapses
+channel distinctions.
+
+**Decision / Implication.** This is not an enum value change. It is
+a scope change to a cross-domain reporting design. The following
+documents require updates before their own Phase 9 runs:
+
+- Contact Entity Product Requirements Document v1.3 → v1.4: replace
+  the 10-value list with the new 8-value list in Section 3.1.
+- CR-MARKETING Sub-Domain Overview v1.2 → v1.3: revise the
+  channel-rollup design that keys off this field's values, including
+  the mapping to CR sub-domains for effectiveness reporting.
+- Any CR-MARKETING process document (CAMPAIGNS, CONTACTS) that
+  references the 10-value list.
+- MR Domain PRD v1.0 → v1.1 (or addendum): resolve CON-ISS-008 with
+  the new 8-value list.
+
+The Phase 9 YAML for MR uses the new 8-value list and does not wait
+for these upstream updates. The exception is logged in
+`programs/MR/EXCEPTIONS.md` as MR-Y9-EXC-005 for traceability.
+
+**Outcome to record.** Whether the upstream PRD updates are made
+before CR Phase 9 begins, and whether the channel-effectiveness
+reporting design in CR-MARKETING absorbs the collapsed value set
+cleanly or requires further scope work.
+
+---
+
+**Last Updated:** 04-13-26 17:10
