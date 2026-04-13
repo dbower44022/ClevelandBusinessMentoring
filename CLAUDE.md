@@ -3,6 +3,14 @@
 This file provides guidance for Claude when working on the Cleveland
 Business Mentors CRM implementation.
 
+**Note on this repo's local directory name.** The GitHub repo is
+`dbower44022/ClevelandBusinessMentoring` (long form). Doug's local clone
+is at `~/Dropbox/Projects/ClevelandBusinessMentors/` — the short form,
+ending in `Mentors`. When a session prompt or instruction refers to a
+local path on Doug's machine, use the short name. A previous two-
+directory split was reconciled on 04-10-26; only the short-named clone
+now exists locally.
+
 ## First — Read the Process Guide
 
 Before doing any work in this repository, read the Document Production
