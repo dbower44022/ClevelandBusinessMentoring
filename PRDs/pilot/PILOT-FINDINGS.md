@@ -110,8 +110,8 @@ actually needed).
 
 **Recorded:** 04-13-26
 **Phase affected:** Repository housekeeping
-**Status:** Action pending — archive to be performed in a dedicated
-session before Phase 9 conversation begins
+**Status:** Resolved (04-13-26) — archive performed at the start of
+the MR Phase 9 pilot conversation rather than as a dedicated session
 
 **Observation.** The CBM repo's `programs/` directory contains 22 files
 authored under the pre-domain-methodology process. These are organized
@@ -124,6 +124,12 @@ legacy. Move to `programs/Archive/` parallel to the
 `PRDs/Archive/` convention already established in this repo. MR pilot
 Phase 9 writes to a clean `programs/` tree using domain-organized
 paths (exact layout to be specified in the Phase 9 Interview Guide).
+
+**Resolution (04-13-26).** All 22 legacy files moved to
+`programs/Archive/` as the first action of the MR Phase 9 pilot
+conversation. Commit reference is on `main`. The `programs/` directory
+now contains only `Archive/`, providing the clean tree the Phase 9
+guide requires.
 
 **Outcome to record:** None — this is a housekeeping decision recorded
 here for traceability.
@@ -150,4 +156,4 @@ If Confirmed: where the methodology change is being made.]
 
 ---
 
-**Last Updated:** 04-13-26 05:12
+**Last Updated:** 04-13-26 14:30
