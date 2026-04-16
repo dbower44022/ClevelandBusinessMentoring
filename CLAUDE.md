@@ -46,7 +46,7 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. All CR Phase 4 process definition complete (04-15-26). CR-PARTNER sub-domain: both process documents v1.0. CR-MARKETING sub-domain: both process documents v1.0. CR-EVENTS sub-domain: both process documents v1.0. CR-REACTIVATE sub-domain: Sub-Domain Overview v1.0, CR-REACTIVATE-OUTREACH v1.0. CR Domain Reconciliation (Phase 5) is now eligible. Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.3, Account Entity PRD v1.3, MN-INTAKE v2.3, CR Domain Overview v1.1, Entity Inventory v1.4, CR-MARKETING SDO v1.2, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0, CR-REACTIVATE SDO v1.0, CR-REACTIVATE-OUTREACH v1.0. Six deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement, Segment, Event, Event Registration. Five carry-forward updates pending: Contact Entity PRD v1.3 → v1.4 (add presenterBio, presenterTopics, lastConversionPushSentAt, lastReactivationSentAt; update Section 5.7 narrative), Account Entity PRD v1.3 → v1.4 (add applicantSince), MN-INTAKE v2.3 → v2.4 (extend REQ-011 to populate Account.applicantSince), CR Domain Overview v1.1 → v1.2 (add CR-EVENTS-ISS-001 to Section 4.7 open issues table), and Campaign Entity PRD (Phase 2b, not yet written; must include three-value channel enum {Email, SMS, Reactivation}, population field {Former Client, Event Attendee, Inactive Prospect} for channel = Reactivation, and three-status lifecycle {Draft, Sent, Cancelled} for channel = Reactivation). Next: CR Domain Reconciliation (Phase 5), or carry-forward updates, or Phase 2b Entity PRDs.**
+**Process status: All MR domain work complete. All CR Phase 4 process definition complete (04-15-26). CR-PARTNER sub-domain: both process documents v1.0. CR-MARKETING sub-domain: both process documents v1.0. CR-EVENTS sub-domain: both process documents v1.0. CR-REACTIVATE sub-domain: Sub-Domain Overview v1.0, CR-REACTIVATE-OUTREACH v1.0. CR Domain Reconciliation (Phase 5) is now eligible. Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.5, Account Entity PRD v1.5, Engagement Entity PRD v1.2, Session Entity PRD v1.1, Dues Entity PRD v1.1, MN-INTAKE v2.4, CR Domain Overview v1.2, Entity Inventory v1.4, CR-MARKETING SDO v1.2, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0, CR-REACTIVATE SDO v1.0, CR-REACTIVATE-OUTREACH v1.0. Six deferred Phase 2b Entity PRDs: Marketing Campaign, Campaign Group, Campaign Engagement, Segment, Event, Event Registration. Four carry-forward updates applied (04-16-26): Contact Entity PRD v1.4 → v1.5 (added presenterBio, presenterTopics, lastConversionPushSentAt, lastReactivationSentAt; updated Section 5.7 narrative), Account Entity PRD v1.4 → v1.5 (added applicantSince), MN-INTAKE v2.3 → v2.4 (extended REQ-011 to populate Account.applicantSince), CR Domain Overview v1.1 → v1.2 (added CR-EVENTS-ISS-001 to Section 4.7 open issues table). One deferred carry-forward remaining: Campaign Entity PRD (Phase 2b, not yet written; must include three-value channel enum {Email, SMS, Reactivation}, population field {Former Client, Event Attendee, Inactive Prospect} for channel = Reactivation, and three-status lifecycle {Draft, Sent, Cancelled} for channel = Reactivation). Next: CR Domain Reconciliation (Phase 5).**
 
 **Process validation pilot (04-13-26):** The MR domain is the
 subject of a methodology pilot running Phases 9 → 11 → 12 → 13
@@ -73,12 +73,12 @@ formalized" to "Confirmed — Phase 9 Interview Guide authored and
 exercised." Finding 3 (legacy programs archive) marked Resolved.
 
 **Follow-up documents pending from MR Phase 9.** Contact Entity PRD
-v1.4 → v1.5 (adopt 8-value `howDidYouHearAboutCbm` list; enumerate
+v1.5 → v1.6 (adopt 8-value `howDidYouHearAboutCbm` list; enumerate
 `mentoringFocusAreas`, `skillsExpertiseTags`, and `fluentLanguages`
 option lists; rename `skillsAndExpertiseTags` to
 `skillsExpertiseTags`). CR-MARKETING Sub-Domain Overview v1.2 → v1.3
 (revise channel-rollup design for the collapsed 8-value list).
-Account Entity PRD v1.4 → v1.5 (enumerate the 20 NAICS sectors on
+Account Entity PRD v1.5 → v1.6 (enumerate the 20 NAICS sectors on
 `industrySector`). Mentor Recruitment Domain PRD v1.0 → v1.1
 (rename two fields; resolve CON-ISS-005 through CON-ISS-008 with
 values supplied in the Phase 9 conversation).
@@ -130,7 +130,7 @@ and applicationDeclineReason uses a reconciled 7-value enum
 
 | Document | File | Version |
 |---|---|---|
-| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.3 |
+| Client Intake | `PRDs/MN/MN-INTAKE.docx` | v2.4 |
 | Mentor Matching | `PRDs/MN/MN-MATCH.docx` | v2.2 |
 | Engagement Management | `PRDs/MN/MN-ENGAGE.docx` | v2.3 |
 | Activity Monitoring | `PRDs/MN/MN-INACTIVE.docx` | v1.2 |
