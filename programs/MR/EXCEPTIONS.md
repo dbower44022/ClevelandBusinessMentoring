@@ -57,11 +57,11 @@ marked "TBD — see CON-ISS-005."
 **Question.** Where should the option list come from?
 
 **Resolution.** User-supplied during the Phase 9 conversation.
-41 values recorded verbatim in `MR-Contact.yaml` on the
+42 values recorded verbatim in `MR-Contact.yaml` on the
 `mentoringFocusAreas` field.
 
 **Required follow-up.** Open issue CON-ISS-005 on the Contact Entity
-Product Requirements Document should be closed and the 41 values
+Product Requirements Document should be closed and the 42 values
 recorded in the Contact Entity PRD v1.3 Section 3.3 so the Mentor
 Recruitment Domain PRD's TBD marker can be removed in a future
 version.
@@ -167,4 +167,4 @@ Contact Entity PRD v1.3. No exceptions were raised on the Dues
 entity, on relationships, or on any field type other than enum and
 multiEnum.
 
-**Last Updated:** 04-13-26 15:45
+**Last Updated:** 04-19-26 14:45
