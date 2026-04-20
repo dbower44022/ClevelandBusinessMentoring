@@ -46,9 +46,11 @@ Northeast Ohio.
 
 ## Current Implementation State
 
-**Process status: All MR domain work complete. CR Domain Reconciliation (Phase 5) complete (04-16-26). CR Domain PRD v1.0 produced at PRDs/CR/CBM-Domain-PRD-ClientRecruiting.docx. Seven processes across four sub-domains reconciled with three reconciliation decisions: CR-RECON-DEC-001 (Campaign.status unified five-value lifecycle for all channels), CR-RECON-DEC-002 (Campaign Engagement unified five-event-type field set for all channels), CR-RECON-DEC-003 (Reactivation saved-list uses factual criteria only; emailOptOut filtering is consuming process responsibility). 257 system requirements, 9 entities in Data Reference, 20 decisions compiled, 17 open issues consolidated. Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.6, Account Entity PRD v1.6, Engagement Entity PRD v1.2, Session Entity PRD v1.1, Dues Entity PRD v1.1, MN-INTAKE v2.4, CR Domain Overview v1.2, Entity Inventory v1.5, CR Domain PRD v1.0. All seven CR Phase 2b Entity PRDs complete at v1.0: Event, Event Registration, Partnership Agreement, Segment, Campaign Group, Marketing Campaign, Campaign Engagement. Next: Stakeholder Review (Phase 8) for the CR Domain PRD.**
+**Process status: All MR domain work complete. MR Phase 9 follow-up work fully closed out (04-20-26). CR Domain Reconciliation (Phase 5) complete (04-16-26). CR Domain PRD v1.1 at PRDs/CR/CBM-Domain-PRD-ClientRecruiting.docx (bumped from v1.0 for MR Phase 9 carry-forward). Seven processes across four sub-domains reconciled with three reconciliation decisions: CR-RECON-DEC-001 (Campaign.status unified five-value lifecycle for all channels), CR-RECON-DEC-002 (Campaign Engagement unified five-event-type field set for all channels), CR-RECON-DEC-003 (Reactivation saved-list uses factual criteria only; emailOptOut filtering is consuming process responsibility). 257 system requirements, 9 entities in Data Reference, 21 decisions compiled (20 original plus CR-DEC-024 added in v1.1), 17 open issues consolidated. Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.6, Account Entity PRD v1.6, Engagement Entity PRD v1.2, Session Entity PRD v1.1, Dues Entity PRD v1.1, MN-INTAKE v2.4, CR Domain Overview v1.3, Entity Inventory v1.5, CR Domain PRD v1.1. All seven CR Phase 2b Entity PRDs complete at v1.0: Event, Event Registration, Partnership Agreement, Segment, Campaign Group, Marketing Campaign, Campaign Engagement. Next: Stakeholder Review (Phase 8) for the CR Domain PRD.**
 
-**Latest structural change (04-18-26):** CR Phase 2b Entity PRDs complete. Seven Entity PRDs produced at v1.0 for all deferred CR-domain entities: Event (Custom Event, 10 native + 10 custom fields, 3 relationships, format-driven dynamic logic), Event Registration (Custom Base, 4 native + 12 custom fields, 2 relationships), Partnership Agreement (Custom Base, 4 native + 6 custom fields, 1 relationship, append-only renewal pattern), Segment (Custom Base, 4 native + 5 custom fields, 3 relationships, segmentType discriminator driving conditional field requirements), Campaign Group (Custom Base, 4 native + 4 custom fields, 1 relationship, no independent status), Marketing Campaign (Custom Base, 4 native + 17 custom fields, 3 relationships, unified five-value status lifecycle per CR-RECON-DEC-001, channel-driven dynamic logic for Reactivation-specific fields), Campaign Engagement (Custom Base, 4 native + 12 custom fields, 2 relationships, unified five-event-type field set per CR-RECON-DEC-002). Entity Inventory bumped to v1.5. Generator JS files committed alongside each .docx. Synthesis task with no interview questions required — all field definitions compiled from CR Domain PRD v1.0 Section 4 and source process documents. Contact Entity PRD v1.5 and Account Entity PRD v1.5 referenced (MR Phase 9 follow-up session bumping these to v1.6 remains pending). All MN, MR, and CR domain entities now have Entity PRDs. Remaining Entity PRDs are FU-domain only (Contribution, Fundraising Campaign).
+**Latest structural change (04-20-26):** MR Phase 9 follow-up work fully closed out. CR Domain PRD v1.0 → v1.1: Section 4.1.1 Shared Fields paragraph rewritten to the 8-value `howDidYouHearAboutCbm` list (Partner Referral, Social Media, CBM Email, Workshop or Event, Search Engine, News or Media, Personal Referral, Other) with revised channel rollup (Partner Referral → CR-PARTNER; Workshop or Event → CR-EVENTS; CBM Email, Social Media, Search Engine, News or Media → CR-MARKETING; Personal Referral and Other → organic/unattributed), reactivation-via-Campaign-tracking note, and MR-Y9-EXC-005 supersession reference; Section 4.7 Conversion Attribution rewritten to measure attribution through Campaign Engagement records where Campaign.channel = Reactivation rather than through a Returning Client enum value; Section 4.8 Report 3 and CR-REACTIVATE-OUTREACH-REQ-024 rewritten to identify converting Contacts via Campaign Engagement within a configurable look-back joined to Account.applicantSince (the howDidYouHearAboutCbm column is removed); Section 4.10 narrative and CR-MARKETING-CAMPAIGNS-REQ-013 updated from "= Email Marketing" to "= CBM Email"; five 10-value → 8-value language updates applied across narrative and requirements; Handoff to CR Domain Reconciliation narrative updated to Campaign-based attribution; CR-DEC-024 added to Section 5 Decisions Made recording the v1.1 supersession per MR-Y9-EXC-005; Section 8 Change Log added with v1.0 baseline and v1.1 rows; upstream version references bumped to Entity Inventory v1.5, Contact Entity PRD v1.6, Account Entity PRD v1.6, CR Domain Overview v1.3, CR-MARKETING SDO v1.3. CR Domain Overview v1.2 → v1.3: Section 4.7 CON-ISS-008 closure description rewritten to reflect the 8-value list with MR-Y9-EXC-005 supersession reference citing Contact Entity PRD v1.6; Section 4.2 and Section 4.3 narrative updated to reference Contact Entity PRD v1.6 and Account Entity PRD v1.6 with durable language replacing drift-prone field counts; three new rows appended to Section 5 Updates to Prior Documents capturing Contact Entity PRD v1.5 → v1.6, Account Entity PRD v1.5 → v1.6, and CR-MARKETING SDO v1.2 → v1.3 updates; Section 8 Change Log added with v1.0 through v1.3 history. All upstream and downstream documents are now aligned with the 8-value `howDidYouHearAboutCbm` enum; the MR Phase 9 follow-up round is complete.
+
+**Prior structural change (04-18-26):** CR Phase 2b Entity PRDs complete. Seven Entity PRDs produced at v1.0 for all deferred CR-domain entities: Event (Custom Event, 10 native + 10 custom fields, 3 relationships, format-driven dynamic logic), Event Registration (Custom Base, 4 native + 12 custom fields, 2 relationships), Partnership Agreement (Custom Base, 4 native + 6 custom fields, 1 relationship, append-only renewal pattern), Segment (Custom Base, 4 native + 5 custom fields, 3 relationships, segmentType discriminator driving conditional field requirements), Campaign Group (Custom Base, 4 native + 4 custom fields, 1 relationship, no independent status), Marketing Campaign (Custom Base, 4 native + 17 custom fields, 3 relationships, unified five-value status lifecycle per CR-RECON-DEC-001, channel-driven dynamic logic for Reactivation-specific fields), Campaign Engagement (Custom Base, 4 native + 12 custom fields, 2 relationships, unified five-event-type field set per CR-RECON-DEC-002). Entity Inventory bumped to v1.5. Generator JS files committed alongside each .docx. Synthesis task with no interview questions required — all field definitions compiled from CR Domain PRD v1.0 Section 4 and source process documents. Contact Entity PRD v1.5 and Account Entity PRD v1.5 referenced at the time (subsequently bumped to v1.6 during MR Phase 9 follow-up). All MN, MR, and CR domain entities now have Entity PRDs. Remaining Entity PRDs are FU-domain only (Contribution, Fundraising Campaign).
 
 **Prior structural change (04-16-26):** CR Domain PRD v1.0 complete. Domain Reconciliation (Phase 5) for the Client Recruiting domain. Seven processes across four sub-domains (CR-PARTNER, CR-MARKETING, CR-EVENTS, CR-REACTIVATE) reconciled into a single Domain PRD. Three reconciliation decisions made: CR-RECON-DEC-001 (Campaign.status unified five-value lifecycle for all channels — no channel-dependent status restriction), CR-RECON-DEC-002 (Campaign Engagement unified five-event-type field set for all channels — Reactivation campaigns simply do not populate unsubscribed/unsubscribedAt), CR-RECON-DEC-003 (Reactivation Candidates saved-list query uses three factual criteria owned by CR-EVENTS-CONVERT; emailOptOut filtering is CR-REACTIVATE-OUTREACH responsibility at consumption time). 257 system requirements compiled. Data Reference covers 9 entities: Contact, Account, Partnership Agreement, Event, Event Registration, Marketing Campaign, Campaign Group, Campaign Engagement, Segment. 20 decisions compiled (3 reconciliation + 17 process-level). 17 open issues consolidated (4 domain-level, 10 process-level, 3 entity-level). Survey Service dependency consolidated across CR-PARTNER-MANAGE-ISS-001, CR-PARTNER-MANAGE-ISS-003, and CR-EVENTS-ISS-001. CON-ISS-004 and ACT-ISS-002 assessed: CR domain coverage now complete, remain open pending FU domain. Next: Stakeholder Review (Phase 8) for the CR Domain PRD.
 
@@ -88,9 +90,9 @@ Recruitment Domain PRD v1.0 → v1.1 (`skillsAndExpertiseTags` renamed to
 `skillsExpertiseTags`; `howDidYouHearAboutCBM` renamed to
 `howDidYouHearAboutCbm`; five TBD markers replaced with cross-references to
 Contact Entity PRD v1.6; MR-RECRUIT-ISS-001 and CON-ISS-005 through CON-ISS-008
-closed). Two carry-forward items remain: CR Domain PRD v1.0 → v1.1 (update
-10-value howDidYouHearAboutCbm references to 8-value list and revised rollup)
-and CR Domain Overview v1.2 → v1.3 (verify and update if needed).
+closed). The two remaining carry-forward items — CR Domain PRD v1.0 → v1.1 and
+CR Domain Overview v1.2 → v1.3 — were completed 04-20-26 (see Latest
+structural change above). MR Phase 9 follow-up round is fully closed.
 
 **Next step in the pilot:** Phase 11 (CRM Deployment) — provision an
 instance of the target CRM. Outside Claude.ai. After Phase 11, Phase
@@ -522,7 +524,7 @@ wysiwyg fields unchanged. Closes MR-MANAGE-ISS-003.
 
 | Document | File | Version |
 |---|---|---|
-| CR Domain Overview | `PRDs/CR/CBM-Domain-Overview-ClientRecruiting.docx` | v1.1 |
+| CR Domain Overview | `PRDs/CR/CBM-Domain-Overview-ClientRecruiting.docx` | v1.3 |
 
 Defines 7 processes across 4 sub-domains: CR-PARTNER (CR-PARTNER-PROSPECT,
 CR-PARTNER-MANAGE), CR-MARKETING (CR-MARKETING-CONTACTS,
@@ -700,11 +702,14 @@ Reconciliation (Phase 5) is complete.
 
 | Document | File | Version |
 |---|---|---|
-| Client Recruiting Domain PRD | `PRDs/CR/CBM-Domain-PRD-ClientRecruiting.docx` | v1.0 |
+| Client Recruiting Domain PRD | `PRDs/CR/CBM-Domain-PRD-ClientRecruiting.docx` | v1.1 |
 
 Reconciled from 7 process documents across 4 sub-domains. 3 reconciliation
-decisions (CR-RECON-DEC-001 through 003). 20 total decisions, 17 open
-issues. 9 entities in Data Reference. 257 system requirements compiled.
+decisions (CR-RECON-DEC-001 through 003). 21 total decisions (20 original plus
+CR-DEC-024 added in v1.1), 17 open issues. 9 entities in Data Reference.
+257 system requirements compiled. v1.1 adopts the 8-value howDidYouHearAboutCbm
+list and measures reactivation attribution through Campaign.channel =
+Reactivation per MR-Y9-EXC-005.
 
 ### Existing Documents (produced under old process)
 
@@ -724,10 +729,9 @@ source material only — never reference them as current requirements.
 
 ### Next Steps
 
-- Stakeholder Review (Phase 8) for the CR Domain PRD v1.0
+- Stakeholder Review (Phase 8) for the CR Domain PRD v1.1
 - Stakeholder input needed to resolve CR-MARKETING-ISS-001 (geographic targeting model) and CR-MARKETING-ISS-002 (media and PR tracking model) before those aspects of CR-MARKETING-CONTACTS and CR-MARKETING-CAMPAIGNS can be fully specified
 - CBM leadership input needed for CR-MARKETING-ISS-003 (prospectStatus value list) and CR-MARKETING-ISS-004 (clientStatus value list)
-- MR Phase 9 follow-up carry-forward: CR Domain PRD v1.0 → v1.1 (update howDidYouHearAboutCbm 10-value references to 8-value list and revised rollup), CR Domain Overview v1.2 → v1.3 (verify and update if needed)
 - Remaining Cross-Domain Services (Phase 4): Email Service, Calendar Service, Survey Service
 - Define Client Satisfaction Tracking (MN-SURVEY) process document
 - Create workflow diagrams for all MN and MR processes
