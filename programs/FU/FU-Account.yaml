@@ -1,0 +1,279 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Fundraising (FU) domain — custom field additions to the native
+  Account entity. Covers the Donor/Sponsor-specific fields (funderType,
+  funderStatus, funderNotes, funderLifetimeGiving, lastContactDate,
+  assignedSponsorCoordinator) plus the geographicServiceArea field
+  shared with the Partner accountType per ACT-DEC-014. The
+  geographicServiceArea is FU-domain-defined per ACT-ISS-004 closure
+  but visible to both Partner and Donor/Sponsor records.
+
+# Source: Fundraising Domain Product Requirements Document v1.0
+#         (05-01-26, Phase 8 Approved 05-01-26), Section 4.2 Account
+#         Entity. Account Entity Product Requirements Document v1.8
+#         Section 3.4 Donor/Sponsor-Specific Fields. FU-PROSPECT v1.0,
+#         FU-RECORD v1.2, FU-STEWARD v1.0, FU-REPORT v1.1 process
+#         documents.
+
+entities:
+
+  Account:
+    description: >
+      Native Company-type entity. The single repository for all
+      organizations known to CBM (partners, funders, employer
+      organizations of clients, and so on). This file defines the
+      seven custom fields contributed by the Fundraising domain.
+      The accountType discriminator field is defined in
+      CR-Partner.yaml (when produced) or here as the first Account
+      YAML produced; this file does not redefine accountType but
+      depends on the "Donor/Sponsor" value being present in the
+      option list. Six of the seven fields appear only when
+      accountType has Donor/Sponsor per ACT-DEC-013; the seventh
+      (geographicServiceArea) appears for both Partner and
+      Donor/Sponsor per ACT-DEC-014. See Account Entity PRD v1.8
+      Section 3.4.
+
+    fields:
+
+      # --- Donor/Sponsor-Specific Fields (Section 3.4) ---
+
+      - name: funderType
+        type: enum
+        label: "Funder Type"
+        description: >
+          Six-value funder category field. Set by the Donor / Sponsor
+          Coordinator at the Coordinator's discretion as soon as the
+          funder category is known. Does not drive system behavior —
+          purely informational and used for FU-REPORT filters.
+          Visible only when accountType has Donor/Sponsor per
+          ACT-DEC-013. See PRD FU-PROSPECT-DAT-024.
+        category: "Donor/Sponsor-Specific"
+        required: false
+        audited: true
+        options:
+          - "Corporation"
+          - "Foundation"
+          - "Government Agency"
+          - "Community Foundation"
+          - "Individual (Organization)"
+          - "Other"
+        style:
+          "Corporation": "primary"
+          "Foundation": "info"
+          "Government Agency": "warning"
+          "Community Foundation": "success"
+          "Individual (Organization)": "default"
+          "Other": "default"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Donor/Sponsor" }
+
+      - name: funderStatus
+        type: enum
+        label: "Funder Status"
+        description: >
+          Seven-value funder lifecycle field, parallel to donorStatus
+          on Contact. Set by the Donor / Sponsor Coordinator.
+          Auto-transitions to Active on first Contribution per
+          FU-PROSPECT-REQ-006 and FU-RECORD-REQ-010. Coordinator
+          transitions to Lapsed during FU-STEWARD sweep per
+          FU-STEWARD-REQ-003. Active-to-Closed transitions permitted
+          under FU-PROSPECT-REQ-005 in exceptional cases per
+          FU-RECON-DEC-003. Visible only when accountType has
+          Donor/Sponsor per ACT-DEC-013. See PRD
+          FU-PROSPECT-DAT-025.
+        category: "Donor/Sponsor-Specific"
+        required: false
+        audited: true
+        default: "Prospect"
+        options:
+          - "Prospect"
+          - "Contacted"
+          - "In Discussion"
+          - "Committed"
+          - "Active"
+          - "Lapsed"
+          - "Closed"
+        style:
+          "Prospect": "default"
+          "Contacted": "info"
+          "In Discussion": "primary"
+          "Committed": "warning"
+          "Active": "success"
+          "Lapsed": "default"
+          "Closed": "default"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Donor/Sponsor" }
+
+      - name: funderNotes
+        type: wysiwyg
+        label: "Funder Notes"
+        description: >
+          Sensitive narrative funder context. Restricted to Donor /
+          Sponsor Coordinator and above (Executive Member, System
+          Administrator) per FU-PROSPECT-REQ-013. Field-level access
+          control is configured manually post-deployment — see
+          MANUAL-CONFIG.md. Used to capture cultivation history,
+          relationship-sensitive context, lapse reasoning, and
+          funder-specific impact-reporting context. Coexists with
+          the cross-domain Notes Service stream. See PRD
+          FU-PROSPECT-DAT-026.
+        category: "Donor/Sponsor-Specific"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Donor/Sponsor" }
+
+      - name: funderLifetimeGiving
+        type: currency
+        label: "Funder Lifetime Giving"
+        description: >
+          System-calculated sum of amount across all Contributions
+          in Received status linked to this Account via donorAccount.
+          Non-Received Contributions do not contribute to lifetime
+          giving per FU-RECORD-REQ-013 and Contribution Entity PRD
+          v1.0 Implementation Note 10. Visible only when accountType
+          has Donor/Sponsor. See PRD FU-RECORD-DAT-020.
+        category: "Donor/Sponsor-Specific"
+        required: false
+        readOnly: true
+        formula:
+          type: aggregate
+          function: sum
+          field: amount
+          relatedEntity: Contribution
+          via: donorAccount
+          where:
+            - { field: status, op: equals, value: "Received" }
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Donor/Sponsor" }
+
+      - name: assignedSponsorCoordinator
+        type: link
+        label: "Assigned Sponsor Coordinator"
+        description: >
+          Custom link field pointing to a Contact record, identifying
+          the specific staff member leading the relationship with
+          this Funder Organization. Analogous to the Partner Account
+          assignedLiaison pattern. Optional in general, conditionally
+          required when funderStatus is Active per FU-PROSPECT-REQ-008.
+          Setting, changing, and clearing the value are available to
+          the Donor / Sponsor Coordinator at any time. See PRD
+          FU-PROSPECT-DAT-027.
+        category: "Donor/Sponsor-Specific"
+        required: false
+        requiredWhen:
+          - { field: funderStatus, op: equals, value: "Active" }
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Donor/Sponsor" }
+        # Link target defined in the relationships section of this
+        # file (assignedSponsorCoordinatorLink).
+
+      - name: lastContactDate
+        type: date
+        label: "Last Contact Date"
+        description: >
+          Most recent Coordinator outreach date for stewardship
+          tracking, parallel to lastContactDate on Contact. Manually
+          set after each outreach per FU-STEWARD-REQ-002. The system
+          does not auto-populate or auto-update this field from any
+          source. Used by the FU-STEWARD Active Donors and Funders
+          Sweep List sort order (ascending, nulls first) per
+          FU-STEWARD-REQ-006 and by the FU-REPORT At-Risk Active
+          Relationships report. Visible only when accountType has
+          Donor/Sponsor. See PRD FU-STEWARD-DAT-020.
+        category: "Donor/Sponsor-Specific"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Donor/Sponsor" }
+
+      # --- Geographic Service Area (shared Partner / Donor/Sponsor) ---
+
+      - name: geographicServiceArea
+        type: multiEnum
+        label: "Geographic Service Area"
+        description: >
+          Northeast Ohio zip code master list. Used for territory-based
+          attribution in the FU-REPORT Mentoring Service Delivery by
+          Funding Territory report (funder-level view) per
+          FU-REPORT-REQ-017 and FU-REPORT-REQ-018. Match rule:
+          set-membership against client Contact.addressPostalCode.
+          Territory overlap supported — a single client and the
+          sessions delivered to that client may be counted toward
+          multiple funders when their territories overlap. Visible
+          for both Partner and Donor/Sponsor accountType per
+          ACT-DEC-014 (visibility expansion via geographicServiceArea
+          v1.2 carry-forward). The value list itself (the master
+          Northeast Ohio zip code list) is deferred to Phase 9
+          implementation per FU-RECON-ISS-003 — see EXCEPTIONS.md
+          entry FU-Y9-EXC-001 and MANUAL-CONFIG.md entry FU-MC-OL-001.
+          See PRD FU-RECORD-DAT-046 and ACT-ISS-004 closure.
+        category: "Geographic"
+        required: false
+        # Option list deferred — see EXCEPTIONS.md FU-Y9-EXC-001.
+        # Once the master list is established, populate options here.
+        options: []
+        visibleWhen:
+          all:
+            - any:
+                - { field: accountType, op: contains, value: "Partner" }
+                - { field: accountType, op: contains, value: "Donor/Sponsor" }
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Donor/Sponsor-Specific"
+            description: >
+              Donor/Sponsor-specific fields contributed by the
+              Fundraising domain. Visible only when accountType has
+              Donor/Sponsor per ACT-DEC-013. Source: Account Entity
+              PRD v1.8 Section 3.4 and Fundraising Domain PRD v1.0
+              Section 4.2.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Donor/Sponsor" }
+            tabs:
+              - label: "Donor/Sponsor-Specific"
+                category: "Donor/Sponsor-Specific"
+
+          - label: "Geographic"
+            description: >
+              Geographic service area for territory-based attribution.
+              Visible for both Partner and Donor/Sponsor accountType
+              per ACT-DEC-014. Source: ACT-ISS-004 closure during
+              FU-REPORT process definition; Fundraising Domain PRD
+              v1.0 Section 4.2.
+            visibleWhen:
+              all:
+                - any:
+                    - { field: accountType, op: contains, value: "Partner" }
+                    - { field: accountType, op: contains, value: "Donor/Sponsor" }
+            tabs:
+              - label: "Geographic"
+                category: "Geographic"
+
+# ---------------------------------------------------------------
+# Relationship — Account.assignedSponsorCoordinator → Contact
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: assignedSponsorCoordinatorLink
+    description: >
+      Custom link from a Funder Organization Account to the Contact
+      who serves as the assigned Sponsor Coordinator for that funder
+      relationship. Many Accounts may share a Coordinator (one
+      Coordinator may lead multiple funder relationships); each
+      Account has at most one assigned Coordinator. Per
+      FU-PROSPECT-REQ-008 the link is optional in general and
+      conditionally required when funderStatus is Active.
+      Analogous to the Partner Account assignedLiaison pattern.
+      See PRD FU-PROSPECT-DAT-027.
+    entity: Account
+    entityForeign: Contact
+    linkType: manyToOne
+    link: assignedSponsorCoordinator
+    linkForeign: coordinatedFunderAccounts
+    label: "Assigned Sponsor Coordinator"
+    labelForeign: "Coordinated Funder Accounts"
+    audited: false

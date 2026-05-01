@@ -1,0 +1,247 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Fundraising (FU) domain — Fundraising Campaign custom entity
+  definition. Groups related Contributions for goal tracking and
+  territory-based attribution. Nine fields. Owned exclusively by the
+  FU domain. Record-level visibility restricted to Donor / Sponsor
+  Coordinator, Executive Member, and System Administrator per
+  FU-RECORD-REQ-022 — implemented post-deployment via field-level
+  access control (see MANUAL-CONFIG.md). The inverse relationship
+  to Contribution is defined on the Contribution side in
+  FU-Contribution.yaml (the contributionCampaign relationship).
+
+# Source: Fundraising Domain Product Requirements Document v1.0
+#         (05-01-26, Phase 8 Approved 05-01-26), Section 4.4
+#         Fundraising Campaign Entity. Fundraising Campaign Entity
+#         Product Requirements Document v1.0 (04-30-26).
+
+entities:
+
+  # ---------------------------------------------------------------
+  # Custom entity — FundraisingCampaign
+  # ---------------------------------------------------------------
+
+  FundraisingCampaign:
+    description: >
+      Groups related Contributions for goal tracking and
+      territory-based attribution. Created and maintained by
+      FU-RECORD; consumed by FU-REPORT. Created in advance of
+      solicitation (Planned status) or retroactively after
+      Contributions have arrived. The campaignType field is a
+      property field, not a discriminator that drives field
+      visibility — all nine fields are visible on every record
+      regardless of campaignType or status per FC-DEC-001 (no
+      dynamic logic). totalRaised is system-calculated from the
+      inverse of the Contribution.campaign link, scoped to
+      Contribution.status = Received only per FC-DEC-005. Received
+      Contributions linked to Cancelled or Completed Campaigns
+      continue to contribute to totalRaised, preserving historical
+      accuracy. See Fundraising Campaign Entity Product Requirements
+      Document v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Fundraising Campaign"
+      labelPlural: "Fundraising Campaigns"
+      stream: false
+      disabled: false
+
+    fields:
+
+      # --- Campaign Identification ---
+
+      - name: campaignName
+        type: varchar
+        label: "Campaign Name"
+        description: >
+          Free-form campaign name. Required at creation per
+          FC-DEC-001. See PRD FU-RECORD-DAT-039.
+        category: "Campaign Identification"
+        required: true
+
+      - name: campaignType
+        type: enum
+        label: "Campaign Type"
+        description: >
+          Six-value enum identifying the campaign category. Property
+          field only — does not drive any field visibility. Used by
+          FU-REPORT for filters in the Year-Over-Year Giving Trends
+          report. See PRD FU-RECORD-DAT-040 and FC-DEC-002.
+        category: "Campaign Identification"
+        required: false
+        options:
+          - "Annual Appeal"
+          - "Capital Campaign"
+          - "Sponsorship"
+          - "Event"
+          - "Grant Cycle"
+          - "Other"
+        style:
+          "Annual Appeal": "primary"
+          "Capital Campaign": "info"
+          "Sponsorship": "warning"
+          "Event": "success"
+          "Grant Cycle": "default"
+          "Other": "default"
+
+      - name: status
+        type: enum
+        label: "Status"
+        description: >
+          Four-value enum selecting the campaign lifecycle state.
+          The Coordinator must select explicitly at creation per
+          FC-DEC-003 — no default. No system-enforced progression
+          order; Coordinator can transition between any values at
+          any time. Cancelled and Completed Campaigns continue to
+          accumulate Received Contributions in totalRaised
+          (preserves historical accuracy). See PRD
+          FU-RECORD-DAT-041.
+        category: "Campaign Identification"
+        required: true
+        audited: true
+        # No default per FC-DEC-003 — Coordinator selects explicitly.
+        options:
+          - "Planned"
+          - "Active"
+          - "Completed"
+          - "Cancelled"
+        style:
+          "Planned": "default"
+          "Active": "success"
+          "Completed": "info"
+          "Cancelled": "default"
+
+      - name: description
+        type: wysiwyg
+        label: "Description"
+        description: >
+          Free-form campaign description. Provides narrative context
+          for the campaign's purpose and audience. See PRD
+          FU-RECORD-DAT-045.
+        category: "Campaign Identification"
+        required: false
+
+      # --- Lifecycle and Goal ---
+
+      - name: goalAmount
+        type: currency
+        label: "Goal Amount"
+        description: >
+          Optional fundraising target for this campaign. Used by
+          FU-REPORT to calculate goal-attainment percentage in the
+          Year-Over-Year Giving Trends report when present. See PRD
+          FU-RECORD-DAT-042.
+        category: "Lifecycle and Goal"
+        required: false
+        audited: true
+
+      - name: startDate
+        type: date
+        label: "Start Date"
+        description: >
+          Campaign period start. Optional. Used by FU-REPORT to scope
+          campaign-period-bound queries. See PRD FU-RECORD-DAT-043.
+        category: "Lifecycle and Goal"
+        required: false
+
+      - name: endDate
+        type: date
+        label: "End Date"
+        description: >
+          Campaign period end. Optional. See PRD FU-RECORD-DAT-044.
+        category: "Lifecycle and Goal"
+        required: false
+
+      - name: totalRaised
+        type: currency
+        label: "Total Raised"
+        description: >
+          System-calculated sum of amount across all Contributions
+          in Received status linked to this Campaign per
+          FU-RECORD-REQ-011. Non-Received Contributions do not
+          contribute. Received Contributions linked to Cancelled or
+          Completed Campaigns continue to count toward totalRaised
+          per FC-DEC-005. See PRD FU-RECORD-DAT-046.
+        category: "Lifecycle and Goal"
+        required: false
+        readOnly: true
+        formula:
+          type: aggregate
+          function: sum
+          field: amount
+          relatedEntity: Contribution
+          via: campaign
+          where:
+            - { field: status, op: equals, value: "Received" }
+
+      # --- Geographic Targeting ---
+
+      - name: geographicServiceArea
+        type: multiEnum
+        label: "Geographic Service Area"
+        description: >
+          Campaign-level Northeast Ohio zip code list. Independent
+          of any Funder Organization Account-level territory — a
+          Contribution can be linked to a Campaign with one
+          territory and to a donor Account with a different
+          territory. Used in the FU-REPORT Mentoring Service
+          Delivery by Funding Territory report (campaign view) per
+          FU-REPORT-REQ-017. The value list itself (the master
+          Northeast Ohio zip code list) is deferred to Phase 9
+          implementation per FU-RECON-ISS-003 — see EXCEPTIONS.md
+          entry FU-Y9-EXC-001 and MANUAL-CONFIG.md entry
+          FU-MC-OL-001. See PRD FU-RECORD-DAT-047 (added per
+          geographicServiceArea v1.2 carry-forward).
+        category: "Geographic Targeting"
+        required: false
+        # Option list deferred — see EXCEPTIONS.md FU-Y9-EXC-001.
+        options: []
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Campaign Identification"
+            description: >
+              Name, type, lifecycle status, description. Source:
+              Fundraising Campaign Entity PRD v1.0 Section 6 panel 1.
+            tabs:
+              - label: "Campaign Identification"
+                category: "Campaign Identification"
+
+          - label: "Lifecycle and Goal"
+            description: >
+              Goal amount, period bounds, and the system-calculated
+              totalRaised rollup. Source: Fundraising Campaign
+              Entity PRD v1.0 Section 6 panel 2.
+            tabs:
+              - label: "Lifecycle and Goal"
+                category: "Lifecycle and Goal"
+
+          - label: "Geographic Targeting"
+            description: >
+              Campaign-level territory for territory-based attribution
+              in the Mentoring Service Delivery by Funding Territory
+              report. Source: Fundraising Campaign Entity PRD v1.0
+              Section 6 panel 3 (added per geographicServiceArea v1.2
+              carry-forward).
+            tabs:
+              - label: "Geographic Targeting"
+                category: "Geographic Targeting"
+
+      list:
+        columns:
+          - field: campaignName
+            width: 28
+          - field: campaignType
+            width: 16
+          - field: status
+            width: 12
+          - field: goalAmount
+            width: 14
+          - field: totalRaised
+            width: 14
+          - field: endDate
+            width: 14

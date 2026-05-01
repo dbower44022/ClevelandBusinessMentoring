@@ -1,0 +1,151 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Fundraising (FU) domain — custom field additions to the native
+  Contact entity. Covers the donor-specific fields contributed by
+  the Fundraising domain: donorStatus (seven-value lifecycle),
+  donorNotes (sensitive narrative), donorLifetimeGiving (rolled-up
+  Contribution sum, Received-only), and lastContactDate (stewardship
+  outreach tracking). Fields are conditionally visible — they appear
+  only when contactType has Donor per CON-DEC-018.
+
+# Source: Fundraising Domain Product Requirements Document v1.0
+#         (05-01-26, Phase 8 Approved 05-01-26), Section 4.1 Contact
+#         Entity. Contact Entity Product Requirements Document v1.7
+#         Section 3.8 Donor-Specific Fields. FU-PROSPECT v1.0,
+#         FU-RECORD v1.2, FU-STEWARD v1.0, FU-REPORT v1.1 process
+#         documents.
+
+entities:
+
+  Contact:
+    description: >
+      Native Person-type entity. The single repository for all
+      individuals known to CBM. This file defines the four custom
+      fields contributed by the Fundraising domain. Fields
+      contributed by other domains (Mentor Recruitment, Mentoring,
+      Client Recruiting) are defined in those domains' YAML files.
+      The contactType discriminator field is defined in
+      MR-Contact.yaml; this file does not redefine it but does
+      depend on the "Donor" value being present in the option list.
+      See Contact Entity Product Requirements Document v1.7
+      Section 3.8.
+
+    fields:
+
+      # --- Donor-Specific Fields (Section 3.8) ---
+
+      - name: donorStatus
+        type: enum
+        label: "Donor Status"
+        description: >
+          Seven-value donor lifecycle field. Set by the Donor /
+          Sponsor Coordinator. Auto-transitions to Active on first
+          Contribution per FU-PROSPECT-REQ-006 and FU-RECORD-REQ-010.
+          Coordinator transitions to Lapsed during FU-STEWARD sweep
+          per FU-STEWARD-REQ-003. Active-to-Closed transitions
+          permitted under FU-PROSPECT-REQ-005 in exceptional cases
+          per FU-RECON-DEC-003. Visible only when contactType has
+          Donor per CON-DEC-018. See PRD FU-PROSPECT-DAT-020.
+          Closes CON-ISS-003.
+        category: "Donor-Specific"
+        required: false
+        audited: true
+        default: "Prospect"
+        options:
+          - "Prospect"
+          - "Contacted"
+          - "In Discussion"
+          - "Committed"
+          - "Active"
+          - "Lapsed"
+          - "Closed"
+        style:
+          "Prospect": "default"
+          "Contacted": "info"
+          "In Discussion": "primary"
+          "Committed": "warning"
+          "Active": "success"
+          "Lapsed": "default"
+          "Closed": "default"
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Donor" }
+
+      - name: donorNotes
+        type: wysiwyg
+        label: "Donor Notes"
+        description: >
+          Sensitive narrative donor context. Restricted to Donor /
+          Sponsor Coordinator and above (Executive Member, System
+          Administrator) per FU-PROSPECT-REQ-013. Field-level access
+          control is configured manually post-deployment — see
+          MANUAL-CONFIG.md. Used to capture cultivation history,
+          relationship-sensitive context, lapse reasoning, and
+          donor-specific impact-reporting context. Coexists with
+          the cross-domain Notes Service stream (the Notes Service
+          is for general activity logging; this field is for
+          sensitive narrative context). See PRD FU-PROSPECT-DAT-021.
+        category: "Donor-Specific"
+        required: false
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Donor" }
+
+      - name: donorLifetimeGiving
+        type: currency
+        label: "Donor Lifetime Giving"
+        description: >
+          System-calculated sum of amount across all Contributions
+          in Received status linked to this Contact via donorContact.
+          Non-Received Contributions do not contribute to lifetime
+          giving per FU-RECORD-REQ-012 and Contribution Entity PRD
+          v1.0 Implementation Note 10. Visible only when contactType
+          has Donor. See PRD FU-RECORD-DAT-018.
+        category: "Donor-Specific"
+        required: false
+        readOnly: true
+        formula:
+          type: aggregate
+          function: sum
+          field: amount
+          relatedEntity: Contribution
+          via: donorContact
+          where:
+            - { field: status, op: equals, value: "Received" }
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Donor" }
+
+      - name: lastContactDate
+        type: date
+        label: "Last Contact Date"
+        description: >
+          Most recent Coordinator outreach date for stewardship
+          tracking. Manually set after each outreach per
+          FU-STEWARD-REQ-001. The system does not auto-populate or
+          auto-update this field from any source. Used by the
+          FU-STEWARD Active Donors and Funders Sweep List sort
+          order (ascending, nulls first) per FU-STEWARD-REQ-006 and
+          by the FU-REPORT At-Risk Active Relationships report.
+          Visible only when contactType has Donor. See PRD
+          FU-STEWARD-DAT-017.
+        category: "Donor-Specific"
+        required: false
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Donor" }
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Donor-Specific"
+            description: >
+              Donor-specific fields contributed by the Fundraising
+              domain. Visible only when contactType has Donor per
+              CON-DEC-018. Source: Contact Entity PRD v1.7
+              Section 3.8 and Fundraising Domain PRD v1.0
+              Section 4.1.
+            visibleWhen:
+              - { field: contactType, op: contains, value: "Donor" }
+            tabs:
+              - label: "Donor-Specific"
+                category: "Donor-Specific"

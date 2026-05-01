@@ -1,0 +1,522 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Fundraising (FU) domain — Contribution custom entity definition,
+  three Contribution relationships (donorContact → Contact,
+  donorAccount → Account, campaign → Fundraising Campaign), and the
+  FU-STEWARD saved views that drive the weekly or bi-weekly
+  stewardship sweep. Eighteen fields total: fourteen shared, three
+  Donation-specific (visible when contributionType = Donation), one
+  Grant-specific (visible when contributionType = Grant). Owned
+  exclusively by the FU domain. Record-level visibility restricted
+  to Donor / Sponsor Coordinator, Executive Member, and System
+  Administrator per FU-RECORD-REQ-021 — implemented post-deployment
+  via field-level access control (see MANUAL-CONFIG.md).
+
+# Source: Fundraising Domain Product Requirements Document v1.0
+#         (05-01-26, Phase 8 Approved 05-01-26), Section 4.3
+#         Contribution Entity. Contribution Entity Product
+#         Requirements Document v1.0 (04-30-26). FU-RECORD v1.2
+#         Section 8.3, FU-STEWARD v1.0 Section 8.3 saved-list
+#         specifications.
+
+entities:
+
+  # ---------------------------------------------------------------
+  # Custom entity — Contribution
+  # ---------------------------------------------------------------
+
+  Contribution:
+    description: >
+      A single received commitment, application, or payment from a
+      donor or funder to CBM. Records donations, sponsorships, and
+      grants under a single entity with a contributionType
+      discriminator (three values: Donation, Sponsorship, Grant).
+      Created and maintained by FU-RECORD; consumed by FU-STEWARD
+      and FU-REPORT. The first Contribution against a pre-Active
+      donor or funder transitions that record's lifecycle field
+      (donorStatus on Contact, funderStatus on Account) to Active —
+      this transition is implemented as a post-deployment automation
+      (see MANUAL-CONFIG.md FU-MC-AA-001) because the v1.1 workflow
+      vocabulary does not support cross-entity setField actions.
+      See Contribution Entity Product Requirements Document v1.0
+      and EXCEPTIONS.md FU-Y9-EXC-002.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Contribution"
+      labelPlural: "Contributions"
+      stream: false
+      disabled: false
+
+    fields:
+
+      # --- Shared Fields (apply to all contributionType values) ---
+
+      - name: contributionType
+        type: enum
+        label: "Contribution Type"
+        description: >
+          Three-value enum selecting the funding category. The
+          Coordinator must select explicitly at creation per
+          CONTR-DEC-001 — no default. Drives field visibility for
+          Donation-only and Grant-only fields per CONTR-DYN-001
+          through CONTR-DYN-005. Three values supersede the Entity
+          Inventory v1.5 four-value list (Pledge removed; Pledged is
+          a status of Contribution.status, not a contributionType
+          value) per FU-RECON-DEC-002. See PRD FU-RECORD-DAT-021.
+        category: "Identification"
+        required: true
+        audited: true
+        # No default per CONTR-DEC-001 — Coordinator selects explicitly.
+        options:
+          - "Donation"
+          - "Sponsorship"
+          - "Grant"
+        style:
+          "Donation": "primary"
+          "Sponsorship": "info"
+          "Grant": "success"
+
+      - name: status
+        type: enum
+        label: "Status"
+        description: >
+          Six-value enum selecting the contribution lifecycle state.
+          The Coordinator must select explicitly at creation per
+          CONTR-DEC-002 — no default. No system-enforced progression
+          order; Coordinator can transition between any values at
+          any time per FU-RECORD-REQ-007. Bounced checks, refunds,
+          and reversals are handled by editing status to Cancelled
+          and recording the reason in notes per FU-RECORD-REQ-018,
+          not by creating offsetting records. donorLifetimeGiving,
+          funderLifetimeGiving, and Fundraising Campaign.totalRaised
+          rollups depend on status = Received only. See PRD
+          FU-RECORD-DAT-022.
+        category: "Identification"
+        required: true
+        audited: true
+        # No default per CONTR-DEC-002 — Coordinator selects explicitly.
+        options:
+          - "Applied"
+          - "Pledged"
+          - "Committed"
+          - "Received"
+          - "Unsuccessful"
+          - "Cancelled"
+        style:
+          "Applied": "default"
+          "Pledged": "info"
+          "Committed": "warning"
+          "Received": "success"
+          "Unsuccessful": "default"
+          "Cancelled": "default"
+
+      - name: donorContact
+        type: link
+        label: "Donor Contact"
+        description: >
+          Link to the donor when the donor is an individual. Mutually
+          exclusive with donorAccount per FU-RECORD-REQ-002 — exactly
+          one of donorContact or donorAccount must be populated on
+          every Contribution. Mutual exclusivity is enforced
+          post-deployment (see MANUAL-CONFIG.md FU-MC-AA-002 and
+          EXCEPTIONS.md FU-Y9-EXC-003) because v1.1 lacks a native
+          mutually-exclusive-link construct. Linked Contact must
+          have contactType including Donor. See PRD FU-RECORD-DAT-023.
+        category: "Identification"
+        required: false
+        audited: true
+        # Link target defined in the relationships section.
+
+      - name: donorAccount
+        type: link
+        label: "Donor Account"
+        description: >
+          Link to the donor when the donor is an organization.
+          Mutually exclusive with donorContact per FU-RECORD-REQ-002.
+          Linked Account must have accountType including
+          Donor/Sponsor. See PRD FU-RECORD-DAT-024.
+        category: "Identification"
+        required: false
+        audited: true
+        # Link target defined in the relationships section.
+
+      - name: amount
+        type: currency
+        label: "Amount"
+        description: >
+          Contribution monetary value. Logically required for
+          status = Received and most other statuses, though not
+          enforced as required at the schema level (the field may
+          be blank for an Applied Grant before an award amount is
+          known). Source for donorLifetimeGiving,
+          funderLifetimeGiving, and Fundraising Campaign.totalRaised
+          rollups (status = Received only). See PRD
+          FU-RECORD-DAT-025.
+        category: "Identification"
+        required: false
+        audited: true
+
+      - name: applicationDate
+        type: date
+        label: "Application Date"
+        description: >
+          Date the grant application was submitted. Visible only when
+          contributionType = Grant per CONTR-DYN-001. Logically
+          required for Grant status = Applied. See PRD
+          FU-RECORD-DAT-026.
+        category: "Lifecycle Dates"
+        required: false
+        audited: true
+        visibleWhen:
+          - { field: contributionType, op: equals, value: "Grant" }
+
+      - name: commitmentDate
+        type: date
+        label: "Commitment Date"
+        description: >
+          Date the pledge or commitment was made. For Grants,
+          this is the date of the award letter. Set by the
+          Coordinator on Pledged or Committed status transitions.
+          See PRD FU-RECORD-DAT-027.
+        category: "Lifecycle Dates"
+        required: false
+        audited: true
+
+      - name: expectedPaymentDate
+        type: date
+        label: "Expected Payment Date"
+        description: >
+          Anticipated payment date for Pledged or Committed
+          Contributions. Used by the Coordinator for cash-flow
+          forecasting. See PRD FU-RECORD-DAT-028.
+        category: "Lifecycle Dates"
+        required: false
+        audited: true
+
+      - name: receivedDate
+        type: date
+        label: "Received Date"
+        description: >
+          Date funds were received. Logically required for
+          status = Received. For multi-payment grants, the date of
+          the final payment per CONTR-DEC-003 — intermediate payment
+          detail is recorded in notes, not as separate records.
+          See PRD FU-RECORD-DAT-029.
+        category: "Lifecycle Dates"
+        required: false
+        audited: true
+
+      - name: designation
+        type: varchar
+        label: "Designation"
+        description: >
+          Free-form purpose / restriction text (e.g., "unrestricted
+          operating support," "scholarship fund," specific program
+          designation). Read by FU-STEWARD and FU-REPORT for
+          impact-reporting and donor-summary purposes. See PRD
+          FU-RECORD-DAT-030.
+        category: "Identification"
+        required: false
+
+      - name: campaign
+        type: link
+        label: "Campaign"
+        description: >
+          Optional link grouping this Contribution with related
+          Contributions for goal tracking and territory attribution.
+          Settable, changeable, and clearable at any time per
+          FU-RECORD-REQ-005. Inverse side of the Fundraising
+          Campaign.totalRaised rollup. See PRD FU-RECORD-DAT-031.
+        category: "Identification"
+        required: false
+        # Link target defined in the relationships section.
+
+      - name: acknowledgmentSent
+        type: bool
+        label: "Acknowledgment Sent"
+        description: >
+          Whether acknowledgment / tax receipt has been sent.
+          Jointly owned by FU-RECORD (primary write at Contribution
+          creation per FU-RECORD-REQ-015) and FU-STEWARD (catch-up
+          write during the sweep per FU-STEWARD-REQ-004) under the
+          hybrid ownership model that resolved EI-ISS-001 per
+          CONTR-DEC-004. The Acknowledgment-Pending Contributions
+          saved view (below) surfaces records where status = Received
+          and acknowledgmentSent = false. See PRD FU-RECORD-DAT-032.
+        category: "Acknowledgment"
+        required: false
+        default: false
+        audited: false
+
+      - name: acknowledgmentDate
+        type: date
+        label: "Acknowledgment Date"
+        description: >
+          Date acknowledgment / tax receipt was sent. Jointly owned
+          per the hybrid ownership model. Specifics of any given
+          acknowledgment are recorded in notes; this field tracks
+          only the date for coverage analytics in the FU-REPORT
+          Acknowledgment Coverage report. See PRD FU-RECORD-DAT-033.
+        category: "Acknowledgment"
+        required: false
+
+      - name: notes
+        type: wysiwyg
+        label: "Notes"
+        description: >
+          Free-form Contribution-specific narrative. Captures
+          multi-payment grant disbursement detail, sponsorship
+          recognition obligations, bounce / refund / reversal context,
+          and any specifics of acknowledgments sent. Coexists with
+          the cross-domain Notes Service stream — the in-record
+          notes field is for Contribution-specific narrative; the
+          Notes Service stream is for general activity logging.
+          See PRD FU-RECORD-DAT-034.
+        category: "Acknowledgment"
+        required: false
+
+      # --- Donation-Specific Fields (visible when contributionType = Donation) ---
+
+      - name: giftType
+        type: enum
+        label: "Gift Type"
+        description: >
+          Seven-value enum identifying the gift mechanism. Visible
+          only when contributionType = Donation per CONTR-DYN-002.
+          For in-kind Donations (giftType = In-Kind), the
+          inKindDescription and inKindValuationBasis fields become
+          visible per CONTR-DYN-003. Sponsorships are not categorized
+          by gift type; in-kind Sponsorships are recorded narratively
+          in notes. See PRD FU-RECORD-DAT-035 and FU-RECON-DEC-001
+          (FU-RECORD-authoritative seven-value list).
+        category: "Donation Details"
+        required: false
+        options:
+          - "Cash"
+          - "Check"
+          - "Credit Card"
+          - "ACH"
+          - "Online Payment"
+          - "In-Kind"
+          - "Other"
+        visibleWhen:
+          - { field: contributionType, op: equals, value: "Donation" }
+
+      - name: inKindDescription
+        type: varchar
+        label: "In-Kind Description"
+        description: >
+          Free-form description of the in-kind contribution (what
+          was given). Visible only when contributionType = Donation
+          AND giftType = In-Kind per CONTR-DYN-003. See PRD
+          FU-RECORD-DAT-036.
+        category: "Donation Details"
+        required: false
+        visibleWhen:
+          all:
+            - { field: contributionType, op: equals, value: "Donation" }
+            - { field: giftType,         op: equals, value: "In-Kind" }
+
+      - name: inKindValuationBasis
+        type: varchar
+        label: "In-Kind Valuation Basis"
+        description: >
+          Free-form description of how the in-kind value was
+          determined (appraisal, market comparable, donor estimate,
+          and so on). Visible only when contributionType = Donation
+          AND giftType = In-Kind per CONTR-DYN-003. See PRD
+          FU-RECORD-DAT-037.
+        category: "Donation Details"
+        required: false
+        visibleWhen:
+          all:
+            - { field: contributionType, op: equals, value: "Donation" }
+            - { field: giftType,         op: equals, value: "In-Kind" }
+
+      # --- Grant-Specific Field (visible when contributionType = Grant) ---
+
+      - name: nextGrantDeadline
+        type: date
+        label: "Next Grant Deadline"
+        description: >
+          Date of the next pending grant-related obligation, typically
+          a reporting deadline. Updated by FU-RECORD initially (when
+          the grant is committed) and by FU-STEWARD as deadlines are
+          met or extended per FU-STEWARD-REQ-005. Source for the
+          FU-STEWARD Grant Deadlines saved view sort order
+          (ascending, past-due at top) per FU-STEWARD-REQ-008.
+          Visible only when contributionType = Grant per
+          CONTR-DYN-004. See PRD FU-RECORD-DAT-038.
+        category: "Grant Details"
+        required: false
+        visibleWhen:
+          - { field: contributionType, op: equals, value: "Grant" }
+
+    # --- Saved Views (FU-STEWARD sweep lists per FU-STEWARD-REQ-007 and -008) ---
+
+    savedViews:
+
+      - id: contribution-acknowledgment-pending
+        name: "Acknowledgment-Pending Contributions"
+        description: >
+          All Contribution records with status = Received and
+          acknowledgmentSent = false, sorted by receivedDate
+          ascending (oldest first). Used by FU-STEWARD as the
+          catch-up sweep list for the hybrid acknowledgment ownership
+          model per FU-STEWARD-REQ-007. The Coordinator sends the
+          missed acknowledgment outside the system and writes
+          acknowledgmentSent and acknowledgmentDate during the sweep.
+        filter:
+          all:
+            - { field: status,             op: equals, value: "Received" }
+            - { field: acknowledgmentSent, op: equals, value: false }
+        orderBy: { field: receivedDate, direction: asc }
+
+      - id: contribution-grant-deadlines
+        name: "Grant Deadlines"
+        description: >
+          All Contribution records with contributionType = Grant,
+          nextGrantDeadline populated, and status in (Committed,
+          Received), sorted by nextGrantDeadline ascending (past-due
+          at top). Used by FU-STEWARD as the grant-deadline sweep
+          list per FU-STEWARD-REQ-008.
+        filter:
+          all:
+            - { field: contributionType,   op: equals,    value: "Grant" }
+            - { field: nextGrantDeadline,  op: isNotNull }
+            - { field: status,             op: in,        value: ["Committed", "Received"] }
+        orderBy: { field: nextGrantDeadline, direction: asc }
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Identification"
+            description: >
+              Type, status, donor link (Contact or Account, mutually
+              exclusive), amount, designation, and Campaign linkage.
+              Source: Contribution Entity PRD v1.0 Section 6 panel 1.
+            tabs:
+              - label: "Identification"
+                category: "Identification"
+
+          - label: "Lifecycle Dates"
+            description: >
+              Date fields tracking the Contribution's progression
+              through its lifecycle (applicationDate for Grants only,
+              commitmentDate, expectedPaymentDate, receivedDate).
+              Source: Contribution Entity PRD v1.0 Section 6 panel 2.
+            tabs:
+              - label: "Lifecycle Dates"
+                category: "Lifecycle Dates"
+
+          - label: "Donation Details"
+            description: >
+              Donation-specific fields (giftType, plus in-kind fields
+              when giftType = In-Kind). Visible only when
+              contributionType = Donation. Source: Contribution
+              Entity PRD v1.0 Section 6 panel 3.
+            visibleWhen:
+              - { field: contributionType, op: equals, value: "Donation" }
+            tabs:
+              - label: "Donation Details"
+                category: "Donation Details"
+
+          - label: "Grant Details"
+            description: >
+              Grant-specific fields (nextGrantDeadline; applicationDate
+              also appears here in the Lifecycle Dates panel). Visible
+              only when contributionType = Grant. Source: Contribution
+              Entity PRD v1.0 Section 6 panel 4.
+            visibleWhen:
+              - { field: contributionType, op: equals, value: "Grant" }
+            tabs:
+              - label: "Grant Details"
+                category: "Grant Details"
+
+          - label: "Acknowledgment"
+            description: >
+              Hybrid-ownership acknowledgment fields plus in-record
+              notes. Source: Contribution Entity PRD v1.0 Section 6
+              panel 5.
+            tabs:
+              - label: "Acknowledgment"
+                category: "Acknowledgment"
+
+      list:
+        columns:
+          - field: name
+            width: 22
+          - field: contributionType
+            width: 12
+          - field: status
+            width: 12
+          - field: amount
+            width: 12
+          - field: receivedDate
+            width: 14
+          - field: campaign
+            width: 14
+          - field: acknowledgmentSent
+            width: 14
+
+# ---------------------------------------------------------------
+# Relationships
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: contributionDonorContact
+    description: >
+      Links a Contribution to the donor Contact when the donor is
+      an individual. Many Contributions belong to one Contact
+      (manyToOne from the Contribution side; oneToMany from the
+      Contact side). Source for Contact.donorLifetimeGiving rollup.
+      Mutually exclusive with contributionDonorAccount — see
+      FU-RECORD-REQ-002 and EXCEPTIONS.md FU-Y9-EXC-003. See PRD
+      FU-RECORD-DAT-023.
+    entity: Contribution
+    entityForeign: Contact
+    linkType: manyToOne
+    link: donorContact
+    linkForeign: contributions
+    label: "Donor Contact"
+    labelForeign: "Contributions"
+    audited: true
+
+  - name: contributionDonorAccount
+    description: >
+      Links a Contribution to the donor Account when the donor is
+      an organization. Many Contributions belong to one Account
+      (manyToOne from the Contribution side; oneToMany from the
+      Account side). Source for Account.funderLifetimeGiving rollup.
+      Mutually exclusive with contributionDonorContact. See PRD
+      FU-RECORD-DAT-024.
+    entity: Contribution
+    entityForeign: Account
+    linkType: manyToOne
+    link: donorAccount
+    linkForeign: contributions
+    label: "Donor Account"
+    labelForeign: "Contributions"
+    audited: true
+
+  - name: contributionCampaign
+    description: >
+      Links a Contribution to its Fundraising Campaign for goal
+      tracking and territory attribution. Many Contributions belong
+      to one Fundraising Campaign (manyToOne from the Contribution
+      side; oneToMany from the Fundraising Campaign side). Inverse
+      side feeds Fundraising Campaign.totalRaised rollup
+      (status = Received only). See PRD FU-RECORD-DAT-031.
+    entity: Contribution
+    entityForeign: FundraisingCampaign
+    linkType: manyToOne
+    link: campaign
+    linkForeign: contributions
+    label: "Campaign"
+    labelForeign: "Contributions"
+    audited: false
