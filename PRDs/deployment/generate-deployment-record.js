@@ -162,11 +162,11 @@ const metaTable = new Table({
     new TableRow({ children: [labelCell("Implementation", 2600),
       cell("Cleveland Business Mentors", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Version", 2600),
-      cell("1.0", { width: 6760 })] }),
+      cell("1.1", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Status", 2600),
       cell("Active \u2014 reflects live system as of Last Updated", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Last Updated", 2600),
-      cell("05-02-26 04:45", { width: 6760 })] }),
+      cell("05-02-26 05:30", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Source of Truth", 2600), multiCell([
       "The running server is the authoritative source for current state.",
       "This document captures values verified at Last Updated and may drift over time.",
@@ -185,6 +185,11 @@ children.push(stripedTable({
   columnWidths: [800, 1500, 7060],
   headers: ["Version", "Date", "Notes"],
   rows: [
+    ["1.1", "05-02-26 05:30",
+      "Added MariaDB and nginx version numbers to Section 6 (EspoCRM "
+      + "Application). Both retrieved from the running containers via SSH "
+      + "for consistency with the EspoCRM version already captured. No "
+      + "other content changes."],
     ["1.0", "05-02-26 04:45",
       "Initial release. Reconstructed from on-server inspection (SSH diagnostic), "
       + "live SSL certificate inspection, and DigitalOcean dashboard. The original "
@@ -463,8 +468,8 @@ children.push(stripedTable({
   rows: [
     ["espocrm", "espocrm/espocrm:fpm", "PHP-FPM application server (port 9000)"],
     ["espocrm-daemon", "espocrm/espocrm:fpm", "Background daemon for EspoCRM scheduled jobs"],
-    ["espocrm-db", "mariadb:latest", "MariaDB database (port 3306, healthy)"],
-    ["espocrm-nginx", "nginx", "Public-facing web server, listening on 80/443 (IPv4 and IPv6)"],
+    ["espocrm-db", "mariadb:latest (12.2.2)", "MariaDB database (port 3306, healthy)"],
+    ["espocrm-nginx", "nginx (1.29.7)", "Public-facing web server, listening on 80/443 (IPv4 and IPv6)"],
     ["espocrm-websocket", "espocrm/espocrm:fpm", "WebSocket server (port 8080, IPv4 and IPv6)"],
   ],
 }));
@@ -498,7 +503,9 @@ children.push(stripedTable({
   columnWidths: [2600, 6760],
   headers: ["Field", "Value"],
   rows: [
-    ["Engine", "MariaDB (mariadb:latest image)"],
+    ["Engine", "MariaDB"],
+    ["Version", "12.2.2"],
+    ["Image", "mariadb:latest"],
     ["Container", "espocrm-db"],
     ["Network exposure", "Internal Docker network only; not bound to host port"],
     ["MariaDB root password", "Referenced in Proton Pass entry: ESPOCRM Root DB Password - Test Instance"],
@@ -695,6 +702,14 @@ children.push(stripedTable({
   columnWidths: [800, 1500, 7060],
   headers: ["Version", "Date", "Changes"],
   rows: [
+    ["1.1", "05-02-26 05:30",
+      "Added MariaDB version (12.2.2) and nginx version (1.29.7) to "
+      + "Section 6.3 (Container Stack) and Section 6.5 (Database). "
+      + "Both versions retrieved via SSH from the running containers, "
+      + "for consistency with the EspoCRM version (9.3.4) already "
+      + "captured. Section 6.5 split the previous combined Engine entry "
+      + "into separate Engine, Version, and Image rows. No other content "
+      + "changes; metadata Last Updated bumped to 05-02-26 05:30."],
     ["1.0", "05-02-26 04:45",
       "Initial release. Eleven sections covering: document purpose and scope; "
       + "deployment summary; DigitalOcean Droplet (identification, hardware, "
