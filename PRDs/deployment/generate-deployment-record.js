@@ -162,11 +162,11 @@ const metaTable = new Table({
     new TableRow({ children: [labelCell("Implementation", 2600),
       cell("Cleveland Business Mentors", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Version", 2600),
-      cell("1.2", { width: 6760 })] }),
+      cell("1.3", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Status", 2600),
       cell("Active \u2014 reflects live system as of Last Updated", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Last Updated", 2600),
-      cell("05-02-26 05:45", { width: 6760 })] }),
+      cell("05-02-26 06:50", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Source of Truth", 2600), multiCell([
       "The running server is the authoritative source for current state.",
       "This document captures values verified at Last Updated and may drift over time.",
@@ -185,6 +185,15 @@ children.push(stripedTable({
   columnWidths: [800, 1500, 7060],
   headers: ["Version", "Date", "Notes"],
   rows: [
+    ["1.3", "05-02-26 06:50",
+      "Relabeled the Public IPv4 row in Section 3.1 (Droplet "
+      + "Identification) to make explicit that this value is the "
+      + "Setup Wizard's SSH Host input. Field now reads "
+      + "\"Public IPv4 (SSH Host)\". The change addresses operator "
+      + "confusion observed during a wizard run, where the wizard "
+      + "asks for SSH Host but the Deployment Record did not "
+      + "previously connect that label to the captured IPv4 value. "
+      + "No other content changes."],
     ["1.2", "05-02-26 05:45",
       "Added the DigitalOcean Droplet ID, the Droplet detail page URL, "
       + "and the in-browser Console URL to Section 3.1 (Droplet "
@@ -265,7 +274,7 @@ children.push(stripedTable({
     ["Instance name and code", "CBMTEST"],
     ["Environment", "Test"],
     ["Application URL", "https://crm-test.clevelandbusinessmentors.org/"],
-    ["Public IPv4", "104.131.45.208"],
+    ["Public IPv4 (SSH Host)", "104.131.45.208"],
     ["Hostname", "CBM-TEST"],
     ["Hosting provider", "DigitalOcean"],
     ["Region", "NYC3"],
@@ -303,7 +312,7 @@ children.push(stripedTable({
     ["Account", "Referenced in Proton Pass entry: DigitalOcean-CRM Hosting - Test Instance"],
     ["Region", "NYC3"],
     ["Hostname (server-side)", "CBM-TEST"],
-    ["Public IPv4", "104.131.45.208"],
+    ["Public IPv4 (SSH Host)", "104.131.45.208"],
     ["Droplet ID", "561480073"],
     ["Droplet detail page", "https://cloud.digitalocean.com/droplets/561480073"],
     ["In-browser Console", "https://cloud.digitalocean.com/droplets/561480073/console"],
@@ -714,6 +723,17 @@ children.push(stripedTable({
   columnWidths: [800, 1500, 7060],
   headers: ["Version", "Date", "Changes"],
   rows: [
+    ["1.3", "05-02-26 06:50",
+      "Two rows relabeled from \"Public IPv4\" to "
+      + "\"Public IPv4 (SSH Host)\": one in Section 2 (Deployment "
+      + "Summary at-a-glance) and one in Section 3.1 (Droplet "
+      + "Identification). The added parenthetical makes explicit "
+      + "that this captured value is the input to the Setup Wizard's "
+      + "SSH Host field on its Server (SSH) Connection page. The "
+      + "issue was identified during a wizard run when an operator "
+      + "noted that the wizard label \"SSH Host\" had no obvious "
+      + "match in the Deployment Record. Metadata Last Updated "
+      + "bumped to 05-02-26 06:50. No other content changes."],
     ["1.2", "05-02-26 05:45",
       "Added three rows to Section 3.1 (Droplet Identification): Droplet "
       + "ID (561480073), Droplet detail page URL, and in-browser Console "
