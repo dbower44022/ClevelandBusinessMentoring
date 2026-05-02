@@ -162,11 +162,11 @@ const metaTable = new Table({
     new TableRow({ children: [labelCell("Implementation", 2600),
       cell("Cleveland Business Mentors", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Version", 2600),
-      cell("1.1", { width: 6760 })] }),
+      cell("1.2", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Status", 2600),
       cell("Active \u2014 reflects live system as of Last Updated", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Last Updated", 2600),
-      cell("05-02-26 05:30", { width: 6760 })] }),
+      cell("05-02-26 05:45", { width: 6760 })] }),
     new TableRow({ children: [labelCell("Source of Truth", 2600), multiCell([
       "The running server is the authoritative source for current state.",
       "This document captures values verified at Last Updated and may drift over time.",
@@ -185,6 +185,13 @@ children.push(stripedTable({
   columnWidths: [800, 1500, 7060],
   headers: ["Version", "Date", "Notes"],
   rows: [
+    ["1.2", "05-02-26 05:45",
+      "Added the DigitalOcean Droplet ID, the Droplet detail page URL, "
+      + "and the in-browser Console URL to Section 3.1 (Droplet "
+      + "Identification). Both URLs derive from the numeric Droplet ID; "
+      + "supplying the URLs directly removes the need for an operator to "
+      + "browse the DO Droplets list to locate this server. No other "
+      + "content changes."],
     ["1.1", "05-02-26 05:30",
       "Added MariaDB and nginx version numbers to Section 6 (EspoCRM "
       + "Application). Both retrieved from the running containers via SSH "
@@ -297,6 +304,9 @@ children.push(stripedTable({
     ["Region", "NYC3"],
     ["Hostname (server-side)", "CBM-TEST"],
     ["Public IPv4", "104.131.45.208"],
+    ["Droplet ID", "561480073"],
+    ["Droplet detail page", "https://cloud.digitalocean.com/droplets/561480073"],
+    ["In-browser Console", "https://cloud.digitalocean.com/droplets/561480073/console"],
   ],
 }));
 children.push(blank());
@@ -616,9 +626,11 @@ children.push(para("10. Operational Notes", { heading: HeadingLevel.HEADING_1 })
 
 children.push(para("10.1 Reaching the Server", { heading: HeadingLevel.HEADING_2 }));
 children.push(para(
-  "SSH using the crm-deploy private key. The DigitalOcean console (Droplet "
-  + "page in the DO dashboard) is also available as a fallback if SSH is "
-  + "unreachable for any reason."
+  "SSH using the crm-deploy private key is the primary access path. The "
+  + "DigitalOcean in-browser Console (linked in Section 3.1) is the "
+  + "documented fallback when SSH is unreachable for any reason \u2014 "
+  + "for example after a firewall misconfiguration that blocks port 22, "
+  + "or while diagnosing a network-layer issue from outside the server."
 ));
 
 children.push(para("10.2 Inspecting the Stack", { heading: HeadingLevel.HEADING_2 }));
@@ -702,6 +714,15 @@ children.push(stripedTable({
   columnWidths: [800, 1500, 7060],
   headers: ["Version", "Date", "Changes"],
   rows: [
+    ["1.2", "05-02-26 05:45",
+      "Added three rows to Section 3.1 (Droplet Identification): Droplet "
+      + "ID (561480073), Droplet detail page URL, and in-browser Console "
+      + "URL. The two URLs are derivable from the Droplet ID but supplying "
+      + "them directly removes the need for an operator to browse the DO "
+      + "Droplets list. Section 10.1 (Reaching the Server) updated to "
+      + "reference the new Console URL by Section 3.1 link rather than "
+      + "describing the Console abstractly. Metadata Last Updated bumped "
+      + "to 05-02-26 05:45."],
     ["1.1", "05-02-26 05:30",
       "Added MariaDB version (12.2.2) and nginx version (1.29.7) to "
       + "Section 6.3 (Container Stack) and Section 6.5 (Database). "
