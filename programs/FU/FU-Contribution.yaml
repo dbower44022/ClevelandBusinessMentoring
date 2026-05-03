@@ -1,17 +1,21 @@
 version: "1.0"
-content_version: "1.0.0"
+content_version: "1.0.1"
 description: >
   Fundraising (FU) domain — Contribution custom entity definition,
   three Contribution relationships (donorContact → Contact,
   donorAccount → Account, campaign → Fundraising Campaign), and the
   FU-STEWARD saved views that drive the weekly or bi-weekly
-  stewardship sweep. Eighteen fields total: fourteen shared, three
+  stewardship sweep. Fifteen fields total: eleven shared, three
   Donation-specific (visible when contributionType = Donation), one
-  Grant-specific (visible when contributionType = Grant). Owned
-  exclusively by the FU domain. Record-level visibility restricted
-  to Donor / Sponsor Coordinator, Executive Member, and System
-  Administrator per FU-RECORD-REQ-021 — implemented post-deployment
-  via field-level access control (see MANUAL-CONFIG.md).
+  Grant-specific (visible when contributionType = Grant). The three
+  link relationships (donorContact, donorAccount, campaign) are
+  declared exclusively in the relationships: block per the schema
+  rule; they are not also listed in the entity's fields: block.
+  Owned exclusively by the FU domain. Record-level visibility
+  restricted to Donor / Sponsor Coordinator, Executive Member, and
+  System Administrator per FU-RECORD-REQ-021 — implemented
+  post-deployment via field-level access control (see
+  MANUAL-CONFIG.md).
 
 # Source: Fundraising Domain Product Requirements Document v1.0
 #         (05-01-26, Phase 8 Approved 05-01-26), Section 4.3
@@ -19,6 +23,22 @@ description: >
 #         Requirements Document v1.0 (04-30-26). FU-RECORD v1.2
 #         Section 8.3, FU-STEWARD v1.0 Section 8.3 saved-list
 #         specifications.
+
+# Revision History:
+#   1.0.1 (05-02-26 18:00) — Removed type:link field declarations
+#     for donorContact, donorAccount, and campaign from the entity
+#     fields: block. These three relationships are declared in the
+#     relationships: block only, per the schema rule that link
+#     relationships are managed via createLink and must not also
+#     appear as link-type fields. Fixes Configure run failure where
+#     field-level POST against fieldManager created stub link fields
+#     that subsequently conflicted with relationship-level createLink
+#     (HTTP 409 Conflict). Fields count: 18 → 15. Field-level
+#     metadata that lived on the removed declarations (description,
+#     category) is not currently propagated to link records by the
+#     deploy pipeline; if needed, configure post-deployment via the
+#     EspoCRM admin UI.
+#   1.0.0 (05-01-26) — Phase 9 YAML generation, initial commit.
 
 entities:
 
@@ -112,35 +132,10 @@ entities:
           "Unsuccessful": "default"
           "Cancelled": "default"
 
-      - name: donorContact
-        type: link
-        label: "Donor Contact"
-        description: >
-          Link to the donor when the donor is an individual. Mutually
-          exclusive with donorAccount per FU-RECORD-REQ-002 — exactly
-          one of donorContact or donorAccount must be populated on
-          every Contribution. Mutual exclusivity is enforced
-          post-deployment (see MANUAL-CONFIG.md FU-MC-AA-002 and
-          EXCEPTIONS.md FU-Y9-EXC-003) because v1.1 lacks a native
-          mutually-exclusive-link construct. Linked Contact must
-          have contactType including Donor. See PRD FU-RECORD-DAT-023.
-        category: "Identification"
-        required: false
-        audited: true
-        # Link target defined in the relationships section.
-
-      - name: donorAccount
-        type: link
-        label: "Donor Account"
-        description: >
-          Link to the donor when the donor is an organization.
-          Mutually exclusive with donorContact per FU-RECORD-REQ-002.
-          Linked Account must have accountType including
-          Donor/Sponsor. See PRD FU-RECORD-DAT-024.
-        category: "Identification"
-        required: false
-        audited: true
-        # Link target defined in the relationships section.
+      # Note: donorContact and donorAccount are declared in the
+      # relationships: block at the bottom of this file. They are not
+      # listed here as type: link fields, per the schema rule that
+      # link relationships go exclusively in the relationships: block.
 
       - name: amount
         type: currency
@@ -220,18 +215,9 @@ entities:
         category: "Identification"
         required: false
 
-      - name: campaign
-        type: link
-        label: "Campaign"
-        description: >
-          Optional link grouping this Contribution with related
-          Contributions for goal tracking and territory attribution.
-          Settable, changeable, and clearable at any time per
-          FU-RECORD-REQ-005. Inverse side of the Fundraising
-          Campaign.totalRaised rollup. See PRD FU-RECORD-DAT-031.
-        category: "Identification"
-        required: false
-        # Link target defined in the relationships section.
+      # Note: campaign is declared in the relationships: block as link
+      # 'campaign' of relationship 'contributionCampaign'. Not listed
+      # here as a type: link field per schema rule.
 
       - name: acknowledgmentSent
         type: bool
