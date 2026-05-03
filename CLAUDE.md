@@ -44,6 +44,43 @@ Northeast Ohio.
 
 ---
 
+## Known State — Requirements Tab Intentionally Empty (decided 05-02-26)
+
+The CRM Builder application's Requirements tab Dashboard reads work
+items, domains, entities, and processes from a per-client SQLite
+database, not from the Word documents in this repository. For the CBM
+implementation, that client database is empty by design.
+
+**Cause.** All CBM PRD work to date was produced before the CRM Builder
+application migrated its document import flow from the legacy
+`automation/cbm_import` CLI bootstrap to the current Path B / Import
+Processor pipeline. Every concrete import method in the legacy bootstrap
+is now a deprecated no-op, and Path B has no batch back-fill path that
+can ingest a fully drafted client repository into a populated client
+database. The result is that the CBM client database shows zero work
+items even though the documents exist and are complete.
+
+**Decision.** Do not back-fill the CBM client database. CBM will be
+re-run end-to-end through the application once the application has been
+updated to incorporate the lessons learned from this first
+implementation. Until that re-run, the Requirements tab for CBM is
+expected to be empty, and any in-app features that depend on it
+(Dashboard, Documents view, Impact Review) will not be available for CBM.
+Carry-forward management, staleness tracking, and cross-document impact
+for the remaining CBM work continue to be handled manually in session,
+as they have been throughout the implementation to date.
+
+**What this means in practice.**
+
+- Do not propose populating the CBM Requirements tab as a fix for any
+  future request that touches it.
+- Do not run the legacy `python -m automation.cbm_import` CLI. It would
+  produce only an empty work item skeleton and offers no benefit.
+- The Word documents in this repository remain the source of record for
+  CBM, not the application's database.
+
+---
+
 ## Current Implementation State
 
 **Process status: All MR domain work complete. MR Phase 9 follow-up work fully closed out (04-20-26). CR Domain Reconciliation (Phase 5) complete (04-16-26). CR Domain PRD v1.2 at PRDs/CR/CBM-Domain-PRD-ClientRecruiting.docx — Phase 8 Stakeholder Review complete (05-01-26), Approved. FU domain Phase 4b process definition complete: FU Domain Overview v1.0 committed 04-22-26; FU-PROSPECT process document v1.0 committed 04-22-26; FU-RECORD process document v1.2 committed 04-30-26 (initial v1.0 04-29-26; v1.1 carry-forward executed 04-29-26 applying the hybrid acknowledgment ownership model surfaced by FU-STEWARD; v1.2 carry-forward executed 04-30-26 adding Fundraising Campaign.geographicServiceArea field surfaced during FU-REPORT process definition); FU-STEWARD process document v1.0 committed 04-29-26; FU-REPORT process document v1.1 committed 05-01-26 (initial v1.0 04-30-26; v1.1 carry-forward executed 05-01-26 aligning Section 7.3 FU-REPORT-DAT-027 giftType enum with the FU-RECORD-authoritative seven-value list per FU-RECON-DEC-001). Phase 7 FU Domain Reconciliation complete (05-01-26) producing FU Domain PRD v1.0 at PRDs/FU/CBM-Domain-PRD-Fundraising.docx. FU-RECON carry-forward bundle complete (05-01-26): FU-RECON-ISS-001 closed by FU-REPORT v1.0 → v1.1 carry-forward; FU-RECON-ISS-002 closed by Entity Inventory v1.5 → v1.6 carry-forward. FU-RECON-ISS-003 (Northeast Ohio zip code master list) remains as a Phase 9 deferral. FU Domain PRD v1.0 — Phase 8 Stakeholder Review complete (05-01-26), Approved. CR Domain PRD v1.2 — Phase 8 Stakeholder Review complete (05-01-26), Approved. Phase 9 YAML Generation complete for the FU domain (05-01-26): four YAML files (FU-Contact.yaml, FU-Account.yaml, FU-Contribution.yaml, FU-FundraisingCampaign.yaml) plus EXCEPTIONS.md and MANUAL-CONFIG.md committed to programs/FU/. Four exceptions surfaced and resolved: FU-Y9-EXC-001 (geographicServiceArea master list deferred — empty options, recorded as MANUAL-CONFIG FU-MC-OL-001), FU-Y9-EXC-002 (auto-Active transition not expressible as v1.1 cross-entity workflow — recorded as MANUAL-CONFIG FU-MC-AA-001), FU-Y9-EXC-003 (donorContact / donorAccount mutual exclusivity not expressible — recorded as MANUAL-CONFIG FU-MC-AA-002), FU-Y9-EXC-004 (Active Donors and Funders Sweep List spans two entities — recorded as MANUAL-CONFIG FU-MC-UV-001). Manual Configuration List has six Role-Based Field Visibility entries (FU-MC-RV-001 through FU-MC-RV-006), three Advanced Automation entries (FU-MC-AA-001 through FU-MC-AA-003), one cross-entity union view (FU-MC-UV-001), and one deferred-master-list option list (FU-MC-OL-001). The implementation-feasibility concern raised during Phase 8 review proved well-founded — four genuine v1.1 schema gaps surfaced during FU YAML generation; all four are recoverable via post-deployment Manual Configuration. Schema v1.2 candidates identified: cross-entity setField action, mutually-exclusive-field constraint construct, cross-entity union saved-view construct. CR and MR Phase 9 YAML Generation remain pending. Bundled end-of-FU-Phase-4b carry-forward executed 04-30-26 propagating six new fields into Contact Entity PRD v1.6 → v1.7 (donorStatus, donorNotes, donorLifetimeGiving, lastContactDate; new Section 3.8 Donor-Specific Fields) and Account Entity PRD v1.7 → v1.8 (assignedSponsorCoordinator, lastContactDate added to Section 3.4 Donor/Sponsor-Specific Fields). EI-ISS-001 closed by FU-RECORD with field-level acknowledgment model (acknowledgmentSent, acknowledgmentDate on Contribution, shared across all contribution types) under hybrid ownership: FU-RECORD primary at Contribution creation, FU-STEWARD catch-up during the sweep. ACT-ISS-004 closed by FU-REPORT process definition session — geographicServiceArea on Account restructured from text to multiEnum (structured zip code list) with visibility expanded to both Partner and Donor/Sponsor account types; same field added to Fundraising Campaign entity (FU-RECORD-DAT-047). CON-ISS-003 closed by bundled carry-forward (donorStatus added). ACT-ISS-002 closed by bundled carry-forward (FU-domain Account fields integrated). All five completed carry-forward request files at PRDs/FU/carry-forward/ are retained as the source-of-record for their decisions. Current versions of upstream documents: Master PRD v2.5, Contact Entity PRD v1.7, Account Entity PRD v1.8, Engagement Entity PRD v1.2, Session Entity PRD v1.1, Dues Entity PRD v1.1, MN-INTAKE v2.4, CR Domain Overview v1.4, CR-PARTNER-MANAGE v1.1, Entity Inventory v1.6, CR Domain PRD v1.2 (Phase 8 Approved), FU Domain Overview v1.0, FU-RECORD v1.2, FU-STEWARD v1.0, FU-REPORT v1.1, FU Domain PRD v1.0 (Phase 8 Approved). All seven CR Phase 2b Entity PRDs complete at v1.0: Event, Event Registration, Partnership Agreement, Segment, Campaign Group, Marketing Campaign, Campaign Engagement. Both FU-owned Phase 5 Entity PRDs complete at v1.0 (committed 04-30-26): Contribution Entity PRD v1.0 and Fundraising Campaign Entity PRD v1.0. All Phase 5 Entity PRDs across all four domains are now complete. Next: Phase 9 YAML Generation for CR (in a fresh session for clean context) or MR Phase 9 completion (which had partial earlier work).**
