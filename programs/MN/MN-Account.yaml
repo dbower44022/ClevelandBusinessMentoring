@@ -1,0 +1,173 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentoring (MN) domain — custom field additions to the native
+  Account entity for Client Organization records. Five fields:
+  organizationType, businessStage, industrySector, industrySubsector,
+  clientNotes. All five are visible only when accountType has Client
+  per Account Entity PRD v1.8 dynamic-logic conventions. The
+  industrySector value list is the same 20 NAICS sector titles used
+  by Mentor Contact.industrySectors per MR-Y9-EXC-001 (cross-entity
+  alignment requirement). The industrySubsector dependent-filter
+  value list (~100 subsectors filtered by sector) is deferred to
+  later implementation — see EXCEPTIONS.md MN-Y9-EXC-005 and
+  MANUAL-CONFIG.md MN-MC-OL-002.
+
+  This file is generated at the unattended Phase 9 multi-domain
+  run's discretion: the run prompt explicitly listed three MN
+  outputs (Contact, Engagement, Session) without naming an Account
+  output, but the MN Domain PRD requires these five Client
+  Organization custom fields on Account and they are MN-domain-
+  owned per the Account Entity PRD's "Domains: MN" annotations on
+  each field. Generating the file is the conservative choice that
+  keeps the MN PRD covered. See EXCEPTIONS.md MN-Y9-EXC-006 for
+  the scope-deviation record.
+
+# Source: Mentoring Domain Product Requirements Document v1.0
+#         (04-01-26), Section 4 (Client Organization entity).
+#         Account Entity Product Requirements Document v1.8
+#         Section 3.3 (Mentoring-domain fields). MN-INTAKE v2.1.
+
+entities:
+
+  Account:
+    description: >
+      Native Company-type entity. The single repository for all
+      organizations known to CBM. This file defines the five
+      MN-owned custom fields needed for Client Organization
+      records (created at MN-INTAKE). The accountType discriminator
+      is declared in CR-Account.yaml; this file does not redefine
+      it but depends on the "Client" value being present in the
+      option list. Native fields name (Business Name —
+      MN-INTAKE-DAT-001), website (MN-INTAKE-DAT-002), and
+      billingAddress composite (MN-INTAKE-DAT-003) are inherited
+      from the Company entity type and require no YAML declaration.
+      See Account Entity PRD v1.8 Section 3.3.
+
+    fields:
+
+      # --- Section 3.3 — Mentoring-Domain Client Fields ---
+
+      - name: organizationType
+        type: enum
+        label: "Organization Type"
+        description: >
+          Whether the client organization operates as a for-profit
+          business or a nonprofit. Drives funder reporting
+          categories. Visible only when accountType has Client.
+          See PRD MN-INTAKE-DAT-004.
+        category: "Client Profile"
+        required: false
+        options:
+          - "For-Profit"
+          - "Non-Profit"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: businessStage
+        type: enum
+        label: "Business Stage"
+        description: >
+          The stage of business development the client organization
+          is in. Used for mentor matching and funder reporting.
+          Required at MN-INTAKE per the data table in MN Domain PRD
+          Section 4. Visible only when accountType has Client. See
+          PRD MN-INTAKE-DAT-005.
+        category: "Client Profile"
+        required: false
+        requiredWhen:
+          - { field: accountType, op: contains, value: "Client" }
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+        options:
+          - "Pre-Startup"
+          - "Startup"
+          - "Early Stage"
+          - "Growth Stage"
+          - "Established"
+
+      - name: industrySector
+        type: enum
+        label: "Industry Sector"
+        description: >
+          Primary NAICS top-level industry sector. 20 standard
+          United States Census Bureau NAICS two-digit sector titles
+          per MR-Y9-EXC-001 (cross-entity alignment requirement —
+          values match Mentor Contact.industrySectors). Drives the
+          Industry Subsector dependent filter. Visible only when
+          accountType has Client. See PRD MN-INTAKE-DAT-006.
+        category: "Client Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+        options:
+          - "Agriculture, Forestry, Fishing and Hunting"
+          - "Mining, Quarrying, and Oil and Gas Extraction"
+          - "Utilities"
+          - "Construction"
+          - "Manufacturing"
+          - "Wholesale Trade"
+          - "Retail Trade"
+          - "Transportation and Warehousing"
+          - "Information"
+          - "Finance and Insurance"
+          - "Real Estate and Rental and Leasing"
+          - "Professional, Scientific, and Technical Services"
+          - "Management of Companies and Enterprises"
+          - "Administrative and Support and Waste Management"
+          - "Educational Services"
+          - "Health Care and Social Assistance"
+          - "Arts, Entertainment, and Recreation"
+          - "Accommodation and Food Services"
+          - "Other Services (except Public Administration)"
+          - "Public Administration"
+
+      - name: industrySubsector
+        type: enum
+        label: "Industry Subsector"
+        description: >
+          Specific industry subsector within the selected Industry
+          Sector. Dependent-filter behavior (~100 subsectors filtered
+          by parent sector) is configured post-deployment because
+          the YAML schema does not express dependent enums — see
+          MANUAL-CONFIG.md MN-MC-DD-002. Empty options list at
+          Phase 9 per EXCEPTIONS.md MN-Y9-EXC-005. Visible only when
+          accountType has Client. See PRD MN-INTAKE-DAT-007.
+        category: "Client Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+        # Empty options — deferred per EXCEPTIONS.md MN-Y9-EXC-005.
+        options: []
+
+      - name: clientNotes
+        type: wysiwyg
+        label: "Client Notes"
+        description: >
+          Rich-text notes specific to the client relationship.
+          Field-level access control restricted to Client
+          Administrator and above; hidden from mentors per Account
+          Entity PRD v1.8 Implementation Note. Configured
+          post-deployment — see MANUAL-CONFIG.md MN-MC-AC-002.
+          Visible only when accountType has Client.
+        category: "Client Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Client Profile"
+            description: >
+              Mentoring-domain client organization profile fields.
+              Visible only when accountType has Client. Source:
+              Account Entity PRD v1.8 Section 3.3 and Mentoring
+              Domain PRD v1.0 Section 4 (Client Organization).
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Client Profile"
+                category: "Client Profile"

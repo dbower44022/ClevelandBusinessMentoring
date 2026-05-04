@@ -1,0 +1,50 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentoring (MN) domain — native Contact entity declaration. The MN
+  domain consumes Contact in four roles via Engagement relationships
+  (assignedMentor, primaryEngagementContact, engagementContacts,
+  additionalMentors) and a fifth role via Session relationships
+  (mentorAttendees, clientAttendees) — but introduces no MN-only
+  custom fields on Contact beyond what already exists in the
+  shared/MR-domain Contact PRD definition. The "Client" value of
+  contactType (declared in MR-Contact.yaml as part of the
+  multi-valued discriminator) is used for client contacts created by
+  MN-INTAKE. All Engagement-side and Session-side relationships to
+  Contact are declared in MN-Engagement.yaml and MN-Session.yaml,
+  respectively, not here. This file exists to document the MN
+  domain's read/use stance on Contact and to keep parity with the
+  Phase 9 expected-outputs list. See EXCEPTIONS.md MN-Y9-EXC-001.
+
+# Source: Mentoring Domain Product Requirements Document v1.0
+#         (04-01-26), Sections 4 (Data Reference). Contact Entity
+#         Product Requirements Document v1.7 — confirms client
+#         contact native fields (firstName, lastName, middleName,
+#         emailAddress, phoneNumber, addressPostalCode for Zip Code,
+#         linkedInProfile [shared], preferredName [shared]) and
+#         confirms Primary Contact is a relationship-level bool, not
+#         a Contact field (CON-DEC-001).
+
+entities:
+
+  Contact:
+    description: >
+      Native Person-type entity. The single repository for all
+      individuals known to CBM. The Mentoring (MN) domain references
+      Contact via Engagement and Session relationships only and
+      contributes no new custom fields. Client contacts are
+      identified by the "Client" value of the multiEnum contactType
+      discriminator (declared in MR-Contact.yaml). All native
+      identity fields used by MN-INTAKE (firstName, lastName,
+      middleName, emailAddress, phoneNumber, addressPostalCode for
+      Zip Code) are present by virtue of the Person entity type and
+      require no YAML declaration. The shared custom fields
+      preferredName and linkedInProfile are already declared in
+      MR-Contact.yaml and used here unchanged. The "Primary Contact"
+      designation (MN-INTAKE-DAT-016) is implemented as a bool on
+      the Contact-to-Account relationship per Contact Entity PRD
+      v1.7 CON-DEC-001 — a Contact-entity field is not the right
+      shape and is intentionally omitted. See MANUAL-CONFIG.md
+      MN-MC-DD-001 for the relationship-level bool that the YAML
+      schema does not currently express. See Contact Entity PRD
+      v1.7.
