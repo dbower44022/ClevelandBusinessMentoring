@@ -1,0 +1,377 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — custom field additions to the
+  native Account entity. The CR domain owns the accountType
+  discriminator (3-value enum: Client, Partner, Donor/Sponsor)
+  that drives all Account-side dynamic-logic visibility across
+  the four-domain implementation. CR also contributes the
+  Partner-specific field set (8 fields), the Client-relationship
+  fields (clientStatus, applicantSinceTimestamp), and two shared
+  fields (parentAccount link, linkedInPage). 14 total fields plus
+  2 relationships.
+
+  This file declares accountType for the first time across the
+  multi-domain YAML set. MN-Account.yaml, FU-Account.yaml, and
+  any future YAMLs that depend on accountType values reference it
+  here. The deploy order (CR before MN before FU) is therefore
+  important; the multi-domain run prompt's Section 8 Next Steps
+  groups deployments by domain in MN → MR → CR → FU order, but
+  the YAML schema does not enforce inter-file dependency, so the
+  operator should deploy CR-Account.yaml early or accept that the
+  accountType discriminator may appear via a different file in
+  the run order.
+
+# Source: CR Domain PRD v1.2 (05-01-26 14:56), Section 4 Account
+#         additions. Account Entity PRD v1.8 Sections 3.1
+#         (Discriminator), 3.2 (Shared), 3.3 (Mentoring — see
+#         MN-Account.yaml for those), 3.4 (Donor/Sponsor — see
+#         FU-Account.yaml), 3.5 (Partner). CR-PARTNER-PROSPECT
+#         v1.0, CR-PARTNER-MANAGE v1.0.
+
+entities:
+
+  Account:
+    description: >
+      Native Company-type entity. Cross-domain shared entity. The
+      CR domain declares the accountType discriminator and the
+      Partner-specific field set. Mentoring-domain Client fields
+      live in MN-Account.yaml; Fundraising-domain Donor/Sponsor
+      fields live in FU-Account.yaml. See Account Entity PRD
+      v1.8.
+
+    fields:
+
+      # --- Section 3.1 — Discriminator ---
+
+      - name: accountType
+        type: multiEnum
+        label: "Account Type"
+        description: >
+          Cross-domain discriminator. An Account may hold any
+          combination of values. Set based on how the
+          organization enters the system (Client at MN-INTAKE,
+          Partner at CR-PARTNER, Donor/Sponsor when a
+          contribution is recorded). Drives all dynamic-logic
+          visibility on Account fields across all four domains.
+          See Account Entity PRD v1.8 Section 3.1.
+        category: "Identification"
+        required: true
+        audited: true
+        options:
+          - "Client"
+          - "Partner"
+          - "Donor/Sponsor"
+        style:
+          "Client": "primary"
+          "Partner": "info"
+          "Donor/Sponsor": "success"
+
+      # --- Section 3.2 — Shared Fields ---
+
+      # Note: parentAccount is declared in the relationships:
+      # block as the accountParent self-referential relationship's
+      # link on the Account side. type: link is not a valid field
+      # type per schema rule.
+
+      - name: linkedInPage
+        type: url
+        label: "LinkedIn Page"
+        description: >
+          The organization's LinkedIn page URL. Provides
+          organizational background context. Originally defined
+          for Partner accounts but applicable to all account
+          types per Account Entity PRD v1.8 Section 3.2.
+        category: "Identification"
+        required: false
+
+      # --- Section 3.3 references — Client fields live in MN-Account.yaml ---
+
+      - name: clientStatus
+        type: enum
+        label: "Client Status"
+        description: >
+          Client-relationship lifecycle of a client company.
+          Tracks where the company is in their relationship with
+          CBM, from initial marketing-stage prospect through
+          active engagement to former client. Set to Prospect at
+          Account creation when the Account is first created via
+          a CR-MARKETING pathway with company information
+          provided. Transitions to Applicant at MN-INTAKE when a
+          linked Contact submits an application. Distinct from
+          Contact.prospectStatus, which tracks the marketing-
+          funnel state of an individual person. Visible only when
+          accountType has Client. Value list straw-man pending
+          CBM leadership input — see EXCEPTIONS.md CR-Y9-EXC-002.
+        category: "Client Profile"
+        required: false
+        audited: true
+        default: "Prospect"
+        options:
+          - "Prospect"
+          - "Applicant"
+          - "Active Client"
+          - "Inactive Client"
+          - "Former Client"
+        style:
+          "Prospect": "default"
+          "Applicant": "warning"
+          "Active Client": "success"
+          "Inactive Client": "default"
+          "Former Client": "default"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: applicantSinceTimestamp
+        type: datetime
+        label: "Applicant Since"
+        description: >
+          Timestamp recording when this Account's clientStatus
+          first transitioned to Applicant. System-populated by
+          MN-INTAKE per MN-INTAKE-REQ-011 — first transition
+          only; the "if currently null" guard ensures the
+          timestamp records the first time the account reached
+          Applicant status, not subsequent re-applications. Used
+          by CR-EVENTS-CONVERT as the application-side anchor for
+          conversion window calculation. Marked externallyPopulated
+          to allow the MN-INTAKE workflow to update it (the v1.1
+          workflow vocabulary cannot express the cross-entity
+          first-transition setField — see MANUAL-CONFIG.md
+          CR-MC-AA-003).
+        category: "Client Profile"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # --- Section 3.5 — Partner-Specific Fields ---
+
+      - name: partnerOrganizationType
+        type: enum
+        label: "Partner Organization Type"
+        description: >
+          The category of organization the partner represents.
+          Visible only when accountType has Partner. Value list
+          deferred to CBM input — see EXCEPTIONS.md CR-Y9-EXC-003.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+        options:
+          - "Community Organization"
+          - "Nonprofit"
+          - "Government Agency"
+          - "Academic Institution"
+          - "Financial Institution"
+          - "Corporation"
+          - "Other"
+
+      - name: partnerType
+        type: multiEnum
+        label: "Partner Type"
+        description: >
+          The nature of the partnership with CBM. A partner may
+          hold more than one type simultaneously — for example,
+          an organization that both refers clients and co-delivers
+          programs. Value list straw-man — see EXCEPTIONS.md
+          CR-Y9-EXC-003. Visible only when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+        options:
+          - "Client Referral"
+          - "Mentor Source"
+          - "Co-Sponsor"
+          - "Joint Marketing"
+          - "Funder"
+          - "Other"
+
+      - name: partnerStatus
+        type: enum
+        label: "Partner Status"
+        description: >
+          The current stage of the partner relationship. Set to
+          Prospect at Account creation in CR-PARTNER-PROSPECT.
+          Transitions to Active on activation per
+          CR-PARTNER-PROSPECT-REQ-007. Lifecycle managed by
+          CR-PARTNER-MANAGE per the transition matrix in
+          CR-PARTNER-MANAGE-REQ-012. Audited per
+          Account Entity PRD v1.8 Implementation. Visible only
+          when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        audited: true
+        default: "Prospect"
+        options:
+          - "Prospect"
+          - "Active"
+          - "Lapsed"
+          - "Inactive"
+        style:
+          "Prospect": "default"
+          "Active": "success"
+          "Lapsed": "warning"
+          "Inactive": "default"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      - name: partnershipStartDate
+        type: date
+        label: "Partnership Start Date"
+        description: >
+          The date the partnership was formally established.
+          Optional for Prospect accounts, expected when status
+          transitions to Active per CR-PARTNER-PROSPECT-REQ-007.
+          Visible only when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        requiredWhen:
+          all:
+            - { field: accountType,   op: contains, value: "Partner" }
+            - { field: partnerStatus, op: equals,   value: "Active" }
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      - name: publicAnnouncementAllowed
+        type: bool
+        label: "Public Announcement Allowed"
+        description: >
+          Whether CBM may publicly reference this partnership in
+          its marketing and communications. Updated per
+          CR-PARTNER-MANAGE-REQ-016. Visible only when accountType
+          has Partner.
+        category: "Partner Profile"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      - name: targetPopulation
+        type: text
+        label: "Target Population"
+        description: >
+          The specific population or business segment the partner
+          focuses on (e.g., minority-owned businesses, women
+          entrepreneurs, underserved communities). Free text per
+          Account Entity PRD v1.8 Section 3.5. Visible only when
+          accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      - name: partnerNotes
+        type: wysiwyg
+        label: "Partner Notes"
+        description: >
+          Rich text notes on the partner relationship, key
+          milestones, and relevant context. Used as a rolling
+          status summary per CR-PARTNER-MANAGE Section 4.2.
+          Restricted to Partner Coordinator and above per
+          CR-PARTNER-PROSPECT-REQ-008 — field-level access
+          control configured post-deployment per MANUAL-CONFIG.md
+          CR-MC-AC-001. Visible only when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      # Note: assignedLiaison is declared in the relationships:
+      # block as the accountAssignedLiaison link on the Account
+      # side. The link target is Contact (Member contactType per
+      # CR-PARTNER-PROSPECT). type: link is not a valid field
+      # type per schema rule.
+
+    duplicateChecks:
+
+      - id: account-website
+        fields: [website]
+        normalize:
+          website: lowercase-trim
+        onMatch: warn
+        message: >
+          An Account with this website URL already exists.
+          Verify whether this is a duplicate or a related
+          organization before proceeding. CR-MARKETING-CONTACTS
+          Account precedence ladder relies on website match to
+          de-duplicate.
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Identification"
+            description: >
+              Account discriminator and shared identity fields.
+              Source: Account Entity PRD v1.8 Sections 3.1, 3.2.
+            tabs:
+              - label: "Identification"
+                category: "Identification"
+
+          - label: "Client Profile"
+            description: >
+              Client-relationship lifecycle fields. Visible only
+              when accountType has Client. Source: Account Entity
+              PRD v1.8 Section 3.5 (clientStatus,
+              applicantSinceTimestamp).
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Client Profile"
+                category: "Client Profile"
+
+          - label: "Partner Profile"
+            description: >
+              Partner-specific fields. Visible only when
+              accountType has Partner. Source: Account Entity PRD
+              v1.8 Section 3.5.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Partner" }
+            tabs:
+              - label: "Partner Profile"
+                category: "Partner Profile"
+
+# ---------------------------------------------------------------
+# Relationships
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: accountParent
+    description: >
+      Self-referential link to another Account record that is the
+      parent organization. Supports organizational hierarchies
+      such as branches, chapters, subsidiaries, or franchise
+      relationships. Originally defined for Partner organizations
+      but applicable to all account types. Both parent and child
+      are independent records with their own profiles. See
+      Account Entity PRD v1.8 Section 3.2.
+    entity: Account
+    entityForeign: Account
+    linkType: manyToOne
+    link: parentAccount
+    linkForeign: childAccounts
+    label: "Parent Account"
+    labelForeign: "Child Accounts"
+    audited: false
+
+  - name: accountAssignedLiaison
+    description: >
+      Custom link from a Partner Account to the Contact (typically
+      a CBM Member) who serves as the assigned liaison for that
+      partnership. Required when partnerStatus is Active per
+      CR-PARTNER-PROSPECT-REQ-007. Many Accounts may share a
+      liaison; each Account has at most one liaison. Source:
+      CR-PARTNER-PROSPECT-DAT-013 and Account Entity PRD v1.8
+      Section 3.5.
+    entity: Account
+    entityForeign: Contact
+    linkType: manyToOne
+    link: assignedLiaison
+    linkForeign: liaisonForPartnerAccounts
+    label: "Assigned Liaison"
+    labelForeign: "Liaison for Partner Accounts"
+    audited: false

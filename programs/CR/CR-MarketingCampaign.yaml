@@ -1,0 +1,389 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Marketing Campaign custom
+  entity definition and the Campaign → Segment and Campaign →
+  Campaign Group relationships. 14 custom fields. Single-domain
+  custom entity owned by the CR-MARKETING and CR-REACTIVATE
+  sub-domains. The unified five-value status lifecycle (Draft,
+  Scheduled, Sent, Complete, Cancelled per CR-RECON-DEC-001)
+  applies across both sub-domains; the channel field includes
+  Reactivation per CR-REACTIVATE SDO. Aggregate metric fields are
+  expressed as v1.1 aggregate formulas counting Campaign
+  Engagement records.
+
+# Source: Marketing Campaign Entity PRD v1.0,
+#         CR-MARKETING-CAMPAIGNS v1.0, CR-REACTIVATE-OUTREACH
+#         v1.0, CR Domain PRD v1.2 Section 3.2.2 / 3.4.1.
+
+entities:
+
+  MarketingCampaign:
+    description: >
+      A single outbound marketing or reactivation send to a
+      target Segment. CRM-side placeholder; content authoring and
+      execution happen in the external marketing platform (for
+      Email/SMS) or via CRM-native workflow (for Reactivation).
+      Engagement events flow back from the marketing platform
+      and are recorded as Campaign Engagement records, which
+      drive the aggregate metric formulas below. Status lifecycle
+      is unified across all three channels per CR-RECON-DEC-001.
+      Cancelled is permitted only from Draft or Scheduled per
+      CR-MARKETING-CAMPAIGNS Section 4.9.
+      campaignName auto-populates name via concat formula.
+      See Marketing Campaign Entity PRD v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Marketing Campaign"
+      labelPlural: "Marketing Campaigns"
+      stream: false
+      disabled: false
+      autoPlaceName: false
+
+    fields:
+
+      # Auto-derived name from campaignName
+      - name: name
+        type: varchar
+        label: "Name"
+        description: >
+          Auto-populated from campaignName via concat formula per
+          Marketing Campaign Entity PRD Implementation Note 1.
+          Read-only.
+        category: "Identity"
+        readOnly: true
+        formula:
+          type: concat
+          parts:
+            - { field: campaignName }
+
+      # --- Section 3.1 — Campaign Identity ---
+
+      - name: campaignName
+        type: varchar
+        label: "Campaign Name"
+        description: >
+          Human-readable label for the campaign. Set at creation.
+          See PRD CR-MARKETING-CAMPAIGNS-DAT-023.
+        category: "Identity"
+        required: true
+
+      - name: channel
+        type: enum
+        label: "Channel"
+        description: >
+          The delivery channel. Set by the Client Recruiter at
+          creation for Email and SMS; system-set to Reactivation
+          for all Campaigns created through the reactivation
+          workflow. Three-value enum expanded from the original
+          two values per CR-REACTIVATE SDO. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-024.
+        category: "Identity"
+        required: true
+        options:
+          - "Email"
+          - "SMS"
+          - "Reactivation"
+        style:
+          "Email": "primary"
+          "SMS": "info"
+          "Reactivation": "success"
+
+      - name: population
+        type: enum
+        label: "Population"
+        description: >
+          Applicable when channel = Reactivation. System-set from
+          the originating saved list when the Campaign is created
+          through the reactivation workflow. Enables the
+          Reactivation Campaign Performance report to group by
+          population. Visible only when channel = Reactivation.
+          See PRD CR-REACTIVATE-OUTREACH-DAT-028.
+        category: "Identity"
+        required: false
+        readOnly: true
+        visibleWhen:
+          - { field: channel, op: equals, value: "Reactivation" }
+        options:
+          - "Former Client"
+          - "Event Attendee"
+          - "Inactive Prospect"
+
+      # --- Section 3.2 — Planning and Scheduling ---
+
+      - name: plannedSendDate
+        type: date
+        label: "Planned Send Date"
+        description: >
+          When the Client Recruiter plans to send this campaign.
+          Set at creation. See PRD CR-MARKETING-CAMPAIGNS-DAT-026.
+        category: "Planning and Scheduling"
+        required: true
+
+      - name: actualSendDate
+        type: datetime
+        label: "Actual Send Date"
+        description: >
+          When the campaign was actually sent. Populated on the
+          Sent transition — from the marketing platform's send
+          confirmation in automatic mode, or entered by the Client
+          Recruiter in manual mode. Email/SMS channels only. See
+          PRD CR-MARKETING-CAMPAIGNS-DAT-027.
+        category: "Planning and Scheduling"
+        required: false
+        externallyPopulated: true
+
+      - name: sendDate
+        type: datetime
+        label: "Send Date (Reactivation)"
+        description: >
+          Timestamp of Campaign dispatch for reactivation sends.
+          System-populated at send time. Applicable when channel
+          = Reactivation (single-action create-and-send workflow).
+          Visible only when channel = Reactivation. See PRD
+          CR-REACTIVATE-OUTREACH-DAT-030.
+        category: "Planning and Scheduling"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+        visibleWhen:
+          - { field: channel, op: equals, value: "Reactivation" }
+
+      # --- Section 3.3 — Status and Organization ---
+
+      - name: status
+        type: enum
+        label: "Status"
+        description: >
+          Campaign lifecycle status. Unified five-value lifecycle
+          for all channels per CR-RECON-DEC-001. Valid transitions:
+          Draft → Scheduled, Scheduled → Sent, Sent → Complete,
+          Draft → Cancelled, Scheduled → Cancelled. No backward
+          transitions. Transition enforcement via post-deployment
+          workflow per MANUAL-CONFIG.md CR-MC-AA-011. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-029.
+        category: "Status and Organization"
+        required: true
+        audited: true
+        default: "Draft"
+        options:
+          - "Draft"
+          - "Scheduled"
+          - "Sent"
+          - "Complete"
+          - "Cancelled"
+        style:
+          "Draft": "default"
+          "Scheduled": "info"
+          "Sent": "warning"
+          "Complete": "success"
+          "Cancelled": "danger"
+
+      - name: externalCampaignId
+        type: varchar
+        label: "External Campaign ID"
+        description: >
+          The marketing platform's campaign identifier. Links the
+          CRM Campaign record to its platform counterpart for
+          engagement data matching. Populated manually or
+          automatically. Not applicable for Reactivation channel
+          (CRM-native sends). See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-030.
+        category: "Status and Organization"
+        required: false
+        visibleWhen:
+          - { field: channel, op: in, value: ["Email", "SMS"] }
+
+      - name: campaignNotes
+        type: wysiwyg
+        label: "Campaign Notes"
+        description: >
+          Free-text commentary: campaign purpose, partner
+          coordination context, lessons learned, or any other
+          notes. Editable at any point in the lifecycle. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-031.
+        category: "Status and Organization"
+        required: false
+
+      # --- Section 3.4 — Aggregate Metrics ---
+
+      - name: totalRecipients
+        type: int
+        label: "Total Recipients"
+        description: >
+          Count of Campaign Engagement records for this Campaign.
+          Aggregate roll-up via the campaign link. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-032.
+        category: "Aggregate Metrics"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: campaign
+
+      - name: totalSent
+        type: int
+        label: "Total Sent"
+        description: >
+          Count of Campaign Engagement records where sent = true.
+          See PRD CR-MARKETING-CAMPAIGNS-DAT-033.
+        category: "Aggregate Metrics"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: campaign
+          where:
+            - { field: sent, op: equals, value: true }
+
+      - name: totalOpened
+        type: int
+        label: "Total Opened"
+        description: >
+          Count of Campaign Engagement records where opened = true.
+          See PRD CR-MARKETING-CAMPAIGNS-DAT-034.
+        category: "Aggregate Metrics"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: campaign
+          where:
+            - { field: opened, op: equals, value: true }
+
+      - name: totalClicked
+        type: int
+        label: "Total Clicked"
+        description: >
+          Count of Campaign Engagement records where clicked = true.
+          See PRD CR-MARKETING-CAMPAIGNS-DAT-035.
+        category: "Aggregate Metrics"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: campaign
+          where:
+            - { field: clicked, op: equals, value: true }
+
+      - name: totalBounced
+        type: int
+        label: "Total Bounced"
+        description: >
+          Count of Campaign Engagement records where bounced =
+          true. See PRD CR-MARKETING-CAMPAIGNS-DAT-036.
+        category: "Aggregate Metrics"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: campaign
+          where:
+            - { field: bounced, op: equals, value: true }
+
+      - name: totalUnsubscribed
+        type: int
+        label: "Total Unsubscribed"
+        description: >
+          Count of Campaign Engagement records where
+          unsubscribed = true. Reactivation Campaigns will
+          typically show zero (Reactivation does not populate
+          unsubscribed per CR-RECON-DEC-002). See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-037.
+        category: "Aggregate Metrics"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: campaign
+          where:
+            - { field: unsubscribed, op: equals, value: true }
+
+    layout:
+
+      detail:
+        panels:
+          - label: "Identity"
+            tabs:
+              - label: "Identity"
+                category: "Identity"
+          - label: "Planning and Scheduling"
+            tabs:
+              - label: "Planning and Scheduling"
+                category: "Planning and Scheduling"
+          - label: "Status and Organization"
+            tabs:
+              - label: "Status and Organization"
+                category: "Status and Organization"
+          - label: "Aggregate Metrics"
+            tabs:
+              - label: "Aggregate Metrics"
+                category: "Aggregate Metrics"
+
+      list:
+        columns:
+          - field: campaignName
+            width: 28
+          - field: channel
+            width: 12
+          - field: status
+            width: 12
+          - field: plannedSendDate
+            width: 14
+          - field: totalRecipients
+            width: 12
+          - field: totalOpened
+            width: 12
+
+# ---------------------------------------------------------------
+# Relationships
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: marketingCampaignSegment
+    description: >
+      Links each Marketing Campaign to its target Segment. Set at
+      creation. A Segment may be targeted by many Campaigns. See
+      PRD CR-MARKETING-CAMPAIGNS-DAT-025.
+    entity: MarketingCampaign
+    entityForeign: Segment
+    linkType: manyToOne
+    link: targetSegment
+    linkForeign: campaigns
+    label: "Target Segment"
+    labelForeign: "Campaigns"
+    audited: false
+
+  - name: marketingCampaignGroup
+    description: >
+      Optional link from Marketing Campaign to Campaign Group for
+      coordinated multi-touch efforts. May be set at creation or
+      added retroactively. See PRD CR-MARKETING-CAMPAIGNS-DAT-028.
+    entity: MarketingCampaign
+    entityForeign: CampaignGroup
+    linkType: manyToOne
+    link: campaignGroup
+    linkForeign: campaigns
+    label: "Campaign Group"
+    labelForeign: "Campaigns"
+    audited: false

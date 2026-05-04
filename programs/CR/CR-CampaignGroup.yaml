@@ -1,0 +1,117 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Campaign Group custom entity
+  definition. 4 simple fields. Lightweight organizational
+  container for coordinated multi-touch Marketing Campaign
+  efforts. No independent status; aggregate metrics roll up from
+  child Campaigns and live on the Campaigns themselves rather
+  than on Campaign Group. Single-domain entity owned by
+  CR-MARKETING.
+
+# Source: Campaign Group Entity PRD v1.0,
+#         CR-MARKETING-CAMPAIGNS v1.0.
+
+entities:
+
+  CampaignGroup:
+    description: >
+      Lightweight organizational container for coordinated
+      multi-touch Campaign efforts (e.g., "Spring 2026
+      Awareness Push" spanning three emails and an SMS reminder).
+      No independent status and no metrics of its own beyond what
+      rolls up from its child Campaigns. Optional — standalone
+      campaigns are not part of any Campaign Group. groupName
+      auto-populates name via concat formula.
+      See Campaign Group Entity PRD v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Campaign Group"
+      labelPlural: "Campaign Groups"
+      stream: false
+      disabled: false
+      autoPlaceName: false
+
+    fields:
+
+      - name: name
+        type: varchar
+        label: "Name"
+        description: >
+          Auto-populated from groupName via concat formula per
+          Campaign Group Entity PRD Implementation Note 1.
+          Read-only.
+        category: "Group Definition"
+        readOnly: true
+        formula:
+          type: concat
+          parts:
+            - { field: groupName }
+
+      - name: groupName
+        type: varchar
+        label: "Group Name"
+        description: >
+          Human-readable label for the coordinated effort. Set by
+          the Client Recruiter at creation. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-038.
+        category: "Group Definition"
+        required: true
+
+      - name: description
+        type: text
+        label: "Description"
+        description: >
+          Free-text explanation of the coordinated effort's goal.
+          See PRD CR-MARKETING-CAMPAIGNS-DAT-039.
+        category: "Group Definition"
+        required: false
+
+      - name: startDate
+        type: date
+        label: "Start Date"
+        description: >
+          When the coordinated effort begins. Informational only —
+          no system behavior is driven by this date. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-040.
+        category: "Group Definition"
+        required: false
+
+      - name: endDate
+        type: date
+        label: "End Date"
+        description: >
+          When the coordinated effort wraps up. Informational
+          only. See PRD CR-MARKETING-CAMPAIGNS-DAT-041.
+        category: "Group Definition"
+        required: false
+
+    layout:
+
+      detail:
+        panels:
+          - label: "Group Definition"
+            description: >
+              All Campaign Group fields. Source: Campaign Group
+              Entity PRD v1.0 (single panel).
+            tabs:
+              - label: "Group Definition"
+                category: "Group Definition"
+
+      list:
+        columns:
+          - field: groupName
+            width: 32
+          - field: startDate
+            width: 16
+          - field: endDate
+            width: 16
+          - field: description
+            width: 36
+
+# Note: Campaigns → Campaign Group relationship is declared on the
+# Marketing Campaign side in CR-MarketingCampaign.yaml as
+# marketingCampaignGroup (link: campaignGroup, linkForeign:
+# campaigns). The reverse side surfaces here automatically via
+# the linkForeign value.

@@ -1,0 +1,233 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Campaign Engagement custom
+  entity definition and the Campaign Engagement → Marketing
+  Campaign and Campaign Engagement → Contact relationships. 12
+  custom fields organized as 5 paired (bool + datetime) event-
+  type fields per CR-RECON-DEC-002 unified field set, plus the
+  two link fields. Single-domain entity owned by CR-MARKETING and
+  CR-REACTIVATE. Per-recipient engagement tracking with first-
+  occurrence-only semantics.
+
+# Source: Campaign Engagement Entity PRD v1.0,
+#         CR-MARKETING-CAMPAIGNS v1.0, CR-REACTIVATE-OUTREACH v1.0.
+
+entities:
+
+  CampaignEngagement:
+    description: >
+      One Contact's engagement with one Marketing Campaign. One
+      Campaign Engagement record per Contact per Campaign.
+      Created and updated by post-deployment automation as
+      engagement events flow back from the marketing platform per
+      Campaign Engagement Entity PRD Implementation Note 3.
+      Each event type records the first occurrence only —
+      subsequent opens, clicks, and bounces do not update the
+      existing record. Drives Marketing Campaign aggregate metric
+      formulas (totalSent, totalOpened, totalClicked,
+      totalBounced, totalUnsubscribed, totalRecipients) and
+      Contact marketing roll-up formulas (totalCampaignsSent,
+      totalOpens, totalClicks, lastMarketingEngagement). Auto-
+      generated name format ({Contact Name} — {Campaign Name})
+      via post-deployment automation per MANUAL-CONFIG.md
+      CR-MC-AA-012. See Campaign Engagement Entity PRD v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Campaign Engagement"
+      labelPlural: "Campaign Engagements"
+      stream: false
+      disabled: false
+
+    duplicateChecks:
+
+      - id: campaign-engagement-contact-campaign
+        fields: [contact, campaign]
+        onMatch: block
+        message: >
+          A Campaign Engagement record already exists for this
+          Contact-Campaign pair. Only one Campaign Engagement
+          per Contact per Campaign per Campaign Engagement
+          Entity PRD Section 3.1.
+
+    fields:
+
+      # Note: contact and campaign are declared in the
+      # relationships: block below.
+
+      # --- Section 3.2 — Engagement Event Fields ---
+
+      - name: sent
+        type: bool
+        label: "Sent"
+        description: >
+          Whether the message was delivered to this recipient.
+          Set to true at dispatch. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-044.
+        category: "Engagement Events"
+        required: false
+        default: false
+        externallyPopulated: true
+
+      - name: sentAt
+        type: datetime
+        label: "Sent At"
+        description: >
+          Timestamp of send. Set when the sent flag is set to
+          true. See PRD CR-MARKETING-CAMPAIGNS-DAT-045.
+        category: "Engagement Events"
+        required: false
+        externallyPopulated: true
+
+      - name: opened
+        type: bool
+        label: "Opened"
+        description: >
+          Whether the recipient opened the message. First open
+          only — subsequent opens do not update. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-046.
+        category: "Engagement Events"
+        required: false
+        default: false
+        externallyPopulated: true
+
+      - name: openedAt
+        type: datetime
+        label: "Opened At"
+        description: >
+          Timestamp of first open. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-047.
+        category: "Engagement Events"
+        required: false
+        externallyPopulated: true
+
+      - name: clicked
+        type: bool
+        label: "Clicked"
+        description: >
+          Whether the recipient clicked a tracked link. First
+          click only. See PRD CR-MARKETING-CAMPAIGNS-DAT-048.
+        category: "Engagement Events"
+        required: false
+        default: false
+        externallyPopulated: true
+
+      - name: clickedAt
+        type: datetime
+        label: "Clicked At"
+        description: >
+          Timestamp of first click. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-049.
+        category: "Engagement Events"
+        required: false
+        externallyPopulated: true
+
+      - name: bounced
+        type: bool
+        label: "Bounced"
+        description: >
+          Whether delivery bounced. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-050.
+        category: "Engagement Events"
+        required: false
+        default: false
+        externallyPopulated: true
+
+      - name: bouncedAt
+        type: datetime
+        label: "Bounced At"
+        description: >
+          Timestamp of bounce. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-051.
+        category: "Engagement Events"
+        required: false
+        externallyPopulated: true
+
+      - name: unsubscribed
+        type: bool
+        label: "Unsubscribed"
+        description: >
+          Whether the recipient unsubscribed as a result of this
+          campaign. Reactivation Campaigns do not populate this
+          field per CR-RECON-DEC-002. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-052.
+        category: "Engagement Events"
+        required: false
+        default: false
+        externallyPopulated: true
+
+      - name: unsubscribedAt
+        type: datetime
+        label: "Unsubscribed At"
+        description: >
+          Timestamp of unsubscribe. Reactivation Campaigns do not
+          populate this field. See PRD
+          CR-MARKETING-CAMPAIGNS-DAT-053.
+        category: "Engagement Events"
+        required: false
+        externallyPopulated: true
+
+    layout:
+
+      detail:
+        panels:
+          - label: "Engagement Events"
+            description: >
+              All five paired engagement event fields. Source:
+              Campaign Engagement Entity PRD v1.0 Section 3.2.
+            tabs:
+              - label: "Engagement Events"
+                category: "Engagement Events"
+
+      list:
+        columns:
+          - field: name
+            width: 30
+          - field: sentAt
+            width: 16
+          - field: openedAt
+            width: 14
+          - field: clickedAt
+            width: 14
+          - field: bouncedAt
+            width: 14
+
+# ---------------------------------------------------------------
+# Relationships
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: campaignEngagementContact
+    description: >
+      Each Campaign Engagement links to exactly one Contact. A
+      Contact may have many Campaign Engagement records across
+      different Campaigns. The Contact link is matched by email
+      address during engagement event ingestion per Campaign
+      Engagement Entity PRD Implementation Note 3. See PRD
+      CR-MARKETING-CAMPAIGNS-DAT-042.
+    entity: CampaignEngagement
+    entityForeign: Contact
+    linkType: manyToOne
+    link: contact
+    linkForeign: campaignEngagements
+    label: "Contact"
+    labelForeign: "Campaign Engagements"
+    audited: false
+
+  - name: campaignEngagementCampaign
+    description: >
+      Each Campaign Engagement belongs to exactly one Marketing
+      Campaign. The Campaign's detail view shows all per-recipient
+      engagement records. Aggregate metric fields on the Marketing
+      Campaign are formula-computed from these records. See PRD
+      CR-MARKETING-CAMPAIGNS-DAT-043.
+    entity: CampaignEngagement
+    entityForeign: MarketingCampaign
+    linkType: manyToOne
+    link: campaign
+    linkForeign: engagements
+    label: "Marketing Campaign"
+    labelForeign: "Campaign Engagements"
+    audited: false

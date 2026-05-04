@@ -1,0 +1,296 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Event Registration custom
+  entity definition and the Event Registration → Event and Event
+  Registration → Contact relationships. 9 custom fields. Single-
+  domain entity owned by CR-EVENTS sub-domain. Custom Base
+  entity (not Event type) per Event Registration Entity PRD
+  Implementation Note.
+
+# Source: Event Registration Entity PRD v1.0,
+#         CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0.
+
+entities:
+
+  EventRegistration:
+    description: >
+      One Contact's registration for one Event. Created via the
+      public registration form (Online) or the Add Walk-In action
+      on the Event detail view (Walk-In). Communication tracking
+      fields support idempotent confirmation, reminder, and
+      follow-up dispatch. Cancellation is staff-initiated.
+      Auto-generated name format ({Event Name} — {Contact Name})
+      via post-deployment automation — MANUAL-CONFIG.md
+      CR-MC-AA-008. See Event Registration Entity PRD v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Event Registration"
+      labelPlural: "Event Registrations"
+      stream: false
+      disabled: false
+
+    duplicateChecks:
+
+      - id: event-registration-event-contact
+        fields: [event, contact]
+        onMatch: block
+        message: >
+          This Contact is already registered for this Event.
+          Duplicate registrations are not allowed (Event Entity
+          PRD note on Event link).
+
+    fields:
+
+      # --- Section 3.1 — Core Registration Fields ---
+
+      - name: registrationDate
+        type: datetime
+        label: "Registration Date"
+        description: >
+          Date and time the registration was created. System-
+          populated. See PRD CR-EVENTS-MANAGE-DAT-036.
+        category: "Registration"
+        required: true
+        readOnly: true
+
+      - name: registrationSource
+        type: enum
+        label: "Registration Source"
+        description: >
+          Pathway through which the registration was created.
+          Online by the public form; Walk-In by the Add Walk-In
+          action on the Event detail view. Walk-In registrations
+          do not trigger a confirmation email. Set at creation,
+          read-only thereafter. See PRD CR-EVENTS-MANAGE-DAT-037.
+        category: "Registration"
+        required: true
+        readOnly: true
+        default: "Online"
+        options:
+          - "Online"
+          - "Walk-In"
+
+      - name: attendanceStatus
+        type: enum
+        label: "Attendance Status"
+        description: >
+          Attendance state of this registration. Defaults to
+          Registered for Online; defaults to Attended for
+          Walk-In. Updated by the Content and Event Administrator
+          via bulk-update actions during or after the event.
+          Cancellation sets this to Cancelled per EVREG-DEC-001.
+          See PRD CR-EVENTS-MANAGE-DAT-038.
+        category: "Registration"
+        required: true
+        audited: true
+        default: "Registered"
+        options:
+          - "Registered"
+          - "Attended"
+          - "No-Show"
+          - "Cancelled"
+        style:
+          "Registered": "info"
+          "Attended": "success"
+          "No-Show": "warning"
+          "Cancelled": "default"
+
+      # Note: event and contact are declared in the
+      # relationships: block below.
+
+      # --- Section 3.2 — Registrant Details ---
+
+      - name: specialRequests
+        type: text
+        label: "Special Requests"
+        description: >
+          Free-text field capturing dietary restrictions,
+          accessibility needs, or other per-event requests
+          submitted by the registrant. See PRD
+          CR-EVENTS-MANAGE-DAT-039.
+        category: "Registrant Details"
+        required: false
+
+      # --- Section 3.3 — Communication Tracking ---
+
+      - name: confirmationSentAt
+        type: datetime
+        label: "Confirmation Sent"
+        description: >
+          Timestamp the confirmation email was sent. System-
+          populated by post-deployment automation per
+          MANUAL-CONFIG.md CR-MC-AA-009. Remains blank for
+          Walk-In registrations. Marked externallyPopulated.
+          See PRD CR-EVENTS-MANAGE-DAT-040.
+        category: "Communication Tracking"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+
+      - name: remindersSent
+        type: multiEnum
+        label: "Reminders Sent"
+        description: >
+          Records which reminder types have been sent for this
+          registration. Idempotency: a reminder type already
+          present is not sent again. Available reminder types
+          vary by Event format (In-Person: 7-day and 1-day;
+          Virtual: 1-day and 1-hour; Hybrid: all three).
+          System-populated by post-deployment automation per
+          MANUAL-CONFIG.md CR-MC-AA-010. See PRD
+          CR-EVENTS-MANAGE-DAT-041.
+        category: "Communication Tracking"
+        required: false
+        externallyPopulated: true
+        options:
+          - "7-day"
+          - "1-day"
+          - "1-hour"
+
+      - name: lastCommunicationBouncedAt
+        type: datetime
+        label: "Last Communication Bounced"
+        description: >
+          Timestamp of the most recent hard bounce of any event
+          communication to this registration. System-populated by
+          the bounce-handling pathway. Does not suppress future
+          sends automatically (pending CR-MARKETING-ISS-004
+          resolution — see EXCEPTIONS.md CR-Y9-EXC-005). See PRD
+          CR-EVENTS-MANAGE-DAT-042.
+        category: "Communication Tracking"
+        required: false
+        externallyPopulated: true
+
+      - name: postEventFollowUpSentAt
+        type: datetime
+        label: "Post-Event Follow-Up Sent"
+        description: >
+          System-populated timestamp indicating that a post-event
+          follow-up email has been dispatched. Idempotency check
+          before dispatch. Remains blank for Cancelled
+          registrations and registrations that were still at
+          Registered status. See PRD CR-EVENTS-CONVERT-DAT-023.
+        category: "Communication Tracking"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+
+      # --- Section 3.4 — Cancellation ---
+
+      - name: cancellationDate
+        type: datetime
+        label: "Cancellation Date"
+        description: >
+          System-populated when attendanceStatus is set to
+          Cancelled per EVREG-DEC-001. Visible only when
+          attendanceStatus = Cancelled. See PRD
+          CR-EVENTS-MANAGE-DAT-043.
+        category: "Cancellation"
+        required: false
+        readOnly: true
+        visibleWhen:
+          - { field: attendanceStatus, op: equals, value: "Cancelled" }
+
+      - name: cancellationReason
+        type: text
+        label: "Cancellation Reason"
+        description: >
+          Optional free-text reason for cancellation. Captured by
+          the Content and Event Administrator. Visible only when
+          attendanceStatus = Cancelled. See PRD
+          CR-EVENTS-MANAGE-DAT-044.
+        category: "Cancellation"
+        required: false
+        visibleWhen:
+          - { field: attendanceStatus, op: equals, value: "Cancelled" }
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Registration"
+            description: >
+              Core registration identity and state. Source: Event
+              Registration Entity PRD v1.0 Section 3.1.
+            tabs:
+              - label: "Registration"
+                category: "Registration"
+
+          - label: "Registrant Details"
+            description: >
+              Per-event details submitted by the registrant.
+              Source: Event Registration Entity PRD v1.0
+              Section 3.2.
+            tabs:
+              - label: "Registrant Details"
+                category: "Registrant Details"
+
+          - label: "Communication Tracking"
+            description: >
+              Idempotent communication tracking. Source: Event
+              Registration Entity PRD v1.0 Section 3.3.
+            tabs:
+              - label: "Communication Tracking"
+                category: "Communication Tracking"
+
+          - label: "Cancellation"
+            description: >
+              Cancellation date and reason. Visible only when
+              attendanceStatus = Cancelled. Source: Event
+              Registration Entity PRD v1.0 Section 3.4.
+            visibleWhen:
+              - { field: attendanceStatus, op: equals, value: "Cancelled" }
+            tabs:
+              - label: "Cancellation"
+                category: "Cancellation"
+
+      list:
+        columns:
+          - field: name
+            width: 28
+          - field: attendanceStatus
+            width: 14
+          - field: registrationSource
+            width: 12
+          - field: registrationDate
+            width: 16
+          - field: confirmationSentAt
+            width: 16
+
+# ---------------------------------------------------------------
+# Relationships
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: eventRegistrationEvent
+    description: >
+      Each Event Registration belongs to exactly one Event. Set
+      at creation and not changed thereafter. See PRD
+      CR-EVENTS-MANAGE-DAT-034.
+    entity: EventRegistration
+    entityForeign: Event
+    linkType: manyToOne
+    link: event
+    linkForeign: registrations
+    label: "Event"
+    labelForeign: "Registrations"
+    audited: false
+
+  - name: eventRegistrationContact
+    description: >
+      Each Event Registration links to exactly one Contact (the
+      registrant). May be a newly-created Contact (from the
+      registration form or walk-in action) or an existing Contact
+      matched by email. See PRD CR-EVENTS-MANAGE-DAT-035.
+    entity: EventRegistration
+    entityForeign: Contact
+    linkType: manyToOne
+    link: contact
+    linkForeign: eventRegistrations
+    label: "Contact"
+    labelForeign: "Event Registrations"
+    audited: false

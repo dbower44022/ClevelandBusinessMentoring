@@ -1,0 +1,158 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Partnership Agreement custom
+  entity definition and the Partnership Agreement → Account
+  relationship. Six custom fields (5 simple + 1 placeholder for
+  the file attachment). Single-domain entity owned exclusively by
+  the CR-PARTNER sub-domain. Activity stream disabled per
+  PA-DEC-005 (compact append-only document records).
+
+  The agreementDocument field is declared as varchar with a
+  description noting the post-deployment file-attachment
+  configuration — the YAML schema does not include a `file` /
+  `attachment` field type. See EXCEPTIONS.md CR-Y9-EXC-004 and
+  MANUAL-CONFIG.md CR-MC-SC-001.
+
+# Source: Partnership Agreement Entity PRD v1.0 (04-17-26 11:00),
+#         CR-PARTNER-PROSPECT v1.0, CR-PARTNER-MANAGE v1.0, CR
+#         Domain PRD v1.2 Section 3.1.
+
+entities:
+
+  PartnershipAgreement:
+    description: >
+      Tracks the terms, dates, and documents for formal
+      agreements between CBM and partner organizations. Single-
+      domain entity owned by the CR-PARTNER sub-domain. Append-
+      only — renewals create a new record, preserving the prior
+      record per PA-DEC-003. Auto-generated name format
+      ({Partner Account Name} — {Agreement Type} — {Creation Date})
+      is implemented via post-deployment automation per PA Note 1
+      (MANUAL-CONFIG.md CR-MC-AA-004). See Partnership Agreement
+      Entity PRD v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Partnership Agreement"
+      labelPlural: "Partnership Agreements"
+      stream: false
+      disabled: false
+
+    fields:
+
+      - name: agreementType
+        type: enum
+        label: "Agreement Type"
+        description: >
+          Type of formal agreement. May differ on a renewal record
+          if the partnership terms have evolved per PA-DEC-003.
+          See PRD CR-PARTNER-PROSPECT-DAT-019.
+        category: "Agreement"
+        required: true
+        options:
+          - "MOU"
+          - "Partnership Agreement"
+          - "Letter of Intent"
+          - "Other"
+
+      - name: creationDate
+        type: date
+        label: "Creation Date"
+        description: >
+          Date the agreement was created or signed. For renewal
+          records, this is the date the renewed agreement was
+          signed, not the date of the original. See PRD
+          CR-PARTNER-PROSPECT-DAT-020.
+        category: "Agreement"
+        required: true
+
+      - name: expirationRenewalDate
+        type: date
+        label: "Expiration / Renewal Date"
+        description: >
+          Date the agreement expires or is due for renewal. Drives
+          the email notification mechanism per PA-DEC-004:
+          notifications are sent to the Partner Coordinator at 60
+          days and 30 days before this date. Implemented via
+          post-deployment automation per MANUAL-CONFIG.md
+          CR-MC-AA-005. See PRD CR-PARTNER-PROSPECT-DAT-021.
+        category: "Agreement"
+        required: false
+
+      - name: agreementDocument
+        type: varchar
+        label: "Agreement Document"
+        description: >
+          The signed agreement document. Schema gap — the YAML
+          schema does not include a file / attachment field type.
+          Post-deployment, this field should be reconfigured as
+          an EspoCRM File or Attachment-Multiple type via the
+          admin UI. Restricted to Partner Coordinator and
+          Executive Member access per PA-DEC-002. See
+          EXCEPTIONS.md CR-Y9-EXC-004 and MANUAL-CONFIG.md
+          CR-MC-SC-001 / CR-MC-AC-002. See PRD
+          CR-PARTNER-PROSPECT-DAT-022.
+        category: "Agreement"
+        required: false
+
+      - name: notes
+        type: wysiwyg
+        label: "Notes"
+        description: >
+          Relevant notes about the agreement. For renewal records,
+          may include reference to the prior agreement record.
+          See PRD CR-PARTNER-PROSPECT-DAT-023.
+        category: "Agreement"
+        required: false
+
+      # Note: partnerOrganization is declared in the
+      # relationships: block below as the
+      # partnershipAgreementPartner link. type: link is not a
+      # valid field type per schema rule.
+
+    layout:
+
+      detail:
+        panels:
+          - label: "Agreement"
+            description: >
+              All fields. Source: Partnership Agreement Entity
+              PRD v1.0 Section 6 (single panel).
+            tabs:
+              - label: "Agreement"
+                category: "Agreement"
+
+      list:
+        columns:
+          - field: name
+            width: 32
+          - field: agreementType
+            width: 18
+          - field: creationDate
+            width: 16
+          - field: expirationRenewalDate
+            width: 16
+
+# ---------------------------------------------------------------
+# Relationship — Partnership Agreement → Account
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: partnershipAgreementPartner
+    description: >
+      Links each Partnership Agreement to its partner Account.
+      Many Partnership Agreements per Account (initial agreement
+      plus all subsequent renewals — append-only per PA-DEC-003).
+      Account must have accountType including Partner; not
+      enforced at relationship level (operational discipline). See
+      PRD CR-PARTNER-PROSPECT-DAT-018.
+    entity: PartnershipAgreement
+    entityForeign: Account
+    linkType: manyToOne
+    link: partnerOrganization
+    linkForeign: partnershipAgreements
+    label: "Partner Organization"
+    labelForeign: "Partnership Agreements"
+    audited: false

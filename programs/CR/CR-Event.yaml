@@ -1,0 +1,262 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Event custom entity definition.
+  Uses the Event entity type, so dateStart, dateEnd, status, name,
+  description, and parent are inherited natives. The native status
+  field requires CBM-specific 6-value list (Draft, Scheduled, In
+  Progress, Completed, Cancelled, Postponed) — schema gap on
+  native option overrides, surfaced in MANUAL-CONFIG.md
+  CR-MC-SC-002. 6 custom fields plus 3 relationships
+  (Presenters → Contact, Co-Sponsoring Partners → Account,
+  reverse Event Registration relationship is on the
+  EventRegistration entity).
+
+  Naming note: the entity is named "Event" but the entity TYPE is
+  also "Event" — EVT-ISS-001 flags potential platform-side naming
+  ambiguity. Best-effort decision: keep name as Event (matches
+  PRD) and document as MANUAL-CONFIG entry if the deploy engine
+  needs an alternate display label.
+
+# Source: Event Entity PRD v1.0, CR-EVENTS-MANAGE v1.0,
+#         CR-EVENTS-CONVERT v1.0, CR Domain PRD v1.2 Section 3.3.
+
+entities:
+
+  Event:
+    description: >
+      A workshop, presentation, networking event, or other
+      direct touchpoint with the business community. Single-
+      domain custom entity owned exclusively by the CR-EVENTS
+      sub-domain. Format-driven dynamic logic (In-Person /
+      Virtual / Hybrid) controls visibility of location,
+      virtualMeetingUrl, and recordingUrl. Status lifecycle (6
+      values) governs Draft → Scheduled validation, registration
+      eligibility, and reminder scheduling. Workflow-validated
+      conditional requireds at status transitions are surfaced
+      in MANUAL-CONFIG.md (the v1.1 schema's requiredWhen
+      expresses field-state preconditions but not status-
+      transition validations). See Event Entity PRD v1.0.
+    action: create
+    type: Event
+    settings:
+      labelSingular: "Event"
+      labelPlural: "Events"
+      stream: true
+      disabled: false
+
+    fields:
+
+      # --- Section 3.1 — Event Classification ---
+
+      - name: format
+        type: enum
+        label: "Format"
+        description: >
+          The event delivery format. Drives dynamic logic
+          visibility on location, virtualMeetingUrl, and
+          recordingUrl. Hybrid is permitted but aspirational in
+          v1.0. See PRD CR-EVENTS-MANAGE-DAT-024 and EVT-DEC-004.
+        category: "Classification"
+        required: true
+        options:
+          - "In-Person"
+          - "Virtual"
+          - "Hybrid"
+
+      - name: topic
+        type: enum
+        label: "Topic"
+        description: >
+          The event topic. 10-value enum aligned with
+          Contact.presenterTopics (declared in CR-Contact.yaml).
+          Used for effectiveness reporting by topic and as a
+          secondary filter on the presenters picker. Required to
+          transition Draft → Scheduled (workflow-validated per
+          Event Entity PRD Implementation Note 3 — see
+          MANUAL-CONFIG.md CR-MC-CR-001). See PRD
+          CR-EVENTS-MANAGE-DAT-025.
+        category: "Classification"
+        required: false
+        options:
+          - "Business Fundamentals"
+          - "Marketing & Sales"
+          - "Finance & Accounting"
+          - "Legal & Compliance"
+          - "Operations"
+          - "Technology & Digital"
+          - "Leadership & People"
+          - "Industry-Specific"
+          - "Networking"
+          - "Other"
+
+      # --- Section 3.2 — Venue and Access ---
+
+      - name: venueCapacity
+        type: int
+        label: "Venue Capacity"
+        description: >
+          Planning and reporting value. Informational only per
+          EVT-DEC-009 — does not enforce a registration limit.
+          See PRD CR-EVENTS-MANAGE-DAT-026.
+        category: "Venue and Access"
+        required: false
+
+      - name: location
+        type: text
+        label: "Location"
+        description: >
+          Venue name and address. Visible when format is In-Person
+          or Hybrid per Event Entity PRD Section 5.1. See PRD
+          CR-EVENTS-MANAGE-DAT-027.
+        category: "Venue and Access"
+        required: false
+        visibleWhen:
+          - { field: format, op: in, value: ["In-Person", "Hybrid"] }
+
+      - name: virtualMeetingUrl
+        type: url
+        label: "Virtual Meeting URL"
+        description: >
+          Meeting platform URL. Visible when format is Virtual or
+          Hybrid per Event Entity PRD Section 5.1. See PRD
+          CR-EVENTS-MANAGE-DAT-028.
+        category: "Venue and Access"
+        required: false
+        visibleWhen:
+          - { field: format, op: in, value: ["Virtual", "Hybrid"] }
+
+      - name: registrationUrl
+        type: url
+        label: "Registration URL"
+        description: >
+          Public-facing URL for the registration form. System-
+          populated when the Event transitions Draft → Scheduled
+          per EVT-DEC-008 (post-deployment automation —
+          MANUAL-CONFIG.md CR-MC-AA-006). Marked
+          externallyPopulated. See PRD CR-EVENTS-MANAGE-DAT-029.
+        category: "Venue and Access"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+
+      - name: recordingUrl
+        type: url
+        label: "Recording URL"
+        description: >
+          Optional link to an externally hosted event recording.
+          Visible when format is Virtual or Hybrid. Recording and
+          publishing are out of scope; the field is a reference
+          only. See PRD CR-EVENTS-MANAGE-DAT-030.
+        category: "Venue and Access"
+        required: false
+        visibleWhen:
+          - { field: format, op: in, value: ["Virtual", "Hybrid"] }
+
+      # --- Section 3.4 — Attachments ---
+
+      - name: documents
+        type: varchar
+        label: "Documents"
+        description: >
+          Staff-only storage of event-related files (run-of-show,
+          logistics notes, agendas, slide decks). Schema gap — the
+          YAML schema does not include an attachment-multiple
+          field type. Post-deployment, this field should be
+          reconfigured as an EspoCRM Attachment-Multiple type via
+          the admin UI. Staff-only access. See EXCEPTIONS.md
+          CR-Y9-EXC-004 and MANUAL-CONFIG.md CR-MC-SC-001 /
+          CR-MC-AC-003. See PRD CR-EVENTS-MANAGE-DAT-033.
+        category: "Documents"
+        required: false
+
+      # Note: presenters and coSponsoringPartners are declared in
+      # the relationships: block below.
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Classification"
+            description: >
+              Format and topic. Source: Event Entity PRD v1.0
+              Section 3.1.
+            tabs:
+              - label: "Classification"
+                category: "Classification"
+
+          - label: "Venue and Access"
+            description: >
+              Format-driven location, virtual meeting URL,
+              registration URL, and recording URL. Source: Event
+              Entity PRD v1.0 Section 3.2.
+            tabs:
+              - label: "Venue and Access"
+                category: "Venue and Access"
+
+          - label: "Documents"
+            description: >
+              Staff-only event document storage. Source: Event
+              Entity PRD v1.0 Section 3.4.
+            tabs:
+              - label: "Documents"
+                category: "Documents"
+
+      list:
+        columns:
+          - field: name
+            width: 28
+          - field: status
+            width: 12
+          - field: format
+            width: 12
+          - field: topic
+            width: 16
+          - field: dateStart
+            width: 16
+          - field: venueCapacity
+            width: 10
+
+# ---------------------------------------------------------------
+# Relationships — Event ↔ Contact (Presenters), Event ↔ Account
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: eventPresenters
+    description: >
+      Many-to-many link from Event to Contact (Presenters).
+      Picker filters by contactType includes Presenter.
+      First-link side effect: appends "Presenter" to
+      Contact.contactType per EVT-DEC-005 — implemented via
+      post-deployment automation per MANUAL-CONFIG.md
+      CR-MC-AA-007. At least one presenter required at Scheduled
+      transition (workflow-validated). See PRD
+      CR-EVENTS-MANAGE-DAT-031.
+    entity: Event
+    entityForeign: Contact
+    linkType: manyToMany
+    link: presenters
+    linkForeign: presenterEvents
+    relationName: eventPresenters
+    label: "Presenters"
+    labelForeign: "Events (as Presenter)"
+    audited: false
+
+  - name: eventCoSponsoringPartners
+    description: >
+      Many-to-many link from Event to Account (Partner
+      organizations). Picker filters by accountType includes
+      Partner; no partnerStatus filter per EVT-DEC-006. Optional
+      throughout the Event lifecycle. See PRD
+      CR-EVENTS-MANAGE-DAT-032.
+    entity: Event
+    entityForeign: Account
+    linkType: manyToMany
+    link: coSponsoringPartners
+    linkForeign: coSponsoredEvents
+    relationName: eventCoSponsoringPartners
+    label: "Co-Sponsoring Partners"
+    labelForeign: "Co-Sponsored Events"
+    audited: false

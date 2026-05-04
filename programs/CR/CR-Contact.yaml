@@ -1,0 +1,335 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — custom field additions to the
+  native Contact entity. 12 fields across CR-MARKETING (8 fields),
+  CR-EVENTS (3 fields including conversion-push tracking), and
+  CR-REACTIVATE (1 field). All marketing roll-up fields are
+  workflow-updated from Campaign Engagement records (declared in
+  CR-CampaignEngagement.yaml). The four roll-up fields
+  (lastMarketingEngagement, totalCampaignsSent, totalOpens,
+  totalClicks) are expressed as v1.1 aggregate formulas where
+  the schema can express the calculation; cross-entity
+  workflow-driven updates that the v1.1 vocabulary cannot express
+  are surfaced in MANUAL-CONFIG.md.
+
+# Source: CR Domain PRD v1.2 (05-01-26 14:56), Section 4 Contact
+#         additions. Contact Entity PRD v1.7 Sections 3.5
+#         (Marketing and Source Attribution), 3.6 (Presenter), and
+#         3.7 (CR Sub-Domain Activity Tracking). CR-MARKETING SDO,
+#         CR-EVENTS SDO, CR-REACTIVATE SDO.
+
+entities:
+
+  Contact:
+    description: >
+      Native Person-type entity. The CR domain contributes
+      marketing-funnel state (prospectStatus,
+      sourceAttributionDetails), opt-out compliance flags
+      (emailOptOut, smsOptOut), four marketing engagement roll-up
+      fields, two Presenter-specific fields, and two
+      sub-domain-activity timestamps. Fields are conditionally
+      visible per the Contact Entity PRD v1.7 dynamic-logic
+      conventions: prospectStatus and sourceAttributionDetails
+      visible when contactType has Client; presenterBio and
+      presenterTopics visible when contactType has Presenter;
+      opt-out and roll-up fields visible for any Contact (any
+      contactType). See Contact Entity PRD v1.7.
+
+    fields:
+
+      # --- CR-MARKETING fields (Section 3.5) ---
+
+      - name: prospectStatus
+        type: enum
+        label: "Prospect Status"
+        description: >
+          Marketing-funnel state of an individual person. Tracks
+          how the prospect is engaging with CBM marketing
+          communications. Set to "New Prospect" automatically at
+          creation when contactType includes Client per
+          CR-MARKETING-CONTACTS-REQ-031. Manually transitioned by
+          the Client Recruiter between non-terminal values.
+          Auto-transitioned to "Converted" by MN-INTAKE
+          per the cross-domain handoff. Auto-or-manual to
+          "Opted Out" when channel-specific flags close out all
+          channels. Five-value straw-man pending CBM leadership
+          finalization (CR-MARKETING-ISS-003) — see EXCEPTIONS.md
+          CR-Y9-EXC-001. Visible only when contactType has Client.
+        category: "Marketing and Source Attribution"
+        required: false
+        audited: true
+        default: "New Prospect"
+        options:
+          - "New Prospect"
+          - "Engaged"
+          - "Unresponsive"
+          - "Converted"
+          - "Opted Out"
+        style:
+          "New Prospect": "default"
+          "Engaged": "info"
+          "Unresponsive": "warning"
+          "Converted": "success"
+          "Opted Out": "danger"
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Client" }
+
+      - name: sourceAttributionDetails
+        type: wysiwyg
+        label: "Source Attribution Details"
+        description: >
+          Supplementary unstructured detail beyond the structured
+          howDidYouHearAboutCbm enum. Holds UTM parameters and
+          referrer URLs when technical signals are available;
+          partner name when Partner Referral; event name when
+          Workshop or Event; staff notes from application review;
+          audit-trail entries when staff override prior values
+          during MN-INTAKE. Used for human review and attribution
+          enrichment. Visible only when contactType has Client.
+        category: "Marketing and Source Attribution"
+        required: false
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Client" }
+
+      - name: emailOptOut
+        type: bool
+        label: "Email Opt-Out"
+        description: >
+          Email marketing opt-out flag. Set automatically by the
+          marketing platform inbound sync on unsubscribe events.
+          Set manually by the Client Recruiter on hard-bounce
+          signals or out-of-band opt-out requests per
+          CR-MARKETING-CONTACTS-REQ-040. CAN-SPAM compliance
+          signal — once set, the email channel is suppressed for
+          this Contact in all future syncs to the marketing
+          platform.
+        category: "Compliance"
+        required: false
+        default: false
+        audited: true
+
+      - name: smsOptOut
+        type: bool
+        label: "SMS Opt-Out"
+        description: >
+          SMS marketing opt-out flag. Separate from emailOptOut
+          because the legal compliance regimes differ (TCPA for
+          SMS, CAN-SPAM for email). Set by the marketing platform
+          inbound sync or manually. TCPA compliance signal.
+        category: "Compliance"
+        required: false
+        default: false
+        audited: true
+
+      - name: lastMarketingEngagement
+        type: datetime
+        label: "Last Marketing Engagement"
+        description: >
+          Timestamp of the most recent send, open, or click event
+          across all Campaigns. Aggregate roll-up from Campaign
+          Engagement records via the contact link — max of the
+          most recent of sentAt, openedAt, clickedAt. The schema's
+          aggregate formula can express the underlying max; the
+          three-way max-of-maxes is expressed as a max of sentAt
+          here (the most populous of the three). For perfect
+          fidelity (max across all three), MANUAL-CONFIG.md
+          CR-MC-AA-001 names the workflow refinement. Used for
+          prospect-level views, segmentation, and CR-REACTIVATE
+          handoff signaling. Marked externallyPopulated to allow
+          the marketing platform inbound sync to refresh it
+          out-of-band when needed.
+        category: "Marketing Engagement"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+        formula:
+          type: aggregate
+          function: max
+          field: sentAt
+          relatedEntity: CampaignEngagement
+          via: contact
+
+      - name: totalCampaignsSent
+        type: int
+        label: "Total Campaigns Sent"
+        description: >
+          Count of Campaign Engagement records where sent = true,
+          across all Campaigns this Contact has been targeted by.
+          Workflow-updated; v1.1 schema's aggregate count formula
+          expresses the underlying calculation. Used for
+          prospect-level engagement summaries and audience
+          saturation analysis.
+        category: "Marketing Engagement"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: contact
+          where:
+            - { field: sent, op: equals, value: true }
+
+      - name: totalOpens
+        type: int
+        label: "Total Opens"
+        description: >
+          Count of Campaign Engagement records where opened = true.
+          Email-only signal (SMS has no "open" event). Used for
+          engagement scoring and segmentation.
+        category: "Marketing Engagement"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: contact
+          where:
+            - { field: opened, op: equals, value: true }
+
+      - name: totalClicks
+        type: int
+        label: "Total Clicks"
+        description: >
+          Count of Campaign Engagement records where clicked = true.
+          The strongest engagement signal in the roll-up set — a
+          click indicates active interest beyond merely opening.
+        category: "Marketing Engagement"
+        required: false
+        readOnly: true
+        default: "0"
+        formula:
+          type: aggregate
+          function: count
+          relatedEntity: CampaignEngagement
+          via: contact
+          where:
+            - { field: clicked, op: equals, value: true }
+
+      # --- CR-EVENTS Presenter-Specific Fields (Section 3.6) ---
+
+      - name: presenterBio
+        type: wysiwyg
+        label: "Presenter Bio"
+        description: >
+          Short biographical text used in event marketing
+          materials, speaker introductions, and registration page
+          content. Visible when contactType includes Presenter.
+        category: "Presenter Profile"
+        required: false
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Presenter" }
+
+      - name: presenterTopics
+        type: multiEnum
+        label: "Presenter Topics"
+        description: >
+          Topics this Contact is available to present on. Value
+          list aligned with the Event.topic enum (10 values).
+          Supports presenter-matching workflows when planning
+          events. Visible when contactType includes Presenter.
+        category: "Presenter Profile"
+        required: false
+        visibleWhen:
+          - { field: contactType, op: contains, value: "Presenter" }
+        options:
+          - "Business Fundamentals"
+          - "Marketing & Sales"
+          - "Finance & Accounting"
+          - "Legal & Compliance"
+          - "Operations"
+          - "Technology & Digital"
+          - "Leadership & People"
+          - "Industry-Specific"
+          - "Networking"
+          - "Other"
+
+      # --- CR Sub-Domain Activity Tracking (Section 3.7) ---
+
+      - name: lastConversionPushSentAt
+        type: datetime
+        label: "Last Conversion Push Sent"
+        description: >
+          Timestamp of the most recent conversion-push campaign
+          sent to this Contact. System-populated when a
+          conversion-push targets this Contact. Supports
+          conversion-push effectiveness comparison in
+          CR-EVENTS-CONVERT. Marked externallyPopulated; updated
+          by post-deployment automation per MANUAL-CONFIG.md
+          CR-MC-AA-002.
+        category: "Sub-Domain Activity"
+        required: false
+        externallyPopulated: true
+
+      - name: lastReactivationSentAt
+        type: datetime
+        label: "Last Reactivation Sent"
+        description: >
+          Timestamp of the most recent reactivation outreach sent
+          to this Contact. System-populated when a reactivation
+          campaign targets this Contact. Used by the Client
+          Recruiter to assess the 90-day minimum gap and to
+          report on reactivation activity per Contact. Internal
+          operational field only.
+        category: "Sub-Domain Activity"
+        required: false
+        externallyPopulated: true
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Marketing and Source Attribution"
+            description: >
+              CR-MARKETING-owned prospect-state and source
+              attribution fields. Visible only when contactType
+              has Client. Source: Contact Entity PRD v1.7
+              Section 3.5.
+            visibleWhen:
+              - { field: contactType, op: contains, value: "Client" }
+            tabs:
+              - label: "Marketing and Source Attribution"
+                category: "Marketing and Source Attribution"
+
+          - label: "Compliance"
+            description: >
+              Channel-specific opt-out flags. Apply across all
+              contactTypes. Source: Contact Entity PRD v1.7
+              Section 3.5.
+            tabs:
+              - label: "Compliance"
+                category: "Compliance"
+
+          - label: "Marketing Engagement"
+            description: >
+              Workflow-updated roll-up metrics across Campaign
+              Engagement records. Source: Contact Entity PRD v1.7
+              Section 3.5.
+            tabs:
+              - label: "Marketing Engagement"
+                category: "Marketing Engagement"
+
+          - label: "Presenter Profile"
+            description: >
+              Presenter-specific fields visible when contactType
+              has Presenter. Source: Contact Entity PRD v1.7
+              Section 3.6.
+            visibleWhen:
+              - { field: contactType, op: contains, value: "Presenter" }
+            tabs:
+              - label: "Presenter Profile"
+                category: "Presenter Profile"
+
+          - label: "Sub-Domain Activity"
+            description: >
+              CR sub-domain outbound activity timestamps. Internal
+              operational fields not visible to the Contact.
+              Source: Contact Entity PRD v1.7 Section 3.7.
+            tabs:
+              - label: "Sub-Domain Activity"
+                category: "Sub-Domain Activity"

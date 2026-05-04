@@ -1,0 +1,160 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Segment custom entity definition
+  and the Segment → Contact (Static members) and Segment → User
+  (owner) relationships. 5 custom fields. Single-domain entity
+  owned by CR-MARKETING. The segmentType discriminator (Dynamic /
+  Static) drives conditional requiredness and visibility of the
+  filterCriteria and memberContactIds fields per SEG-DEC-001.
+  segmentType is immutable after creation per Implementation
+  Note 1.
+
+# Source: Segment Entity PRD v1.0,
+#         CR-MARKETING-CONTACTS v1.0 Section 4.7.
+
+entities:
+
+  Segment:
+    description: >
+      A reusable target audience for Marketing Campaigns. Two
+      first-class types: Dynamic segments compute membership at
+      view/use time from filter criteria; Static segments hold an
+      explicit Contact membership list. Used by CR-MARKETING-
+      CAMPAIGNS as Campaign target audiences and by CR-REACTIVATE-
+      OUTREACH as reactivation populations. See Segment Entity
+      PRD v1.0.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Segment"
+      labelPlural: "Segments"
+      stream: false
+      disabled: false
+
+    fields:
+
+      - name: description
+        type: text
+        label: "Description"
+        description: >
+          Free-text description of the segment's intent. Editable
+          after creation. See PRD CR-MARKETING-CONTACTS-DAT-045.
+        category: "Definition"
+        required: false
+
+      - name: segmentType
+        type: enum
+        label: "Segment Type"
+        description: >
+          Discriminator distinguishing the two segment types.
+          Set at creation and immutable thereafter per
+          SEG-DEC-001. A segment cannot change type after
+          creation; that requires deletion and recreation.
+          Drives conditional requiredness of filterCriteria and
+          memberContactIds. Immutability is enforced by post-
+          deployment workflow per MANUAL-CONFIG.md CR-MC-AA-013.
+          See PRD CR-MARKETING-CONTACTS-DAT-046.
+        category: "Definition"
+        required: true
+        options:
+          - "Dynamic"
+          - "Static"
+
+      - name: filterCriteria
+        type: text
+        label: "Filter Criteria"
+        description: >
+          Required when segmentType = Dynamic. Stores the filter
+          criteria expression that defines membership across
+          three categories: lifecycle/pipeline, source/attribution,
+          and geographic/demographic per CR-MARKETING-CONTACTS
+          REQ-043. Membership is computed at view or use time,
+          not stored. The exact storage format is an
+          implementation concern (free-text expression, JSON
+          payload, or platform-native filter syntax). Visible
+          only when segmentType = Dynamic. See PRD
+          CR-MARKETING-CONTACTS-DAT-047.
+        category: "Definition"
+        required: false
+        requiredWhen:
+          - { field: segmentType, op: equals, value: "Dynamic" }
+        visibleWhen:
+          - { field: segmentType, op: equals, value: "Dynamic" }
+
+      # Note: memberContactIds is a manyToMany relationship to
+      # Contact, declared in the relationships: block below.
+      # Required when segmentType = Static (workflow-validated
+      # post-deployment per MANUAL-CONFIG.md CR-MC-CR-002 — the
+      # YAML schema's requiredWhen does not enforce relationship
+      # cardinality minimums).
+
+      # Note: owner is declared in the relationships: block below
+      # as a manyToOne link to User.
+
+    layout:
+
+      detail:
+        panels:
+          - label: "Definition"
+            description: >
+              Segment definition. Membership panel content varies
+              by segmentType. Source: Segment Entity PRD v1.0
+              Sections 3.1, 6.
+            tabs:
+              - label: "Definition"
+                category: "Definition"
+
+      list:
+        columns:
+          - field: name
+            width: 32
+          - field: segmentType
+            width: 14
+          - field: createdAt
+            width: 16
+          - field: description
+            width: 38
+
+# ---------------------------------------------------------------
+# Relationships
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: segmentMembers
+    description: >
+      Many-to-many relationship from Segment to Contact for
+      Static segments only. Populated via three operations:
+      manual search-and-add, import-and-add, and manual remove
+      per CR-MARKETING-CONTACTS-REQ-045. Empty for Dynamic
+      segments (dynamic membership is computed from
+      filterCriteria, not stored). See PRD
+      CR-MARKETING-CONTACTS-DAT-048.
+    entity: Segment
+    entityForeign: Contact
+    linkType: manyToMany
+    link: memberContactIds
+    linkForeign: segments
+    relationName: segmentMembers
+    label: "Member Contacts"
+    labelForeign: "Segments (as Member)"
+    audited: false
+
+  - name: segmentOwner
+    description: >
+      Set automatically at segment creation to the Client
+      Recruiter who created the segment. Read-only after
+      creation; ownership transfer is not in scope for v1.0.
+      Links to the User entity (the CRM operator account, not a
+      Contact). Per Segment Entity PRD Implementation Note 4:
+      distinct from the native assignedUser. See PRD
+      CR-MARKETING-CONTACTS-DAT-049.
+    entity: Segment
+    entityForeign: User
+    linkType: manyToOne
+    link: owner
+    linkForeign: ownedSegments
+    label: "Owner"
+    labelForeign: "Owned Segments"
+    audited: false
