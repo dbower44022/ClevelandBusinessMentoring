@@ -1,5 +1,5 @@
 version: "1.0"
-content_version: "1.0.0"
+content_version: "1.0.2"
 description: >
   Fundraising (FU) domain — custom field additions to the native
   Account entity. Covers the Donor/Sponsor-specific fields (funderType,
@@ -7,7 +7,10 @@ description: >
   assignedSponsorCoordinator) plus the geographicServiceArea field
   shared with the Partner accountType per ACT-DEC-014. The
   geographicServiceArea is FU-domain-defined per ACT-ISS-004 closure
-  but visible to both Partner and Donor/Sponsor records.
+  but visible to both Partner and Donor/Sponsor records. The
+  assignedSponsorCoordinator link to Contact is declared exclusively
+  in the relationships: block per the schema rule; it is not also
+  listed in the entity's fields: block.
 
 # Source: Fundraising Domain Product Requirements Document v1.0
 #         (05-01-26, Phase 8 Approved 05-01-26), Section 4.2 Account
@@ -146,27 +149,6 @@ entities:
             - { field: status, op: equals, value: "Received" }
         visibleWhen:
           - { field: accountType, op: contains, value: "Donor/Sponsor" }
-
-      - name: assignedSponsorCoordinator
-        type: link
-        label: "Assigned Sponsor Coordinator"
-        description: >
-          Custom link field pointing to a Contact record, identifying
-          the specific staff member leading the relationship with
-          this Funder Organization. Analogous to the Partner Account
-          assignedLiaison pattern. Optional in general, conditionally
-          required when funderStatus is Active per FU-PROSPECT-REQ-008.
-          Setting, changing, and clearing the value are available to
-          the Donor / Sponsor Coordinator at any time. See PRD
-          FU-PROSPECT-DAT-027.
-        category: "Donor/Sponsor-Specific"
-        required: false
-        requiredWhen:
-          - { field: funderStatus, op: equals, value: "Active" }
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Donor/Sponsor" }
-        # Link target defined in the relationships section of this
-        # file (assignedSponsorCoordinatorLink).
 
       - name: lastContactDate
         type: date
