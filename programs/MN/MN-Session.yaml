@@ -122,6 +122,11 @@ entities:
         category: "Session Detail"
         required: false
         # Empty options list — deferred per EXCEPTIONS.md MN-Y9-EXC-004.
+        # Validator accepts via optionsDeferred:true; operator
+        # populates the topic taxonomy post-deploy per MANUAL-CONFIG.md
+        # MN-MC-OL-001 once CBM program leadership decides on
+        # SBA-aligned vs. custom taxonomy per SES-ISS-001 / MN-DEC-019.
+        optionsDeferred: true
         options: []
 
       # --- Section 3.2 — Session Notes and Follow-Up ---

@@ -138,6 +138,10 @@ entities:
         visibleWhen:
           - { field: accountType, op: contains, value: "Client" }
         # Empty options — deferred per EXCEPTIONS.md MN-Y9-EXC-005.
+        # Validator accepts via optionsDeferred:true; operator
+        # populates the ~100-value taxonomy and dependent-filter
+        # configuration post-deploy per MANUAL-CONFIG.md MN-MC-DD-002.
+        optionsDeferred: true
         options: []
 
       - name: clientNotes
