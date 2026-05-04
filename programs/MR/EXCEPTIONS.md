@@ -329,7 +329,29 @@ MR-Y9-EXC-010.
 
 ---
 
-## MR-Y9-EXC-010 — Email template body files deferred (refresh, 2026-05-04)
+## MR-Y9-EXC-010 — Email template body files deferred (refresh, 2026-05-04) — **CLOSED 2026-05-04**
+
+**Resolution.** Test-minimal HTML body files authored
+2026-05-04 to unblock the deployment-engine validation pass.
+All three files exist at the paths declared in MR-Contact.yaml:
+- programs/MR/templates/mentor-application-confirmation.html
+- programs/MR/templates/mentor-application-decline.html
+- programs/MR/templates/mentor-duplicate-email-alert.html
+
+The bodies are deliberately minimal — a single sentence of
+purpose-text plus the merge-field placeholders required by the
+emailTemplates declarations (`{{personalEmail}}` for all three;
+`{{applicationDeclineReason}}` additionally for the decline
+template). Each file is prefixed with a `TEST TEMPLATE` marker
+so anyone reading the rendered email can see at a glance that
+the content is placeholder. CBM-voice authoring of the actual
+body content is deferred to the Mentor Administrator post-
+deployment-validation; the current bodies satisfy the schema
+hard-reject only.
+
+---
+
+## MR-Y9-EXC-010 — Original deferral record (kept for traceability)
 
 **Trigger.** Schema v1.2.x requires that every emailTemplates
 entry's bodyFile resolves to an existing HTML file. The three
