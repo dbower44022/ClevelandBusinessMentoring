@@ -1,13 +1,33 @@
 version: "1.0"
-content_version: "1.0.0"
+content_version: "1.1.0"
 description: >
   Mentor Recruitment (MR) domain — Dues entity definition and the
-  Contact ↔ Dues relationship. Defines one annual dues obligation per
-  mentor per billing year. Owned exclusively by the MR domain.
+  Dues ↔ Contact relationship. Refreshed against Dues Entity PRD
+  v1.1 (2026-05-04) using YAML schema v1.2.x constructs. Major
+  changes from v1.0.0:
 
-# Source: Dues Entity PRD v1.0 (04-05-26 22:00),
-#         MR Domain PRD v1.0 (04-03-26 23:00), Section 4 "Entity: Dues"
-#         and process document MR-MANAGE.
+    - Moved deprecated v1.0 entity-level properties (labelSingular,
+      labelPlural, stream) into the settings: block
+    - Added formula:concat for the auto-generated name field
+    - Added requiredWhen and visibleWhen for paymentDate and
+      paymentMethod (paymentStatus = Paid / Waived rules)
+    - Added one savedView (Dues — Outstanding) previously in
+      MANUAL-CONFIG.md
+    - Added autoPlaceName: false because name is computed by
+      concat formula and should not surface as a manual input
+
+  Single-domain entity owned exclusively by the MR domain.
+
+# Source: Dues Entity PRD v1.1 (04-15-26 23:20),
+#         MR Domain PRD v1.0 (04-03-26 23:00), Section 4 "Entity:
+#         Dues" and process document MR-MANAGE.
+
+# Revision History:
+#   1.1.0 (2026-05-04) — Refreshed against Dues PRD v1.1 and v1.1+
+#     schema. Added 1 formula (concat name), 2 requiredWhen, 2
+#     visibleWhen, 1 savedView. Migrated entity-level deprecated
+#     props to settings:.
+#   1.0.0 (04-13-26) — Phase 9 YAML generation, initial commit.
 
 entities:
 
@@ -17,19 +37,70 @@ entities:
 
   Dues:
     description: >
-      One annual dues obligation for a single mentor. One record is
-      created per mentor per billing year. Provides a complete payment
-      history independent of the summary duesStatus and duesPaymentDate
-      fields on the mentor Contact record. Single-domain entity owned
-      exclusively by Mentor Recruitment (MR). All fields defined in
-      MR-MANAGE process document. See Dues Entity PRD v1.0.
+      One annual dues obligation for a single mentor. One record
+      is created per mentor per billing year. Provides a complete
+      payment history independent of the summary duesStatus and
+      duesPaymentDate fields on the mentor Contact record.
+      Single-domain entity owned exclusively by Mentor Recruitment
+      (MR). All fields defined in MR-MANAGE process document.
+      See Dues Entity PRD v1.1.
     action: create
     type: Base
-    labelSingular: "Dues"
-    labelPlural: "Dues"
-    stream: false
+    settings:
+      labelSingular: "Dues"
+      labelPlural: "Dues"
+      stream: false
+      disabled: false
+      autoPlaceName: false
+
+    savedViews:
+
+      - id: dues-outstanding
+        name: "Dues — Outstanding"
+        description: >
+          All Dues records with paymentStatus = Unpaid and
+          dueDate in the past or upcoming. Used during MR-MANAGE
+          dues collection per MR-MC-SV-004 (now realized as a
+          first-class saved view in v1.1.0).
+        columns: [name, billingYear, amount, dueDate, paymentStatus]
+        filter:
+          - { field: paymentStatus, op: equals, value: "Unpaid" }
+        orderBy: { field: dueDate, direction: asc }
+
+      - id: dues-paid-current-year
+        name: "Dues — Paid (Current Year)"
+        description: >
+          All Dues records at paymentStatus = Paid for the current
+          billing year. Used for collection reporting.
+        columns: [name, billingYear, amount, paymentDate, paymentMethod]
+        filter:
+          - { field: paymentStatus, op: equals, value: "Paid" }
+        orderBy: { field: paymentDate, direction: desc }
 
     fields:
+
+      # The native name field is auto-generated via the concat
+      # formula below: "{Mentor Name} — {Billing Year}". Read-only;
+      # autoPlaceName is set to false at entity-settings level so
+      # the layout engine does not also try to surface name as a
+      # manual input.
+      - name: name
+        type: varchar
+        label: "Name"
+        description: >
+          Auto-generated label "{Mentor Name} — {Billing Year}"
+          per Dues Entity PRD v1.1 Note on name. Read-only —
+          should not be manually edited. New in v1.1.0:
+          previously documented as MR-MC-CF-006 (manual concat),
+          now expressed as a formula.
+        category: "Billing"
+        readOnly: true
+        formula:
+          type: concat
+          parts:
+            - { lookup: { via: mentor, field: name } }
+            - { literal: " — " }
+            - { field: billingYear }
 
       # --- Billing Fields (Section 3.1) ---
 
@@ -37,9 +108,10 @@ entities:
         type: int
         label: "Billing Year"
         description: >
-          The calendar year this dues record applies to (e.g., 2026).
-          One Dues record exists per mentor per billing year. Used in
-          the auto-generated name field. See PRD MR-MANAGE-DAT-029.
+          The calendar year this dues record applies to (e.g.,
+          2026). One Dues record exists per mentor per billing
+          year. Used in the auto-generated name field. See PRD
+          MR-MANAGE-DAT-029.
         category: "Billing"
         required: true
 
@@ -47,9 +119,9 @@ entities:
         type: currency
         label: "Amount"
         description: >
-          The dues amount invoiced for this billing year. The amount
-          is uniform across all mentors and does not change year to
-          year. See PRD MR-MANAGE-DAT-030.
+          The dues amount invoiced for this billing year. The
+          amount is uniform across all mentors and does not change
+          year to year. See PRD MR-MANAGE-DAT-030.
         category: "Billing"
         required: true
 
@@ -69,9 +141,10 @@ entities:
         type: enum
         label: "Payment Status"
         description: >
-          The current payment status for this dues record. Updated by
-          the Mentor Administrator when payment is received or a
-          waiver is granted. See PRD MR-MANAGE-DAT-032.
+          The current payment status for this dues record. Updated
+          by the Mentor Administrator when payment is received or
+          a waiver is granted. Drives field visibility for
+          paymentDate and paymentMethod. See PRD MR-MANAGE-DAT-032.
         category: "Billing"
         required: true
         default: "Unpaid"
@@ -89,23 +162,30 @@ entities:
         type: date
         label: "Payment Date"
         description: >
-          The date payment was received. Required when paymentStatus =
-          Paid. Field-level visibility (show only when paymentStatus =
-          Paid) is configured manually post-deployment — see
-          MANUAL-CONFIG.md. See PRD MR-MANAGE-DAT-033.
+          The date payment was received. Required when
+          paymentStatus = Paid. Visible only when paymentStatus =
+          Paid per Dues PRD v1.1 Section 5.1. See PRD
+          MR-MANAGE-DAT-033.
         category: "Billing"
         required: false
+        requiredWhen:
+          - { field: paymentStatus, op: equals, value: "Paid" }
+        visibleWhen:
+          - { field: paymentStatus, op: equals, value: "Paid" }
 
       - name: paymentMethod
         type: enum
         label: "Payment Method"
         description: >
-          How the dues were paid. Required when paymentStatus = Paid.
-          Field-level visibility (hide when paymentStatus = Waived) is
-          configured manually post-deployment — see MANUAL-CONFIG.md.
-          See PRD MR-MANAGE-DAT-034.
+          How the dues were paid. Required when paymentStatus =
+          Paid. Hidden when paymentStatus = Waived per Dues PRD
+          v1.1 Section 5.2. See PRD MR-MANAGE-DAT-034.
         category: "Billing"
         required: false
+        requiredWhen:
+          - { field: paymentStatus, op: equals, value: "Paid" }
+        visibleWhen:
+          - { field: paymentStatus, op: in, value: ["Unpaid", "Paid"] }
         options:
           - "Online Payment"
           - "Check"
@@ -117,10 +197,10 @@ entities:
         label: "Notes"
         description: >
           Additional notes about this dues record (e.g., waiver
-          rationale, payment arrangement details). Visible to Mentor
-          Administrator only — field-level access control is
-          configured manually post-deployment. See PRD
-          MR-MANAGE-DAT-035.
+          rationale, payment arrangement details). Visible to
+          Mentor Administrator only — field-level access control
+          is configured manually post-deployment per MR-MC-AC-001.
+          See PRD MR-MANAGE-DAT-035.
         category: "Notes"
         required: false
 
@@ -129,15 +209,15 @@ entities:
         panels:
           - label: "Billing"
             description: >
-              Billing obligation and payment tracking for this dues
-              record. Source: Dues Entity PRD Section 6.
+              Billing obligation and payment tracking for this
+              dues record. Source: Dues Entity PRD v1.1 Section 6.
             tabs:
               - label: "Billing"
                 category: "Billing"
           - label: "Notes"
             description: >
-              Administrative notes on this dues record. Source: Dues
-              Entity PRD Section 6.
+              Administrative notes on this dues record. Source:
+              Dues Entity PRD v1.1 Section 6.
             tabs:
               - label: "Notes"
                 category: "Notes"
@@ -166,8 +246,10 @@ relationships:
     description: >
       Links Dues records to the mentor Contact who paid them.
       Many Dues records belong to one Contact (manyToOne from the
-      Dues side; oneToMany from the Contact side). See PRD
-      MR-MANAGE-DAT-028 and Dues Entity PRD Section 4.
+      Dues side; oneToMany from the Contact side). The Dues.name
+      concat formula above looks up the mentor's name via this
+      relationship. See PRD MR-MANAGE-DAT-028 and Dues Entity PRD
+      v1.1 Section 4.
     entity: Dues
     entityForeign: Contact
     linkType: manyToOne
