@@ -35,7 +35,8 @@
 ### CR-MC-AA-003 — Account.applicantSinceTimestamp first-transition setField
 
 - **Source.** Account Entity PRD v1.8 Section 3.5;
-  MN-INTAKE-REQ-011.
+  MN-INTAKE-REQ-011. Pairs with MN-MC-AA-018 — the upstream
+  Account.clientStatus transition that triggers this side-effect.
 - **Description.** When MN-INTAKE creates an Engagement and the
   associated Account.clientStatus transitions to Applicant for
   the first time (the "if currently null" guard), set
@@ -179,6 +180,27 @@
   the system.
 - **Dependencies.** Engagement entity, Session entity, Contact
   entity, Account entity, Partner Coordinator role.
+
+### CR-MC-AA-017 — Contact.sourceAttributionDetails override audit trail
+
+- **Source.** MN-INTAKE-REQ-013, CR-MARKETING Sub-Domain Overview
+  v1.0 Section 4.7. Paired upstream-trigger entry: MN-MC-AA-020.
+- **Description.** Whenever Contact.howDidYouHearAboutCbm is
+  overridden by an administrator (after its initial write by
+  intake or by a CR-MARKETING pathway), append an audit-trail
+  entry to Contact.sourceAttributionDetails capturing: the prior
+  structured-field value, the new structured-field value, the
+  timestamp of the override, and the user who performed the
+  override. This implements the layered authority policy from the
+  CR-MARKETING Sub-Domain Overview v1.0 Section 4.7 — the
+  structured field carries the current authoritative value while
+  sourceAttributionDetails carries the full provenance history
+  (including original self-report and any subsequent overrides).
+  This is a perpetual rule, not a one-time intake-time behavior —
+  every override at any point in the Contact's lifecycle must
+  append to sourceAttributionDetails.
+- **Dependencies.** Contact entity, howDidYouHearAboutCbm,
+  sourceAttributionDetails, audit-trail formatting convention.
 
 ---
 
@@ -519,7 +541,7 @@ Item counts by category:
 
 | Category | Count |
 |---|---|
-| Advanced Automation | 16 |
+| Advanced Automation | 17 |
 | Email Templates | 7 |
 | Field-Level Access Control (Role-Based) | 5 |
 | Conditional-Required (Workflow-Validated) | 3 |
@@ -529,11 +551,11 @@ Item counts by category:
 | Integrations | 5 |
 | Stream and Audit Logging | 3 |
 | Deferred Master Lists | 4 |
-| **Total** | **61** |
+| **Total** | **62** |
 
 CR is the heaviest CBM domain by every measure (entity count,
 field count, MANUAL-CONFIG count). Heavy MANUAL-CONFIG load
 reflects the marketing/events functional footprint — not a
 deficiency in the YAML or Phase 9 work.
 
-**Last Updated:** 2026-05-04
+**Last Updated:** 05-05-26 05:23

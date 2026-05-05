@@ -204,6 +204,79 @@ post-deployment automation outside the YAML schema.
   configuration, not YAML-expressible.
 - **Dependencies.** Engagement entity, role/permission configuration.
 
+### MN-MC-AA-017 — Intake Contact deduplication by email
+
+- **Source.** MN-INTAKE-REQ-010, CR-MARKETING Sub-Domain Overview
+  v1.0.
+- **Description.** When the intake form is submitted, check whether
+  a Contact already exists with a matching email address
+  (case-insensitive) before creating a new Contact record. If a
+  matching Contact is found — typically because the individual was
+  created earlier as a prospect via a CR-MARKETING pathway — update
+  the existing Contact with intake form data rather than creating a
+  duplicate. Email match is the only automatic deduplication
+  criterion. If a prospect Contact exists with the same name but a
+  different email, manual deduplication by the Client Administrator
+  is required as a fallback.
+- **Dependencies.** Contact entity, intake form integration,
+  Contact.emailAddress index for lookup.
+
+### MN-MC-AA-018 — Account.clientStatus → Applicant transition at intake
+
+- **Source.** MN-INTAKE-REQ-011, Account Entity PRD v1.8 Section
+  3.5, CR-MARKETING Sub-Domain Overview v1.0. Pairs with
+  CR-MC-AA-003 (the applicantSinceTimestamp first-transition
+  side-effect).
+- **Description.** When MN-INTAKE creates or links an Engagement to
+  an Account, set Account.clientStatus to "Applicant". If the
+  Account already existed with clientStatus = "Prospect" (because
+  it was created earlier via a CR-MARKETING pathway with company
+  information), the value transitions Prospect → Applicant. If a
+  new Account is created at intake, clientStatus is set to
+  "Applicant" at creation time. CR-MC-AA-003 handles the paired
+  applicantSinceTimestamp first-transition write that fires off
+  this status transition.
+- **Dependencies.** Account entity, clientStatus, MN-INTAKE
+  form-processing pipeline.
+
+### MN-MC-AA-019 — Contact.prospectStatus → Converted at intake
+
+- **Source.** MN-INTAKE-REQ-012, CR-MARKETING Sub-Domain Overview
+  v1.0.
+- **Description.** When the intake form is submitted, transition
+  the submitting Contact's prospectStatus to "Converted" (the
+  terminal state of the marketing-funnel lifecycle). Only the
+  Contact who actually submitted the application is transitioned —
+  other prospect Contacts at the same Account retain their own
+  marketing-funnel state independently. Each individual person
+  tracks their own prospectStatus.
+- **Dependencies.** Contact entity, prospectStatus, MN-INTAKE
+  form-processing pipeline. Pairs with MN-MC-AA-017 (which
+  determines whether the submitting Contact is a new or existing
+  record).
+
+### MN-MC-AA-020 — Intake howDidYouHearAboutCbm layered write
+
+- **Source.** MN-INTAKE-REQ-013, CR-MARKETING Sub-Domain Overview
+  v1.0 Section 4.7. Pairs with CR-MC-AA-017 (sourceAttributionDetails
+  override audit trail — see CR-MANUAL-CONFIG).
+- **Description.** When the applicant fills out the intake form
+  and selects a value for howDidYouHearAboutCbm, write the
+  self-reported value to Contact.howDidYouHearAboutCbm ONLY if the
+  field is currently blank. If the field already contains a value
+  (typically because it was set at Contact creation by a
+  CR-MARKETING pathway with known source attribution), do NOT
+  overwrite it. Always write the applicant's self-reported value
+  to Contact.sourceAttributionDetails (timestamped, with source =
+  "intake-self-report") regardless of whether the structured field
+  was preserved or written, so the self-report is never lost. The
+  Client Administrator may override the structured field at any
+  time during application review; that override behavior is
+  captured in CR-MC-AA-017 as a perpetual audit-trail rule, not
+  just an intake rule.
+- **Dependencies.** Contact entity, howDidYouHearAboutCbm,
+  sourceAttributionDetails, MN-INTAKE form-processing pipeline.
+
 ---
 
 ## Email Templates
@@ -524,7 +597,7 @@ Item counts by category:
 
 | Category | Count |
 |---|---|
-| Advanced Automation | 16 |
+| Advanced Automation | 20 |
 | Email Templates | 8 |
 | Field-Level Access Control (Role-Based) | 3 |
 | Conditional-Required (Workflow-Validated) | 5 |
@@ -534,6 +607,6 @@ Item counts by category:
 | Integrations | 4 |
 | Stream and Audit Logging | 3 |
 | Deferred Master Lists | 2 |
-| **Total** | **45** |
+| **Total** | **49** |
 
-**Last Updated:** 2026-05-04
+**Last Updated:** 05-05-26 05:23
