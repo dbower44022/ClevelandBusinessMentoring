@@ -192,7 +192,11 @@ entities:
         category: "Geographic"
         required: false
         # Option list deferred — see EXCEPTIONS.md FU-Y9-EXC-001.
-        # Once the master list is established, populate options here.
+        # Validator accepts via optionsDeferred:true; operator
+        # populates the Northeast Ohio zip code master list via
+        # the EspoCRM admin UI post-deploy per MANUAL-CONFIG.md
+        # FU-MC-OL-001.
+        optionsDeferred: true
         options: []
         visibleWhen:
           all:
