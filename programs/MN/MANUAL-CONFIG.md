@@ -430,6 +430,19 @@ validation.
   requiredWhen because Notes is wysiwyg and "newly added content"
   is not a YAML-expressible condition.
 
+### MN-MC-CR-006 — Engagement.meetingCadence required at first-Session-Completed transition
+
+- **Source.** Engagement Entity PRD v1.3 Implementation Note 10,
+  MN-ENGAGE workflow, Domain PRD v1.0+ Section 4.
+- **Description.** When the first Session on an Engagement reaches
+  Completed status and the system transitions Engagement.engagementStatus
+  from Assigned to Active (per MN-MC-AA-008), validate that
+  Engagement.meetingCadence is populated. Block the transition with a
+  user-facing message if meetingCadence is empty. Pairs with MN-MC-AA-008
+  (the first-completed-Session activates Engagement workflow).
+- **Dependencies.** Engagement entity, engagementStatus, meetingCadence,
+  Session entity, parent link.
+
 ---
 
 ## Native Field Customization (Schema Gap)
@@ -600,13 +613,13 @@ Item counts by category:
 | Advanced Automation | 20 |
 | Email Templates | 8 |
 | Field-Level Access Control (Role-Based) | 3 |
-| Conditional-Required (Workflow-Validated) | 5 |
+| Conditional-Required (Workflow-Validated) | 6 |
 | Native Field Customization (Schema Gap) | 1 |
 | Dependent / Cascading Enums (Schema Gap) | 2 |
 | Saved Views and List Filters | 1 |
 | Integrations | 4 |
 | Stream and Audit Logging | 3 |
 | Deferred Master Lists | 2 |
-| **Total** | **49** |
+| **Total** | **50** |
 
-**Last Updated:** 05-05-26 05:23
+**Last Updated:** 05-05-26 05:33

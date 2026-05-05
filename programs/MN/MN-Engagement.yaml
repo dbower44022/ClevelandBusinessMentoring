@@ -1,15 +1,15 @@
 version: "1.0"
-content_version: "1.0.0"
+content_version: "1.0.1"
 description: >
   Mentoring (MN) domain — Engagement custom entity definition, plus
   the Engagement relationships to Account (Client Organization),
   Contact (Assigned Mentor, Primary Engagement Contact, Engagement
-  Contacts, Additional Mentors, Referring Partner), and Session
-  (oneToMany). 24 custom fields organized into seven panels driven
-  by engagementStatus visibility rules. Owned primarily by the MN
-  domain; one CR-contributed field (referringPartner) carries the
-  CR-PARTNER-MANAGE referral attribution per ENG entity PRD v1.2
-  Section 3.7. Workflow-updated roll-up fields (totalSessions,
+  Contacts, Additional Mentors, Requested Mentor, Referring Partner),
+  and Session (oneToMany). 24 custom fields organized into seven
+  panels driven by engagementStatus visibility rules. Owned primarily
+  by the MN domain; one CR-contributed field (referringPartner)
+  carries the CR-PARTNER-MANAGE referral attribution per ENG entity
+  PRD v1.3 Section 3.7. Workflow-updated roll-up fields (totalSessions,
   totalSessionsLast30Days, lastSessionDate, totalSessionHours,
   nextSessionDateTime) are declared as `formula:` aggregate where
   the v1.1 schema can express the calculation, and as
@@ -17,6 +17,19 @@ description: >
   computation requires a workflow trigger that is not expressible
   in the v1.1 workflow vocabulary. See EXCEPTIONS.md and
   MANUAL-CONFIG.md.
+
+  v1.0.1 (05-05-26) — corrections triggered by the 05-05-26
+  verification pass against the Mentoring Domain PRD: (a) added
+  engagementRequestedMentor relationship (manyToOne to Contact)
+  capturing the optional intake-form preferred-mentor selection per
+  MN-INTAKE-DAT-026 / MN-MATCH-REQ-009, structurally parallel to
+  engagementAssignedMentor; (b) relaxed meetingCadence from
+  required:true to required:false because the field is set by the
+  mentor after the first session and the intake flow cannot populate
+  it at Engagement creation time. Workflow validation that
+  meetingCadence is populated before the Assigned-to-Active
+  transition is enforced post-deployment per MANUAL-CONFIG entry
+  MN-MC-CR-006.
 
 # Source: Mentoring Domain Product Requirements Document v1.0
 #         (04-01-26), Section 4 Data Reference. Engagement Entity
@@ -112,9 +125,15 @@ entities:
           first session. Drives MN-INACTIVE inactivity thresholds
           (Weekly = 7 days, Bi-Weekly = 14 days, Monthly = 30 days,
           As Needed = configurable system default per
-          MN-INACTIVE-DEC). See PRD MN-ENGAGE-DAT-014.
+          MN-INACTIVE-DEC). Required at the workflow level when the
+          engagement transitions from Assigned to Active per
+          MN-MC-CR-006 — not enforced as a field-level constraint
+          so that intake-stage records can be created before a
+          meeting cadence has been agreed on. See PRD
+          MN-ENGAGE-DAT-014 and Engagement Entity PRD v1.3
+          Implementation Note 10.
         category: "Lifecycle and Status"
-        required: true
+        required: false
         options:
           - "Weekly"
           - "Bi-Weekly"
@@ -714,4 +733,20 @@ relationships:
     linkForeign: referredEngagements
     label: "Referring Partner"
     labelForeign: "Referred Engagements"
+    audited: false
+
+  - name: engagementRequestedMentor
+    description: >
+      Optional client-selected preferred mentor recorded at MN-INTAKE
+      via the intake form's preferred-mentor selector. Reviewed by the
+      Client Assignment Coordinator during MN-MATCH per MN-MATCH-REQ-009;
+      a preference, not a guarantee. manyToOne — many engagements may
+      request the same mentor. See PRD MN-INTAKE-DAT-026 / MN-MATCH-DAT-024.
+    entity: Engagement
+    entityForeign: Contact
+    linkType: manyToOne
+    link: requestedMentor
+    linkForeign: requestedEngagements
+    label: "Requested Mentor"
+    labelForeign: "Requested Engagements (as Mentor)"
     audited: false
