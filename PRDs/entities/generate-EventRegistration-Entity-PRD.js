@@ -21,10 +21,10 @@ const ENTITY = {
   // ── Document metadata ────────────────────────────────────────────
   orgName: "Cleveland Business Mentors",
   entityName: "Event Registration",
-  version: "1.0",
+  version: "1.1",
   status: "Draft",
-  lastUpdated: "04-17-26 10:30",
-  sourceDocuments: "CR Domain PRD v1.0, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0, Entity Inventory v1.4, Event Entity PRD v1.0, Contact Entity PRD v1.5",
+  lastUpdated: "05-05-26 23:45",
+  sourceDocuments: "CR Domain PRD v1.0, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0, Entity Inventory v1.4, Event Entity PRD v1.0, Contact Entity PRD v1.5, Zoom Integration Architecture v1.0",
   outputFile: "/home/claude/cbm/PRDs/entities/EventRegistration-Entity-PRD.docx",
 
   // ── Entity overview (Section 1) ──────────────────────────────────
@@ -49,7 +49,8 @@ const ENTITY = {
   ],
 
   overviewNotes: [
-    { label: "Creation pathways:", text: " Event Registrations are created through two pathways: (1) the public online registration form (registrationSource = Online, attendanceStatus defaults to Registered), and (2) the Add Walk-In action on the Event detail view (registrationSource = Walk-In, attendanceStatus defaults to Attended). Both pathways create or match a Contact record and link it to the Event." },
+    { label: "Creation pathways:", text: " Event Registrations are created through three pathways: (1) the public online registration form (registrationSource = Online, attendanceStatus defaults to Registered), (2) the Add Walk-In action on the Event detail view (registrationSource = Walk-In, attendanceStatus defaults to Attended), and (3) for Events with format = Virtual or Hybrid and Zoom integration enabled, the Zoom integration bridge service auto-creating Walk-In registrations from post-Webinar attendance reports for Zoom participants whose email matches an existing Contact but who had no pre-existing Event Registration (registrationSource = Walk-In, attendanceStatus = Attended). All three pathways create or match a Contact record and link it to the Event." },
+    { label: "Zoom integration writes:", text: " For Event Registrations whose parent Event has format = Virtual or Hybrid and Zoom integration enabled, the Zoom integration bridge service writes to three fields automatically: zoomRegistrantId is populated when the registration is pushed to the Zoom Webinar (Section 3.5); attendanceStatus is set to Attended or No-Show after the Webinar ends, write-once and only on Event Registrations not already in a terminal status (Cancelled, Attended, or No-Show); and the integration cancels the Zoom-side registrant when attendanceStatus is set to Cancelled by staff (Zoom sends the cancellation email)." },
   ],
 
   // ── Native fields (Section 2) ────────────────────────────────────
@@ -87,14 +88,14 @@ const ENTITY = {
           { bold: "Implementation: " }, { text: "system-populated, readOnly." },
         ]],
         ["registrationSource", "enum", "Yes", "Online, Walk-In", "Online", "CR-EVENTS-MANAGE-DAT-037", [
-          { text: "The pathway through which the registration was created. Online is set by the public registration form; Walk-In is set by the Add Walk-In action on the Event detail view. Walk-In registrations do not trigger a confirmation email. " },
+          { text: "The pathway through which the registration was created. Online is set by the public registration form; Walk-In is set by the Add Walk-In action on the Event detail view. For Events with format = Virtual or Hybrid and Zoom integration enabled, Walk-In is also set by the Zoom integration bridge service when the post-Webinar attendance reconciliation finds a Zoom participant whose email matches an existing Contact but who has no corresponding Event Registration \u2014 the bridge service creates the Event Registration with registrationSource = Walk-In and attendanceStatus = Attended. Walk-In registrations (regardless of source) do not trigger a confirmation email and have no zoomRegistrantId (they are created after the Webinar has already ended). " },
           { bold: "Domains: " }, { text: "CR. " },
           { bold: "Implementation: " }, { text: "system-set at creation based on creation pathway, readOnly thereafter." },
         ]],
         ["attendanceStatus", "enum", "Yes", "Registered, Attended, No-Show, Cancelled", "Registered", "CR-EVENTS-MANAGE-DAT-038", [
-          { text: "The attendance state of this registration. Defaults to Registered for Online registrations and to Attended for Walk-In registrations. Updated by the Content and Event Administrator during or after the event via bulk-update actions (Mark Selected as Attended, Mark Remaining as No-Show). Staff-initiated cancellations set this to Cancelled (EVREG-DEC-001). " },
+          { text: "The attendance state of this registration. Defaults to Registered for Online registrations and to Attended for Walk-In registrations. Updated by one of three pathways: (1) the Content and Event Administrator via bulk-update actions during or after the event (Mark Selected as Attended, Mark Remaining as No-Show); (2) staff-initiated cancellations setting this to Cancelled (EVREG-DEC-001); or (3) for parent Events with format = Virtual or Hybrid and Zoom integration enabled, the Zoom integration bridge service writing Attended or No-Show automatically after the Webinar ends (write-once: the bridge service does not overwrite a value already set by staff). Setting attendanceStatus to Cancelled on a registration that has been pushed to Zoom additionally triggers the bridge service to cancel the registrant in Zoom (Zoom sends the cancellation email automatically). " },
           { bold: "Domains: " }, { text: "CR. " },
-          { bold: "Implementation: " }, { text: "default varies by creation pathway." },
+          { bold: "Implementation: " }, { text: "default varies by creation pathway. Bulk-action and Zoom-driven writes are write-once \u2014 neither overwrites a value already set by the other or by staff." },
         ]],
       ],
     },
@@ -152,6 +153,18 @@ const ENTITY = {
         ]],
       ],
     },
+    {
+      heading: "3.5 Zoom Integration",
+      headingLevel: 2,
+      intro: "The following field supports automated Zoom Webinar integration for Event Registrations whose parent Event has format = Virtual or Hybrid. The field is system-populated by the Zoom integration bridge service and is read-only in the CRM UI.",
+      fields: [
+        ["zoomRegistrantId", "varchar", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-045", [
+          { text: "The Zoom-side registrant ID, system-populated by the Zoom integration bridge service after the registration is successfully pushed to the Zoom Webinar. Empty for Event Registrations whose parent Event has format = In-Person, for Event Registrations created against an Event whose Webinar has not yet been provisioned (queued in the bridge backlog and populated when the Webinar is created), and for Walk-In registrations created from the post-Webinar attendance reconciliation flow (those registrations have no corresponding Zoom registrant). Read-only after population. " },
+          { bold: "Domains: " }, { text: "CR. " },
+          { bold: "Implementation: " }, { text: "system-populated, readOnly. See Zoom Integration Architecture v1.0 \u00a75.3 (registrant push) and \u00a75.5 (registration cancellation)." },
+        ]],
+      ],
+    },
   ],
 
   // ── Relationships (Section 4) ────────────────────────────────────
@@ -186,6 +199,7 @@ const ENTITY = {
     { name: "Registrant Details Panel", text: "specialRequests." },
     { name: "Communication Tracking Panel", text: "confirmationSentAt (read-only), remindersSent (read-only), postEventFollowUpSentAt (read-only), lastCommunicationBouncedAt (read-only)." },
     { name: "Cancellation Panel", text: "cancellationDate (read-only), cancellationReason." },
+    { name: "Zoom Integration Panel", text: "zoomRegistrantId (read-only). Visible only when the parent Event has format = Virtual or Hybrid. Field is empty until the registration is pushed to the Zoom Webinar by the bridge service." },
   ],
 
   // ── Implementation notes (Section 7) ─────────────────────────────
@@ -199,6 +213,7 @@ const ENTITY = {
     { label: "7. Post-event follow-up dispatch:", text: " The Send Post-Event Emails action on the Event detail view dispatches post-event follow-up emails to all eligible Event Registrations. Eligible means: attendanceStatus = Attended (receives Thank-You) or attendanceStatus = No-Show (receives We-Missed-You); postEventFollowUpSentAt is blank (idempotency); and dateEnd has passed (gate condition). Cancelled and Registered registrations are skipped." },
     { label: "8. Transactional communication and emailOptOut:", text: " All event communications (confirmation, reminders, post-event follow-ups for thank-you and we-missed-you) are transactional and ignore Contact.emailOptOut. Only conversion-push sends from CR-EVENTS-CONVERT honor the emailOptOut flag, as those are marketing communications." },
     { label: "9. Product name restriction:", text: " This document is a Level 2 Entity PRD. No specific CRM product names appear in this document. All references to platform capabilities use generic terminology. Product-specific implementation details belong in YAML program files and implementation documentation only." },
+    { label: "10. Zoom integration field provisioning:", text: " The zoomRegistrantId field is provisioned by CRM Builder when the deployment YAML includes a zoomConfig block. For deployments without Zoom integration, this field is not provisioned. The integration logic governing when the field is populated, when attendanceStatus is written by the bridge, and when Walk-In registrations are auto-created is documented in PRDs/product/zoom-integration-architecture.md v1.0 in the crmbuilder repo, sections 5.3, 5.5, and 5.7 respectively." },
   ],
 
   // ── Open issues (Section 8) ──────────────────────────────────────
@@ -214,6 +229,8 @@ const ENTITY = {
     ["EVREG-DEC-004", "No activity stream. Event Registration is a transactional record with system-populated tracking fields. Activity stream adds overhead without proportional value for this entity type."],
     ["EVREG-DEC-005", "postEventFollowUpSentAt added by CR-EVENTS-CONVERT for idempotency on the Send Post-Event Emails action. Ensures post-event follow-up emails are sent at most once per registration regardless of how many times the action is invoked."],
     ["EVREG-DEC-006", "Cancellation fields (cancellationDate, cancellationReason) are always visible, not conditionally hidden when attendanceStatus \u2260 Cancelled. The empty-field cost is lower than the dynamic logic complexity cost."],
+    ["EVREG-DEC-007", "Zoom integration writes are write-once for attendanceStatus. The Zoom integration bridge service writes Attended or No-Show only when attendanceStatus is not already in a terminal state (Cancelled, Attended, or No-Show set by staff). This protects staff judgment from being overwritten by automated reconciliation. Conversely, staff cancellations set Cancelled regardless of any prior bridge-driven write."],
+    ["EVREG-DEC-008", "Zoom-driven Walk-In creation is restricted to existing Contacts. The Zoom integration bridge service creates Walk-In registrations only for post-Webinar attendees whose email matches an existing Contact record. Attendees with no matching Contact are ignored \u2014 no placeholder Contact records are created. This avoids polluting the Contact database with one-off attendees, typos, or shared email addresses (per Issue 10 of the Zoom Integration Architecture design)."],
   ],
 };
 
