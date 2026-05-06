@@ -21,10 +21,10 @@ const ENTITY = {
   // ── Document metadata ────────────────────────────────────────────
   orgName: "Cleveland Business Mentors",
   entityName: "Event",
-  version: "1.0",
+  version: "1.1",
   status: "Draft",
-  lastUpdated: "04-17-26 10:00",
-  sourceDocuments: "CR Domain PRD v1.0, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0, Entity Inventory v1.4, Contact Entity PRD v1.5, Account Entity PRD v1.5",
+  lastUpdated: "05-05-26 23:41",
+  sourceDocuments: "CR Domain PRD v1.0, CR-EVENTS SDO v1.0, CR-EVENTS-MANAGE v1.0, CR-EVENTS-CONVERT v1.0, Entity Inventory v1.4, Contact Entity PRD v1.5, Account Entity PRD v1.5, Zoom Integration Architecture v1.0",
   outputFile: "/home/claude/cbm/PRDs/entities/Event-Entity-PRD.docx",
 
   // ── Entity overview (Section 1) ──────────────────────────────────
@@ -107,15 +107,16 @@ const ENTITY = {
           { bold: "Domains: " }, { text: "CR." },
         ]],
         ["virtualMeetingUrl", "url", "Conditional", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-028", [
-          { text: "Meeting platform URL. Visible via dynamic logic when format is Virtual or Hybrid. Required when format is Virtual or Hybrid and the Event is transitioning to Scheduled. " },
+          { text: "Meeting platform URL. For Events with format = Virtual or Hybrid, this field is system-populated by the Zoom integration bridge service when the Event transitions Draft \u2192 Scheduled \u2014 set to the Zoom Webinar\u2019s join URL. Visible via dynamic logic when format is Virtual or Hybrid. Required when format is Virtual or Hybrid and the Event is transitioning to Scheduled (the Zoom integration satisfies this requirement automatically; for non-Zoom virtual platforms, the field must be populated manually). " },
           { bold: "Visibility: " }, { text: "format = Virtual or Hybrid. " },
-          { bold: "Domains: " }, { text: "CR." },
+          { bold: "Domains: " }, { text: "CR. " },
+          { bold: "Implementation: " }, { text: "system-populated by Zoom integration when configured; otherwise manually populated. See Zoom Integration Architecture v1.0 \u00a75.1." },
         ]],
         ["registrationUrl", "url", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-029", [
-          { text: "Public-facing URL for the registration form. System-populated when the Event transitions from Draft to Scheduled (EVT-DEC-008). Visible via dynamic logic when Event status is not Draft. " },
+          { text: "Public-facing URL for the registration form. For Events with format = Virtual or Hybrid, this field is system-populated by the Zoom integration bridge service when the Event transitions Draft \u2192 Scheduled (the Zoom Webinar\u2019s public registration URL). For Events with format = In-Person, the field is system-populated by the CRM-native registration form mechanism on the same transition (EVT-DEC-008). Visible via dynamic logic when Event status is not Draft. " },
           { bold: "Visibility: " }, { text: "status \u2260 Draft. " },
           { bold: "Domains: " }, { text: "CR. " },
-          { bold: "Implementation: " }, { text: "system-populated, readOnly." },
+          { bold: "Implementation: " }, { text: "system-populated, readOnly. Population source depends on format. See Zoom Integration Architecture v1.0 \u00a75.1." },
         ]],
         ["recordingUrl", "url", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-030", [
           { text: "Optional link to an externally hosted event recording. Visible via dynamic logic when format is Virtual or Hybrid. Recording and publishing are out of scope; the field is a reference only. " },
@@ -153,6 +154,37 @@ const ENTITY = {
         ]],
       ],
     },
+    {
+      heading: "3.5 Zoom Integration",
+      headingLevel: 2,
+      intro: "The following fields support automated Zoom Webinar integration for Events with format = Virtual or Hybrid. All four fields are system-populated by the Zoom integration bridge service and are read-only in the CRM UI. Visibility of these fields is driven by format via dynamic logic (Section 5).",
+      fields: [
+        ["zoomWebinarId", "varchar", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-034", [
+          { text: "The Zoom-side Webinar ID, system-populated by the Zoom integration bridge service when the Event transitions Draft \u2192 Scheduled. Empty for Events with format = In-Person or for Events still in Draft. Read-only after population. " },
+          { bold: "Visibility: " }, { text: "format = Virtual or Hybrid AND status \u2260 Draft. " },
+          { bold: "Domains: " }, { text: "CR. " },
+          { bold: "Implementation: " }, { text: "system-populated, readOnly. See Zoom Integration Architecture v1.0 \u00a75.1." },
+        ]],
+        ["zoomHostEmail", "varchar", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-035", [
+          { text: "The Zoom user under whose account the Webinar was created, system-populated by the Zoom integration bridge service from connector configuration. All Webinars are hosted by a single configured Zoom user regardless of which CRM coordinator created the Event. Read-only. " },
+          { bold: "Visibility: " }, { text: "format = Virtual or Hybrid AND status \u2260 Draft. " },
+          { bold: "Domains: " }, { text: "CR. " },
+          { bold: "Implementation: " }, { text: "system-populated, readOnly." },
+        ]],
+        ["attendanceCapturedAt", "datetime", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-036", [
+          { text: "Timestamp set by the Zoom integration bridge service when the post-Webinar attendance capture flow completes successfully. A non-null value indicates that EventRegistration.attendanceStatus has been written for all participants. Acts as the idempotency key \u2014 subsequent inbound triggers (Zoom webhook OR polling safety net) are no-ops once this field is set. Read-only. " },
+          { bold: "Visibility: " }, { text: "format = Virtual or Hybrid AND status = Completed. " },
+          { bold: "Domains: " }, { text: "CR. " },
+          { bold: "Implementation: " }, { text: "system-populated, readOnly. See Zoom Integration Architecture v1.0 \u00a75.7." },
+        ]],
+        ["zoomLastSyncedAt", "datetime", "No", "\u2014", "\u2014", "CR-EVENTS-MANAGE-DAT-037", [
+          { text: "Timestamp updated by the Zoom integration bridge service after every successful outbound sync of Event field changes (name, dateStart, duration, description, timezone) to the Zoom Webinar. Lets operators see when the Webinar was last reconciled with the CRM record. Read-only. " },
+          { bold: "Visibility: " }, { text: "format = Virtual or Hybrid AND status \u2260 Draft. " },
+          { bold: "Domains: " }, { text: "CR. " },
+          { bold: "Implementation: " }, { text: "system-populated, readOnly. See Zoom Integration Architecture v1.0 \u00a75.2." },
+        ]],
+      ],
+    },
   ],
 
   // ── Relationships (Section 4) ────────────────────────────────────
@@ -174,9 +206,9 @@ const ENTITY = {
     { heading: "5.1 Format-Driven Field Visibility", paragraphs: [
       { text: "The format field drives visibility of location, access, and recording fields:" },
     ], bullets: [
-      { label: "format = In-Person:", text: " Show location. Hide virtualMeetingUrl, recordingUrl." },
-      { label: "format = Virtual:", text: " Show virtualMeetingUrl, recordingUrl. Hide location." },
-      { label: "format = Hybrid:", text: " Show location, virtualMeetingUrl, recordingUrl." },
+      { label: "format = In-Person:", text: " Show location. Hide virtualMeetingUrl, recordingUrl, zoomWebinarId, zoomHostEmail, attendanceCapturedAt, zoomLastSyncedAt." },
+      { label: "format = Virtual:", text: " Show virtualMeetingUrl, recordingUrl, zoomWebinarId, zoomHostEmail, attendanceCapturedAt, zoomLastSyncedAt. Hide location." },
+      { label: "format = Hybrid:", text: " Show location, virtualMeetingUrl, recordingUrl, zoomWebinarId, zoomHostEmail, attendanceCapturedAt, zoomLastSyncedAt." },
     ]},
     { heading: "5.2 Status-Driven Field Visibility", paragraphs: [
       { label: "Condition:", text: " status \u2260 Draft" },
@@ -196,6 +228,12 @@ const ENTITY = {
       { label: "virtualMeetingUrl", text: " \u2014 required at Scheduled when format = Virtual or Hybrid" },
       { label: "presenters", text: " \u2014 at least one required at Scheduled" },
     ]},
+    { heading: "5.4 Zoom Field Status-Driven Visibility", paragraphs: [
+      { text: "In addition to the format-driven visibility in 5.1, the Zoom integration fields have status-driven visibility that layers on top:" },
+    ], bullets: [
+      { label: "zoomWebinarId, zoomHostEmail, zoomLastSyncedAt:", text: " visible only when status \u2260 Draft (these fields are populated at the Draft \u2192 Scheduled transition)." },
+      { label: "attendanceCapturedAt:", text: " visible only when status = Completed (this field is populated only after the Webinar has ended and attendance has been captured)." },
+    ]},
   ],
 
   // ── Layout guidance (Section 6) ──────────────────────────────────
@@ -207,6 +245,7 @@ const ENTITY = {
     { name: "Presenters Panel", text: "presenters (manyToMany relationship to Contact). Filtered by contactType includes Presenter with presenterTopics as secondary filter." },
     { name: "Partners Panel", text: "coSponsoringPartners (manyToMany relationship to Account). Filtered by accountType includes Partner; no partnerStatus filter." },
     { name: "Documents Panel", text: "documents (attachment-multiple). Staff-only event file storage." },
+    { name: "Zoom Integration Panel", text: "zoomWebinarId, zoomHostEmail, zoomLastSyncedAt (visible when format = Virtual or Hybrid AND status \u2260 Draft), attendanceCapturedAt (visible when format = Virtual or Hybrid AND status = Completed). All fields read-only and system-populated by the Zoom integration bridge service." },
     { name: "Registrations Panel", text: "Event Registration related records list (oneToMany reverse). Displays all registrations linked to this Event." },
   ],
 
@@ -222,6 +261,7 @@ const ENTITY = {
     { label: "8. Reminder schedule:", text: " Format-specific reminder timing: In-Person events send reminders at seven days and one day before dateStart; Virtual events at one day and one hour before; Hybrid events at seven days, one day, and one hour before. Daily evaluation loop with per-reminder-type idempotency via Event Registration.remindersSent." },
     { label: "9. Attendance recording:", text: " In-person primary mechanism is post-event bulk update (Mark Selected as Attended, Mark Remaining as No-Show). Virtual primary mechanism is manual transcription from the meeting platform attendance report. No automated import tooling in v1.0 (CR-EVENTS-MANAGE-ISS-001)." },
     { label: "10. Product name restriction:", text: " This document is a Level 2 Entity PRD. No specific CRM product names appear in this document. All references to platform capabilities use generic terminology. Product-specific implementation details belong in YAML program files and implementation documentation only." },
+    { label: "11. Zoom integration field provisioning:", text: " The four Zoom integration fields (zoomWebinarId, zoomHostEmail, attendanceCapturedAt, zoomLastSyncedAt) are provisioned by CRM Builder when the deployment YAML includes a zoomConfig block. For deployments without Zoom integration, these fields are not provisioned. The integration logic is documented in PRDs/product/zoom-integration-architecture.md v1.0 in the crmbuilder repo. Dependencies between these fields and the existing virtualMeetingUrl and registrationUrl fields are documented in \u00a75.1 and \u00a75.7 of that architecture." },
   ],
 
   // ── Open issues (Section 8) ──────────────────────────────────────
@@ -242,6 +282,8 @@ const ENTITY = {
     ["EVT-DEC-008", "registrationUrl is system-populated on the Draft-to-Scheduled transition. The field is read-only after population and visible via dynamic logic only when status is not Draft."],
     ["EVT-DEC-009", "venueCapacity is informational only. The system does not block registrations when venueCapacity is reached. No waitlist functionality in v1.0. Capacity is a planning and reporting aid, not an enforcement mechanism."],
     ["EVT-DEC-010", "Self-cancellation removed entirely. All registration cancellations are staff-initiated through the Content and Event Administrator. Confirmation email directs recipients to contact a dedicated events address to cancel. Likelihood that the target CRM can support self-cancellation without significant customization is low, and the effort is not justified by the value."],
+    ["EVT-DEC-011", "Zoom integration fields are provisioned only for deployments with Zoom integration enabled. The four fields (zoomWebinarId, zoomHostEmail, attendanceCapturedAt, zoomLastSyncedAt) and the system-populated semantics on virtualMeetingUrl and registrationUrl are conditional on the deployment YAML including zoomConfig. For non-Zoom deployments, virtualMeetingUrl and registrationUrl remain manually populated as documented in v1.0 of this PRD."],
+    ["EVT-DEC-012", "registrationUrl population source depends on format. For Virtual/Hybrid Events with Zoom integration enabled, the Zoom Webinar\u2019s registration URL is the value. For In-Person Events (or Virtual/Hybrid without Zoom integration), the value is generated by the CRM-native registration mechanism. The field\u2019s read-only behavior and dynamic-logic visibility (status \u2260 Draft) are unchanged from v1.0."],
   ],
 };
 
