@@ -32,6 +32,50 @@ or produce documents out of sequence.
 
 ---
 
+## Conduct framework for any stakeholder-facing session
+
+Before any AI-conducted stakeholder-facing interview for CBM — whether
+under the current 13-phase Document Production Process or the evolved
+5-phase methodology (when CBM redo runs against it) — read the three
+files in the conduct framework. These are authoritative for how the AI
+behaves during the interview, independent of which methodology is
+being executed.
+
+```
+https://github.com/dbower44022/crmbuilder/blob/main/PRDs/process/conduct/charter.md
+https://github.com/dbower44022/crmbuilder/blob/main/PRDs/process/conduct/kickoff.md
+https://github.com/dbower44022/crmbuilder/blob/main/PRDs/process/conduct/question-library.md
+```
+
+Key points for CBM specifically:
+
+- **Charter §11.6.b — "inferences require positive support."** Most
+  important rule for CBM work. The CBM redo experiment surfaced two
+  specific fabrications (fit/no-fit client distinction; operational-
+  strategic donor work split) where pattern-matched plausibility
+  against generic nonprofit operations did not apply to CBM. Always
+  test: *"What did the stakeholder actually say that supports this?"*
+  If the answer is "nothing directly, but it follows from how similar
+  orgs typically operate," the inference is not yet legitimate. Convert
+  to a question or capture as a gap.
+- **Pattern library entry.** A nonprofit-mentoring pattern library
+  entry exists at `PRDs/process/research/evolved-methodology/pattern-library/pattern-library-entry-nonprofit-mentoring.md`
+  in the crmbuilder repo. Section A holds tested generalizations
+  applicable to CBM; Section B holds CBM-derived observations that
+  should be treated as hypotheses to verify, not defaults; Section C
+  documents the fabrications to actively avoid.
+- **Session types for CBM.** Most CBM work to date has been Variant A
+  (administrator-as-proxy: Doug solo). Real-SME sessions are Variant B
+  (first session) or C (follow-up). When the test of the evolved
+  methodology runs against actual CBM stakeholders, Variant B or D
+  (multi-stakeholder) will apply.
+
+When in doubt about how to ask a question, structure a session, or
+handle a difficult conversational moment for CBM, consult these three
+files before improvising.
+
+---
+
 ## This Repository
 
 This is the **Cleveland Business Mentors (CBM)** client implementation
