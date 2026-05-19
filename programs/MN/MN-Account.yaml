@@ -61,8 +61,23 @@ entities:
         options:
           - "For-Profit"
           - "Non-Profit"
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Client" }
+
+      - name: companyType
+        type: multiEnum
+        label: "Company Type"
+        description: >
+          Whether the client organization operates as a for-profit
+          business or a nonprofit. Drives funder reporting
+          categories. Visible only when accountType has Client.
+          See PRD MN-INTAKE-DAT-004.
+        category: "Company Information"
+        required: false
+        options:
+          - ""
+          - "Client"
+          - "Sponsor"
+          - "Partner"
+          - "Other"
 
       - name: businessStage
         type: enum
@@ -175,3 +190,27 @@ entities:
             tabs:
               - label: "Client Profile"
                 category: "Client Profile"
+
+          - label: "Partner Profile"
+            description: >
+              Mentoring-domain client organization profile fields.
+              Visible only when accountType has Client. Source:
+              Account Entity PRD v1.8 Section 3.3 and Mentoring
+              Domain PRD v1.0 Section 4 (Client Organization).
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Partner" }
+            tabs:
+              - label: "Partner Profile"
+                category: "Partner Profile"
+
+          - label: "Sponsor Profile"
+            description: >
+              Mentoring-domain client organization profile fields.
+              Visible only when accountType has Client. Source:
+              Account Entity PRD v1.8 Section 3.3 and Mentoring
+              Domain PRD v1.0 Section 4 (Client Organization).
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Sponsor" }
+            tabs:
+              - label: "Sponsor Profile"
+                category: "Sponsor Profile"
