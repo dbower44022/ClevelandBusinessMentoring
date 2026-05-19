@@ -174,6 +174,82 @@ entities:
         visibleWhen:
           - { field: accountType, op: contains, value: "Client" }
 
+      # --- Sponsor Organization Fields ---
+      # Scaffolding to back the "Sponsor Profile" layout panel. The
+      # specific field set and option values are placeholders pending
+      # an MN Domain PRD section on Sponsor data requirements; the
+      # field shapes follow the Client-fields pattern (category +
+      # visibleWhen accountType=Sponsor). Update with the real
+      # requirements when the PRD lands; the panel/category linkage
+      # is what's load-bearing for the validator.
+
+      - name: sponsorshipLevel
+        type: enum
+        label: "Sponsorship Level"
+        description: >
+          Recognition tier for this sponsor organization. Drives
+          benefits package and recognition placement. Visible only
+          when accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+        options:
+          - "Title"
+          - "Platinum"
+          - "Gold"
+          - "Silver"
+          - "Bronze"
+
+      - name: annualPledgeAmount
+        type: currency
+        label: "Annual Pledge Amount"
+        description: >
+          Annual sponsorship pledge in dollars. Drives funder
+          reporting totals. Visible only when accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
+      - name: sponsorshipStartDate
+        type: date
+        label: "Sponsorship Start Date"
+        description: >
+          Date the current sponsorship arrangement began. Visible
+          only when accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
+      - name: sponsorshipRenewalDate
+        type: date
+        label: "Sponsorship Renewal Date"
+        description: >
+          Date the current sponsorship is up for renewal. Drives
+          the renewal-pipeline reports. Visible only when
+          accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
+      - name: sponsorNotes
+        type: wysiwyg
+        label: "Sponsor Notes"
+        description: >
+          Rich-text notes specific to the sponsor relationship.
+          Field-level access control restricted to Client
+          Administrator and above per the same Account Entity PRD
+          v1.8 Implementation Note pattern used by clientNotes;
+          configured post-deployment. Visible only when accountType
+          has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
     layout:
 
       detail:
