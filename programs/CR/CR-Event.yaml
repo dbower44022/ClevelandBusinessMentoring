@@ -90,6 +90,15 @@ entities:
           - "Networking"
           - "Other"
 
+      - name: eventFee
+        type: int
+        label: "Event Fee"
+        description: >
+          The fee charged for attending the event.
+        category: "Classification"
+        required: false
+
+
       # --- Section 3.2 — Venue and Access ---
 
       - name: venueCapacity

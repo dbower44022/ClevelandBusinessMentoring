@@ -48,3 +48,76 @@ entities:
       MN-MC-DD-001 for the relationship-level bool that the YAML
       schema does not currently express. See Contact Entity PRD
       v1.7.
+
+    fields:
+
+      # --- Section 4.1 — Identity and Contact Information ---
+
+      - name: contactType
+        type: multiEnum
+        label: "Contact Type"
+        description: >
+          Discriminator field for the Contact entity. Determines
+          which type-specific fields and panels are visible. A
+          Contact may hold any combination of values. Set based on
+          how the Contact enters the system (e.g., Mentor at
+          MR-APPLY submission, Client at MN-INTAKE submission). See
+          Contact Entity PRD v1.7 Section 3.1 and Entity Inventory
+          EI-2a.
+        category: "Identity and Contact Information"
+        required: true
+        audited: true
+        options:
+          - "Client"
+          - "Mentor"
+          - "Partner"
+          - "Administrator"
+          - "Presenter"
+          - "Donor"
+          - "Member"
+        style:
+          "Client": "primary"
+          "Mentor": "success"
+          "Partner": "info"
+          "Administrator": "warning"
+          "Presenter": "default"
+          "Donor": "default"
+          "Member": "default"
+
+      - name: preferredName
+        type: varchar
+        label: "Preferred Name"
+        description: >
+          The name the contact prefers to be called. Used in
+          communications when provided. Originally defined for
+          Client contacts; applicable to all contact types per
+          Contact PRD v1.7 Section 3.1. See PRD MN-INTAKE-DAT-011
+          and MR-APPLY-DAT-006.
+        category: "Identity and Contact Information"
+        required: false
+
+      - name: linkedInProfile
+        type: url
+        label: "LinkedIn Profile"
+        description: >
+          The contact's LinkedIn profile URL. Provides professional
+          background context. Defined for Client contacts at
+          MN-INTAKE and for Mentor contacts in MR per Contact PRD
+          v1.7 Section 3.1. See PRD MN-INTAKE-DAT-015 and
+          MR-APPLY-DAT-009.
+        category: "Identity and Contact Information"
+        required: false
+
+      - name: title
+        type: varchar
+        label: "Title"
+        description: >
+          The contact's LinkedIn profile URL. Provides professional
+          background context. Defined for Client contacts at
+          MN-INTAKE and for Mentor contacts in MR per Contact PRD
+          v1.7 Section 3.1. See PRD MN-INTAKE-DAT-015 and
+          MR-APPLY-DAT-009.
+        category: "Identity and Contact Information"
+        required: false
+
+
