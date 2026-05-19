@@ -250,6 +250,90 @@ entities:
         visibleWhen:
           - { field: accountType, op: contains, value: "Sponsor" }
 
+      # --- Partner Organization Fields ---
+      # Scaffolding to back the "Partner Profile" layout panel. The
+      # specific field set and option values are placeholders pending
+      # an MN Domain PRD section on Partner data requirements; the
+      # field shapes follow the Client/Sponsor pattern (category +
+      # visibleWhen accountType=Partner). Update with the real
+      # requirements when the PRD lands; the panel/category linkage
+      # is what's load-bearing for the validator.
+
+      - name: partnershipType
+        type: enum
+        label: "Partnership Type"
+        description: >
+          Nature of the organization's partnership relationship with
+          CBM. Drives partner reporting categories. Visible only
+          when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+        options:
+          - "Referral Partner"
+          - "Training Partner"
+          - "Community Partner"
+          - "Service Partner"
+          - "Funding Partner"
+
+      - name: partnershipStartDate
+        type: date
+        label: "Partnership Start Date"
+        description: >
+          Date the current partnership relationship began. Visible
+          only when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      - name: partnershipAgreementDate
+        type: date
+        label: "Partnership Agreement Date"
+        description: >
+          Date the formal partnership agreement / MOU was signed.
+          Drives compliance reports and renewal tracking. Visible
+          only when accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
+      - name: partnerContactCadence
+        type: enum
+        label: "Partner Contact Cadence"
+        description: >
+          How frequently CBM staff are expected to engage with this
+          partner organization. Drives relationship-management
+          reporting and reminder workflows. Visible only when
+          accountType has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+        options:
+          - "Monthly"
+          - "Quarterly"
+          - "Semi-Annually"
+          - "Annually"
+          - "As-Needed"
+
+      - name: partnerNotes
+        type: wysiwyg
+        label: "Partner Notes"
+        description: >
+          Rich-text notes specific to the partner relationship.
+          Field-level access control restricted to Client
+          Administrator and above per the same Account Entity PRD
+          v1.8 Implementation Note pattern used by clientNotes;
+          configured post-deployment. Visible only when accountType
+          has Partner.
+        category: "Partner Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Partner" }
+
     layout:
 
       detail:
