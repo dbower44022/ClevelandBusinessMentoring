@@ -1,0 +1,116 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentoring (MN) domain — Sponsor-conditional custom fields on the
+  native Account entity. Five fields: sponsorshipLevel,
+  annualPledgeAmount, sponsorshipStartDate, sponsorshipRenewalDate,
+  sponsorNotes. All five are visible only when accountType has
+  Sponsor per Account Entity PRD v1.8 dynamic-logic conventions.
+  The accountType discriminator is declared in CR-Account.yaml; this
+  file depends on the "Sponsor" value being present in that option
+  list.
+
+  These are placeholder field shapes pending an MN Domain PRD section
+  on Sponsor data requirements. The set was extracted from
+  MN-Account.yaml when the Sponsor/Partner accountType-conditional
+  fields were split into per-relationship-flavor files. The specific
+  field names and option values are likely to change once the PRD
+  lands; the load-bearing methodology element is the accountType
+  conditional discipline (every field gates on `accountType contains
+  "Sponsor"`).
+
+  SPLIT-NOTE: This file declares fields ONLY. The Account detail
+  layout is owned exclusively by MN-Account.yaml. Sponsor fields
+  exist on the Account entity after this file deploys but are not
+  placed on a labeled layout panel by YAML. An operator post-deploy
+  step adds a Sponsor Profile panel via the EspoCRM Layout Manager,
+  OR the operator folds those panels back into MN-Account.yaml's
+  layout block. The engine does not currently merge layouts across
+  files (EspoCRM stores one detail layout per entity, PUT replaces)
+  so split-file layouts are not viable until cross-file layout
+  aggregation is added to the engine.
+
+# Source: Mentoring Domain Product Requirements Document v1.0
+#         (04-01-26), Section 4 (Sponsor Organization — scaffolding
+#         pending real PRD section). Account Entity Product
+#         Requirements Document v1.8 Section 3.3 pattern.
+
+entities:
+
+  Account:
+    description: >
+      Native Company-type entity. This file contributes Sponsor-
+      conditional custom fields only. Client-conditional fields and
+      the Account detail layout are in MN-Account.yaml; Partner-
+      conditional fields are in MN-Partner.yaml. The accountType
+      discriminator value list (which must include "Sponsor") is
+      owned by CR-Account.yaml.
+
+    fields:
+
+      - name: sponsorshipLevel
+        type: enum
+        label: "Sponsorship Level"
+        description: >
+          Recognition tier for this sponsor organization. Drives
+          benefits package and recognition placement. Visible only
+          when accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+        options:
+          - "Title"
+          - "Platinum"
+          - "Gold"
+          - "Silver"
+          - "Bronze"
+
+      - name: annualPledgeAmount
+        type: currency
+        label: "Annual Pledge Amount"
+        description: >
+          Annual sponsorship pledge in dollars. Drives funder
+          reporting totals. Visible only when accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
+      - name: sponsorshipStartDate
+        type: date
+        label: "Sponsorship Start Date"
+        description: >
+          Date the current sponsorship arrangement began. Visible
+          only when accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
+      - name: sponsorshipRenewalDate
+        type: date
+        label: "Sponsorship Renewal Date"
+        description: >
+          Date the current sponsorship is up for renewal. Drives
+          the renewal-pipeline reports. Visible only when
+          accountType has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }
+
+      - name: sponsorNotes
+        type: wysiwyg
+        label: "Sponsor Notes"
+        description: >
+          Rich-text notes specific to the sponsor relationship.
+          Field-level access control restricted to Client
+          Administrator and above per the same Account Entity PRD
+          v1.8 Implementation Note pattern used by clientNotes;
+          configured post-deployment. Visible only when accountType
+          has Sponsor.
+        category: "Sponsor Profile"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Sponsor" }

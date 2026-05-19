@@ -2,10 +2,12 @@ version: "1.0"
 content_version: "1.0.0"
 description: >
   Mentoring (MN) domain — custom field additions to the native
-  Account entity for Client Organization records. Five fields:
-  organizationType, businessStage, industrySector, industrySubsector,
-  clientNotes. All five are visible only when accountType has Client
-  per Account Entity PRD v1.8 dynamic-logic conventions. The
+  Account entity for Client Organization records. Six Client-side
+  fields: organizationType, companyType, businessStage,
+  industrySector, industrySubsector, clientNotes; four Account-
+  level external-reference fields surfacing partner/sponsor
+  context on the Account record: partnerType,
+  partnerPrimaryContact, sponsorType, sponsorPrimaryContact. The
   industrySector value list is the same 20 NAICS sector titles used
   by Mentor Contact.industrySectors per MR-Y9-EXC-001 (cross-entity
   alignment requirement). The industrySubsector dependent-filter
@@ -16,12 +18,36 @@ description: >
   This file is generated at the unattended Phase 9 multi-domain
   run's discretion: the run prompt explicitly listed three MN
   outputs (Contact, Engagement, Session) without naming an Account
-  output, but the MN Domain PRD requires these five Client
-  Organization custom fields on Account and they are MN-domain-
-  owned per the Account Entity PRD's "Domains: MN" annotations on
-  each field. Generating the file is the conservative choice that
-  keeps the MN PRD covered. See EXCEPTIONS.md MN-Y9-EXC-006 for
-  the scope-deviation record.
+  output, but the MN Domain PRD requires these Client Organization
+  custom fields on Account and they are MN-domain-owned per the
+  Account Entity PRD's "Domains: MN" annotations on each field.
+  Generating the file is the conservative choice that keeps the MN
+  PRD covered. See EXCEPTIONS.md MN-Y9-EXC-006 for the scope-
+  deviation record.
+
+  SPLIT-NOTE: MN-Sponsor.yaml and MN-Partner.yaml carry the
+  detailed accountType-conditional fields for Sponsor and Partner
+  records (level/amount/dates/notes). THIS file carries a small
+  set of Account-level "external reference" fields — partnerType,
+  partnerPrimaryContact, sponsorType, sponsorPrimaryContact —
+  that surface the partner/sponsor classification and primary
+  contact directly on the Account detail layout. These four are
+  intentionally lightweight and parallel to MN-Partner.yaml /
+  MN-Sponsor.yaml fields; the detailed fields in those sibling
+  files exist on the Account entity post-deploy but are NOT placed
+  on the YAML-managed detail layout (EspoCRM stores one detail
+  layout per entity; only this file writes it). The detailed
+  fields surface either via the EspoCRM Layout Manager (operator
+  post-deploy step) or once cross-file layout aggregation lands in
+  the deploy engine.
+
+  The partnerPrimaryContact and sponsorPrimaryContact fields are
+  declared as varchar today as a placeholder. The methodologically
+  correct shape is a manyToOne relationship to Contact (rendered
+  as a Contact link field in EspoCRM); the YAML schema does not
+  allow `type: link` so the relationship form would live in the
+  top-level `relationships:` block. Deferred to a follow-up after
+  the MN Domain PRD specifies the primary-contact link semantics.
 
 # Source: Mentoring Domain Product Requirements Document v1.0
 #         (04-01-26), Section 4 (Client Organization entity).
@@ -33,16 +59,18 @@ entities:
   Account:
     description: >
       Native Company-type entity. The single repository for all
-      organizations known to CBM. This file defines the five
-      MN-owned custom fields needed for Client Organization
-      records (created at MN-INTAKE). The accountType discriminator
-      is declared in CR-Account.yaml; this file does not redefine
-      it but depends on the "Client" value being present in the
-      option list. Native fields name (Business Name —
-      MN-INTAKE-DAT-001), website (MN-INTAKE-DAT-002), and
-      billingAddress composite (MN-INTAKE-DAT-003) are inherited
-      from the Company entity type and require no YAML declaration.
-      See Account Entity PRD v1.8 Section 3.3.
+      organizations known to CBM. This file defines the MN-owned
+      custom fields needed for Client Organization records
+      (created at MN-INTAKE) plus four Account-level external-
+      reference fields for partner/sponsor classification. The
+      accountType discriminator is declared in CR-Account.yaml;
+      this file does not redefine it but depends on the "Client",
+      "Partner", and "Sponsor" values being present in its option
+      list. Native fields name (Business Name — MN-INTAKE-DAT-001),
+      website (MN-INTAKE-DAT-002), and billingAddress composite
+      (MN-INTAKE-DAT-003) are inherited from the Company entity
+      type and require no YAML declaration. See Account Entity PRD
+      v1.8 Section 3.3.
 
     fields:
 
@@ -174,98 +202,28 @@ entities:
         visibleWhen:
           - { field: accountType, op: contains, value: "Client" }
 
-      # --- Sponsor Organization Fields ---
-      # Scaffolding to back the "Sponsor Profile" layout panel. The
-      # specific field set and option values are placeholders pending
-      # an MN Domain PRD section on Sponsor data requirements; the
-      # field shapes follow the Client-fields pattern (category +
-      # visibleWhen accountType=Sponsor). Update with the real
-      # requirements when the PRD lands; the panel/category linkage
-      # is what's load-bearing for the validator.
+      # --- Partner Profile External-Reference Fields ---
+      # Lightweight summary fields visible on the Account detail
+      # layout to give CBM staff at-a-glance visibility into the
+      # partner classification and primary contact for any Account
+      # whose accountType has Partner. The detailed partner data
+      # (start date, agreement date, contact cadence, notes) lives
+      # in MN-Partner.yaml. These two fields exist on Account so
+      # the Partner Profile layout panel has content the validator
+      # can resolve via category lookup (file-scoped). Name choices:
+      # `partnerType` (rather than `partnershipType`) keeps these
+      # distinct from MN-Partner.yaml's `partnershipType` field to
+      # avoid duplicate field declarations on the Account entity.
 
-      - name: sponsorshipLevel
-        type: enum
-        label: "Sponsorship Level"
-        description: >
-          Recognition tier for this sponsor organization. Drives
-          benefits package and recognition placement. Visible only
-          when accountType has Sponsor.
-        category: "Sponsor Profile"
-        required: false
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Sponsor" }
-        options:
-          - "Title"
-          - "Platinum"
-          - "Gold"
-          - "Silver"
-          - "Bronze"
-
-      - name: annualPledgeAmount
-        type: currency
-        label: "Annual Pledge Amount"
-        description: >
-          Annual sponsorship pledge in dollars. Drives funder
-          reporting totals. Visible only when accountType has Sponsor.
-        category: "Sponsor Profile"
-        required: false
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Sponsor" }
-
-      - name: sponsorshipStartDate
-        type: date
-        label: "Sponsorship Start Date"
-        description: >
-          Date the current sponsorship arrangement began. Visible
-          only when accountType has Sponsor.
-        category: "Sponsor Profile"
-        required: false
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Sponsor" }
-
-      - name: sponsorshipRenewalDate
-        type: date
-        label: "Sponsorship Renewal Date"
-        description: >
-          Date the current sponsorship is up for renewal. Drives
-          the renewal-pipeline reports. Visible only when
-          accountType has Sponsor.
-        category: "Sponsor Profile"
-        required: false
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Sponsor" }
-
-      - name: sponsorNotes
-        type: wysiwyg
-        label: "Sponsor Notes"
-        description: >
-          Rich-text notes specific to the sponsor relationship.
-          Field-level access control restricted to Client
-          Administrator and above per the same Account Entity PRD
-          v1.8 Implementation Note pattern used by clientNotes;
-          configured post-deployment. Visible only when accountType
-          has Sponsor.
-        category: "Sponsor Profile"
-        required: false
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Sponsor" }
-
-      # --- Partner Organization Fields ---
-      # Scaffolding to back the "Partner Profile" layout panel. The
-      # specific field set and option values are placeholders pending
-      # an MN Domain PRD section on Partner data requirements; the
-      # field shapes follow the Client/Sponsor pattern (category +
-      # visibleWhen accountType=Partner). Update with the real
-      # requirements when the PRD lands; the panel/category linkage
-      # is what's load-bearing for the validator.
-
-      - name: partnershipType
+      - name: partnerType
         type: enum
         label: "Partnership Type"
         description: >
-          Nature of the organization's partnership relationship with
-          CBM. Drives partner reporting categories. Visible only
-          when accountType has Partner.
+          Top-level partnership classification surfaced on the
+          Account record. Mirrors the partnership-type taxonomy in
+          MN-Partner.yaml; treat this as the Account-level summary
+          and the MN-Partner.yaml partnershipType as the detail
+          record. Visible only when accountType has Partner.
         category: "Partner Profile"
         required: false
         visibleWhen:
@@ -277,62 +235,63 @@ entities:
           - "Service Partner"
           - "Funding Partner"
 
-      - name: partnershipStartDate
-        type: date
-        label: "Partnership Start Date"
+      - name: partnerPrimaryContact
+        type: varchar
+        label: "Partnership Primary Contact"
         description: >
-          Date the current partnership relationship began. Visible
-          only when accountType has Partner.
+          Name (or email) of the primary Contact representing this
+          Account in its Partner relationship with CBM. Declared as
+          varchar today as a placeholder; the methodologically
+          correct shape is a manyToOne relationship to Contact
+          rendered as a Contact link field in EspoCRM — the YAML
+          schema does not allow `type: link`, so a future revision
+          would move this to a top-level `relationships:` block.
+          Visible only when accountType has Partner.
         category: "Partner Profile"
         required: false
         visibleWhen:
           - { field: accountType, op: contains, value: "Partner" }
 
-      - name: partnershipAgreementDate
-        type: date
-        label: "Partnership Agreement Date"
-        description: >
-          Date the formal partnership agreement / MOU was signed.
-          Drives compliance reports and renewal tracking. Visible
-          only when accountType has Partner.
-        category: "Partner Profile"
-        required: false
-        visibleWhen:
-          - { field: accountType, op: contains, value: "Partner" }
+      # --- Sponsor Profile External-Reference Fields ---
+      # Same shape as the Partner Profile reference block. The
+      # detailed sponsor data (level, pledge amount, dates, notes)
+      # lives in MN-Sponsor.yaml. These two fields exist on Account
+      # so the Sponsor Profile layout panel has content the
+      # validator can resolve via category lookup.
 
-      - name: partnerContactCadence
+      - name: sponsorType
         type: enum
-        label: "Partner Contact Cadence"
+        label: "Sponsor Type"
         description: >
-          How frequently CBM staff are expected to engage with this
-          partner organization. Drives relationship-management
-          reporting and reminder workflows. Visible only when
-          accountType has Partner.
-        category: "Partner Profile"
+          Top-level sponsor classification — the kind of
+          organization providing sponsorship. Distinct from
+          MN-Sponsor.yaml's sponsorshipLevel, which captures the
+          recognition tier. Visible only when accountType has
+          Sponsor.
+        category: "Sponsor Profile"
         required: false
         visibleWhen:
-          - { field: accountType, op: contains, value: "Partner" }
+          - { field: accountType, op: contains, value: "Sponsor" }
         options:
-          - "Monthly"
-          - "Quarterly"
-          - "Semi-Annually"
-          - "Annually"
-          - "As-Needed"
+          - "Corporate"
+          - "Foundation"
+          - "Government"
+          - "Individual"
+          - "Other"
 
-      - name: partnerNotes
-        type: wysiwyg
-        label: "Partner Notes"
+      - name: sponsorPrimaryContact
+        type: varchar
+        label: "Sponsor Primary Contact"
         description: >
-          Rich-text notes specific to the partner relationship.
-          Field-level access control restricted to Client
-          Administrator and above per the same Account Entity PRD
-          v1.8 Implementation Note pattern used by clientNotes;
-          configured post-deployment. Visible only when accountType
-          has Partner.
-        category: "Partner Profile"
+          Name (or email) of the primary Contact representing this
+          Account in its Sponsor relationship with CBM. Same
+          placeholder/varchar caveat as partnerPrimaryContact — a
+          proper Contact link belongs in a future `relationships:`
+          revision. Visible only when accountType has Sponsor.
+        category: "Sponsor Profile"
         required: false
         visibleWhen:
-          - { field: accountType, op: contains, value: "Partner" }
+          - { field: accountType, op: contains, value: "Sponsor" }
 
     layout:
 
@@ -353,10 +312,14 @@ entities:
 
           - label: "Partner Profile"
             description: >
-              Mentoring-domain client organization profile fields.
-              Visible only when accountType has Client. Source:
-              Account Entity PRD v1.8 Section 3.3 and Mentoring
-              Domain PRD v1.0 Section 4 (Client Organization).
+              Account-level external-reference fields for partner
+              organizations. Two fields — partnerType,
+              partnerPrimaryContact — surface the partnership
+              classification and primary contact on the Account
+              detail layout. Detailed partner data (start date,
+              agreement date, contact cadence, notes) lives in
+              MN-Partner.yaml and is not placed on this layout.
+              Visible only when accountType has Partner.
             visibleWhen:
               - { field: accountType, op: contains, value: "Partner" }
             tabs:
@@ -365,10 +328,14 @@ entities:
 
           - label: "Sponsor Profile"
             description: >
-              Mentoring-domain client organization profile fields.
-              Visible only when accountType has Client. Source:
-              Account Entity PRD v1.8 Section 3.3 and Mentoring
-              Domain PRD v1.0 Section 4 (Client Organization).
+              Account-level external-reference fields for sponsor
+              organizations. Two fields — sponsorType,
+              sponsorPrimaryContact — surface the sponsor
+              classification and primary contact on the Account
+              detail layout. Detailed sponsor data (level, pledge
+              amount, dates, notes) lives in MN-Sponsor.yaml and is
+              not placed on this layout. Visible only when
+              accountType has Sponsor.
             visibleWhen:
               - { field: accountType, op: contains, value: "Sponsor" }
             tabs:
