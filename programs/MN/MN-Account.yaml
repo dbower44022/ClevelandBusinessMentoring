@@ -25,21 +25,23 @@ description: >
   PRD covered. See EXCEPTIONS.md MN-Y9-EXC-006 for the scope-
   deviation record.
 
-  SPLIT-NOTE: MN-Sponsor.yaml and MN-Partner.yaml carry the
-  detailed accountType-conditional fields for Sponsor and Partner
-  records (level/amount/dates/notes). THIS file carries a small
-  set of Account-level "external reference" fields — partnerType,
-  partnerPrimaryContact, sponsorType, sponsorPrimaryContact —
-  that surface the partner/sponsor classification and primary
-  contact directly on the Account detail layout. These four are
-  intentionally lightweight and parallel to MN-Partner.yaml /
-  MN-Sponsor.yaml fields; the detailed fields in those sibling
-  files exist on the Account entity post-deploy but are NOT placed
-  on the YAML-managed detail layout (EspoCRM stores one detail
-  layout per entity; only this file writes it). The detailed
-  fields surface either via the EspoCRM Layout Manager (operator
-  post-deploy step) or once cross-file layout aggregation lands in
-  the deploy engine.
+  SPLIT-NOTE: MN-Partner-TEST.yaml and MN-Sponsor-TEST.yaml
+  (exploratory test scaffolding) create separate custom entities
+  PartnerProfile and SponsorProfile that hold the detailed per-
+  partner / per-sponsor attribute records. THIS file carries a
+  small set of Account-level "foreign reference" fields —
+  partnerType, partnerPrimaryContact, sponsorType,
+  sponsorPrimaryContact — that surface the partner/sponsor
+  classification and primary contact directly on the Account
+  detail layout, so CBM staff see key partner/sponsor context
+  without navigating to the PartnerProfile / SponsorProfile
+  record. These are currently denormalized fields (enum +
+  varchar) rather than proper Account → PartnerProfile /
+  Account → SponsorProfile relationship links; converting to
+  relationships is a follow-up once the PartnerProfile /
+  SponsorProfile entities and their Account relationships are
+  evaluated against a running EspoCRM and the cardinality
+  decision is made.
 
   The partnerPrimaryContact and sponsorPrimaryContact fields are
   declared as varchar today as a placeholder. The methodologically
@@ -187,9 +189,9 @@ entities:
         optionsDeferred: true
         options: []
 
-      - name: clientNotes
+      - name: companyNotes
         type: wysiwyg
-        label: "Client Notes"
+        label: "Company Notes"
         description: >
           Rich-text notes specific to the client relationship.
           Field-level access control restricted to Client

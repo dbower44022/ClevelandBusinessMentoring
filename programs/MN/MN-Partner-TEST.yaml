@@ -1,0 +1,148 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentoring (MN) domain — TEST YAML. Creates a new PartnerProfile
+  custom entity (Base type) that holds the full set of partner-
+  organization attributes as records of its own type, rather than
+  contributing accountType-conditional fields back onto Account.
+
+  This file is an EXPLORATORY scaffold, not a methodology-approved
+  artifact. It is used to evaluate the "Partner Profile as its own
+  entity, denormalized reference fields on Account" pattern against
+  a running EspoCRM instance. The Account-side counterpart fields
+  (partnerType, partnerPrimaryContact) live in MN-Account.yaml and
+  are intentionally lightweight; they give CBM staff at-a-glance
+  partner context on the Account record without forcing a
+  navigation into the PartnerProfile detail.
+
+  Five attributes are carried on PartnerProfile:
+  partnershipType, partnershipStartDate, partnershipAgreementDate,
+  partnerContactCadence, partnerNotes. Field shapes and option
+  values are placeholders pending an MN Domain PRD section on
+  Partner data requirements. Because PartnerProfile is its own
+  entity, fields are unconditionally visible — accountType-
+  conditional visibility is no longer relevant; every record IS a
+  PartnerProfile by virtue of its existence.
+
+  The PartnerProfile → Account relationship (1:1, modeled as
+  manyToOne) is declared in the `relationships:` block at the
+  bottom of this file. Cardinality note: 1:1 is the intended
+  semantic (each Account has at most one PartnerProfile; each
+  PartnerProfile belongs to exactly one Account), but the YAML
+  schema only exposes oneToMany / manyToOne / manyToMany.
+  manyToOne is the closest fit (FK on the child PartnerProfile
+  pointing at its parent Account); the 1:1 uniqueness invariant
+  must be enforced via operator discipline + a post-deploy
+  duplicate-check rule on PartnerProfile.account (the YAML schema
+  does not currently write duplicate-check rules — see CLAUDE.md
+  "YAML Schema Rules" §3 — so this is a MANUAL-CONFIG item).
+
+# Source: Mentoring Domain Product Requirements Document v1.0
+#         (04-01-26), Section 4 (Partner Organization — scaffolding
+#         pending real PRD section). Pattern reference: Engagement
+#         Entity in MN-Engagement.yaml for the new-custom-entity
+#         declaration shape (action: create + type: Base + settings).
+
+entities:
+
+  PartnerProfile:
+    description: >
+      Custom Base-type entity. Holds the per-partner attribute
+      record for an organization that has a Partner relationship
+      with CBM. One PartnerProfile per partnering Account (planned
+      relationship, see file description). Fields are unconditional
+      because every record IS a PartnerProfile.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Partner Profile"
+      labelPlural: "Partner Profiles"
+      stream: true
+      disabled: false
+
+    fields:
+
+      - name: partnershipType
+        type: enum
+        label: "Partnership Type"
+        description: >
+          Nature of the organization's partnership relationship
+          with CBM. Drives partner reporting categories.
+        category: "Partner Profile"
+        required: false
+        options:
+          - "Referral Partner"
+          - "Training Partner"
+          - "Community Partner"
+          - "Service Partner"
+          - "Funding Partner"
+
+      - name: partnershipStartDate
+        type: date
+        label: "Partnership Start Date"
+        description: >
+          Date the current partnership relationship began.
+        category: "Partner Profile"
+        required: false
+
+      - name: partnershipAgreementDate
+        type: date
+        label: "Partnership Agreement Date"
+        description: >
+          Date the formal partnership agreement / MOU was signed.
+          Drives compliance reports and renewal tracking.
+        category: "Partner Profile"
+        required: false
+
+      - name: partnerContactCadence
+        type: enum
+        label: "Partner Contact Cadence"
+        description: >
+          How frequently CBM staff are expected to engage with this
+          partner organization. Drives relationship-management
+          reporting and reminder workflows.
+        category: "Partner Profile"
+        required: false
+        options:
+          - "Monthly"
+          - "Quarterly"
+          - "Semi-Annually"
+          - "Annually"
+          - "As-Needed"
+
+      - name: partnerNotes
+        type: wysiwyg
+        label: "Partner Notes"
+        description: >
+          Rich-text notes specific to the partner relationship.
+          Field-level access control restricted to Client
+          Administrator and above per the same Account Entity PRD
+          v1.8 Implementation Note pattern used by clientNotes;
+          configured post-deployment.
+        category: "Partner Profile"
+        required: false
+
+relationships:
+
+  - name: partnerProfileAccount
+    description: >
+      Links each PartnerProfile record to its parent Account.
+      Semantically 1:1 (each Account has at most one PartnerProfile;
+      each PartnerProfile belongs to exactly one Account); modeled
+      as manyToOne because the YAML schema does not support
+      oneToOne. The FK lives on the child PartnerProfile side
+      (`account` link); the inverse on Account is named
+      `partnerProfile` (singular) to suggest the 1:1 intent even
+      though EspoCRM treats it as a 0..n collection panel under
+      the hood. 1:1 uniqueness is enforced via operator discipline
+      + a post-deploy duplicate-check rule on PartnerProfile.account
+      (manual config — the YAML schema does not write
+      duplicate-check rules).
+    entity: PartnerProfile
+    entityForeign: Account
+    linkType: manyToOne
+    link: account
+    linkForeign: partnerProfile
+    label: "Account"
+    labelForeign: "Partner Profile"
+    audited: true

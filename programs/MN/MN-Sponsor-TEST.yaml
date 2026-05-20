@@ -1,0 +1,141 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Mentoring (MN) domain — TEST YAML. Creates a new SponsorProfile
+  custom entity (Base type) that holds the full set of sponsor-
+  organization attributes as records of its own type, rather than
+  contributing accountType-conditional fields back onto Account.
+
+  This file is an EXPLORATORY scaffold, not a methodology-approved
+  artifact. It is used to evaluate the "Sponsor Profile as its own
+  entity, denormalized reference fields on Account" pattern against
+  a running EspoCRM instance. The Account-side counterpart fields
+  (sponsorType, sponsorPrimaryContact) live in MN-Account.yaml and
+  are intentionally lightweight; they give CBM staff at-a-glance
+  sponsor context on the Account record without forcing a
+  navigation into the SponsorProfile detail.
+
+  Five attributes are carried on SponsorProfile:
+  sponsorshipLevel, annualPledgeAmount, sponsorshipStartDate,
+  sponsorshipRenewalDate, sponsorNotes. Field shapes and option
+  values are placeholders pending an MN Domain PRD section on
+  Sponsor data requirements. Because SponsorProfile is its own
+  entity, fields are unconditionally visible — accountType-
+  conditional visibility is no longer relevant; every record IS a
+  SponsorProfile by virtue of its existence.
+
+  The SponsorProfile → Account relationship (1:1, modeled as
+  manyToOne) is declared in the `relationships:` block at the
+  bottom of this file. Cardinality note: 1:1 is the intended
+  semantic (each Account has at most one SponsorProfile; each
+  SponsorProfile belongs to exactly one Account), but the YAML
+  schema only exposes oneToMany / manyToOne / manyToMany.
+  manyToOne is the closest fit (FK on the child SponsorProfile
+  pointing at its parent Account); the 1:1 uniqueness invariant
+  must be enforced via operator discipline + a post-deploy
+  duplicate-check rule on SponsorProfile.account (the YAML schema
+  does not currently write duplicate-check rules — see CLAUDE.md
+  "YAML Schema Rules" §3 — so this is a MANUAL-CONFIG item).
+
+# Source: Mentoring Domain Product Requirements Document v1.0
+#         (04-01-26), Section 4 (Sponsor Organization — scaffolding
+#         pending real PRD section). Pattern reference: Engagement
+#         Entity in MN-Engagement.yaml for the new-custom-entity
+#         declaration shape (action: create + type: Base + settings).
+
+entities:
+
+  SponsorProfile:
+    description: >
+      Custom Base-type entity. Holds the per-sponsor attribute
+      record for an organization that has a Sponsor relationship
+      with CBM. One SponsorProfile per sponsoring Account (planned
+      relationship, see file description). Fields are unconditional
+      because every record IS a SponsorProfile.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Sponsor Profile"
+      labelPlural: "Sponsor Profiles"
+      stream: true
+      disabled: false
+
+    fields:
+
+      - name: sponsorshipLevel
+        type: enum
+        label: "Sponsorship Level"
+        description: >
+          Recognition tier for this sponsor organization. Drives
+          benefits package and recognition placement.
+        category: "Sponsor Profile"
+        required: false
+        options:
+          - "Title"
+          - "Platinum"
+          - "Gold"
+          - "Silver"
+          - "Bronze"
+
+      - name: annualPledgeAmount
+        type: currency
+        label: "Annual Pledge Amount"
+        description: >
+          Annual sponsorship pledge in dollars. Drives funder
+          reporting totals.
+        category: "Sponsor Profile"
+        required: false
+
+      - name: sponsorshipStartDate
+        type: date
+        label: "Sponsorship Start Date"
+        description: >
+          Date the current sponsorship arrangement began.
+        category: "Sponsor Profile"
+        required: false
+
+      - name: sponsorshipRenewalDate
+        type: date
+        label: "Sponsorship Renewal Date"
+        description: >
+          Date the current sponsorship is up for renewal. Drives
+          the renewal-pipeline reports.
+        category: "Sponsor Profile"
+        required: false
+
+      - name: sponsorNotes
+        type: wysiwyg
+        label: "Sponsor Notes"
+        description: >
+          Rich-text notes specific to the sponsor relationship.
+          Field-level access control restricted to Client
+          Administrator and above per the same Account Entity PRD
+          v1.8 Implementation Note pattern used by clientNotes;
+          configured post-deployment.
+        category: "Sponsor Profile"
+        required: false
+
+relationships:
+
+  - name: sponsorProfileAccount
+    description: >
+      Links each SponsorProfile record to its parent Account.
+      Semantically 1:1 (each Account has at most one SponsorProfile;
+      each SponsorProfile belongs to exactly one Account); modeled
+      as manyToOne because the YAML schema does not support
+      oneToOne. The FK lives on the child SponsorProfile side
+      (`account` link); the inverse on Account is named
+      `sponsorProfile` (singular) to suggest the 1:1 intent even
+      though EspoCRM treats it as a 0..n collection panel under
+      the hood. 1:1 uniqueness is enforced via operator discipline
+      + a post-deploy duplicate-check rule on SponsorProfile.account
+      (manual config — the YAML schema does not write
+      duplicate-check rules).
+    entity: SponsorProfile
+    entityForeign: Account
+    linkType: manyToOne
+    link: account
+    linkForeign: sponsorProfile
+    label: "Account"
+    labelForeign: "Sponsor Profile"
+    audited: true
