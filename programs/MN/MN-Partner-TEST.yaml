@@ -146,3 +146,18 @@ relationships:
     label: "Account"
     labelForeign: "Partner Profile"
     audited: true
+
+  - name: partnerContacts
+    description: >
+      Links a PartnerProfile record to the Contacts at the partner
+      organization. One PartnerProfile has many Contacts; each
+      Contact points back to a single PartnerProfile via the
+      `partnerProfile` inverse link.
+    entity: PartnerProfile
+    entityForeign: Contact
+    linkType: oneToMany
+    link: contacts
+    linkForeign: partnerProfile
+    label: "Partner Company"
+    labelForeign: "Partner Profile"
+    audited: true
