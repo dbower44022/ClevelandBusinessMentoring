@@ -88,6 +88,12 @@ Northeast Ohio.
 
 ---
 
+## Working conventions
+
+**Push convention.** Claude.ai sandbox commits live in an ephemeral container Doug cannot access; in the sandbox, Claude commits AND pushes together in the same turn — a held commit between turns is a lost commit. Claude Code commits land in Doug's local clone, which Doug reviews before pushing; in Claude Code, Claude commits and Doug pushes. Both surfaces read this file; the rule is the same regardless of which one is reading it.
+
+---
+
 ## Known State — Requirements Tab Intentionally Empty (decided 05-02-26)
 
 The CRM Builder application's Requirements tab Dashboard reads work
