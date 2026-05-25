@@ -1,0 +1,158 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of ClientProfile captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  ClientProfile:
+    action: create
+    type: Base
+    labelSingular: Client
+    labelPlural: Clients
+    stream: true
+    fields:
+    - name: clientContactEmail
+      type: foreign
+      label: Contact Email
+      readOnly: true
+    - name: industrySector
+      type: enum
+      label: Industry Sector
+      options:
+      - Agriculture, Forestry, Fishing and Hunting
+      - Mining, Quarrying, and Oil and Gas Extraction
+      - Utilities
+      - Construction
+      - Manufacturing
+      - Wholesale Trade
+      - Retail Trade
+      - Transportation and Warehousing
+      - Information
+      - Finance and Insurance
+      - Real Estate and Rental and Leasing
+      - Professional, Scientific, and Technical Services
+      - Management of Companies and Enterprises
+      - Administrative and Support and Waste Management
+      - Educational Services
+      - Health Care and Social Assistance
+      - Arts, Entertainment, and Recreation
+      - Accommodation and Food Services
+      - Other Services (except Public Administration)
+      - Public Administration
+      maxLength: 100
+    - name: clientRace
+      type: enum
+      label: Client Race
+      options:
+      - ''
+      - American Indian or Alaska Native
+      - Asian
+      - Black or African American
+      - Native Hawaiin or Other Pacific Islander
+      - White
+      maxLength: 100
+    - name: clientEthnicity
+      type: enum
+      label: Client Ethnicity
+      options:
+      - ''
+      - Hispanic or Latino
+      - Not Hispanic or Latino
+      maxLength: 100
+    - name: clientVeteranStatus
+      type: enum
+      label: Veteran Status
+      options:
+      - ''
+      - No military, Reserver, or National Guard service
+      - Veteran
+      - Service Disabled Veteran
+      - Active Duty
+      - Member of Reserve
+      - Member of National Guard
+      - Spouse of Military Member
+      maxLength: 100
+    - name: entityType
+      type: enum
+      label: Legal Entity Type
+      options:
+      - ''
+      - Sole Proprietorship
+      - S-Corporation
+      - Partnership
+      - LLC
+      - Corporation
+      - Other
+      maxLength: 100
+    - name: legalEntityType
+      type: enum
+      label: Legal Entity Type
+      options:
+      - Sole Proprietorship
+      - General Partnership
+      - Limited Partnership
+      - Limited Liability Partnership (LLP)
+      - Limited Liability Company (LLC)
+      - S-Corporation
+      - C-Corporation
+      - Nonprofit Corporation
+      - Benefit Corporation (B-Corp)
+      - Cooperative
+      - Not Yet Formed
+      - Other
+      maxLength: 100
+    - name: stateOfFormation
+      type: varchar
+      label: State of Formation
+      maxLength: 2
+    - name: formationDate
+      type: date
+      label: Formation Date
+    - name: yearFounded
+      type: int
+      label: Year Founded
+      min: 1900
+      max: 2099
+    - name: federalEinOnFile
+      type: bool
+      label: Federal EIN Obtained
+    - name: ohioVendorsLicenseOnFile
+      type: bool
+      label: Ohio Vendor's License Obtained
+    - name: registeredOnSamGov
+      type: bool
+      label: Registered on SAM.gov
+    - name: localLicensesAndPermits
+      type: text
+      label: Local Licenses and Permits Held
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          tabBreak: true
+          tabLabel: Overview
+          rows:
+          - - name
+            - linkedCompany
+          - - description
+          - - clientcontact
+            - clientContactEmail
+        - label: Advanced Profile
+          tabBreak: true
+          tabLabel: Adv Profile
+          rows:
+          - - clientRace
+            - clientEthnicity
+          - - clientVeteranStatus
+            - legalEntityType
+          - - federalEinOnFile
+            - localLicensesAndPermits
+          - - ohioVendorsLicenseOnFile
+            - registeredOnSamGov
+          - - stateOfFormation
+            - yearFounded
+      list:
+        columns:
+        - field: name
+        - field: clientcontact
+          width: 16
+        - field: createdAt
+          width: 16

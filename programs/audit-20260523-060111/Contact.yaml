@@ -1,0 +1,74 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Contact captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Contact:
+    fields:
+    - name: clientContact
+      type: linkOne
+      label: CBM Client Profile
+    - name: mentorProfile
+      type: linkOne
+      label: Mentor Profile
+    - name: contactType
+      type: multiEnum
+      label: Contact Type
+      default:
+      - ''
+      audited: true
+      options:
+      - ''
+      - Client
+      - Mentor
+      - Partner
+      - Administrator
+      - Presenter
+      - Donor
+      - Member
+      style:
+        Client: primary
+        Mentor: success
+        Partner: info
+        Administrator: warning
+    - name: preferredName
+      type: varchar
+      label: Preferred Name
+    - name: linkedInProfile
+      type: url
+      label: LinkedIn Profile
+    - name: primaryCompany
+      type: link
+      label: Client Company
+    - name: partnerProfile
+      type: link
+      label: Partner Profile
+    - name: sponsorProfile
+      type: link
+      label: Sponsor Profile
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - salutationName
+            - firstName
+            - lastName
+            - preferredName
+          - - contactType
+            - accounts
+          - - emailAddress
+            - phoneNumber
+          - - address
+            - linkedInProfile
+            - doNotCall
+          - - description
+      list:
+        columns:
+        - field: name
+        - field: account
+          width: 25
+        - field: contactType
+          width: 16
+        - field: emailAddress
+          width: 20
+        - field: phoneNumber
+          width: 18

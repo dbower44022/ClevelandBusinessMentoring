@@ -1,0 +1,38 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Lead captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Lead:
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - accountName
+          - - emailAddress
+            - phoneNumber
+          - - title
+            - website
+          - - address
+            - null
+        - label: Details
+          rows:
+          - - status
+            - source
+          - - opportunityAmount
+            - campaign
+          - - industry
+            - null
+          - - description
+      list:
+        columns:
+        - field: name
+        - field: status
+          width: 15
+        - field: emailAddress
+          width: 20
+        - field: assignedUser
+          width: 18
+        - field: createdAt
+          width: 13

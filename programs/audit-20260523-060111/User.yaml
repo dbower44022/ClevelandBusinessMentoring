@@ -1,0 +1,28 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of User captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  User:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - userName
+            - null
+          - - name
+            - title
+          - - emailAddress
+            - phoneNumber
+          - - gender
+            - null
+      list:
+        columns:
+        - field: name
+        - field: userName
+          width: 20
+        - field: title
+          width: 18
+        - field: emailAddress
+          width: 20
+        - field: isActive
+          width: 10

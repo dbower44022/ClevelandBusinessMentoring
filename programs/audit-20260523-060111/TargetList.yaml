@@ -1,0 +1,21 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of TargetList captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  TargetList:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - entryCount
+          - - category
+            - optedOutCount
+          - - description
+      list:
+        columns:
+        - field: name
+        - field: entryCount
+          width: 20
+        - field: createdAt
+          width: 20

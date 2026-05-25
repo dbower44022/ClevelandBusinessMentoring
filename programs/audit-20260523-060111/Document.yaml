@@ -1,0 +1,33 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Document captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Document:
+    fields:
+    - name: clientEngagement
+      type: link
+      label: Engagement
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - file
+            - null
+          - - name
+            - folder
+        - label: Details
+          rows:
+          - - type
+            - publishDate
+          - - status
+            - expirationDate
+          - - description
+      list:
+        columns:
+        - field: name
+        - field: file
+          width: 10
+        - field: status
+          width: 15
+        - field: createdAt
+          width: 18

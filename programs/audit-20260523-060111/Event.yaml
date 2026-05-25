@@ -1,0 +1,103 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Event captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Event:
+    action: create
+    type: Event
+    labelSingular: Event
+    labelPlural: Events
+    stream: true
+    fields:
+    - name: format
+      type: enum
+      label: Format
+      required: true
+      default: Virtual
+      options:
+      - In-Person
+      - Virtual
+      - Hybrid
+      maxLength: 100
+    - name: topic
+      type: enum
+      label: Topic
+      options:
+      - Business Fundamentals
+      - Marketing & Sales
+      - Finance & Accounting
+      - Legal & Compliance
+      - Operations
+      - Technology & Digital
+      - Leadership & People
+      - Industry-Specific
+      - Networking
+      - Other
+      maxLength: 100
+    - name: venueCapacity
+      type: int
+      label: Venue Capacity
+    - name: location
+      type: text
+      label: Location
+    - name: virtualMeetingUrl
+      type: url
+      label: Virtual Meeting URL
+    - name: registrationUrl
+      type: url
+      label: Registration URL
+      readOnly: true
+    - name: recordingUrl
+      type: url
+      label: Recording URL
+    - name: documents
+      type: varchar
+      label: Documents
+    - name: eventFee
+      type: int
+      label: Event Fee
+    layout:
+      detail:
+        panels:
+        - label: Classification
+          tabBreak: true
+          tabLabel: Event Info
+          rows:
+          - - name
+          - - format
+            - topic
+          - - eventFee
+            - duration
+          - - dateStart
+            - status
+          - - description
+        - label: Venue and Access
+          tabBreak: true
+          tabLabel: Venue Info
+          rows:
+          - - venueCapacity
+            - location
+          - - virtualMeetingUrl
+            - registrationUrl
+          - - recordingUrl
+            - null
+        - label: Documents
+          tabBreak: true
+          tabLabel: Documents
+          rows:
+          - - documents
+            - null
+      list:
+        columns:
+        - field: name
+          width: 28
+        - field: status
+          width: 12
+        - field: format
+          width: 12
+        - field: topic
+          width: 16
+        - field: dateStart
+          width: 16
+        - field: venueCapacity
+          width: 10

@@ -1,0 +1,33 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Opportunity captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Opportunity:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - account
+          - - stage
+            - amount
+          - - probability
+            - closeDate
+          - - contacts
+            - leadSource
+          - - description
+      list:
+        columns:
+        - field: name
+        - field: account
+          width: 22
+        - field: stage
+          width: 15
+        - field: assignedUser
+          width: 12
+        - field: createdAt
+          width: 12
+        - field: closeDate
+          width: 9
+        - field: amount
+          width: 10

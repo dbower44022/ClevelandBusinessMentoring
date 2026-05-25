@@ -1,0 +1,32 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Campaign captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Campaign:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - status
+          - - type
+            - startDate
+          - - budget
+            - endDate
+          - - targetLists
+            - excludingTargetLists
+          - - description
+        - label: Mail Merge
+          rows:
+          - - contactsTemplate
+            - leadsTemplate
+          - - accountsTemplate
+            - mailMergeOnlyWithAddress
+      list:
+        columns:
+        - field: name
+          width: 40
+        - field: type
+          width: 20
+        - field: status
+        - field: createdAt

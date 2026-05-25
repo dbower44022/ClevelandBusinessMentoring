@@ -1,0 +1,77 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Session captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Session:
+    action: create
+    type: Event
+    labelSingular: Session
+    labelPlural: Sessions
+    stream: true
+    fields:
+    - name: sessionType
+      type: enum
+      label: Session Type
+      options:
+      - In-Person
+      - Video Call
+      - Phone Call
+      maxLength: 100
+    - name: meetingLocationType
+      type: enum
+      label: Meeting Location Type
+      options:
+      - Organization Office
+      - Client's Place of Business
+      - Other
+      maxLength: 100
+    - name: locationDetails
+      type: varchar
+      label: Location Details
+    - name: topicsCovered
+      type: multiEnum
+      label: Topics Covered
+    - name: sessionNotes
+      type: wysiwyg
+      label: Session Notes
+    - name: nextSteps
+      type: wysiwyg
+      label: Next Steps
+    - name: nextSessionDateTime
+      type: datetime
+      label: Next Session Date/Time
+    layout:
+      detail:
+        panels:
+        - label: Session Detail
+          rows:
+          - - name
+            - engagement
+          - - sessionType
+            - meetingLocationType
+          - - locationDetails
+            - topicsCovered
+          - - dateStart
+            - duration
+          - - status
+            - description
+        - label: Notes and Follow-Up
+          rows:
+          - - sessionNotes
+          - - nextSteps
+          - - nextSessionDateTime
+            - null
+      list:
+        columns:
+        - field: name
+          width: 30
+        - field: dateStart
+          width: 18
+        - field: status
+          width: 16
+        - field: duration
+          width: 10
+        - field: sessionType
+          width: 14
+        - field: nextSessionDateTime
+          width: 12

@@ -1,0 +1,32 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Task captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Task:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - parent
+          - - status
+            - priority
+          - - dateStart
+            - dateCompleted
+          - - dateEnd
+            - reminders
+          - - description
+          - - attachments
+      list:
+        columns:
+        - field: name
+        - field: status
+          width: 14
+        - field: priority
+          width: 12
+        - field: dateEnd
+          width: 15
+        - field: assignedUser
+          width: 15
+        - field: createdAt
+          width: 15

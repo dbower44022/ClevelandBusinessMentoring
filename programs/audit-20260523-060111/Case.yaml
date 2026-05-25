@@ -1,0 +1,31 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Case captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Case:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - number
+          - - status
+            - account
+          - - priority
+            - contacts
+          - - type
+            - null
+          - - description
+          - - attachments
+      list:
+        columns:
+        - field: name
+        - field: number
+        - field: status
+          width: 11
+        - field: priority
+          width: 11
+        - field: account
+          width: 18
+        - field: assignedUser
+          width: 14

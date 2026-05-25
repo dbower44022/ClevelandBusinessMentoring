@@ -1,0 +1,200 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Account captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Account:
+    fields:
+    - name: clientProfile
+      type: link
+      label: Client Profile
+    - name: organizationType
+      type: enum
+      label: Organization Type
+      options:
+      - For-Profit
+      - Non-Profit
+      maxLength: 100
+    - name: businessStage
+      type: enum
+      label: Business Stage
+      options:
+      - Pre-Startup
+      - Startup
+      - Early Stage
+      - Growth Stage
+      - Established
+      maxLength: 100
+    - name: industrySector
+      type: enum
+      label: Industry Sector
+      default: Agriculture, Forestry, Fishing and Hunting
+      options:
+      - Agriculture, Forestry, Fishing and Hunting
+      - Mining, Quarrying, and Oil and Gas Extraction
+      - Utilities
+      - Construction
+      - Manufacturing
+      - Wholesale Trade
+      - Retail Trade
+      - Transportation and Warehousing
+      - Information
+      - Finance and Insurance
+      - Real Estate and Rental and Leasing
+      - Professional, Scientific, and Technical Services
+      - Management of Companies and Enterprises
+      - Administrative and Support and Waste Management
+      - Educational Services
+      - Health Care and Social Assistance
+      - Arts, Entertainment, and Recreation
+      - Accommodation and Food Services
+      - Other Services (except Public Administration)
+      - Public Administration
+      maxLength: 100
+    - name: industrySubsector
+      type: enum
+      label: Industry Subsector
+      options:
+      - ''
+      - Option 1
+      maxLength: 100
+    - name: clientNotes
+      type: wysiwyg
+      label: Company Notes
+    - name: sponsorProfile
+      type: linkOne
+      label: Sponsor Profile
+    - name: primaryContact
+      type: linkOne
+      label: Primary Contact
+    - name: companyType
+      type: multiEnum
+      label: Company Type
+      default: []
+      options:
+      - ''
+      - Client
+      - Sponsor
+      - Partner
+      - Other
+    - name: sponsorshipLevel
+      type: enum
+      label: Sponsorship Level
+      options:
+      - Title
+      - Platinum
+      - Gold
+      - Silver
+      - Bronze
+      maxLength: 100
+    - name: annualPledgeAmount
+      type: currency
+      label: Annual Pledge Amount
+    - name: sponsorshipStartDate
+      type: date
+      label: Sponsorship Start Date
+    - name: sponsorshipRenewalDate
+      type: date
+      label: Sponsorship Renewal Date
+    - name: sponsorNotes
+      type: wysiwyg
+      label: Sponsor Notes
+    - name: partnershipStartDate
+      type: date
+      label: Partnership Start Date
+    - name: partnershipAgreementDate
+      type: date
+      label: Partnership Agreement Date
+    - name: partnerContactCadence
+      type: enum
+      label: Partner Contact Cadence
+      options:
+      - Monthly
+      - Quarterly
+      - Semi-Annually
+      - Annually
+      - As-Needed
+      maxLength: 100
+    - name: partnerNotes
+      type: wysiwyg
+      label: Partner Notes
+    - name: companyPartnerProfile
+      type: linkOne
+      label: Partner Profile
+    - name: companyPartnerType
+      type: foreign
+      label: Partner Type
+      readOnly: true
+    - name: annualPledgeAmountCurrency
+      type: enum
+      label: Annual Pledge Amount (Currency)
+      maxLength: 3
+    - name: annualPledgeAmountConverted
+      type: currencyConverted
+      label: Annual Pledge Amount (Converted)
+      readOnly: true
+    layout:
+      detail:
+        panels:
+        - label: Company Info
+          tabBreak: true
+          tabLabel: Company Info
+          rows:
+          - - name
+            - companyType
+          - - organizationType
+            - businessStage
+          - - industrySector
+            - industrySubsector
+        - rows:
+          - - billingAddress
+            - website
+          - - primaryContact
+            - phoneNumber
+        - rows:
+          - - clientNotes
+        - label: Partner Profile
+          tabBreak: true
+          tabLabel: Partner Profile
+          hidden: true
+          dynamicLogicVisible:
+            attribute: companyType
+            value: Partner
+          rows:
+          - - companyPartnerType
+            - partnershipStartDate
+            - companyPartnerProfile
+          - - partnershipAgreementDate
+            - partnerContactCadence
+          - - partnerNotes
+        - label: Sponsor Profile
+          tabBreak: true
+          tabLabel: Sponsor Profile
+          hidden: true
+          dynamicLogicVisible:
+            attribute: companyType
+            value: Sponsor
+          rows:
+          - - sponsorshipLevel
+            - annualPledgeAmount
+            - sponsorProfile
+          - - sponsorshipStartDate
+            - sponsorshipRenewalDate
+          - - sponsorNotes
+        - label: Client Profile
+          tabBreak: true
+          tabLabel: Client Profile
+          dynamicLogicVisible:
+            attribute: companyType
+            value: Client
+          rows:
+          - - clientProfile
+            - null
+      list:
+        columns:
+        - field: name
+        - field: billingAddressCity
+          width: 16
+        - field: companyType
+          width: 16
+        - field: website
+          width: 25

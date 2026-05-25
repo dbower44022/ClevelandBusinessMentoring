@@ -1,0 +1,29 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Call captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  Call:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - parent
+          - - status
+            - direction
+          - - dateStart
+            - dateEnd
+          - - duration
+            - reminders
+          - - description
+      list:
+        columns:
+        - field: name
+        - field: parent
+          width: 22
+        - field: status
+          width: 15
+        - field: dateStart
+          width: 15
+        - field: assignedUser
+          width: 15

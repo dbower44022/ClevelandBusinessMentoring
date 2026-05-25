@@ -1,0 +1,58 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of PartnerProfile captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-05-23T06:01:40Z.
+entities:
+  PartnerProfile:
+    action: create
+    type: Base
+    labelSingular: Partner Profile
+    labelPlural: Partner Profiles
+    stream: true
+    fields:
+    - name: partnershipType
+      type: enum
+      label: Partnership Type
+      options:
+      - Referral Partner
+      - Training Partner
+      - Community Partner
+      - Service Partner
+      - Funding Partner
+      maxLength: 100
+    - name: partnershipStartDate
+      type: date
+      label: Partnership Start Date
+    - name: partnershipAgreementDate
+      type: date
+      label: Partnership Agreement Date
+    - name: partnerContactCadence
+      type: enum
+      label: Partner Contact Cadence
+      options:
+      - Monthly
+      - Quarterly
+      - Semi-Annually
+      - Annually
+      - As-Needed
+      maxLength: 100
+    - name: partnerNotes
+      type: wysiwyg
+      label: Partner Notes
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - partnerCompany
+            - partnershipType
+          - - partnerContactCadence
+            - partnershipStartDate
+            - partnershipAgreementDate
+          - - primaryPartnercontact
+            - null
+        - rows:
+          - - partnerNotes
+            - null
+      list:
+        columns:
+        - field: name
