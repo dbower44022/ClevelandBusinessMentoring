@@ -12,7 +12,7 @@ const borders = { top: border, bottom: border, left: border, right: border };
 const cellMargins = { top: 60, bottom: 60, left: 100, right: 100 };
 const MC = [2800, 6560]; const TC = [1500, 7860]; const P3 = [2200, 2600, 4560]; const CLC = [1300, 1900, 6160];
 const TABLE_WIDTH = 9360;
-const DOC = { orgName: "Cleveland Business Mentors", docName: "CR-RESOURCES Sub-Domain Overview", version: "1.0", lastUpdated: "05-29-26 16:30" };
+const DOC = { orgName: "Cleveland Business Mentors", docName: "CR-RESOURCES Sub-Domain Overview", version: "1.1", lastUpdated: "05-30-26" };
 
 function r(t, o = {}) { return new TextRun({ text: t, font: FONT, size: o.size || SZ.body, bold: o.bold || false, italics: o.italics || false, color: o.color }); }
 function p(t, o = {}) { return new Paragraph({ spacing: { after: o.after ?? 120 }, children: Array.isArray(t) ? t : [r(t, o)] }); }
@@ -73,14 +73,12 @@ function build() {
   c.push(p("CR-RESOURCES depends on CR-EVENTS for the origin of recordings. A recording resource links back to its source event through Resource.sourceEvent, and the recording-migration step extends CR-EVENTS-MANAGE. The dependency is read-only on the Events side: this sub-domain follows the event's raw recording link to retrieve content but never modifies event data. Standalone assets have no cross-sub-domain dependency."));
 
   c.push(heading("7. Open Issues", HeadingLevel.HEADING_1));
-  c.push(table(TC, ["Identifier", "Open Issue"], [
-    ["CR-RESOURCES-ISS-001", "The resourceType and category value lists are first-draft proposals, pending confirmation."],
-    ["CR-RESOURCES-ISS-002", "Default sort and grouping of the public Resources page (proposed: by category, then resourceDate descending)."],
-  ]));
+  c.push(p("None. Both version 1.0 open issues (CR-RESOURCES-ISS-001 and ISS-002) were resolved in version 1.1 following stakeholder confirmation — the resourceType and category value lists are confirmed, and the public Resources page is ordered by category then resourceDate descending. The authoritative resolutions are recorded as RES-DEC-007 through RES-DEC-010 in the Resource Entity PRD v1.1 and in the CR-RESOURCES-MANAGE v1.1 Interview Transcript."));
 
   c.push(heading("8. Change Log", HeadingLevel.HEADING_1));
   c.push(table(CLC, ["Version", "Date", "Summary"], [
     ["1.0", "05-29-26 16:30", "Initial CR-RESOURCES Sub-Domain Overview establishing the Resource Library as the fifth Client Recruiting sub-domain: purpose, scope and boundaries against CR-EVENTS and CR-MARKETING, the single CR-RESOURCES-MANAGE process, personas, the owned Resource entity and read-only Event dependency."],
+    ["1.1", "05-30-26", "Resolved both version 1.0 open issues (CR-RESOURCES-ISS-001 and ISS-002) following stakeholder confirmation; Open Issues section now empty, pointing to the authoritative decisions in Resource Entity PRD v1.1 and CR-RESOURCES-MANAGE v1.1."],
   ]));
   return c;
 }

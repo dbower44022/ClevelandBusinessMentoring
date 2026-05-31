@@ -29,8 +29,8 @@ const TABLE_WIDTH = 9360;
 const ENTITY = {
   orgName: "Cleveland Business Mentors",
   entityName: "Resource",
-  version: "1.0",
-  lastUpdated: "05-29-26 16:30",
+  version: "1.1",
+  lastUpdated: "05-30-26",
 };
 
 // ── Helpers ────────────────────────────
@@ -123,7 +123,7 @@ function buildContent() {
     ["resourceType", "enum", "Yes", "Recorded Event; Document; Video; Audio; Template; Link; Other", "\u2014", "CR-RESOURCES-MANAGE-DAT-001",
       "The kind of resource. A descriptive property field; it does not drive field visibility. Recorded Event is used for recordings migrated from a completed event; the remaining values cover standalone assets."],
     ["category", "enum", "Yes", "Starting a Business; Financing; Marketing and Sales; Operations; Leadership and Strategy; Legal and Compliance; Other", "\u2014", "CR-RESOURCES-MANAGE-DAT-002",
-      "Topical category used to group and filter resources on the public page. Value list is a first-draft proposal pending confirmation (see Open Issues)."],
+      "Topical category used to group and filter resources on the public page (RES-DEC-007)."],
     ["description", "wysiwyg", "No", "\u2014", "\u2014", "CR-RESOURCES-MANAGE-DAT-003",
       "Public-facing description of the resource shown on the Resources page."],
     ["url", "url", "Conditional", "\u2014", "\u2014", "CR-RESOURCES-MANAGE-DAT-004",
@@ -168,17 +168,12 @@ function buildContent() {
     "publishedAt is system-set on first listing and retained after unlisting, recording first-publication time rather than current state.",
     "resourceType and category are property fields, not discriminators; the field set does not vary by type.",
     "featured is an optional highlight used by the page; it has no effect on visibility, which depends solely on listedPublicly.",
-    "Resources are unlisted rather than deleted, so public links and history are preserved (proposed; see Open Issues).",
+    "Resources are unlisted rather than deleted, so public links and history are preserved; an unlisted Resource is retained and never hard-deleted (RES-DEC-010).",
     "No product names appear in this document, per the output standard for this document level.",
   ].forEach((t) => c.push(bullet(t)));
 
   c.push(heading("8. Open Issues", HeadingLevel.HEADING_1));
-  c.push(twoColTable("Identifier", "Open Issue", [
-    ["RES-ISS-001", "The resourceType and category value lists are a first-draft proposal and are pending confirmation."],
-    ["RES-ISS-002", "Whether url and file may both be present or are mutually exclusive. Proposed: at least one is required before listing, and both are permitted."],
-    ["RES-ISS-003", "Default sort and grouping of the public Resources page. Proposed: grouped by category, then resourceDate descending."],
-    ["RES-ISS-004", "Whether a retention or no-deletion rule should be formalized for unlisted Resources."],
-  ]));
+  c.push(p("None. All version 1.0 open issues (RES-ISS-001 through RES-ISS-004) were resolved in version 1.1; see Decisions Made (RES-DEC-007 through RES-DEC-010)."));
 
   c.push(heading("9. Decisions Made", HeadingLevel.HEADING_1));
   c.push(twoColTable("Identifier", "Decision", [
@@ -188,11 +183,16 @@ function buildContent() {
     ["RES-DEC-004", "The published copy of a recording is a separate artifact held on the Resource (its own url or file), distinct from the raw recording link on the source event."],
     ["RES-DEC-005", "resourceType and category are property fields, not discriminators; the field set is uniform across all resource types."],
     ["RES-DEC-006", "The entity is owned by the new CR-RESOURCES sub-domain of Client Recruiting."],
+    ["RES-DEC-007", "The resourceType value list (Recorded Event; Document; Video; Audio; Template; Link; Other) and the category value list (Starting a Business; Financing; Marketing and Sales; Operations; Leadership and Strategy; Legal and Compliance; Other) are confirmed for version 1.1. Resolves RES-ISS-001."],
+    ["RES-DEC-008", "At least one of url or file must be present before a Resource can be listed publicly; both are permitted simultaneously. Resolves RES-ISS-002."],
+    ["RES-DEC-009", "The public Resources page is ordered by category, then by resourceDate descending within each category. Resolves RES-ISS-003."],
+    ["RES-DEC-010", "Unlisted Resources are retained and never hard-deleted; unlisting sets listedPublicly to false only, preserving the record, its publishedAt timestamp, and history. Resolves RES-ISS-004."],
   ]));
 
   c.push(heading("10. Change Log", HeadingLevel.HEADING_1));
   c.push(changeLogTable([
     ["1.0", "05-29-26 16:30", "Initial Resource Entity PRD defining the public Resources page content entity for the CR-RESOURCES sub-domain: the uniform field set, the public-visibility model gated only by listedPublicly, the optional Event link, and the relationship between the published copy and the source event's raw recording link."],
+    ["1.1", "05-30-26", "Resolved all four version 1.0 open issues following stakeholder confirmation: confirmed the resourceType and category value lists (RES-DEC-007), the at-least-one-of-url-or-file presence rule with both permitted (RES-DEC-008), the by-category then resourceDate-descending page ordering (RES-DEC-009), and the retain-never-hard-delete rule for unlisted Resources (RES-DEC-010). Open Issues section now empty."],
   ]));
 
   return c;

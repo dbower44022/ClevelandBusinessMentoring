@@ -23,7 +23,7 @@ const RELC = [3200, 6160];
 const FTC = [2400, 2400, 4560];
 const CLC = [1300, 1900, 6160];
 const TABLE_WIDTH = 9360;
-const DOC = { orgName: "Cleveland Business Mentors", docName: "CR-RESOURCES-MANAGE Process Document", version: "1.0", lastUpdated: "05-29-26 16:30" };
+const DOC = { orgName: "Cleveland Business Mentors", docName: "CR-RESOURCES-MANAGE Process Document", version: "1.1", lastUpdated: "05-30-26" };
 
 function r(text, opts = {}) { return new TextRun({ text, font: FONT, size: opts.size || SZ.body, bold: opts.bold || false, italics: opts.italics || false, color: opts.color }); }
 function p(text, opts = {}) { return new Paragraph({ spacing: { after: opts.after ?? 120 }, alignment: opts.align, children: Array.isArray(text) ? text : [r(text, opts)] }); }
@@ -119,7 +119,7 @@ function buildContent() {
   c.push(heading("8.3 Fields Created or Updated", HeadingLevel.HEADING_2));
   c.push(genTable(DC, ["Field", "Entity", "Type", "Identifier", "Notes"], [
     ["resourceType", "Resource", "enum", "CR-RESOURCES-MANAGE-DAT-001", "Kind of resource; property field, not a discriminator."],
-    ["category", "Resource", "enum", "CR-RESOURCES-MANAGE-DAT-002", "Topical category for the public page. Value list pending confirmation."],
+    ["category", "Resource", "enum", "CR-RESOURCES-MANAGE-DAT-002", "Topical category for the public page; value list confirmed (see Interview Transcript)."],
     ["description", "Resource", "wysiwyg", "CR-RESOURCES-MANAGE-DAT-003", "Public-facing description."],
     ["url", "Resource", "url", "CR-RESOURCES-MANAGE-DAT-004", "Published, externally-hosted link to the resource."],
     ["file", "Resource", "attachment", "CR-RESOURCES-MANAGE-DAT-005", "Uploaded file alternative to url."],
@@ -131,11 +131,7 @@ function buildContent() {
   ], 3));
 
   c.push(heading("9. Open Issues", HeadingLevel.HEADING_1));
-  c.push(genTable(TC, ["Identifier", "Open Issue"], [
-    ["CR-RESOURCES-MANAGE-ISS-001", "The resourceType and category value lists are first-draft proposals, pending confirmation. Mirrors RES-ISS-001 / RES-ISS-002 in the Resource Entity PRD."],
-    ["CR-RESOURCES-MANAGE-ISS-002", "Default sort and grouping of the public Resources page (proposed: by category, then resourceDate descending). Mirrors RES-ISS-003."],
-    ["CR-RESOURCES-MANAGE-ISS-003", "Whether a retention or no-deletion rule should be formalized for unlisted Resources. Mirrors RES-ISS-004."],
-  ]));
+  c.push(p("None. The three version 1.0 open issues (CR-RESOURCES-MANAGE-ISS-001 through ISS-003) were resolved in version 1.1 following stakeholder confirmation; the resolutions are recorded in the Interview Transcript and mirror RES-DEC-007 through RES-DEC-010 in the Resource Entity PRD."));
 
   c.push(heading("10. Interview Transcript", HeadingLevel.HEADING_1));
   c.push(p("This process was defined through design discussion rather than a separate stakeholder interview; the decisions below are recorded for traceability.", { italics: true }));
@@ -144,11 +140,16 @@ function buildContent() {
     ["Is the Resources page public or gated?", "Fully public. The publish flag (listedPublicly) is the only gate; no authentication. The Resource entity therefore carries no access attributes."],
     ["How does a recording reach the page?", "The event's recording link is a back-office pointer to the raw, unedited recording. The administrator retrieves it, edits and re-hosts the finished copy, and publishes that copy as a separate Resource. The raw link is never published."],
     ["Where does this process live?", "In the new CR-RESOURCES sub-domain of Client Recruiting. The recording-migration step is a continuation off the end of the Event Management process (CR-EVENTS-MANAGE)."],
+    ["What are the resourceType and category value lists? (resolves ISS-001)", "Confirmed for version 1.1. resourceType: Recorded Event; Document; Video; Audio; Template; Link; Other. category: Starting a Business; Financing; Marketing and Sales; Operations; Leadership and Strategy; Legal and Compliance; Other."],
+    ["May a Resource carry both a url and a file? (resolves ISS-001)", "At least one of url or file must be present before a Resource can be listed publicly; both are permitted simultaneously."],
+    ["How is the public Resources page ordered? (resolves ISS-002)", "Grouped by category, then by resourceDate descending within each category."],
+    ["What happens to an unlisted Resource? (resolves ISS-003)", "It is retained and never hard-deleted. Unlisting sets listedPublicly to false only, preserving the record, its publishedAt timestamp, and history."],
   ].forEach(([q, a]) => { c.push(p([r("Q: ", { bold: true }), r(q)])); c.push(p([r("Decision: ", { bold: true }), r(a)], { after: 160 })); });
 
   c.push(heading("11. Change Log", HeadingLevel.HEADING_1));
   c.push(genTable(CLC, ["Version", "Date", "Summary"], [
     ["1.0", "05-29-26 16:30", "Initial Resource Library Management process document for the CR-RESOURCES sub-domain: recording-migration and standalone-asset publishing paths, maintenance and unlisting, the public-visibility model, requirements REQ-001 through REQ-009, and data items DAT-001 through DAT-010 (matching the Resource Entity PRD)."],
+    ["1.1", "05-30-26", "Resolved the three version 1.0 open issues following stakeholder confirmation: confirmed the resourceType and category value lists and the at-least-one-of-url-or-file rule (ISS-001), the by-category then resourceDate-descending page ordering (ISS-002), and the retain-never-hard-delete rule for unlisted Resources (ISS-003). Resolutions recorded in the Interview Transcript; Open Issues section now empty. Mirrors Resource Entity PRD v1.1."],
   ]));
   return c;
 }
