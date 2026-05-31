@@ -1,0 +1,279 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Client Recruiting (CR) domain — Resource custom entity definition
+  for the CR-RESOURCES sub-domain (the public Resources page).
+  Custom Base entity holding both event recordings and standalone
+  assets in one uniform field set; the optional sourceEvent link
+  distinguishes a recording (linked) from a standalone asset
+  (unlinked). The page is fully public — visibility is gated solely
+  by listedPublicly, with no access attributes. 8 custom fields
+  plus 1 relationship (Resource → Event, manyToOne).
+
+  Three constructs are not directly expressible in the v1.2.x YAML
+  schema and are surfaced as manual-config items:
+    - file (attachment) — no attachment field type in the schema;
+      declared as varchar, reconfigure post-deploy. CR-MC-SC-001 /
+      EXCEPTIONS CR-Y9-EXC-004.
+    - description — the native Base description field is text, not
+      wysiwyg; rich-text upgrade is post-deploy. CR-MC-SC-005.
+    - content-presence rule (at least one of url or file before
+      listedPublicly = true) is a cross-field validation; not
+      expressible via requiredWhen. CR-MC-CR-004.
+    - publishedAt first-listing population is post-deploy
+      automation. CR-MC-AA-018.
+
+# Source: Resource Entity PRD v1.1 (05-30-26), CR-RESOURCES-MANAGE
+#         v1.1, CR-RESOURCES Sub-Domain Overview v1.1, CR Domain PRD
+#         v1.5 Section 3 (CR-RESOURCES sub-domain).
+
+# Revision History:
+#   1.0.0 (05-30-26) — Phase 9 YAML generation, initial commit.
+#     Generated from Resource Entity PRD v1.1 after the v1.1
+#     close-out resolved RES-ISS-001..004 (RES-DEC-007..010).
+
+entities:
+
+  # ---------------------------------------------------------------
+  # Custom entity — Resource
+  # ---------------------------------------------------------------
+
+  Resource:
+    description: >
+      A single item published on the organization's public
+      Resources page — either a recording of a past event or a
+      standalone asset created for the business community. Fully
+      public content record: whether it appears on the page is
+      governed solely by listedPublicly, with no access
+      restrictions. The optional sourceEvent link ties a recording
+      back to the event it came from; standalone assets leave it
+      empty. The published url/file is the edited, re-hosted copy,
+      distinct from the source event's raw recordingUrl. Owned
+      exclusively by the CR-RESOURCES sub-domain of Client
+      Recruiting. See Resource Entity PRD v1.1.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Resource"
+      labelPlural: "Resources"
+      stream: true
+      disabled: false
+
+    fields:
+
+      # --- Section 3 — Identification ---
+
+      - name: resourceType
+        type: enum
+        label: "Resource Type"
+        description: >
+          The kind of resource. A descriptive property field; it
+          does not drive field visibility. "Recorded Event" is used
+          for recordings migrated from a completed event; the
+          remaining values cover standalone assets. Value list
+          confirmed per RES-DEC-007. See PRD
+          CR-RESOURCES-MANAGE-DAT-001.
+        category: "Identification"
+        required: true
+        options:
+          - "Recorded Event"
+          - "Document"
+          - "Video"
+          - "Audio"
+          - "Template"
+          - "Link"
+          - "Other"
+
+      - name: category
+        type: enum
+        label: "Category"
+        description: >
+          Topical category used to group and filter resources on
+          the public page. Value list confirmed per RES-DEC-007.
+          See PRD CR-RESOURCES-MANAGE-DAT-002.
+        category: "Identification"
+        required: true
+        options:
+          - "Starting a Business"
+          - "Financing"
+          - "Marketing and Sales"
+          - "Operations"
+          - "Leadership and Strategy"
+          - "Legal and Compliance"
+          - "Other"
+
+      # --- Section 3 — Content ---
+
+      - name: description
+        type: wysiwyg
+        label: "Description"
+        description: >
+          Public-facing description of the resource shown on the
+          Resources page. Declared as wysiwyg for rich-text intent;
+          the native Base description field is text, so the engine
+          skips the redeclaration (TYPE CONFLICT). Rich-text upgrade
+          is a post-deploy admin task — see CR-MC-SC-005. See PRD
+          CR-RESOURCES-MANAGE-DAT-003.
+        category: "Content"
+        required: false
+
+      - name: url
+        type: url
+        label: "URL"
+        description: >
+          Link to the published, externally-hosted resource — the
+          edited recording or the asset, held in a reliable location
+          the Resources page can read. Distinct from the source
+          event's raw recordingUrl. At least one of url or file must
+          be present before the resource can be listed (RES-DEC-008;
+          validation per CR-MC-CR-004). See PRD
+          CR-RESOURCES-MANAGE-DAT-004.
+        category: "Content"
+        required: false
+
+      - name: file
+        type: varchar
+        label: "File"
+        description: >
+          Uploaded file as an alternative to url for resources
+          hosted directly. Schema gap — the YAML schema has no
+          attachment field type; declared as varchar and must be
+          reconfigured post-deployment as an EspoCRM Attachment
+          (File) field via the admin UI. See CR-MC-SC-001 and
+          EXCEPTIONS CR-Y9-EXC-004. At least one of url or file must
+          be present before listing (RES-DEC-008; CR-MC-CR-004).
+          See PRD CR-RESOURCES-MANAGE-DAT-005.
+        category: "Content"
+        required: false
+
+      - name: resourceDate
+        type: date
+        label: "Resource Date"
+        description: >
+          Public-facing date of the resource. For a recording this
+          is typically the date of the source event. Used for
+          display and as the secondary sort key on the page (by
+          category, then resourceDate descending — RES-DEC-009). See
+          PRD CR-RESOURCES-MANAGE-DAT-006.
+        category: "Content"
+        required: false
+
+      # --- Section 3 — Publishing ---
+
+      - name: listedPublicly
+        type: bool
+        label: "Listed Publicly"
+        description: >
+          Whether the resource is shown on the public Resources
+          page. This is the only gate on public visibility, and it
+          is reversible. Setting it true the first time records
+          publishedAt (CR-MC-AA-018). Unlisting sets this back to
+          false only; the record is retained and never hard-deleted
+          (RES-DEC-010). See PRD CR-RESOURCES-MANAGE-DAT-007.
+        category: "Publishing"
+        required: false
+        default: "false"
+        audited: true
+
+      - name: publishedAt
+        type: datetime
+        label: "Published At"
+        description: >
+          Timestamp set automatically the first time the resource is
+          listed publicly. Read-only and system-maintained. Retained
+          if the resource is later unlisted, so it records the
+          first-publication time rather than the current listing
+          state. Population is post-deploy automation — see
+          CR-MC-AA-018. See PRD CR-RESOURCES-MANAGE-DAT-008.
+        category: "Publishing"
+        required: false
+        readOnly: true
+        externallyPopulated: true
+        audited: true
+
+      - name: featured
+        type: bool
+        label: "Featured"
+        description: >
+          Optional flag used to highlight a resource on the page. No
+          effect on visibility, which depends solely on
+          listedPublicly. See PRD CR-RESOURCES-MANAGE-DAT-009.
+        category: "Publishing"
+        required: false
+        default: "false"
+
+      # Note: sourceEvent (CR-RESOURCES-MANAGE-DAT-010) is declared
+      # in the relationships: block below. As a manyToOne link it
+      # renders as a selectable field on the record; its inverse is
+      # the "Resources" panel on the Event record.
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Identification"
+            description: >
+              Resource type and topical category. Source: Resource
+              Entity PRD v1.1 Section 6.
+            tabs:
+              - label: "Identification"
+                category: "Identification"
+
+          - label: "Content"
+            description: >
+              Public-facing description, the published URL or file,
+              and the resource date. Source: Resource Entity PRD
+              v1.1 Section 6.
+            tabs:
+              - label: "Content"
+                category: "Content"
+
+          - label: "Publishing"
+            description: >
+              Publish flag, first-publication timestamp, and the
+              optional featured highlight. Source: Resource Entity
+              PRD v1.1 Section 6.
+            tabs:
+              - label: "Publishing"
+                category: "Publishing"
+
+      list:
+        columns:
+          - field: name
+            width: 30
+          - field: resourceType
+            width: 14
+          - field: category
+            width: 18
+          - field: resourceDate
+            width: 12
+          - field: listedPublicly
+            width: 10
+          - field: featured
+            width: 10
+
+# ---------------------------------------------------------------
+# Relationship — Resource → Event (sourceEvent, manyToOne, optional)
+# ---------------------------------------------------------------
+
+relationships:
+
+  - name: resourceSourceEvent
+    description: >
+      Many-to-one link from Resource to the Event it was recorded
+      from (identifier CR-RESOURCES-MANAGE-DAT-010). Optional —
+      standalone assets leave it empty. The inverse appears as a
+      "Resources" panel on the Event record. The published copy on
+      the Resource (url/file) is a distinct artifact from the
+      Event's raw recordingUrl. See Resource Entity PRD v1.1
+      Section 4 and RES-DEC-004.
+    entity: Resource
+    entityForeign: Event
+    linkType: manyToOne
+    link: sourceEvent
+    linkForeign: resources
+    relationName: resourceSourceEvent
+    label: "Source Event"
+    labelForeign: "Resources"
+    audited: false

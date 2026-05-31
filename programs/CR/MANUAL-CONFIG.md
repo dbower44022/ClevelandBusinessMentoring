@@ -3,7 +3,7 @@
 **Implementation:** Cleveland Business Mentors (CBM)
 **Domain:** Client Recruiting (CR)
 **Phase 9 conversation date:** 2026-05-04 (unattended multi-domain run)
-**Files covered:** All 9 CR YAML files
+**Files covered:** All 10 CR YAML files (CR-Resource.yaml added 05-30-26)
 
 ---
 
@@ -202,6 +202,21 @@
 - **Dependencies.** Contact entity, howDidYouHearAboutCbm,
   sourceAttributionDetails, audit-trail formatting convention.
 
+### CR-MC-AA-018 — Resource.publishedAt first-listing setField
+
+- **Source.** Resource Entity PRD v1.1 Section 3 (DAT-008),
+  RES-DEC-010.
+- **Description.** The first time Resource.listedPublicly
+  transitions from false to true, set Resource.publishedAt to the
+  current timestamp. Never overwrite publishedAt on subsequent
+  toggles — it records first-publication time, not current listing
+  state, and is retained when the resource is later unlisted. The
+  field is read-only and externallyPopulated in the YAML; this
+  automation is the populating system. Equivalent shape to
+  CR-MC-AA-003 (Account.applicantSinceTimestamp first-transition
+  setField).
+- **Dependencies.** Resource entity, listedPublicly, publishedAt.
+
 ---
 
 ## Email Templates
@@ -318,6 +333,20 @@ Schema v1.2.x does not express role-based field-level visibility
   documents that no requiredWhen is configured even though
   CBM may want to require it operationally in the future.
 
+### CR-MC-CR-004 — Resource content-presence validation before listing
+
+- **Source.** Resource Entity PRD v1.1 Section 5.3, RES-DEC-008.
+- **Description.** At least one of Resource.url or Resource.file
+  must be present before Resource.listedPublicly can be set true,
+  so a listed resource always resolves to something the public can
+  open. This is an "at least one of two fields" cross-field
+  precondition gated on a third field's transition, which the
+  requiredWhen construct cannot express (it sets requiredness on a
+  single field). Implement as a save/transition validation that
+  blocks setting listedPublicly = true with an explanatory message
+  when both url and file are empty. Both fields may be present
+  simultaneously (RES-DEC-008).
+
 ---
 
 ## Native Field Customization (Schema Gap)
@@ -325,11 +354,13 @@ Schema v1.2.x does not express role-based field-level visibility
 ### CR-MC-SC-001 — file / attachment-multiple field type
 
 - **Source.** EXCEPTIONS.md CR-Y9-EXC-004.
-- **Description.** PartnershipAgreement.agreementDocument and
-  Event.documents are declared as varchar at YAML level. Both
-  must be reconfigured post-deployment via EspoCRM admin
-  (Entity Manager → Entity → field → change type). This is a
-  v1.3 schema candidate.
+- **Description.** PartnershipAgreement.agreementDocument,
+  Event.documents, and Resource.file are declared as varchar at
+  YAML level. All must be reconfigured post-deployment via EspoCRM
+  admin (Entity Manager → Entity → field → change type) — to an
+  Attachment-Multiple type for the first two and a single
+  Attachment (File) type for Resource.file. This is a v1.3 schema
+  candidate.
 
 ### CR-MC-SC-002 — Event.status custom value list overrides Event-type defaults
 
@@ -356,6 +387,19 @@ Schema v1.2.x does not express role-based field-level visibility
   MarketingCampaign and the description field on CampaignGroup
   are wysiwyg / text respectively. No native-field reconfiguration
   needed at this time.
+
+### CR-MC-SC-005 — Resource.description rich-text upgrade
+
+- **Source.** Resource Entity PRD v1.1 Section 3 (DAT-003);
+  same platform fact as CR-MC-SC-004.
+- **Description.** Resource.description is declared as wysiwyg to
+  express rich-text intent, but the native description field on
+  Base entities is text — the deploy engine skips the
+  redeclaration (TYPE CONFLICT) and leaves the native text field.
+  If rich text is wanted on the public Resources page, reconfigure
+  the field to wysiwyg post-deployment via EspoCRM admin (Entity
+  Manager → Resource → description → change type). Otherwise the
+  native text field is functional as-is.
 
 ---
 
@@ -541,21 +585,22 @@ Item counts by category:
 
 | Category | Count |
 |---|---|
-| Advanced Automation | 17 |
+| Advanced Automation | 18 |
 | Email Templates | 7 |
 | Field-Level Access Control (Role-Based) | 5 |
-| Conditional-Required (Workflow-Validated) | 3 |
-| Native Field Customization (Schema Gap) | 4 |
+| Conditional-Required (Workflow-Validated) | 4 |
+| Native Field Customization (Schema Gap) | 5 |
 | Dependent / Cascading Enums (Schema Gap) | 2 |
 | Saved Views and List Filters | 12 |
 | Integrations | 5 |
 | Stream and Audit Logging | 3 |
 | Deferred Master Lists | 4 |
-| **Total** | **62** |
+| **Total** | **65** |
 
 CR is the heaviest CBM domain by every measure (entity count,
 field count, MANUAL-CONFIG count). Heavy MANUAL-CONFIG load
 reflects the marketing/events functional footprint — not a
 deficiency in the YAML or Phase 9 work.
 
-**Last Updated:** 05-05-26 05:23
+**Last Updated:** 05-30-26 (added CR-Resource.yaml: CR-MC-AA-018,
+CR-MC-CR-004, CR-MC-SC-005; extended CR-MC-SC-001 for Resource.file)
