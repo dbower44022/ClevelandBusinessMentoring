@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources | Cleveland Business Mentors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+
+    :root {
+      --navy:      #00205B;
+      --gold:      #B58113;
+      --black:     #000000;
+      --white:     #FFFFFF;
+      --light-bg:  #F5F7FA;
+      --max-width: 1200px;
+      --section-pad: 80px 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', 'Arial Rounded MT Bold', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    h1 {
+      font-family: 'Arial Rounded MT Bold', 'Montserrat', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    h2 {
+      font-family: 'Arial Rounded MT Bold', 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    p { margin-bottom: 18px; }
+    p:last-child { margin-bottom: 0; }
+
+    .accent-rule {
+      display: block; width: 60px; height: 4px;
+      background-color: var(--gold); margin: 0 0 32px 0;
+    }
+    .accent-rule--center { margin: 0 auto 32px; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      background-color: var(--gold);
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      padding: 15px 30px;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+    .btn:hover { background-color: var(--navy); border-color: var(--navy); color: var(--white); }
+    .btn--outline {
+      background-color: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+    .btn--outline:hover { background-color: var(--white); color: var(--navy); }
+    .btn--navy {
+      background-color: var(--navy);
+      border-color: var(--navy);
+    }
+    .btn--navy:hover { background-color: var(--gold); border-color: var(--gold); }
+
+    /* NAV */
+    .site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background-color: var(--navy);
+      padding: 0 24px;
+    }
+    .site-nav__inner {
+      max-width: var(--max-width); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .site-nav__logo {
+      font-family: 'Arial Rounded MT Bold', 'Montserrat', sans-serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--white); text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-nav__logo span { color: var(--gold); }
+    .site-nav__links { list-style: none; display: flex; gap: 32px; }
+    .site-nav__links a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--white); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .site-nav__links a:hover,
+    .site-nav__links a.active { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      background-color: var(--navy);
+      color: var(--white);
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+    .hero h1 { color: var(--white); margin-bottom: 16px; }
+    .hero p  { font-size: 20px; opacity: 0.88; max-width: 700px; margin: 0 auto; }
+
+    /* BOTTOM PANEL */
+    .bottom-panel {
+      background-color: var(--navy);
+      color: var(--white);
+      padding: var(--section-pad);
+    }
+    .bottom-panel__inner {
+      max-width: var(--max-width); margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px;
+    }
+    .bottom-panel h3 { color: var(--gold); margin-bottom: 12px; }
+    .bottom-panel p  { color: rgba(255,255,255,0.85); margin-bottom: 8px; font-size: 16px; }
+    .bottom-panel a  { color: var(--gold); text-decoration: none; }
+    .bottom-panel a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    .site-footer {
+      background-color: #001440;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 24px;
+      font-size: 14px;
+    }
+    .site-footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 960px) {
+      .bottom-panel__inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .bottom-panel__inner { grid-template-columns: 1fr; }
+      h1 { font-size: 34px; }
+      h2 { font-size: 26px; }
+      .site-nav__links { gap: 16px; }
+      .site-nav__links a { font-size: 13px; }
+    }
+
+
+    .intro-section { max-width: var(--max-width); margin: 0 auto; padding: var(--section-pad); text-align: center; }
+    .intro-section p { max-width: 800px; margin: 0 auto 18px; font-size: 19px; }
+
+    /* TABS */
+    .tabs-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    .tab-nav { display: flex; border-bottom: 3px solid var(--navy); margin-bottom: 48px; }
+    .tab-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 17px; font-weight: 700;
+      padding: 14px 32px;
+      border: none; background: none; cursor: pointer;
+      color: #555; border-bottom: 4px solid transparent;
+      margin-bottom: -3px; transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--navy); }
+    .tab-btn.active { color: var(--navy); border-bottom-color: var(--gold); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* CARD GRID */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      padding-bottom: 80px;
+    }
+    .resource-card {
+      background: var(--white);
+      border: 1px solid #dde3ed;
+      border-radius: 10px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .resource-card:hover { box-shadow: 0 8px 28px rgba(0,32,91,0.12); transform: translateY(-3px); }
+    .category-tag {
+      display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; text-transform: uppercase;
+      width: fit-content;
+    }
+    .tag-blog    { background: var(--gold); color: var(--white); }
+    .tag-article { background: var(--navy); color: var(--white); }
+    .resource-card h3 { color: var(--navy); font-size: 18px; margin-bottom: 12px; line-height: 1.35; }
+    .resource-card p  { font-size: 15px; line-height: 1.65; flex-grow: 1; color: #333; margin-bottom: 20px; }
+    .resource-card .btn { align-self: flex-start; font-size: 15px; padding: 10px 22px; }
+
+    /* TEMPLATES PLACEHOLDER */
+    .templates-placeholder {
+      text-align: center; padding: 80px 24px;
+      background: var(--light-bg); border-radius: 12px; margin-bottom: 80px;
+    }
+    .templates-placeholder h3 { font-size: 26px; color: var(--navy); margin-bottom: 16px; }
+    .templates-placeholder p  { max-width: 560px; margin: 0 auto 24px; font-size: 17px; color: #555; }
+
+    @media (max-width: 1100px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 700px)  { .card-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px)  { .tab-btn { font-size: 14px; padding: 12px 18px; } }
+
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="site-nav__inner">
+      <a href="../home.html" class="site-nav__logo">Cleveland <span>Business Mentors</span></a>
+      <ul class="site-nav__links">
+        <li><a href="../home.html">Home</a></li>
+        <li><a href="../about-page-draft/about.html">About</a></li>
+        <li><a href="../mentoring-pages/how-it-works.html">Mentoring</a></li>
+        <li><a href="../mentoring-pages/workshops.html">Workshops</a></li>
+        <li><a href="../resources.html" class="active">Resources</a></li>
+        <li><a href="#">Support Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>Resources</h1>
+    <p>Expert insights and practical tools from our mentor team</p>
+  </header>
+
+  <section class="intro-section">
+    <h2>Knowledge to Help You Grow</h2>
+    <span class="accent-rule accent-rule--center"></span>
+    <p>Our mentor team shares practical insights, expert advice, and tools to help you start, grow, and strengthen your business. Browse our blogs and articles below, or download one of our business templates.</p>
+  </section>
+
+  <div class="tabs-wrapper">
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-panel="blogs-articles">Blogs &amp; Articles</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-panel="templates">Templates</button>
+    </div>
+
+    <div id="blogs-articles" class="tab-panel active" role="tabpanel">
+      <div class="card-grid">
+
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>How to Use AI to Enhance Your Business</h3>
+        <p>Discover how small business owners can put AI tools like ChatGPT to work for market research, idea generation, and everyday troubleshooting. CBM mentor James Breiner shares practical prompts to get started, plus an important caution: always verify what AI tells you.</p>
+        <a href="resources/how-to-use-ai.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>Financial and Budgeting Tips for Startups and Entrepreneurs</h3>
+        <p>Many entrepreneurs know their product well but struggle with the financial side of running a business. This guide walks you through building a monthly expense budget, understanding cash flow, and creating a clear road map to profitability.</p>
+        <a href="resources/financial-budgeting-tips.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>The Value of Giving Positive Feedback</h3>
+        <p>Recognizing good work is one of the most powerful — and underused — tools a small business leader has. CBM mentor James Breiner draws on management research and classics like <em>The One Minute Manager</em> to explain why specific, timely praise builds stronger, more motivated teams.</p>
+        <a href="resources/value-of-positive-feedback.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>Some Important Resources for Starting a Nonprofit</h3>
+        <p>Starting a nonprofit in Cleveland requires careful planning, legal compliance, and access to the right support network. This step-by-step resource guide covers everything from incorporation and tax-exempt status to local funding opportunities and how CBM can help.</p>
+        <a href="resources/starting-a-nonprofit.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>Starting a Group Home in Ohio</h3>
+        <p>Group homes and residential facilities play a vital role in Ohio's continuum of care — but launching one means navigating complex licensing, staffing, zoning, and funding requirements across multiple state agencies. This white paper outlines the main facility types, the agencies that regulate them, and the local resources available to new operators.</p>
+        <a href="resources/starting-a-group-home.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>Tips for Finding the Right Accountant for Your Small Business</h3>
+        <p>The right accountant can keep your business compliant, help manage cash flow, and guide smarter financial decisions — but finding one who truly understands small business takes more than a Google search. These practical tips walk you through clarifying your needs, evaluating credentials, understanding fees, and building a lasting relationship.</p>
+        <a href="resources/finding-the-right-accountant.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>Tips for Finding the Right Attorney to Support Your Small Business</h3>
+        <p>Every small business eventually needs legal guidance, whether for forming an LLC, reviewing contracts, or navigating regulations specific to your industry. This article offers practical steps for finding an attorney who listens, communicates clearly, and delivers ongoing value — not just one-time transactional help.</p>
+        <a href="resources/finding-the-right-attorney.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-blog">Blog</span>
+        <h3>What Does It Take to Be a Successful Entrepreneur? Optimism Helps</h3>
+        <p>Nobel Prize-winning economist Daniel Kahneman's research reveals surprising truths about how entrepreneurs think — including the roles of optimism, luck, and cognitive bias in success and failure. CBM mentor James Breiner explores what business owners can learn from behavioral economics to avoid common mental traps.</p>
+        <a href="resources/successful-entrepreneur.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-article">Article</span>
+        <h3>Funding Your Small Business</h3>
+        <p>A clear, well-organized funding request signals credibility to lenders, investors, and grant committees alike. This practical framework walks you through every element — from the executive summary and use of funds to financial projections and risk management — to help you tell a compelling, credible story.</p>
+        <a href="resources/funding-your-small-business.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-article">Article</span>
+        <h3>The Government Provides $6 Billion in Grants Each Year for Small Businesses</h3>
+        <p>If you run a small science or technology business, the Small Business Innovation Research (SBIR) program represents nearly $6 billion in annual federal grants — and you keep your equity and intellectual property. This article explains how the three-phase program works and how to write a competitive proposal.</p>
+        <a href="resources/government-grants-sbir.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-article">Article</span>
+        <h3>Test Your Customer IQ</h3>
+        <p>How well do you really know your customers? This quick ten-question quiz helps you identify gaps in your understanding of who your best prospects are, what triggers their buying decisions, and how they find you — followed by five strategies for turning those insights into faster sales.</p>
+        <a href="resources/test-your-customer-iq.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-article">Article</span>
+        <h3>How to Generate More Referrals for Your Business</h3>
+        <p>Referrals lead to better-fit clients, faster decisions, and built-in trust — but they don't happen by accident. These nine actionable strategies help you build the relationships, visibility, and clear messaging you need to turn your network into a reliable, ongoing source of new business.</p>
+        <a href="resources/generate-more-referrals.html" class="btn">Read More</a>
+      </div>
+      <div class="resource-card">
+        <span class="category-tag tag-article">Article</span>
+        <h3>The Value of Direct Mail in Modern Marketing</h3>
+        <p>In a world of digital ad overload, a well-crafted postcard can cut through the noise and build real neighborhood recognition for your business. This article explains the data behind direct mail's staying power and shares a simple three-part formula for running campaigns that track results and drive growth.</p>
+        <a href="resources/direct-mail-marketing.html" class="btn">Read More</a>
+      </div>
+      </div>
+    </div>
+
+    <div id="templates" class="tab-panel" role="tabpanel">
+      <div class="templates-placeholder">
+        <h3>Business Templates Coming Soon</h3>
+        <p>We're preparing downloadable templates to help you plan, budget, and manage your business. Check back soon — or connect with a mentor who can walk you through the tools directly.</p>
+        <a href="mailto:info@cbmentors.org" class="btn">Contact Us to Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="bottom-panel">
+    <div class="bottom-panel__inner">
+      <div>
+        <h3>Ready to Connect?</h3>
+        <p>Our certified mentors are here to help you start, grow, and strengthen your business — at no cost to you.</p>
+        <a href="#" class="btn" style="margin-top:8px;">Request a Mentor</a>
+      </div>
+      <div>
+        <h3>Upcoming Workshops</h3>
+        <p>Join us for free webinars and in-person events covering key topics for entrepreneurs at every stage.</p>
+        <a href="../mentoring-pages/workshops.html" class="btn btn--outline" style="margin-top:8px;">View Schedule</a>
+      </div>
+      <div>
+        <h3>Get in Touch</h3>
+        <p>Questions? We'd love to hear from you.</p>
+        <p><a href="mailto:info@cbmentors.org">info@cbmentors.org</a></p>
+        <p>P.O. Box 22286<br>Beachwood, OH 44122</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Cleveland Business Mentors. All rights reserved. |
+       <a href="#">Privacy Policy</a> |
+       <a href="mailto:info@cbmentors.org">info@cbmentors.org</a>
+    </p>
+  </footer>
+
+  <script>
+    const tabBtns   = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+        tabPanels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
+        document.getElementById(btn.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
