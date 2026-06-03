@@ -1,0 +1,1447 @@
+# =================================================================
+# CBM Client Business Profile — Candidate Field Inventory
+# =================================================================
+#
+# Purpose:  Review artifact for selecting which business-profile
+#           fields to add to the Client side of the Account entity
+#           so that mentors can review a client's situation without
+#           re-asking the same questions session after session.
+#
+# Status:   Draft for review — NOT a deployable YAML program file.
+#           Structure follows the conventions of the CRM Builder
+#           YAML schema (field types, options, etc.) but the
+#           top-level structure is an inventory, not an entity
+#           declaration. See companion file
+#           MN-Account-business-profile-draft.yaml for the
+#           entity-shape rendering.
+#
+# Scope:    Account-level (the business) only. Owner demographic
+#           attributes (race, ethnicity, gender, veteran status,
+#           disability status) belong on the Contact entity per
+#           SBA Form 641 conventions and are explicitly out of
+#           scope for this inventory.
+#
+# Visibility default: All proposed new fields are scoped to
+#           visibleWhen accountType contains "Client" in this
+#           draft. Promotion to additional account types
+#           (Partner, Donor/Sponsor) is a future scoping
+#           decision per category.
+
+inventory_metadata:
+  title: "CBM Client Business Profile — Candidate Field Inventory"
+  version: "0.1.0"
+  status: "Draft for Doug's review"
+  last_updated: "05-18-26 05:30"
+  author: "Claude session, 05-18-26"
+  research_basis: >
+    SBA Form 641 (federal counseling intake standard used by SCORE,
+    SBDC, and Women's Business Centers), federal SBA contracting
+    certifications (8(a), WOSB/EDWOSB, VOSB/SDVOSB, HUBZone, SDB,
+    DBE), Ohio Department of Administrative Services certifications
+    (MBE, WBE, EDGE, VFBE), Cuyahoga County certifications (MBE,
+    WBE, SBE), and standard small-business mentoring intake
+    practices. See conversation thread of 05-18-26 for citations.
+
+  field_status_legend:
+    existing: >
+      Field already declared in current YAML programs. Listed
+      here for completeness; no new declaration needed.
+    candidate-new: >
+      Proposed new field. Would require Account Entity PRD update
+      and a YAML declaration if approved.
+    candidate-relocate: >
+      Exists somewhere but worth considering moving or copying.
+
+  field_sensitivity_legend:
+    routine: >
+      Standard business information routinely captured on intake
+      forms across the industry. Low confidentiality risk.
+    moderate: >
+      Operational detail that the client may consider competitive
+      or private. Should be visible only to assigned mentors and
+      administrators.
+    sensitive: >
+      Financial or compliance information. Restricted to
+      administrator roles or explicit role-based access control.
+
+  capture_phase_legend:
+    intake: >
+      Captured during the initial signup or first-touch form.
+      Should be brief; client fills out directly.
+    first-session: >
+      Captured during the first session with the assigned mentor.
+      Filled in by the mentor on behalf of the client based on
+      conversation.
+    ongoing: >
+      Captured over the course of the mentoring relationship as
+      the topic arises naturally. Not expected at intake.
+
+# =================================================================
+# Native fields (already present, no declaration required)
+# =================================================================
+
+native_fields_inherited_from_company_entity:
+  description: >
+    These fields exist on every Account record by virtue of the
+    native Company entity type. They are listed for completeness;
+    no YAML declaration is needed.
+
+  fields:
+    - name: name
+      type: varchar
+      label: "Business Name"
+      notes: "Native. MN-INTAKE-DAT-001 references this field."
+
+    - name: website
+      type: url
+      label: "Website"
+      notes: "Native. MN-INTAKE-DAT-002 references this field."
+
+    - name: billingAddress
+      type: address-composite
+      label: "Billing Address"
+      notes: >
+        Native composite (street, city, state, postalCode, country).
+        MN-INTAKE-DAT-003 references this field.
+
+    - name: emailAddress
+      type: email
+      label: "Email"
+      notes: "Native."
+
+    - name: phoneNumber
+      type: phone
+      label: "Phone"
+      notes: "Native."
+
+# =================================================================
+# Existing Client-side custom fields
+# =================================================================
+
+existing_custom_fields_on_account:
+  description: >
+    Already declared in current YAML programs. Listed here for
+    review so the user can confirm whether each one should be
+    kept as-is or modified.
+
+  fields:
+    - name: organizationType
+      type: enum
+      label: "Organization Type"
+      declared_in: "MN-Account.yaml"
+      options:
+        - "For-Profit"
+        - "Non-Profit"
+      status: existing
+      sensitivity: routine
+      phase: intake
+      notes: >
+        Drives funder reporting categories. The two-value list may
+        need expansion to cover B-Corp, Cooperative, and Sole
+        Proprietorship distinctions — see candidate
+        legalEntityType below for a richer alternative.
+
+    - name: businessStage
+      type: enum
+      label: "Business Stage"
+      declared_in: "MN-Account.yaml"
+      options:
+        - "Pre-Startup"
+        - "Startup"
+        - "Early Stage"
+        - "Growth Stage"
+        - "Established"
+      status: existing
+      sensitivity: routine
+      phase: intake
+      notes: >
+        Existing five-value list aligns with standard small-business
+        mentoring lifecycle frameworks. Consider whether to add
+        "Pivoting", "Preparing to Sell or Exit", or "Distressed /
+        Turnaround" as additional values for mature businesses.
+
+    - name: industrySector
+      type: enum
+      label: "Industry Sector"
+      declared_in: "MN-Account.yaml"
+      options_summary: "20 NAICS top-level sectors"
+      status: existing
+      sensitivity: routine
+      phase: intake
+
+    - name: industrySubsector
+      type: enum
+      label: "Industry Subsector"
+      declared_in: "MN-Account.yaml"
+      options: []
+      optionsDeferred: true
+      status: existing
+      sensitivity: routine
+      phase: intake
+      notes: "~100 NAICS subsectors, deferred per MN-MC-DD-002."
+
+    - name: clientNotes
+      type: wysiwyg
+      label: "Client Notes"
+      declared_in: "MN-Account.yaml"
+      status: existing
+      sensitivity: moderate
+      phase: ongoing
+
+# =================================================================
+# CANDIDATE NEW FIELDS — organized by category
+# =================================================================
+
+categories:
+
+  # ---------------------------------------------------------------
+  - id: identity-legal
+    name: "Identity, Legal Formation, and Registration"
+    rationale: >
+      Captures whether the business is formally established and
+      what kind of legal entity it is. Mentors need to know this
+      to advise on operating-agreement issues, liability concerns,
+      and tax implications. Several of the SBA Form 641 fields
+      live here.
+    fields:
+
+      - name: legalBusinessName
+        type: varchar
+        label: "Legal Business Name"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          The exact name as filed with the Secretary of State.
+          May differ from the trade name in the native "name"
+          field (which is the colloquial name the business
+          uses publicly).
+        source: "SBA Form 641 Part I; standard accounting intake"
+
+      - name: doingBusinessAsNames
+        type: text
+        label: "Doing Business As (DBA) Names"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          Free-text list of any DBA / fictitious business names
+          the client operates under. Some businesses operate
+          multiple brands under one legal entity.
+
+      - name: legalEntityType
+        type: enum
+        label: "Legal Entity Type"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Sole Proprietorship"
+          - "General Partnership"
+          - "Limited Partnership"
+          - "Limited Liability Partnership (LLP)"
+          - "Limited Liability Company (LLC)"
+          - "S-Corporation"
+          - "C-Corporation"
+          - "Nonprofit Corporation"
+          - "Benefit Corporation (B-Corp)"
+          - "Cooperative"
+          - "Not Yet Formed"
+          - "Other"
+        rationale: >
+          Richer than the existing organizationType (For-Profit /
+          Non-Profit) and aligned with SBA Form 641's six values
+          plus the Ohio-relevant additions. Consider whether to
+          deprecate organizationType in favor of this or keep both
+          for backwards compatibility.
+        source: "SBA Form 641 question 29; Ohio LLC and B-Corp law"
+
+      - name: stateOfFormation
+        type: varchar
+        label: "State of Formation"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Two-letter state code. Most CBM clients will be Ohio,
+          but some businesses incorporate in Delaware for legal
+          reasons even when operating elsewhere.
+
+      - name: formationDate
+        type: date
+        label: "Formation Date"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          The date the business was legally formed. Note that
+          this may predate the date the owner thinks of the
+          business as having "started" (yearFounded below).
+        source: "SBA Form 641 question 24"
+
+      - name: yearFounded
+        type: int
+        label: "Year Founded"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 1900
+        max: 2099
+        rationale: >
+          The year the owner considers the business to have
+          started, which may predate formal legal formation
+          (e.g., a sole proprietorship operating informally
+          before LLC formation).
+
+      - name: federalEinOnFile
+        type: bool
+        label: "Federal EIN Obtained"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          Yes/no rather than capturing the actual EIN, which is
+          sensitive. Knowing whether the client has an EIN tells
+          a mentor whether the client can open business accounts,
+          hire employees, etc. The number itself is not needed
+          for mentoring purposes.
+
+      - name: ohioVendorsLicenseOnFile
+        type: bool
+        label: "Ohio Vendor's License Obtained"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          Ohio requires a vendor's license for businesses selling
+          taxable goods or services. Whether the client has one
+          is a foundational compliance check.
+
+      - name: registeredOnSamGov
+        type: bool
+        label: "Registered on SAM.gov"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          SAM.gov registration is the gateway to federal
+          contracting. Useful to know whether the client is in
+          the government-contracting space at all.
+        source: "SBA basic requirements for federal contracting"
+
+      - name: localLicensesAndPermits
+        type: text
+        label: "Local Licenses and Permits Held"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Free-text list of city, county, and industry-specific
+          licenses (contractor's license, food service permit,
+          professional licenses, liquor license, etc.). Highly
+          industry-dependent.
+
+  # ---------------------------------------------------------------
+  - id: ownership-control
+    name: "Ownership and Control"
+    rationale: >
+      Aggregate ownership attributes of the business that drive
+      certification eligibility. Individual owner demographics
+      live on the Contact entity, not here. Percentages are at
+      the business level because the certification rules
+      (51 percent owned and controlled by women, for example)
+      operate at that level.
+    fields:
+
+      - name: numberOfOwners
+        type: int
+        label: "Number of Owners"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 0
+        rationale: >
+          Distinguishes solo entrepreneurs from partnerships and
+          multi-owner businesses. Affects mentoring approach.
+
+      - name: isFamilyOwnedBusiness
+        type: bool
+        label: "Family-Owned Business"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          Family businesses face distinctive succession,
+          governance, and conflict-management challenges that
+          mentors with family-business expertise can help with.
+
+      - name: percentOwnedByWomen
+        type: int
+        label: "Percent Owned by Women"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 0
+        max: 100
+        rationale: >
+          Drives eligibility for WOSB, EDWOSB, Ohio WBE, and
+          Cuyahoga County WBE certifications, which require 51
+          percent or more women ownership.
+
+      - name: percentOwnedByMinority
+        type: int
+        label: "Percent Owned by Minority-Group Members"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 0
+        max: 100
+        rationale: >
+          Drives eligibility for SBA 8(a), Ohio MBE, and county
+          MBE certifications, which require 51 percent or more
+          minority ownership. Minority groups defined by Ohio
+          MBE rules include African American, American Indian,
+          Hispanic, and Asian.
+
+      - name: percentOwnedByVeterans
+        type: int
+        label: "Percent Owned by Veterans"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 0
+        max: 100
+        rationale: >
+          Drives eligibility for VOSB, SDVOSB, and Ohio VFBE
+          certifications, which require 51 percent or more
+          veteran ownership.
+
+      - name: ownerNumberOfPriorBusinesses
+        type: int
+        label: "Owner Prior Businesses"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        min: 0
+        rationale: >
+          Distinguishes first-time entrepreneurs from serial
+          founders. Materially affects mentoring approach.
+
+      - name: acquisitionType
+        type: enum
+        label: "How the Business Was Acquired"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Founded by Current Owner(s)"
+          - "Purchased from a Prior Owner"
+          - "Inherited"
+          - "Franchise"
+          - "Family Business — Second Generation"
+          - "Family Business — Third Generation or Beyond"
+          - "Spin-Off from Prior Employer"
+          - "Other"
+        rationale: >
+          Inherited and franchise businesses face fundamentally
+          different mentoring needs than founder-led startups.
+
+  # ---------------------------------------------------------------
+  - id: certifications
+    name: "Government and Industry Certifications"
+    rationale: >
+      Certifications opens doors to set-aside government contracts
+      and supplier diversity programs. CBM should know which ones
+      a client holds and which they might be eligible for.
+      Structural alternative — instead of two multiEnum fields,
+      a separate Certification entity with per-record fields for
+      issuing body, certificate number, issue date, expiration
+      date, and status would be cleaner if CBM expects to actively
+      help clients pursue certifications. Flagged for the user's
+      decision.
+    structural_note: >
+      The candidate fields below treat certifications as flat
+      multi-select lists. If CBM expects to track issue and
+      expiration dates per certification, propose a separate
+      Certification entity with the values below as its type enum.
+    fields:
+
+      - name: certificationsHeld
+        type: multiEnum
+        label: "Certifications Currently Held"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "SBA 8(a) Business Development"
+          - "SBA Women-Owned Small Business (WOSB)"
+          - "SBA Economically Disadvantaged WOSB (EDWOSB)"
+          - "SBA Veteran-Owned Small Business (VOSB)"
+          - "SBA Service-Disabled VOSB (SDVOSB)"
+          - "SBA HUBZone"
+          - "SBA Small Disadvantaged Business (SDB)"
+          - "Federal Disadvantaged Business Enterprise (DBE)"
+          - "Ohio Minority Business Enterprise (MBE)"
+          - "Ohio Women Business Enterprise (WBE)"
+          - "Ohio Encouraging Diversity, Growth and Equity (EDGE)"
+          - "Ohio Veteran-Friendly Business Enterprise (VFBE)"
+          - "Cuyahoga County MBE"
+          - "Cuyahoga County WBE"
+          - "Cuyahoga County SBE"
+          - "Other"
+        rationale: >
+          Mentors should know what doors are already open to the
+          client. The list covers federal, state, and county
+          certifications relevant to Northeast Ohio businesses.
+
+      - name: certificationsInterestedIn
+        type: multiEnum
+        label: "Certifications of Interest"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "SBA 8(a) Business Development"
+          - "SBA Women-Owned Small Business (WOSB)"
+          - "SBA Economically Disadvantaged WOSB (EDWOSB)"
+          - "SBA Veteran-Owned Small Business (VOSB)"
+          - "SBA Service-Disabled VOSB (SDVOSB)"
+          - "SBA HUBZone"
+          - "SBA Small Disadvantaged Business (SDB)"
+          - "Federal Disadvantaged Business Enterprise (DBE)"
+          - "Ohio Minority Business Enterprise (MBE)"
+          - "Ohio Women Business Enterprise (WBE)"
+          - "Ohio Encouraging Diversity, Growth and Equity (EDGE)"
+          - "Ohio Veteran-Friendly Business Enterprise (VFBE)"
+          - "Cuyahoga County MBE"
+          - "Cuyahoga County WBE"
+          - "Cuyahoga County SBE"
+          - "Other"
+        rationale: >
+          Flags potential mentoring opportunities. Mentors with
+          certification expertise can be matched to clients
+          pursuing certifications.
+
+      - name: certificationNotes
+        type: text
+        label: "Certification Notes"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Free-text capture of certification numbers, expiration
+          dates, and any in-progress applications.
+
+  # ---------------------------------------------------------------
+  - id: classification
+    name: "Industry Classification"
+    rationale: >
+      Beyond the existing industrySector and industrySubsector,
+      a structured NAICS code makes the business searchable
+      against federal databases and SBA size standards.
+    fields:
+
+      - name: naicsCode
+        type: varchar
+        label: "Primary NAICS Code"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        maxLength: 6
+        rationale: >
+          The six-digit NAICS code, which the SBA uses to determine
+          small-business size eligibility for federal contracting
+          programs. Distinct from industrySector (the two-digit
+          parent code value).
+        source: "SBA size standards reference 13 CFR 121.201"
+
+      - name: businessDescription
+        type: text
+        label: "Business Description"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          One- to two-paragraph plain-language description of what
+          the business does. Helps mentors understand the business
+          without re-asking and can be reused for marketing or
+          grant applications.
+
+  # ---------------------------------------------------------------
+  - id: scale-financial
+    name: "Scale and Financial Snapshot"
+    rationale: >
+      Financial scale is essential context for any mentoring
+      conversation. SBA Form 641 captures revenue and profit/loss
+      directly. CBM may want bracketed ranges instead of exact
+      values to reduce client reluctance.
+    fields:
+
+      - name: annualRevenueRange
+        type: enum
+        label: "Annual Revenue Range"
+        sensitivity: sensitive
+        phase: intake
+        status: candidate-new
+        options:
+          - "Pre-Revenue"
+          - "Under $50,000"
+          - "$50,000 to $100,000"
+          - "$100,000 to $250,000"
+          - "$250,000 to $500,000"
+          - "$500,000 to $1 Million"
+          - "$1 Million to $2 Million"
+          - "$2 Million to $5 Million"
+          - "$5 Million to $10 Million"
+          - "Over $10 Million"
+          - "Prefer Not to Share"
+        rationale: >
+          Bracketed ranges lower the disclosure threshold compared
+          to asking for an exact number. SBA Form 641 asks for
+          exact revenue and profit; CBM may choose differently.
+
+      - name: revenueTrend
+        type: enum
+        label: "Revenue Trend (last 12 months)"
+        sensitivity: moderate
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Growing Significantly"
+          - "Growing Modestly"
+          - "Flat"
+          - "Declining Modestly"
+          - "Declining Significantly"
+          - "Too New to Tell"
+        rationale: >
+          Direction matters more than absolute number for many
+          mentoring conversations.
+
+      - name: profitabilityStatus
+        type: enum
+        label: "Profitability Status"
+        sensitivity: sensitive
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Profitable"
+          - "Breakeven"
+          - "Operating at a Loss"
+          - "Owner Draws Only (No Formal Profit)"
+          - "Pre-Revenue"
+          - "Prefer Not to Share"
+        rationale: >
+          Directly relevant to whether a mentoring conversation
+          needs to address cost-cutting, pricing, or growth.
+
+      - name: mostRecentFullYearRevenue
+        type: currency
+        label: "Most Recent Full Year Revenue"
+        sensitivity: sensitive
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          Exact value, optional. Captured when the client is
+          willing to share precise numbers. Direct alignment
+          with SBA Form 641 question 28.
+
+      - name: fiscalYearEndMonth
+        type: enum
+        label: "Fiscal Year End"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "January"
+          - "February"
+          - "March"
+          - "April"
+          - "May"
+          - "June"
+          - "July"
+          - "August"
+          - "September"
+          - "October"
+          - "November"
+          - "December"
+        rationale: >
+          Most small businesses use a calendar year, but some
+          align to industry cycles. Affects timing of financial
+          conversations.
+
+  # ---------------------------------------------------------------
+  - id: workforce
+    name: "Workforce and Labor"
+    rationale: >
+      The native intake captures total employee count only.
+      Richer workforce detail (full-time vs. part-time, contractor
+      use, union status) materially affects mentoring on HR,
+      growth, and compliance topics. Includes the user's
+      "union" question explicitly.
+    fields:
+
+      - name: numberOfFullTimeEmployees
+        type: int
+        label: "Number of Full-Time W-2 Employees"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 0
+        rationale: >
+          Splitting full-time from part-time gives mentors better
+          context than the combined number on SBA Form 641
+          question 27.
+
+      - name: numberOfPartTimeEmployees
+        type: int
+        label: "Number of Part-Time W-2 Employees"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        min: 0
+
+      - name: numberOf1099Contractors
+        type: int
+        label: "Number of 1099 Contractors Used Regularly"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        min: 0
+        rationale: >
+          Many small businesses run lean by using contractors.
+          Worth distinguishing from W-2 employees for compliance
+          and growth conversations.
+
+      - name: usesPayrollService
+        type: bool
+        label: "Uses a Payroll Service"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: usesPeoOrEor
+        type: bool
+        label: "Uses a PEO or Employer of Record"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: currentlyHiring
+        type: bool
+        label: "Currently Hiring"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          One of the two most-asked mentoring questions per SCORE
+          data (the other being capital). Worth surfacing
+          explicitly.
+
+      - name: workforceUnionized
+        type: bool
+        label: "Workforce Represented by a Labor Union"
+        sensitivity: moderate
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Captures one of three meanings of the user's "union"
+          question — whether the workforce is covered by a
+          collective bargaining agreement.
+
+      - name: unionSignatoryContractor
+        type: bool
+        label: "Signatory Contractor with a Trades Union"
+        sensitivity: moderate
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Captures the second meaning — whether the business is
+          a signatory to a building trades union agreement.
+          Highly relevant in Northeast Ohio for construction,
+          electrical, plumbing, HVAC, and related trades.
+
+      - name: workforceLaborNotes
+        type: text
+        label: "Workforce and Labor Notes"
+        sensitivity: moderate
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          Free-text capture for which union(s), CBA expiration,
+          or related context.
+
+  # ---------------------------------------------------------------
+  - id: customers-markets
+    name: "Customers and Markets"
+    rationale: >
+      Whom the business sells to is one of the most consequential
+      mentoring topics. Includes the SBA Form 641 export question
+      that affects whether International Trade mentoring fits.
+    fields:
+
+      - name: primaryCustomerType
+        type: multiEnum
+        label: "Primary Customer Type"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Business-to-Business (B2B)"
+          - "Business-to-Consumer (B2C)"
+          - "Business-to-Government (B2G)"
+          - "Nonprofit-to-Donor (for nonprofit clients)"
+          - "Other"
+        rationale: >
+          A B2B-only mentor coaching a B2C client is a poor fit;
+          this field enables better matching.
+
+      - name: geographicMarketReach
+        type: enum
+        label: "Geographic Market Reach"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Hyper-Local (within a few miles)"
+          - "Local (within Cuyahoga County)"
+          - "Regional (Northeast Ohio)"
+          - "Statewide (Ohio)"
+          - "Multi-State"
+          - "National"
+          - "International"
+        rationale: >
+          Substantially affects growth mentoring conversations.
+
+      - name: hasCustomerConcentrationRisk
+        type: bool
+        label: "Single Customer Over 25 Percent of Revenue"
+        sensitivity: sensitive
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          A material risk factor that every mentor should know
+          about immediately. Customer concentration is one of
+          the most common causes of small-business failure.
+
+      - name: exportingActive
+        type: bool
+        label: "Currently Exports Goods or Services"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        source: "SBA Form 641 question 20b"
+
+      - name: exportCountries
+        type: text
+        label: "Export Destinations"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        visibleWhen_proposed: "exportingActive equals true"
+        rationale: "Captured only when exportingActive is true."
+
+  # ---------------------------------------------------------------
+  - id: sales-channels
+    name: "Sales and Marketing Channels"
+    rationale: >
+      How the business actually finds and sells to customers.
+      Builds on the existing native website field and CR-Account's
+      linkedInPage.
+    fields:
+
+      - name: salesChannels
+        type: multiEnum
+        label: "Sales Channels Used"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Direct Sales"
+          - "Retail Storefront"
+          - "E-Commerce Website"
+          - "Wholesale to Other Businesses"
+          - "Distributors and Resellers"
+          - "Online Marketplaces (Amazon, Etsy, eBay, etc.)"
+          - "Referrals and Word of Mouth"
+          - "Catalog or Direct Mail"
+          - "Trade Shows and Events"
+          - "Subscription or Recurring Revenue"
+          - "Other"
+
+      - name: socialMediaPresence
+        type: multiEnum
+        label: "Active Social Media Presence"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Facebook"
+          - "Instagram"
+          - "LinkedIn"
+          - "X (formerly Twitter)"
+          - "YouTube"
+          - "TikTok"
+          - "Pinterest"
+          - "Other"
+
+      - name: hasGoogleBusinessProfile
+        type: bool
+        label: "Has Claimed Google Business Profile"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: usesEmailMarketing
+        type: bool
+        label: "Uses Email Marketing"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+  # ---------------------------------------------------------------
+  - id: operations
+    name: "Operations and Facilities"
+    rationale: >
+      Physical and operational footprint context. SBA Form 641
+      captures the home-based and online flags; this adds depth.
+    fields:
+
+      - name: isHomeBased
+        type: bool
+        label: "Home-Based Business"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        source: "SBA Form 641 question 26"
+
+      - name: conductsBusinessOnline
+        type: bool
+        label: "Conducts Business Primarily Online"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        source: "SBA Form 641 question 25"
+
+      - name: numberOfPhysicalLocations
+        type: int
+        label: "Number of Physical Locations"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        min: 0
+
+      - name: primaryLocationOwnership
+        type: enum
+        label: "Primary Location Ownership"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Owned by the Business"
+          - "Owned by the Owner Personally"
+          - "Leased"
+          - "Home-Based"
+          - "Coworking Space"
+          - "No Fixed Location"
+          - "Other"
+
+      - name: inventoryModel
+        type: enum
+        label: "Inventory Model"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "None — Service Only"
+          - "Light Inventory"
+          - "Moderate Inventory"
+          - "Heavy Inventory"
+          - "Just-in-Time / Made to Order"
+          - "Other"
+
+      - name: supplyChainNotes
+        type: text
+        label: "Supply Chain Notes"
+        sensitivity: moderate
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          Captures concerns like sole-source suppliers,
+          import-dependence, or seasonality.
+
+  # ---------------------------------------------------------------
+  - id: financial-infrastructure
+    name: "Financial Infrastructure"
+    rationale: >
+      Accounting, banking, and credit posture. Foundational
+      context for any financial mentoring topic.
+    fields:
+
+      - name: accountingMethod
+        type: enum
+        label: "Accounting Method"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Cash Basis"
+          - "Accrual Basis"
+          - "Hybrid"
+          - "Not Yet Established"
+
+      - name: usesAccountingSoftware
+        type: bool
+        label: "Uses Accounting Software"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: bookkeepingStatus
+        type: enum
+        label: "Bookkeeping Status"
+        sensitivity: moderate
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Up-to-Date"
+          - "Behind by Less Than 3 Months"
+          - "Behind by 3 to 12 Months"
+          - "Behind by More Than 12 Months"
+          - "No Formal Bookkeeping"
+          - "Outsourced and Up-to-Date"
+
+      - name: hasBusinessBankAccount
+        type: bool
+        label: "Has Dedicated Business Bank Account"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        rationale: >
+          Many micro-businesses commingle business and personal
+          finances. A foundational mentoring conversation.
+
+      - name: hasBusinessCreditCard
+        type: bool
+        label: "Has Business Credit Card"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: hasLineOfCredit
+        type: bool
+        label: "Has Active Line of Credit"
+        sensitivity: moderate
+        phase: first-session
+        status: candidate-new
+
+      - name: personalCreditScoreRange
+        type: enum
+        label: "Owner Personal Credit Score Range"
+        sensitivity: sensitive
+        phase: ongoing
+        status: candidate-new
+        options:
+          - "800 and Above"
+          - "740 to 799"
+          - "670 to 739"
+          - "580 to 669"
+          - "Below 580"
+          - "Unknown"
+          - "Prefer Not to Share"
+        rationale: >
+          Bracketed range, owner-attributed. Affects ability to
+          obtain SBA loans and credit. May belong on the owner
+          Contact rather than the Account — flagged for
+          discussion.
+
+      - name: businessCreditScoreEstablished
+        type: bool
+        label: "Has Established Business Credit"
+        sensitivity: moderate
+        phase: first-session
+        status: candidate-new
+
+  # ---------------------------------------------------------------
+  - id: funding-history
+    name: "Funding History and Capital Needs"
+    rationale: >
+      Where the business has gotten money and whether it needs
+      more. Aligned with SBA Form 641's "Financing/Capital"
+      counseling category. Capital is one of the top two
+      mentoring topics across the industry.
+    structural_note: >
+      If CBM expects to track individual funding events with
+      amounts and dates, this category may be better as a child
+      FundingEvent entity. The flat fields below are the
+      lighter-weight alternative.
+    fields:
+
+      - name: fundingSourcesUsedToDate
+        type: multiEnum
+        label: "Funding Sources Used to Date"
+        sensitivity: sensitive
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Personal Savings"
+          - "Friends and Family"
+          - "Bank Loan (Conventional)"
+          - "SBA Loan"
+          - "Line of Credit"
+          - "Credit Cards"
+          - "Angel Investor"
+          - "Venture Capital"
+          - "Crowdfunding"
+          - "Grant"
+          - "Microloan"
+          - "Equipment Financing"
+          - "Revenue-Based Financing"
+          - "Bootstrap (Revenue Only)"
+          - "Other"
+
+      - name: totalCapitalRaisedToDate
+        type: currency
+        label: "Total Capital Raised to Date"
+        sensitivity: sensitive
+        phase: ongoing
+        status: candidate-new
+
+      - name: currentlySeekingCapital
+        type: bool
+        label: "Currently Seeking Capital"
+        sensitivity: moderate
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          Surfaces high-frequency mentoring need immediately.
+
+      - name: capitalSoughtAmount
+        type: currency
+        label: "Capital Sought Amount"
+        sensitivity: sensitive
+        phase: ongoing
+        status: candidate-new
+        visibleWhen_proposed: "currentlySeekingCapital equals true"
+
+      - name: capitalSoughtPurpose
+        type: text
+        label: "Capital Sought Purpose"
+        sensitivity: moderate
+        phase: ongoing
+        status: candidate-new
+        visibleWhen_proposed: "currentlySeekingCapital equals true"
+
+  # ---------------------------------------------------------------
+  - id: technology
+    name: "Technology and Systems"
+    rationale: >
+      What systems the business already uses. Keeps mentors from
+      re-asking and surfaces opportunities for technology
+      modernization advice.
+    fields:
+
+      - name: pointOfSaleSystemUsed
+        type: varchar
+        label: "Point of Sale System"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        maxLength: 100
+
+      - name: customerSystemUsed
+        type: varchar
+        label: "Customer Management System"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        maxLength: 100
+
+      - name: techStackNotes
+        type: text
+        label: "Technology Stack Notes"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+
+  # ---------------------------------------------------------------
+  - id: professional-advisors
+    name: "Professional Advisors"
+    rationale: >
+      Who else is in the picture. Mentors should know about
+      existing CPAs, attorneys, and other advisors so they can
+      coordinate or defer rather than duplicate advice.
+    structural_note: >
+      If CBM wants to capture advisor names and contact info,
+      a related Advisor entity (with advisorType, name, firm,
+      contact info) is likely cleaner. The flat fields below
+      are the lighter-weight alternative.
+    fields:
+
+      - name: hasAccountantOrCpa
+        type: bool
+        label: "Has Accountant or CPA on Retainer"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: hasBusinessAttorney
+        type: bool
+        label: "Has Business Attorney"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: hasInsuranceAgent
+        type: bool
+        label: "Has Business Insurance Agent"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: hasFinancialAdvisor
+        type: bool
+        label: "Has Financial or Wealth Advisor"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: otherCoachOrMentorRelationships
+        type: text
+        label: "Other Coaching or Mentoring Relationships"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Surfaces parallel advisory relationships so mentors can
+          coordinate. Also identifies clients who may not be
+          ready to commit to CBM mentoring exclusively.
+
+      - name: advisorNotes
+        type: wysiwyg
+        label: "Advisor Notes"
+        sensitivity: moderate
+        phase: ongoing
+        status: candidate-new
+
+  # ---------------------------------------------------------------
+  - id: insurance-compliance
+    name: "Insurance and Compliance Posture"
+    rationale: >
+      Foundational risk-management coverage. Whether these are in
+      place tells mentors a lot about the maturity of the
+      business operationally.
+    fields:
+
+      - name: generalLiabilityInsuranceActive
+        type: bool
+        label: "General Liability Insurance Active"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: professionalLiabilityInsuranceActive
+        type: bool
+        label: "Professional Liability Insurance Active"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: workersCompCoverageStatus
+        type: enum
+        label: "Workers Compensation Coverage"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Active Through BWC"
+          - "Active Through Self-Insurance"
+          - "Lapsed"
+          - "Not Required (No Employees)"
+          - "Unknown"
+
+      - name: cyberInsuranceActive
+        type: bool
+        label: "Cyber Insurance Active"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+
+      - name: otherInsuranceNotes
+        type: text
+        label: "Other Insurance Notes"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          Captures specialty coverage (product liability, D and O,
+          E and O, commercial auto, business interruption, etc.)
+
+  # ---------------------------------------------------------------
+  - id: mentoring-context
+    name: "Mentoring Context and Intangibles"
+    rationale: >
+      Captures the soft context that makes mentoring effective —
+      goals, challenges, prior experience with mentoring, and
+      preferences. Aligned with SCORE practice and SBA Form 641
+      question 30 (nature of counseling sought).
+    fields:
+
+      - name: topBusinessGoalsNext12Months
+        type: text
+        label: "Top Business Goals — Next 12 Months"
+        sensitivity: moderate
+        phase: intake
+        status: candidate-new
+
+      - name: currentTopChallenges
+        type: text
+        label: "Current Top Challenges"
+        sensitivity: moderate
+        phase: intake
+        status: candidate-new
+
+      - name: priorMentoringReceived
+        type: bool
+        label: "Previously Received Business Mentoring"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+
+      - name: priorMentoringSources
+        type: multiEnum
+        label: "Prior Mentoring Sources"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "SCORE"
+          - "Small Business Development Center (SBDC)"
+          - "Women's Business Center"
+          - "Veterans Business Outreach Center"
+          - "Minority Business Development Agency"
+          - "Private Coach or Consultant"
+          - "Industry Association"
+          - "Other Nonprofit"
+          - "Other"
+
+      - name: priorBusinessTrainingNotes
+        type: text
+        label: "Prior Business Training or Education"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        rationale: >
+          Captures relevant prior education, certifications, or
+          training programs (MBA, executive education, industry
+          certifications, etc.).
+
+      - name: nature_of_assistance_sought
+        type: multiEnum
+        label: "Nature of Assistance Sought"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Start-up Assistance"
+          - "Business Plan"
+          - "Financing and Capital"
+          - "Managing a Business"
+          - "Human Resources and Managing Employees"
+          - "Customer Relations"
+          - "Business Accounting and Budget"
+          - "Cash Flow Management"
+          - "Tax Planning"
+          - "Marketing and Sales"
+          - "Government Contracting (including certifications)"
+          - "Franchising"
+          - "Buy or Sell a Business"
+          - "Technology and Computers"
+          - "E-Commerce"
+          - "Legal Issues"
+          - "International Trade"
+        rationale: >
+          Directly mirrors SBA Form 641 question 30. Enables
+          matching to mentors with relevant expertise.
+        source: "SBA Form 641 question 30"
+
+      - name: languagePreference
+        type: enum
+        label: "Preferred Language for Mentoring"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "English"
+          - "Spanish"
+          - "Other"
+
+      - name: accessibilityNeeds
+        type: text
+        label: "Accessibility Needs"
+        sensitivity: sensitive
+        phase: intake
+        status: candidate-new
+
+      - name: willingToProvideTestimonial
+        type: bool
+        label: "Willing to Provide a Testimonial Later"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+
+      - name: willingToParticipateInCbmEvents
+        type: bool
+        label: "Willing to Participate in CBM Events"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+
+# =================================================================
+# Summary counts
+# =================================================================
+
+summary:
+  total_existing_native_fields: 5
+  total_existing_custom_fields: 5
+  total_candidate_new_fields: 88
+  total_categories: 15
+  by_phase:
+    intake: 28
+    first-session: 41
+    ongoing: 19
+  by_sensitivity:
+    routine: 66
+    moderate: 13
+    sensitive: 9
+  by_category:
+    identity-legal: 10
+    ownership-control: 7
+    certifications: 3
+    classification: 2
+    scale-financial: 5
+    workforce: 9
+    customers-markets: 5
+    sales-channels: 4
+    operations: 6
+    financial-infrastructure: 8
+    funding-history: 5
+    technology: 3
+    professional-advisors: 6
+    insurance-compliance: 5
+    mentoring-context: 10
+  structural_decisions_flagged:
+    - >
+      Certifications as flat multiEnum vs. separate Certification
+      entity with issue and expiration dates per record.
+    - >
+      Funding history as flat fields vs. child FundingEvent entity
+      with amount, source, date per record.
+    - >
+      Professional advisors as flat bool flags vs. child Advisor
+      entity with name, firm, contact info per record.
+    - >
+      personalCreditScoreRange placement — Account vs. Contact.
+      Strictly an owner attribute; flagged for relocation.
+    - >
+      Promotion of selected fields to additional accountType
+      visibility (Partner, Donor/Sponsor) per category.
