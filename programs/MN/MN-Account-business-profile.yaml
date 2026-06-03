@@ -1,0 +1,1258 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  Cleveland Business Mentors — Client Business Profile field
+  additions to the native Account entity. Adds 81 custom fields
+  across 15 categories that capture business attributes mentors
+  need to know without re-asking session over session. All fields
+  are visible only when accountType has Client per Account Entity
+  PRD v1.10 Section 3.6.
+
+  Companion to the existing MN-Account.yaml, which holds the five
+  foundational Client-side fields (organizationType, businessStage,
+  industrySector, industrySubsector, clientNotes). This file is
+  additive — no fields in MN-Account.yaml are modified or
+  redeclared.
+
+  Sibling files: programs/MN/MN-Account.yaml (foundational client
+  fields), programs/CR/CR-Account.yaml (accountType discriminator,
+  Partner fields, Client-relationship lifecycle), programs/FU/
+  FU-Account.yaml (Donor/Sponsor fields).
+
+# Source: Account Entity PRD v1.10 Section 3.6 (Client Business
+#         Profile), derived from the candidate field inventory at
+#         PRDs/entities/business-profile-field-inventory.yaml v0.1.0
+#         after Gate 1 scope approval (81 of 88 candidate fields
+#         included; 7 deferred per ACT-ISS-005 and structural
+#         decisions documented in Implementation Notes).
+
+entities:
+
+  Account:
+    description: >
+      Native Company-type entity. Cross-domain shared entity. This
+      file adds 81 Client Business Profile fields organized across
+      15 categories. Sibling to MN-Account.yaml. All fields visible
+      only when accountType has Client.
+
+    fields:
+
+      # ============================================
+      # Identity and Legal
+      # ============================================
+
+      - name: legalBusinessName
+        type: varchar
+        label: "Legal Business Name"
+        description: >
+          The exact name as filed with the Secretary of State. May differ from the colloquial name in the native Account.name field.
+        category: "Identity and Legal"
+        required: false
+        maxLength: 255
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: doingBusinessAsNames
+        type: text
+        label: "Doing Business As (DBA) Names"
+        description: >
+          Free-text list of any DBA or fictitious business names the client operates under. Some businesses operate multiple brands under one legal entity.
+        category: "Identity and Legal"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: legalEntityType
+        type: enum
+        label: "Legal Entity Type"
+        description: >
+          The legal form under which the business is organized. Aligned with SBA Form 641 question 29 with additional Ohio-relevant values (B-Corp, Cooperative).
+        category: "Identity and Legal"
+        required: false
+        options:
+          - "Sole Proprietorship"
+          - "General Partnership"
+          - "Limited Partnership"
+          - "Limited Liability Partnership (LLP)"
+          - "Limited Liability Company (LLC)"
+          - "S-Corporation"
+          - "C-Corporation"
+          - "Nonprofit Corporation"
+          - "Benefit Corporation (B-Corp)"
+          - "Cooperative"
+          - "Not Yet Formed"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: stateOfFormation
+        type: varchar
+        label: "State of Formation"
+        description: >
+          Two-letter state code for the state in which the business is legally formed. Often Ohio for CBM clients but some businesses incorporate elsewhere (commonly Delaware) while operating in Ohio.
+        category: "Identity and Legal"
+        required: false
+        maxLength: 2
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: formationDate
+        type: date
+        label: "Formation Date"
+        description: >
+          The date the business was legally formed.
+        category: "Identity and Legal"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: yearFounded
+        type: int
+        label: "Year Founded"
+        description: >
+          The year the owner considers the business to have started, which may predate legal formation.
+        category: "Identity and Legal"
+        required: false
+        min: 1900
+        max: 2099
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: federalEinOnFile
+        type: bool
+        label: "Federal EIN Obtained"
+        description: >
+          Whether the business has obtained a federal Employer Identification Number. The number itself is not captured; the flag is sufficient for mentoring purposes.
+        category: "Identity and Legal"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: ohioVendorsLicenseOnFile
+        type: bool
+        label: "Ohio Vendor's License Obtained"
+        description: >
+          Ohio requires a vendor's license for businesses selling taxable goods or services.
+        category: "Identity and Legal"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: registeredOnSamGov
+        type: bool
+        label: "Registered on SAM.gov"
+        description: >
+          SAM.gov registration is the gateway to federal contracting. Flags whether the client is positioned for government contract work.
+        category: "Identity and Legal"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: localLicensesAndPermits
+        type: text
+        label: "Local Licenses and Permits Held"
+        description: >
+          Free-text list of city, county, and industry-specific licenses (contractor's license, food service permit, professional licenses, etc.).
+        category: "Identity and Legal"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Ownership and Control
+      # ============================================
+
+      - name: numberOfOwners
+        type: int
+        label: "Number of Owners"
+        description: >
+          Distinguishes solo entrepreneurs from partnerships and multi-owner businesses.
+        category: "Ownership and Control"
+        required: false
+        min: 0
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: isFamilyOwnedBusiness
+        type: bool
+        label: "Family-Owned Business"
+        description: >
+          Family businesses face distinctive succession, governance, and conflict-management challenges.
+        category: "Ownership and Control"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: percentOwnedByWomen
+        type: int
+        label: "Percent Owned by Women"
+        description: >
+          Drives eligibility for WOSB, EDWOSB, Ohio WBE, and Cuyahoga County WBE certifications (51 percent or more required).
+        category: "Ownership and Control"
+        required: false
+        min: 0
+        max: 100
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: percentOwnedByMinority
+        type: int
+        label: "Percent Owned by Minority-Group Members"
+        description: >
+          Drives eligibility for SBA 8(a), Ohio MBE, and county MBE certifications. Minority groups per Ohio MBE rules include African American, American Indian, Hispanic, and Asian.
+        category: "Ownership and Control"
+        required: false
+        min: 0
+        max: 100
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: percentOwnedByVeterans
+        type: int
+        label: "Percent Owned by Veterans"
+        description: >
+          Drives eligibility for VOSB, SDVOSB, and Ohio VFBE certifications.
+        category: "Ownership and Control"
+        required: false
+        min: 0
+        max: 100
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: ownerNumberOfPriorBusinesses
+        type: int
+        label: "Owner Prior Businesses"
+        description: >
+          Number of businesses the primary owner founded or owned previously. Distinguishes first-time entrepreneurs from serial founders.
+        category: "Ownership and Control"
+        required: false
+        min: 0
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: acquisitionType
+        type: enum
+        label: "How the Business Was Acquired"
+        description: >
+          The path by which the current owner came to own the business. Materially affects mentoring approach.
+        category: "Ownership and Control"
+        required: false
+        options:
+          - "Founded by Current Owner(s)"
+          - "Purchased from a Prior Owner"
+          - "Inherited"
+          - "Franchise"
+          - "Family Business — Second Generation"
+          - "Family Business — Third Generation or Beyond"
+          - "Spin-Off from Prior Employer"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Certifications
+      # ============================================
+
+      - name: certificationsHeld
+        type: multiEnum
+        label: "Certifications Currently Held"
+        description: >
+          Federal, state, and county certifications the business currently holds. Drives mentor matching and informs the client's contracting opportunities. See inventory file for the structural alternative.
+        category: "Certifications"
+        required: false
+        options:
+          - "SBA 8(a) Business Development"
+          - "SBA Women-Owned Small Business (WOSB)"
+          - "SBA Economically Disadvantaged WOSB (EDWOSB)"
+          - "SBA Veteran-Owned Small Business (VOSB)"
+          - "SBA Service-Disabled VOSB (SDVOSB)"
+          - "SBA HUBZone"
+          - "SBA Small Disadvantaged Business (SDB)"
+          - "Federal Disadvantaged Business Enterprise (DBE)"
+          - "Ohio Minority Business Enterprise (MBE)"
+          - "Ohio Women Business Enterprise (WBE)"
+          - "Ohio Encouraging Diversity, Growth and Equity (EDGE)"
+          - "Ohio Veteran-Friendly Business Enterprise (VFBE)"
+          - "Cuyahoga County MBE"
+          - "Cuyahoga County WBE"
+          - "Cuyahoga County SBE"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: certificationsInterestedIn
+        type: multiEnum
+        label: "Certifications of Interest"
+        description: >
+          Certifications the client is interested in pursuing. Flags mentoring opportunities and helps match mentors with certification expertise.
+        category: "Certifications"
+        required: false
+        options:
+          - "SBA 8(a) Business Development"
+          - "SBA Women-Owned Small Business (WOSB)"
+          - "SBA Economically Disadvantaged WOSB (EDWOSB)"
+          - "SBA Veteran-Owned Small Business (VOSB)"
+          - "SBA Service-Disabled VOSB (SDVOSB)"
+          - "SBA HUBZone"
+          - "SBA Small Disadvantaged Business (SDB)"
+          - "Federal Disadvantaged Business Enterprise (DBE)"
+          - "Ohio Minority Business Enterprise (MBE)"
+          - "Ohio Women Business Enterprise (WBE)"
+          - "Ohio Encouraging Diversity, Growth and Equity (EDGE)"
+          - "Ohio Veteran-Friendly Business Enterprise (VFBE)"
+          - "Cuyahoga County MBE"
+          - "Cuyahoga County WBE"
+          - "Cuyahoga County SBE"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: certificationNotes
+        type: text
+        label: "Certification Notes"
+        description: >
+          Free-text capture of certification numbers, expiration dates, and in-progress applications.
+        category: "Certifications"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Industry Classification
+      # ============================================
+
+      - name: naicsCode
+        type: varchar
+        label: "Primary NAICS Code"
+        description: >
+          The six-digit North American Industry Classification System code. Used by the SBA to determine small-business size eligibility for federal contracting programs. Distinct from the existing industrySector field (which captures the two-digit parent code value).
+        category: "Industry Classification"
+        required: false
+        maxLength: 6
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: businessDescription
+        type: text
+        label: "Business Description"
+        description: >
+          One- to two-paragraph plain-language description of what the business does. Reusable for marketing materials and grant applications.
+        category: "Industry Classification"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Financials
+      # ============================================
+
+      - name: annualRevenueRange
+        type: enum
+        label: "Annual Revenue Range"
+        description: >
+          Bracketed annual revenue range. Bracketed rather than exact to lower the disclosure threshold for clients who are reluctant to share precise numbers.
+        category: "Financials"
+        required: false
+        options:
+          - "Pre-Revenue"
+          - "Under $50,000"
+          - "$50,000 to $100,000"
+          - "$100,000 to $250,000"
+          - "$250,000 to $500,000"
+          - "$500,000 to $1 Million"
+          - "$1 Million to $2 Million"
+          - "$2 Million to $5 Million"
+          - "$5 Million to $10 Million"
+          - "Over $10 Million"
+          - "Prefer Not to Share"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: revenueTrend
+        type: enum
+        label: "Revenue Trend (last 12 months)"
+        description: >
+          Direction of revenue change over the past year. Direction often matters more than absolute value for mentoring conversations.
+        category: "Financials"
+        required: false
+        options:
+          - "Growing Significantly"
+          - "Growing Modestly"
+          - "Flat"
+          - "Declining Modestly"
+          - "Declining Significantly"
+          - "Too New to Tell"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: profitabilityStatus
+        type: enum
+        label: "Profitability Status"
+        description: >
+          Whether the business is currently making money. Directly relevant to mentoring focus area.
+        category: "Financials"
+        required: false
+        options:
+          - "Profitable"
+          - "Breakeven"
+          - "Operating at a Loss"
+          - "Owner Draws Only (No Formal Profit)"
+          - "Pre-Revenue"
+          - "Prefer Not to Share"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: fiscalYearEndMonth
+        type: enum
+        label: "Fiscal Year End"
+        description: >
+          The month in which the business closes its fiscal year. Most small businesses use a calendar year.
+        category: "Financials"
+        required: false
+        options:
+          - "January"
+          - "February"
+          - "March"
+          - "April"
+          - "May"
+          - "June"
+          - "July"
+          - "August"
+          - "September"
+          - "October"
+          - "November"
+          - "December"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Workforce
+      # ============================================
+
+      - name: numberOfFullTimeEmployees
+        type: int
+        label: "Number of Full-Time W-2 Employees"
+        description: >
+          Headcount of W-2 employees working 30 or more hours per week. Splitting full-time from part-time gives better mentoring context than a single combined number.
+        category: "Workforce"
+        required: false
+        min: 0
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: numberOfPartTimeEmployees
+        type: int
+        label: "Number of Part-Time W-2 Employees"
+        description: >
+          Headcount of W-2 employees working fewer than 30 hours per week.
+        category: "Workforce"
+        required: false
+        min: 0
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: numberOf1099Contractors
+        type: int
+        label: "Number of 1099 Contractors Used Regularly"
+        description: >
+          Independent contractors the business engages on an ongoing basis (not one-off project hires).
+        category: "Workforce"
+        required: false
+        min: 0
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: usesPayrollService
+        type: bool
+        label: "Uses a Payroll Service"
+        description: >
+          Whether the business uses a third-party payroll provider.
+        category: "Workforce"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: usesPeoOrEor
+        type: bool
+        label: "Uses a PEO or Employer of Record"
+        description: >
+          Whether the business uses a Professional Employer Organization or Employer of Record arrangement.
+        category: "Workforce"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: currentlyHiring
+        type: bool
+        label: "Currently Hiring"
+        description: >
+          Surfaces an active mentoring need. Hiring and capital are the two most-requested small-business mentoring topics per SCORE data.
+        category: "Workforce"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: workforceUnionized
+        type: bool
+        label: "Workforce Represented by a Labor Union"
+        description: >
+          Whether the business's workforce is covered by a collective bargaining agreement.
+        category: "Workforce"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: unionSignatoryContractor
+        type: bool
+        label: "Signatory Contractor with a Trades Union"
+        description: >
+          Whether the business is a signatory to a building trades union agreement. Highly relevant in Northeast Ohio for construction, electrical, plumbing, HVAC, and related skilled trades.
+        category: "Workforce"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: workforceLaborNotes
+        type: text
+        label: "Workforce and Labor Notes"
+        description: >
+          Free-text capture of which union(s), CBA expiration dates, or related labor-relations context.
+        category: "Workforce"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Customers and Markets
+      # ============================================
+
+      - name: primaryCustomerType
+        type: multiEnum
+        label: "Primary Customer Type"
+        description: >
+          The type of customers the business primarily sells to. A business may serve multiple customer types.
+        category: "Customers and Markets"
+        required: false
+        options:
+          - "Business-to-Business (B2B)"
+          - "Business-to-Consumer (B2C)"
+          - "Business-to-Government (B2G)"
+          - "Nonprofit-to-Donor"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: geographicMarketReach
+        type: enum
+        label: "Geographic Market Reach"
+        description: >
+          The geographic area the business serves.
+        category: "Customers and Markets"
+        required: false
+        options:
+          - "Hyper-Local (within a few miles)"
+          - "Local (within Cuyahoga County)"
+          - "Regional (Northeast Ohio)"
+          - "Statewide (Ohio)"
+          - "Multi-State"
+          - "National"
+          - "International"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasCustomerConcentrationRisk
+        type: bool
+        label: "Single Customer Over 25 Percent of Revenue"
+        description: >
+          Material risk factor. Customer concentration is one of the most common causes of small-business failure and should be visible to every mentor immediately.
+        category: "Customers and Markets"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: exportingActive
+        type: bool
+        label: "Currently Exports Goods or Services"
+        description: >
+          Whether the business currently exports. Aligned with SBA Form 641 question 20b.
+        category: "Customers and Markets"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: exportCountries
+        type: text
+        label: "Export Destinations"
+        description: >
+          Free-text list of countries exported to. Shown only when exportingActive is true.
+        category: "Customers and Markets"
+        required: false
+        visibleWhen:
+          all:
+            - { field: accountType, op: contains, value: "Client" }
+            - { field: exportingActive, op: equals, value: true }
+
+      # ============================================
+      # Sales and Marketing
+      # ============================================
+
+      - name: salesChannels
+        type: multiEnum
+        label: "Sales Channels Used"
+        description: >
+          How the business reaches and sells to customers.
+        category: "Sales and Marketing"
+        required: false
+        options:
+          - "Direct Sales"
+          - "Retail Storefront"
+          - "E-Commerce Website"
+          - "Wholesale to Other Businesses"
+          - "Distributors and Resellers"
+          - "Online Marketplaces"
+          - "Referrals and Word of Mouth"
+          - "Catalog or Direct Mail"
+          - "Trade Shows and Events"
+          - "Subscription or Recurring Revenue"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: socialMediaPresence
+        type: multiEnum
+        label: "Active Social Media Presence"
+        description: >
+          Social media platforms on which the business maintains an active business presence.
+        category: "Sales and Marketing"
+        required: false
+        options:
+          - "Facebook"
+          - "Instagram"
+          - "LinkedIn"
+          - "X (formerly Twitter)"
+          - "YouTube"
+          - "TikTok"
+          - "Pinterest"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasGoogleBusinessProfile
+        type: bool
+        label: "Has Claimed Google Business Profile"
+        description: >
+          Whether the business has claimed and maintains a Google Business Profile.
+        category: "Sales and Marketing"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: usesEmailMarketing
+        type: bool
+        label: "Uses Email Marketing"
+        description: >
+          Whether the business runs an email marketing program.
+        category: "Sales and Marketing"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Operations
+      # ============================================
+
+      - name: isHomeBased
+        type: bool
+        label: "Home-Based Business"
+        description: >
+          Whether the business operates primarily from the owner's home. Aligned with SBA Form 641 question 26.
+        category: "Operations"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: conductsBusinessOnline
+        type: bool
+        label: "Conducts Business Primarily Online"
+        description: >
+          Whether business operations are primarily conducted through online channels. Aligned with SBA Form 641 question 25.
+        category: "Operations"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: numberOfPhysicalLocations
+        type: int
+        label: "Number of Physical Locations"
+        description: >
+          Count of physical business locations.
+        category: "Operations"
+        required: false
+        min: 0
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: primaryLocationOwnership
+        type: enum
+        label: "Primary Location Ownership"
+        description: >
+          How the primary business location is held.
+        category: "Operations"
+        required: false
+        options:
+          - "Owned by the Business"
+          - "Owned by the Owner Personally"
+          - "Leased"
+          - "Home-Based"
+          - "Coworking Space"
+          - "No Fixed Location"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: inventoryModel
+        type: enum
+        label: "Inventory Model"
+        description: >
+          How the business handles inventory.
+        category: "Operations"
+        required: false
+        options:
+          - "None — Service Only"
+          - "Light Inventory"
+          - "Moderate Inventory"
+          - "Heavy Inventory"
+          - "Just-in-Time / Made to Order"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: supplyChainNotes
+        type: text
+        label: "Supply Chain Notes"
+        description: >
+          Free-text capture of supply chain concerns including sole-source suppliers, import dependence, and seasonality.
+        category: "Operations"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Financial Infrastructure
+      # ============================================
+
+      - name: accountingMethod
+        type: enum
+        label: "Accounting Method"
+        description: >
+          The basis of accounting the business uses.
+        category: "Financial Infrastructure"
+        required: false
+        options:
+          - "Cash Basis"
+          - "Accrual Basis"
+          - "Hybrid"
+          - "Not Yet Established"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: usesAccountingSoftware
+        type: bool
+        label: "Uses Accounting Software"
+        description: >
+          Whether the business uses dedicated accounting software.
+        category: "Financial Infrastructure"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: bookkeepingStatus
+        type: enum
+        label: "Bookkeeping Status"
+        description: >
+          Current state of the business's bookkeeping.
+        category: "Financial Infrastructure"
+        required: false
+        options:
+          - "Up-to-Date"
+          - "Behind by Less Than 3 Months"
+          - "Behind by 3 to 12 Months"
+          - "Behind by More Than 12 Months"
+          - "No Formal Bookkeeping"
+          - "Outsourced and Up-to-Date"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasBusinessBankAccount
+        type: bool
+        label: "Has Dedicated Business Bank Account"
+        description: >
+          Whether the business has a bank account separate from the owner's personal accounts. Many micro-businesses commingle finances; a foundational mentoring topic.
+        category: "Financial Infrastructure"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasBusinessCreditCard
+        type: bool
+        label: "Has Business Credit Card"
+        description: >
+          Whether the business has at least one credit card in the business name.
+        category: "Financial Infrastructure"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasLineOfCredit
+        type: bool
+        label: "Has Active Line of Credit"
+        description: >
+          Whether the business has an active commercial line of credit.
+        category: "Financial Infrastructure"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: businessCreditScoreEstablished
+        type: bool
+        label: "Has Established Business Credit"
+        description: >
+          Whether the business has built and maintains business credit separately from personal credit.
+        category: "Financial Infrastructure"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Funding and Capital
+      # ============================================
+
+      - name: currentlySeekingCapital
+        type: bool
+        label: "Currently Seeking Capital"
+        description: >
+          Surfaces an active mentoring need. Capital is one of the two most-requested small-business mentoring topics per SCORE data.
+        category: "Funding and Capital"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: capitalSoughtPurpose
+        type: text
+        label: "Capital Sought Purpose"
+        description: >
+          What the capital would be used for. Shown only when currentlySeekingCapital is true.
+        category: "Funding and Capital"
+        required: false
+        visibleWhen:
+          all:
+            - { field: accountType, op: contains, value: "Client" }
+            - { field: currentlySeekingCapital, op: equals, value: true }
+
+      # ============================================
+      # Technology
+      # ============================================
+
+      - name: pointOfSaleSystemUsed
+        type: varchar
+        label: "Point of Sale System"
+        description: >
+          The POS system the business uses, if applicable.
+        category: "Technology"
+        required: false
+        maxLength: 100
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: customerSystemUsed
+        type: varchar
+        label: "Customer Management System"
+        description: >
+          The customer relationship management system the business uses, if any.
+        category: "Technology"
+        required: false
+        maxLength: 100
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: techStackNotes
+        type: text
+        label: "Technology Stack Notes"
+        description: >
+          Free-text capture of the business's broader technology posture.
+        category: "Technology"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Professional Advisors
+      # ============================================
+
+      - name: hasAccountantOrCpa
+        type: bool
+        label: "Has Accountant or CPA on Retainer"
+        description: >
+          Whether the business engages a CPA or accountant.
+        category: "Professional Advisors"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasBusinessAttorney
+        type: bool
+        label: "Has Business Attorney"
+        description: >
+          Whether the business has retained legal counsel.
+        category: "Professional Advisors"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasInsuranceAgent
+        type: bool
+        label: "Has Business Insurance Agent"
+        description: >
+          Whether the business has a dedicated insurance agent or broker.
+        category: "Professional Advisors"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: hasFinancialAdvisor
+        type: bool
+        label: "Has Financial or Wealth Advisor"
+        description: >
+          Whether the owner has a financial advisor for business or personal wealth management.
+        category: "Professional Advisors"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Insurance and Compliance
+      # ============================================
+
+      - name: generalLiabilityInsuranceActive
+        type: bool
+        label: "General Liability Insurance Active"
+        description: >
+          Whether the business carries general liability insurance.
+        category: "Insurance and Compliance"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: professionalLiabilityInsuranceActive
+        type: bool
+        label: "Professional Liability Insurance Active"
+        description: >
+          Whether the business carries professional liability (errors and omissions) insurance.
+        category: "Insurance and Compliance"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: workersCompCoverageStatus
+        type: enum
+        label: "Workers Compensation Coverage"
+        description: >
+          Status of workers compensation coverage.
+        category: "Insurance and Compliance"
+        required: false
+        options:
+          - "Active Through BWC"
+          - "Active Through Self-Insurance"
+          - "Lapsed"
+          - "Not Required (No Employees)"
+          - "Unknown"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: cyberInsuranceActive
+        type: bool
+        label: "Cyber Insurance Active"
+        description: >
+          Whether the business carries cyber liability insurance.
+        category: "Insurance and Compliance"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: otherInsuranceNotes
+        type: text
+        label: "Other Insurance Notes"
+        description: >
+          Free-text capture of specialty coverage (product liability, D and O, E and O, commercial auto, business interruption, etc.).
+        category: "Insurance and Compliance"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      # ============================================
+      # Mentoring Context
+      # ============================================
+
+      - name: topBusinessGoalsNext12Months
+        type: text
+        label: "Top Business Goals — Next 12 Months"
+        description: >
+          What the owner most wants to achieve in the next year. Anchor for the mentoring relationship.
+        category: "Mentoring Context"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: currentTopChallenges
+        type: text
+        label: "Current Top Challenges"
+        description: >
+          What is keeping the owner up at night. Surfaces the highest-leverage mentoring topics.
+        category: "Mentoring Context"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: priorMentoringReceived
+        type: bool
+        label: "Previously Received Business Mentoring"
+        description: >
+          Whether the owner has worked with a business mentor before.
+        category: "Mentoring Context"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: priorMentoringSources
+        type: multiEnum
+        label: "Prior Mentoring Sources"
+        description: >
+          Where the owner has received business mentoring before.
+        category: "Mentoring Context"
+        required: false
+        options:
+          - "SCORE"
+          - "Small Business Development Center (SBDC)"
+          - "Women's Business Center"
+          - "Veterans Business Outreach Center"
+          - "Minority Business Development Agency"
+          - "Private Coach or Consultant"
+          - "Industry Association"
+          - "Other Nonprofit"
+          - "Other"
+        visibleWhen:
+          all:
+            - { field: accountType, op: contains, value: "Client" }
+            - { field: priorMentoringReceived, op: equals, value: true }
+
+      - name: priorBusinessTrainingNotes
+        type: text
+        label: "Prior Business Training or Education"
+        description: >
+          Relevant prior education, certifications, or training programs (MBA, executive education, industry certifications).
+        category: "Mentoring Context"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: natureOfAssistanceSought
+        type: multiEnum
+        label: "Nature of Assistance Sought"
+        description: >
+          The mentoring topics the client wants help with. Mirrors SBA Form 641 question 30. Drives mentor matching.
+        category: "Mentoring Context"
+        required: false
+        options:
+          - "Start-up Assistance"
+          - "Business Plan"
+          - "Financing and Capital"
+          - "Managing a Business"
+          - "Human Resources and Managing Employees"
+          - "Customer Relations"
+          - "Business Accounting and Budget"
+          - "Cash Flow Management"
+          - "Tax Planning"
+          - "Marketing and Sales"
+          - "Government Contracting (including certifications)"
+          - "Franchising"
+          - "Buy or Sell a Business"
+          - "Technology and Computers"
+          - "E-Commerce"
+          - "Legal Issues"
+          - "International Trade"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: languagePreference
+        type: enum
+        label: "Preferred Language for Mentoring"
+        description: >
+          Language the client prefers for mentoring sessions.
+        category: "Mentoring Context"
+        required: false
+        options:
+          - "English"
+          - "Spanish"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: accessibilityNeeds
+        type: text
+        label: "Accessibility Needs"
+        description: >
+          Any accessibility accommodations the client needs to fully participate in mentoring sessions and events.
+        category: "Mentoring Context"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: willingToProvideTestimonial
+        type: bool
+        label: "Willing to Provide a Testimonial Later"
+        description: >
+          Whether the client has indicated willingness to provide a testimonial about CBM in the future.
+        category: "Mentoring Context"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: willingToParticipateInCbmEvents
+        type: bool
+        label: "Willing to Participate in CBM Events"
+        description: >
+          Whether the client has indicated willingness to attend or participate in CBM-hosted events.
+        category: "Mentoring Context"
+        required: false
+        default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+    layout:
+
+      detail:
+        panels:
+
+          - label: "Identity and Legal"
+            description: >
+              Legal formation, registration, and compliance foundations. Visible only when accountType has Client.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Identity and Legal"
+                category: "Identity and Legal"
+
+          - label: "Ownership and Certifications"
+            description: >
+              Aggregate ownership composition driving certification eligibility and the certifications currently held or sought.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Ownership and Control"
+                category: "Ownership and Control"
+              - label: "Certifications"
+                category: "Certifications"
+
+          - label: "Classification"
+            description: >
+              Industry classification at NAICS resolution.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Industry Classification"
+                category: "Industry Classification"
+
+          - label: "Financials"
+            description: >
+              Scale, revenue, profitability, and fiscal calendar.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Financials"
+                category: "Financials"
+              - label: "Financial Infrastructure"
+                category: "Financial Infrastructure"
+              - label: "Funding and Capital"
+                category: "Funding and Capital"
+
+          - label: "Workforce"
+            description: >
+              Employees, contractors, union status, and labor relations.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Workforce"
+                category: "Workforce"
+
+          - label: "Customers and Markets"
+            description: >
+              Who the business sells to and where.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Customers and Markets"
+                category: "Customers and Markets"
+              - label: "Sales and Marketing"
+                category: "Sales and Marketing"
+
+          - label: "Operations"
+            description: >
+              Physical and operational footprint of the business.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Operations"
+                category: "Operations"
+              - label: "Technology"
+                category: "Technology"
+
+          - label: "Advisors and Insurance"
+            description: >
+              Existing professional relationships and risk coverage.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Professional Advisors"
+                category: "Professional Advisors"
+              - label: "Insurance and Compliance"
+                category: "Insurance and Compliance"
+
+          - label: "Mentoring Context"
+            description: >
+              Goals, challenges, prior mentoring history, and preferences that inform how CBM mentors engage.
+            visibleWhen:
+              - { field: accountType, op: contains, value: "Client" }
+            tabs:
+              - label: "Mentoring Context"
+                category: "Mentoring Context"
+
