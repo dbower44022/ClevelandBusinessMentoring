@@ -282,4 +282,119 @@ entities:
           - "$5 Million to $10 Million"
           - "Over $10 Million"
           - "Prefer Not to Share"
+
+      # ===============================================================
+      # Category: Government and Industry Certifications
+      # ===============================================================
+      # STRUCTURAL DECISION FLAGGED: Certifications could be a
+      # separate Certification entity with per-record fields for
+      # issuing body, certificate number, issue date, expiration
+      # date, and status. The flat-multiEnum approach below is the
+      # lighter-weight alternative.
+
+      - name: certificationsHeld
+        type: multiEnum
+        label: "Certifications Currently Held"
+        description: >
+          Federal, state, and county certifications the business
+          currently holds. Drives mentor matching and informs the
+          client's contracting opportunities. See inventory file
+          for the structural alternative.
+        category: "Certifications"
+        required: false
+        options:
+          - "SBA 8(a) Business Development"
+          - "SBA Women-Owned Small Business (WOSB)"
+          - "SBA Economically Disadvantaged WOSB (EDWOSB)"
+          - "SBA Veteran-Owned Small Business (VOSB)"
+          - "SBA Service-Disabled VOSB (SDVOSB)"
+          - "SBA HUBZone"
+          - "SBA Small Disadvantaged Business (SDB)"
+          - "Federal Disadvantaged Business Enterprise (DBE)"
+          - "Ohio Minority Business Enterprise (MBE)"
+          - "Ohio Women Business Enterprise (WBE)"
+          - "Ohio Encouraging Diversity, Growth and Equity (EDGE)"
+          - "Ohio Veteran-Friendly Business Enterprise (VFBE)"
+          - "Cuyahoga County MBE"
+          - "Cuyahoga County WBE"
+          - "Cuyahoga County SBE"
+          - "Other"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+
+      - name: revenueTrend
+        type: enum
+        label: "Revenue Trend (last 12 months)"
+        description: >
+          Direction of revenue change over the past year.
+          Direction often matters more than absolute value for
+          mentoring conversations.
+        category: "Financials"
+        required: false
+        options:
+          - "Growing Significantly"
+          - "Growing Modestly"
+          - "Flat"
+          - "Declining Modestly"
+          - "Declining Significantly"
+          - "Too New to Tell"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: profitabilityStatus
+        type: enum
+        label: "Profitability Status"
+        description: >
+          Whether the business is currently making money.
+          Directly relevant to mentoring focus area.
+        category: "Financials"
+        required: false
+        options:
+          - "Profitable"
+          - "Breakeven"
+          - "Operating at a Loss"
+          - "Owner Draws Only (No Formal Profit)"
+          - "Pre-Revenue"
+          - "Prefer Not to Share"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: mostRecentFullYearRevenue
+        type: currency
+        label: "Most Recent Full Year Revenue"
+        description: >
+          Optional exact revenue figure. Captured when the client
+          is willing to share precise numbers. Aligned with
+          SBA Form 641 question 28.
+        category: "Financials"
+        required: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: fiscalYearEndMonth
+        type: enum
+        label: "Fiscal Year End"
+        description: >
+          The month in which the business closes its fiscal
+          year. Most small businesses use a calendar year.
+        category: "Financials"
+        required: false
+        options:
+          - "January"
+          - "February"
+          - "March"
+          - "April"
+          - "May"
+          - "June"
+          - "July"
+          - "August"
+          - "September"
+          - "October"
+          - "November"
+          - "December"
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+
  
