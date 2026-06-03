@@ -1,12 +1,12 @@
 version: "1.0"
-content_version: "1.0.0"
+content_version: "1.1.0"
 description: >
   Cleveland Business Mentors — Client Business Profile field
-  additions to the native Account entity. Adds 81 custom fields
+  additions to the native Account entity. Adds 82 custom fields
   across 15 categories that capture business attributes mentors
   need to know without re-asking session over session. All fields
   are visible only when accountType has Client per Account Entity
-  PRD v1.10 Section 3.6.
+  PRD v1.11 Section 3.6.
 
   Companion to the existing MN-Account.yaml, which holds the five
   foundational Client-side fields (organizationType, businessStage,
@@ -19,19 +19,21 @@ description: >
   Partner fields, Client-relationship lifecycle), programs/FU/
   FU-Account.yaml (Donor/Sponsor fields).
 
-# Source: Account Entity PRD v1.10 Section 3.6 (Client Business
+# Source: Account Entity PRD v1.11 Section 3.6 (Client Business
 #         Profile), derived from the candidate field inventory at
-#         PRDs/entities/business-profile-field-inventory.yaml v0.1.0
+#         PRDs/entities/business-profile-field-inventory.yaml v0.2.0
 #         after Gate 1 scope approval (81 of 88 candidate fields
-#         included; 7 deferred per ACT-ISS-005 and structural
-#         decisions documented in Implementation Notes).
+#         included at v1.10; 7 deferred per ACT-ISS-005). v1.11
+#         adds businessProfileLastReviewed (F4) and overlap-clarifying
+#         notes on percentOwnedByWomen / Minority / Veterans (F3) per
+#         the pre-Phase-8 review pass (ACT-DEC-017).
 
 entities:
 
   Account:
     description: >
       Native Company-type entity. Cross-domain shared entity. This
-      file adds 81 Client Business Profile fields organized across
+      file adds 82 Client Business Profile fields organized across
       15 categories. Sibling to MN-Account.yaml. All fields visible
       only when accountType has Client.
 
@@ -191,7 +193,7 @@ entities:
         type: int
         label: "Percent Owned by Women"
         description: >
-          Drives eligibility for WOSB, EDWOSB, Ohio WBE, and Cuyahoga County WBE certifications (51 percent or more required).
+          Drives eligibility for WOSB, EDWOSB, Ohio WBE, and Cuyahoga County WBE certifications (51 percent or more required). Note: the three percent-owned fields (women, minority, veterans) are independent measurements and may sum to more than 100 percent for owners belonging to multiple groups.
         category: "Ownership and Control"
         required: false
         min: 0
@@ -203,7 +205,7 @@ entities:
         type: int
         label: "Percent Owned by Minority-Group Members"
         description: >
-          Drives eligibility for SBA 8(a), Ohio MBE, and county MBE certifications. Minority groups per Ohio MBE rules include African American, American Indian, Hispanic, and Asian.
+          Drives eligibility for SBA 8(a), Ohio MBE, and county MBE certifications. Minority groups per Ohio MBE rules include African American, American Indian, Hispanic, and Asian. Note: the three percent-owned fields (women, minority, veterans) are independent measurements and may sum to more than 100 percent for owners belonging to multiple groups.
         category: "Ownership and Control"
         required: false
         min: 0
@@ -215,7 +217,7 @@ entities:
         type: int
         label: "Percent Owned by Veterans"
         description: >
-          Drives eligibility for VOSB, SDVOSB, and Ohio VFBE certifications.
+          Drives eligibility for VOSB, SDVOSB, and Ohio VFBE certifications. Note: the three percent-owned fields (women, minority, veterans) are independent measurements and may sum to more than 100 percent for owners belonging to multiple groups.
         category: "Ownership and Control"
         required: false
         min: 0
@@ -1155,6 +1157,16 @@ entities:
         category: "Mentoring Context"
         required: false
         default: false
+        visibleWhen:
+          - { field: accountType, op: contains, value: "Client" }
+
+      - name: businessProfileLastReviewed
+        type: date
+        label: "Business Profile Last Reviewed"
+        description: >
+          Date the assigned mentor most recently reviewed and updated the Client Business Profile fields with the client. Supports a saved-view filter that surfaces records older than N months for periodic-review nudges. Many fields in this profile (currentlyHiring, currentlySeekingCapital, bookkeepingStatus, revenueTrend, and similar state fields) drift month over month; this field provides the freshness signal mentors and administrators need to keep the record current. Added in v1.1.0 / PRD v1.11 to close F4 from the pre-Phase-8 review pass.
+        category: "Mentoring Context"
+        required: false
         visibleWhen:
           - { field: accountType, op: contains, value: "Client" }
 

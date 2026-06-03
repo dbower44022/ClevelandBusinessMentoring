@@ -29,9 +29,9 @@
 
 inventory_metadata:
   title: "CBM Client Business Profile — Candidate Field Inventory"
-  version: "0.1.0"
+  version: "0.2.0"
   status: "Draft for Doug's review"
-  last_updated: "05-18-26 05:30"
+  last_updated: "05-18-26 07:00"
   author: "Claude session, 05-18-26"
   research_basis: >
     SBA Form 641 (federal counseling intake standard used by SCORE,
@@ -386,7 +386,11 @@ categories:
         rationale: >
           Drives eligibility for WOSB, EDWOSB, Ohio WBE, and
           Cuyahoga County WBE certifications, which require 51
-          percent or more women ownership.
+          percent or more women ownership. Note: the three
+          percent-owned fields (women, minority, veterans) are
+          independent measurements and may sum to more than 100
+          percent for owners belonging to multiple groups (for
+          example, a veteran-owned women-owned business).
 
       - name: percentOwnedByMinority
         type: int
@@ -401,7 +405,10 @@ categories:
           MBE certifications, which require 51 percent or more
           minority ownership. Minority groups defined by Ohio
           MBE rules include African American, American Indian,
-          Hispanic, and Asian.
+          Hispanic, and Asian. Note: the three percent-owned
+          fields (women, minority, veterans) are independent
+          measurements and may sum to more than 100 percent for
+          owners belonging to multiple groups.
 
       - name: percentOwnedByVeterans
         type: int
@@ -414,7 +421,10 @@ categories:
         rationale: >
           Drives eligibility for VOSB, SDVOSB, and Ohio VFBE
           certifications, which require 51 percent or more
-          veteran ownership.
+          veteran ownership. Note: the three percent-owned
+          fields (women, minority, veterans) are independent
+          measurements and may sum to more than 100 percent for
+          owners belonging to multiple groups.
 
       - name: ownerNumberOfPriorBusinesses
         type: int
@@ -1335,7 +1345,7 @@ categories:
           training programs (MBA, executive education, industry
           certifications, etc.).
 
-      - name: nature_of_assistance_sought
+      - name: natureOfAssistanceSought
         type: multiEnum
         label: "Nature of Assistance Sought"
         sensitivity: routine
@@ -1396,6 +1406,24 @@ categories:
         phase: ongoing
         status: candidate-new
 
+      - name: businessProfileLastReviewed
+        type: date
+        label: "Business Profile Last Reviewed"
+        sensitivity: routine
+        phase: ongoing
+        status: candidate-new
+        rationale: >
+          Date the assigned mentor most recently reviewed and
+          updated the Client Business Profile fields with the
+          client. Supports a saved-view filter that surfaces
+          records older than N months for periodic-review nudges.
+          Many fields in this profile (currentlyHiring,
+          currentlySeekingCapital, bookkeepingStatus, revenueTrend,
+          and similar state fields) drift month over month; this
+          field provides the freshness signal mentors and
+          administrators need to keep the record current. Added
+          in inventory v0.2.0 / PRD v1.11 to close F4 from the
+          pre-Phase-8 review pass.
 # =================================================================
 # Summary counts
 # =================================================================
@@ -1403,14 +1431,14 @@ categories:
 summary:
   total_existing_native_fields: 5
   total_existing_custom_fields: 5
-  total_candidate_new_fields: 88
+  total_candidate_new_fields: 89
   total_categories: 15
   by_phase:
     intake: 28
     first-session: 41
-    ongoing: 19
+    ongoing: 20
   by_sensitivity:
-    routine: 66
+    routine: 67
     moderate: 13
     sensitive: 9
   by_category:
@@ -1428,7 +1456,7 @@ summary:
     technology: 3
     professional-advisors: 6
     insurance-compliance: 5
-    mentoring-context: 10
+    mentoring-context: 11
   structural_decisions_flagged:
     - >
       Certifications as flat multiEnum vs. separate Certification
