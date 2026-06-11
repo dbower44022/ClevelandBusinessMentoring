@@ -1,0 +1,328 @@
+version: '1.0'
+content_version: 1.0.0
+description: Security audit snapshot (roles and teams) captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-10T04:26:11Z.
+teams:
+- name: Client Assignment Team
+- name: Data Integrity Team
+- name: Mentor Team
+- name: Partner Management Team
+- name: Sponsor Management Team
+roles:
+- name: Client Assignment Role
+  scope_access:
+    Email:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    Account:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+    Contact:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+    Document:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    KnowledgeBaseArticle:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    Report:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    ClientProfile:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+    Engagement:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+    MentorProfile:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+    Session:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+  system_permissions:
+    assignment_permission: all
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: ClientMentorIntakeRole
+  scope_access:
+    Account:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    Contact:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    ClientProfile:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    Engagement:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    Event:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    MentorProfile:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: ContentAndEventAdmin
+  scope_access:
+    Event:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Data Integrity Team Role
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Event Manager Role
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Mentor Review Role
+  scope_access:
+    MentorProfile:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Mentor Role
+  scope_access:
+    Email:
+      create: true
+      read: own
+      edit: own
+      delete: own
+      stream: 'no'
+    User:
+      create: false
+      read: team
+      edit: own
+      delete: 'no'
+      stream: 'no'
+    Account:
+      create: true
+      read: own
+      edit: own
+      delete: 'no'
+      stream: own
+    Contact:
+      create: true
+      read: own
+      edit: own
+      delete: 'no'
+      stream: own
+    ClientProfile:
+      create: false
+      read: own
+      edit: own
+      delete: 'no'
+      stream: own
+    Engagement:
+      create: false
+      read: own
+      edit: own
+      delete: 'no'
+      stream: own
+    Event:
+      create: false
+      read: all
+      edit: own
+      delete: 'no'
+      stream: own
+    MentorProfile:
+      create: false
+      read: all
+      edit: 'no'
+      delete: 'no'
+      stream: 'no'
+    Session:
+      create: true
+      read: own
+      edit: own
+      delete: 'no'
+      stream: own
+  system_permissions:
+    assignment_permission: team
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Partner Manager Role
+  scope_access:
+    Account:
+      create: true
+      read: team
+      edit: team
+      delete: 'no'
+      stream: team
+    Contact:
+      create: true
+      read: team
+      edit: team
+      delete: 'no'
+      stream: team
+    PartnerProfile:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: all
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Sponsor Manager Role
+  scope_access:
+    Account:
+      create: true
+      read: team
+      edit: team
+      delete: 'no'
+      stream: team
+    Contact:
+      create: true
+      read: team
+      edit: team
+      delete: 'no'
+      stream: team
+    SponsorProfile:
+      create: true
+      read: team
+      edit: team
+      delete: 'no'
+      stream: 'no'
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: false
+    mass_update: false
+    portal: false
+- name: Standard User
+  scope_access:
+    EmailTemplateCategory:
+      create: false
+      read: all
+      edit: 'no'
+      delete: 'no'
+      stream: 'no'
+    EmailTemplate:
+      create: true
+      read: all
+      edit: 'no'
+      delete: 'no'
+      stream: 'no'
+    Email:
+      create: true
+      read: all
+      edit: all
+      delete: 'no'
+      stream: 'no'
+    Engagement:
+      create: true
+      read: own
+      edit: own
+      delete: 'no'
+      stream: 'no'
+    Event:
+      create: true
+      read: own
+      edit: own
+      delete: 'no'
+      stream: 'no'
+    MentorProfile:
+      create: false
+      read: all
+      edit: 'no'
+      delete: 'no'
+      stream: 'no'
+    Session:
+      create: true
+      read: own
+      edit: own
+      delete: 'no'
+      stream: 'no'
+  system_permissions:
+    assignment_permission: not-set
+    user_permission: not-set
+    export: true
+    mass_update: false
+    portal: false

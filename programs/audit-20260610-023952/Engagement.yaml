@@ -1,0 +1,306 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Engagement captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-10T02:42:27Z.
+entities:
+  Engagement:
+    action: create
+    type: Base
+    labelSingular: Engagement
+    labelPlural: Engagements
+    stream: true
+    fields:
+    - name: engagementStatus
+      type: enum
+      label: Engagement Status
+      required: true
+      default: Submitted
+      audited: true
+      options:
+      - Submitted
+      - Declined
+      - Pending Acceptance
+      - Assigned
+      - Assignment Declined
+      - Assignment Dormant
+      - Active
+      - On-Hold
+      - Dormant
+      - Inactive
+      - Abandoned
+      - Completed
+      style:
+        Submitted: info
+        Declined: danger
+        Pending Acceptance: warning
+        Assigned: primary
+        Active: success
+        On-Hold: warning
+        Abandoned: danger
+        Completed: success
+      maxLength: 100
+    - name: meetingCadence
+      type: enum
+      label: Meeting Cadence
+      options:
+      - Weekly
+      - Bi-Weekly
+      - Monthly
+      - As Needed
+      maxLength: 100
+    - name: holdEndDate
+      type: date
+      label: Hold End Date
+    - name: mentoringFocusAreas
+      type: multiEnum
+      label: Mentoring Focus Areas
+      options:
+      - Accounting & Tax Services
+      - Advertising, Design, & Marketing
+      - Agriculture
+      - Animal & Veterinary Services
+      - Architecture, Engineering, & Related Services
+      - Arts, Entertainment, & Recreation
+      - Auto Repair & Mechanic
+      - Beauty, Cosmetics & Salon Services
+      - Business Consulting & Coaching
+      - Childcare
+      - Commercial & Residential Services
+      - Construction
+      - Counseling & Therapy
+      - Distribution & Transportation of Goods
+      - Education
+      - Farming & Livestock
+      - Fine Arts, Artisan, & Craft Work
+      - Fishing & Hunting
+      - Food & Beverage
+      - Forestry
+      - Funeral & Death Care Services
+      - Information Technology
+      - Manufacturing
+      - Media & Publishing
+      - Mining, Quarry, & Utilities
+      - Nonprofit
+      - Personal Care Services
+      - Photography & Video Services
+      - Professional Services
+      - Public Relations & Communications
+      - Real Estate
+      - Recruiting & Staffing
+      - Rental & Leasing
+      - Restaurant & Bar
+      - Retail
+      - Social Assistance & Family Services
+      - Transportation
+      - Travel, Hospitality, & Tourism
+      - Warehousing
+      - Waste Management & Disposal
+      - Website Development
+      - Wellness, Healthcare, & Home Health
+    - name: mentoringNeedsDescription
+      type: wysiwyg
+      label: Mentoring Needs Description
+      required: true
+    - name: engagementNotes
+      type: wysiwyg
+      label: Engagement Notes
+    - name: totalSessions
+      type: int
+      label: Total Sessions
+      readOnly: true
+    - name: totalSessionsLast30Days
+      type: int
+      label: Total Sessions (Last 30 Days)
+      readOnly: true
+    - name: lastSessionDate
+      type: date
+      label: Last Session Date
+      readOnly: true
+    - name: totalSessionHours
+      type: float
+      label: Total Session Hours
+      readOnly: true
+    - name: nextSessionDateTime
+      type: datetime
+      label: Next Session Date/Time
+    - name: closeDate
+      type: date
+      label: Close Date
+      readOnly: true
+    - name: closeReason
+      type: enum
+      label: Close Reason
+      options:
+      - Goals Achieved
+      - Client Withdrew
+      - Inactive / No Response
+      - Other
+      style:
+        Goals Achieved: success
+        Client Withdrew: warning
+      maxLength: 100
+    - name: newBusinessStarted
+      type: bool
+      label: New Business Started
+    - name: newLocationOpened
+      type: bool
+      label: New Location Opened
+    - name: significantRevenueIncrease
+      type: bool
+      label: Significant Revenue Increase
+    - name: revenueIncreasePercentage
+      type: float
+      label: Revenue Increase Percentage
+    - name: significantEmploymentIncrease
+      type: bool
+      label: Significant Employment Increase
+    - name: employmentIncreasePercentage
+      type: float
+      label: Employment Increase Percentage
+    - name: engagementStartDate
+      type: date
+      label: Engagement Start Date
+    layout:
+      detail:
+        panels:
+        - label: Lifecycle and Status
+          rows:
+          - - name
+            - engagementStartDate
+          - - engagementStatus
+            - meetingCadence
+          - - holdEndDate
+            - mentorProfile
+          - - null
+            - null
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Mentoring Context
+          rows:
+          - - mentoringFocusAreas
+          - - mentoringNeedsDescription
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Session Analytics
+          rows:
+          - - totalSessions
+            - totalSessionsLast30Days
+            - lastSessionDate
+            - totalSessionHours
+          - - nextSessionDateTime
+            - null
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Notes
+          rows:
+          - - engagementNotes
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Closure
+          tabBreak: true
+          tabLabel: Closure Info
+          rows:
+          - - closeDate
+            - closeReason
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Engagement Outcomes
+          dynamicLogicVisible:
+            all:
+            - field: engagementStatus
+              op: equals
+              value: Completed
+          rows:
+          - - newBusinessStarted
+            - newLocationOpened
+          - - significantRevenueIncrease
+            - revenueIncreasePercentage
+          - - significantEmploymentIncrease
+            - employmentIncreasePercentage
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          width: 28
+          link: true
+          align: left
+        - field: engagementStatus
+          width: 14
+        - field: meetingCadence
+          width: 10
+        - field: lastSessionDate
+          width: 12
+        - field: nextSessionDateTime
+          width: 14
+        - field: totalSessions
+          width: 10
+        - field: closeDate
+          width: 12
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: primaryEngagementContact
+          width: 20
+        - field: createdAt
+          width: 20
+        - field: engagementStatus
+          width: 20
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - mentorProfile
+      - engagementStatus
+      - referringPartner
+      - engagementClient
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        _delimiter_:
+          disabled: true
+        _tabBreak_1:
+          index: 0
+          tabBreak: true
+          tabLabel: Details
+        engagementContacts:
+          index: 1
+        additionalMentors:
+          index: 2
+        _tabBreak_2:
+          index: 3
+          tabBreak: true
+          tabLabel: Sessions
+        engagementSessions:
+          index: 4
+        _tabBreak_3:
+          index: 5
+          tabBreak: true
+          tabLabel: Documents
+        engagementDocuments:
+          index: 6
+        _tabBreak_0:
+          index: 7
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 8
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

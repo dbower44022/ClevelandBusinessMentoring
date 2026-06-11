@@ -1,0 +1,86 @@
+version: '1.0'
+content_version: 1.0.0
+description: Relationships audit snapshot captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-10T04:26:11Z.
+relationships:
+- name: engagementToContact
+  entity: Engagement
+  entityForeign: Contact
+  linkType: manyToOne
+  link: primaryEngagementContact
+  linkForeign: cPrimaryEngagementsAsContact
+  label: Primary Engagement Contact
+  labelForeign: Engagements (as Primary Contact)
+- name: engagementToContact
+  entity: Engagement
+  entityForeign: Contact
+  linkType: manyToMany
+  link: engagementContacts
+  linkForeign: cEngagementsAsContact
+  label: Engagement Contacts
+  labelForeign: Engagements (as Contact)
+  relationName: cEngagementContacts
+- name: engagementToMentorProfile
+  entity: Engagement
+  entityForeign: MentorProfile
+  linkType: manyToMany
+  link: additionalMentors
+  linkForeign: engagements
+  label: Additional Mentors
+  labelForeign: CoMentoring Engagements
+  relationName: cEngagementMentorProfile
+- name: engagementToMentorProfile
+  entity: Engagement
+  entityForeign: MentorProfile
+  linkType: manyToOne
+  link: mentorProfile
+  linkForeign: engagements1
+  label: Assigned Mentor
+  labelForeign: Assigned Engagements
+- name: engagementToPartnerProfile
+  entity: Engagement
+  entityForeign: PartnerProfile
+  linkType: manyToOne
+  link: referringPartner
+  linkForeign: engagements
+  label: Referring Partner
+  labelForeign: Referred Engagements
+- name: engagementToMentorProfile
+  entity: Engagement
+  entityForeign: MentorProfile
+  linkType: manyToOne
+  link: requestedMentor
+  linkForeign: engagementsMentorRequested
+  label: Mentor Requested
+  labelForeign: Client Requests
+- name: engagementToClientProfile
+  entity: Engagement
+  entityForeign: ClientProfile
+  linkType: manyToOne
+  link: engagementClient
+  linkForeign: clientEngagements
+  label: Client
+  labelForeign: Engagements
+- name: engagementToSession
+  entity: Engagement
+  entityForeign: Session
+  linkType: oneToMany
+  link: engagementSessions
+  linkForeign: engagement
+  label: Sessions
+  labelForeign: Engagement
+- name: engagementToDocument
+  entity: Engagement
+  entityForeign: Document
+  linkType: oneToMany
+  link: engagementDocuments
+  linkForeign: cClientEngagement
+  label: Engagement Documents
+  labelForeign: Engagement
+- name: engagementToAccount
+  entity: Engagement
+  entityForeign: Account
+  linkType: manyToOne
+  link: clientOrganization
+  linkForeign: cEngagements
+  label: Client Organization
+  labelForeign: Engagements

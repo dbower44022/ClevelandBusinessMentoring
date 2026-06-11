@@ -1,0 +1,144 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of EventRegistration captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-10T02:42:27Z.
+entities:
+  EventRegistration:
+    action: create
+    type: Base
+    labelSingular: Event Registration
+    labelPlural: Event Registrations
+    stream: false
+    fields:
+    - name: registrationDate
+      type: datetime
+      label: Registration Date
+      required: true
+      readOnly: true
+    - name: registrationSource
+      type: enum
+      label: Registration Source
+      required: true
+      default: Online
+      readOnly: true
+      options:
+      - Online
+      - Walk-In
+      maxLength: 100
+    - name: attendanceStatus
+      type: enum
+      label: Attendance Status
+      required: true
+      default: Registered
+      audited: true
+      options:
+      - Registered
+      - Attended
+      - No-Show
+      - Cancelled
+      style:
+        Registered: info
+        Attended: success
+        No-Show: warning
+      maxLength: 100
+    - name: specialRequests
+      type: text
+      label: Special Requests
+    - name: confirmationSentAt
+      type: datetime
+      label: Confirmation Sent
+      readOnly: true
+    - name: remindersSent
+      type: multiEnum
+      label: Reminders Sent
+      options:
+      - 7-day
+      - 1-day
+      - 1-hour
+    - name: lastCommunicationBouncedAt
+      type: datetime
+      label: Last Communication Bounced
+    - name: postEventFollowUpSentAt
+      type: datetime
+      label: Post-Event Follow-Up Sent
+      readOnly: true
+    - name: cancellationDate
+      type: datetime
+      label: Cancellation Date
+      readOnly: true
+    - name: cancellationReason
+      type: text
+      label: Cancellation Reason
+    layout:
+      detail:
+        panels:
+        - label: Registration
+          rows:
+          - - name
+          - - registrationDate
+            - registrationSource
+          - - attendanceStatus
+            - null
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Registrant Details
+          rows:
+          - - specialRequests
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Communication Tracking
+          rows:
+          - - confirmationSentAt
+            - remindersSent
+          - - lastCommunicationBouncedAt
+            - postEventFollowUpSentAt
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Cancellation
+          dynamicLogicVisible:
+            all:
+            - field: attendanceStatus
+              op: equals
+              value: Cancelled
+          rows:
+          - - cancellationDate
+            - null
+          - - cancellationReason
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          width: 28
+        - field: attendanceStatus
+          width: 14
+        - field: registrationSource
+          width: 12
+        - field: registrationDate
+          width: 16
+        - field: confirmationSentAt
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

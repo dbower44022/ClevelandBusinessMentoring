@@ -1,0 +1,96 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of User captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-10T02:42:27Z.
+entities:
+  User:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - userName
+            - null
+          - - name
+            - title
+          - - emailAddress
+            - phoneNumber
+          - - gender
+            - null
+      detailSmall:
+        panels:
+        - rows:
+          - - name
+          - - userName
+          - - emailAddress
+          - - phoneNumber
+        - rows:
+          - - type
+            - isActive
+          - - teams
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: userName
+          width: 20
+        - field: title
+          width: 18
+        - field: emailAddress
+          width: 20
+        - field: isActive
+          width: 10
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: userName
+          width: 30
+        - field: emailAddress
+          width: 30
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - teams
+      - createdAt
+      - createdBy
+      - emailAddress
+      - title
+      - type
+      - isActive
+      - position
+      - portals
+      - accounts
+      - contact
+      massUpdate:
+      - teams
+      - roles
+      - defaultTeam
+      - isActive
+      bottomPanelsDetail:
+        stream:
+          sticked: false
+          index: 0
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+      sidePanelsDetail:
+        default:
+          index: 0
+        _delimiter_:
+          index: 1
+        activities:
+          index: 2
+        history:
+          index: 3
+        tasks:
+          index: 4
+      sidePanelsDetailSmall:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        tasks:
+          disabled: true

@@ -464,6 +464,35 @@ entities:
         visibleWhen:
           - { field: engagementStatus, op: equals, value: "Completed" }
 
+      - name: natureOfAssistanceSought
+        type: multiEnum
+        label: "Nature of Assistance Sought"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Start-up Assistance"
+          - "Business Plan"
+          - "Financing and Capital"
+          - "Managing a Business"
+          - "Human Resources and Managing Employees"
+          - "Customer Relations"
+          - "Business Accounting and Budget"
+          - "Cash Flow Management"
+          - "Tax Planning"
+          - "Marketing and Sales"
+          - "Government Contracting (including certifications)"
+          - "Franchising"
+          - "Buy or Sell a Business"
+          - "Technology and Computers"
+          - "E-Commerce"
+          - "Legal Issues"
+          - "International Trade"
+        rationale: >
+          Directly mirrors SBA Form 641 question 30. Enables
+          matching to mentors with relevant expertise.
+        source: "SBA Form 641 question 30"
+
       # --- Section 3.7 — Referral Attribution (CR-contributed) ---
 
       # Note: referringPartner is declared in the relationships:
@@ -752,3 +781,5 @@ relationships:
     label: "Requested Mentor"
     labelForeign: "Requested Engagements (as Mentor)"
     audited: false
+
+

@@ -396,5 +396,161 @@ entities:
         visibleWhen:
           - { field: accountType, op: contains, value: "Client" }
 
+      - name: primaryCustomerType
+        type: multiEnum
+        label: "Primary Customer Type"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        category: "Customers and Markets"
+        required: false
+        options:
+          - "Business-to-Business (B2B)"
+          - "Business-to-Consumer (B2C)"
+          - "Business-to-Government (B2G)"
+          - "Nonprofit-to-Donor (for nonprofit clients)"
+          - "Other"
+        rationale: >
+          A B2B-only mentor coaching a B2C client is a poor fit;
+          this field enables better matching.
+
+      - name: geographicMarketReach
+        type: enum
+        label: "Geographic Market Reach"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        category: "Customers and Markets"
+        required: false
+        options:
+          - "Hyper-Local (within a few miles)"
+          - "Local (within Cuyahoga County)"
+          - "Regional (Northeast Ohio)"
+          - "Statewide (Ohio)"
+          - "Multi-State"
+          - "National"
+          - "International"
+        rationale: >
+          Substantially affects growth mentoring conversations.
+
+
+      - name: salesChannels
+        type: multiEnum
+        label: "Sales Channels Used"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Direct Sales"
+          - "Retail Storefront"
+          - "E-Commerce Website"
+          - "Wholesale to Other Businesses"
+          - "Distributors and Resellers"
+          - "Online Marketplaces (Amazon, Etsy, eBay, etc.)"
+          - "Referrals and Word of Mouth"
+          - "Catalog or Direct Mail"
+          - "Trade Shows and Events"
+          - "Subscription or Recurring Revenue"
+          - "Other"
+
+      - name: socialMediaPresence
+        type: multiEnum
+        label: "Active Social Media Presence"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Facebook"
+          - "Instagram"
+          - "LinkedIn"
+          - "X (formerly Twitter)"
+          - "YouTube"
+          - "TikTok"
+          - "Pinterest"
+          - "Other"
+
+      - name: hasGoogleBusinessProfile
+        type: bool
+        label: "Has Claimed Google Business Profile"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: usesEmailMarketing
+        type: bool
+        label: "Uses Email Marketing"
+        sensitivity: routine
+        phase: first-session
+        status: candidate-new
+
+      - name: isHomeBased
+        type: bool
+        label: "Home-Based Business"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        source: "SBA Form 641 question 26"
+
+      - name: conductsBusinessOnline
+        type: bool
+        label: "Conducts Business Primarily Online"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        source: "SBA Form 641 question 25"
+
+
+      - name: fundingSourcesUsedToDate
+        type: multiEnum
+        label: "Funding Sources Used to Date"
+        sensitivity: sensitive
+        phase: first-session
+        status: candidate-new
+        options:
+          - "Personal Savings"
+          - "Friends and Family"
+          - "Bank Loan (Conventional)"
+          - "SBA Loan"
+          - "Line of Credit"
+          - "Credit Cards"
+          - "Angel Investor"
+          - "Venture Capital"
+          - "Crowdfunding"
+          - "Grant"
+          - "Microloan"
+          - "Equipment Financing"
+          - "Revenue-Based Financing"
+          - "Bootstrap (Revenue Only)"
+          - "Other"
+
+
+      - name: natureOfAssistanceSought
+        type: multiEnum
+        label: "Nature of Assistance Sought"
+        sensitivity: routine
+        phase: intake
+        status: candidate-new
+        options:
+          - "Start-up Assistance"
+          - "Business Plan"
+          - "Financing and Capital"
+          - "Managing a Business"
+          - "Human Resources and Managing Employees"
+          - "Customer Relations"
+          - "Business Accounting and Budget"
+          - "Cash Flow Management"
+          - "Tax Planning"
+          - "Marketing and Sales"
+          - "Government Contracting (including certifications)"
+          - "Franchising"
+          - "Buy or Sell a Business"
+          - "Technology and Computers"
+          - "E-Commerce"
+          - "Legal Issues"
+          - "International Trade"
+        rationale: >
+          Directly mirrors SBA Form 641 question 30. Enables
+          matching to mentors with relevant expertise.
+        source: "SBA Form 641 question 30"
 
  

@@ -1,0 +1,266 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of ClientProfile captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-10T02:42:27Z.
+entities:
+  ClientProfile:
+    action: create
+    type: Base
+    labelSingular: Client
+    labelPlural: Clients
+    stream: true
+    fields:
+    - name: clientContactEmail
+      type: foreign
+      label: Contact Email
+      readOnly: true
+    - name: industrySector
+      type: enum
+      label: Industry Sector
+      options:
+      - Agriculture, Forestry, Fishing and Hunting
+      - Mining, Quarrying, and Oil and Gas Extraction
+      - Utilities
+      - Construction
+      - Manufacturing
+      - Wholesale Trade
+      - Retail Trade
+      - Transportation and Warehousing
+      - Information
+      - Finance and Insurance
+      - Real Estate and Rental and Leasing
+      - Professional, Scientific, and Technical Services
+      - Management of Companies and Enterprises
+      - Administrative and Support and Waste Management
+      - Educational Services
+      - Health Care and Social Assistance
+      - Arts, Entertainment, and Recreation
+      - Accommodation and Food Services
+      - Other Services (except Public Administration)
+      - Public Administration
+      maxLength: 100
+    - name: clientRace
+      type: enum
+      label: Client Race
+      options:
+      - ''
+      - American Indian or Alaska Native
+      - Asian
+      - Black or African American
+      - Native Hawaiin or Other Pacific Islander
+      - White
+      maxLength: 100
+    - name: clientEthnicity
+      type: enum
+      label: Client Ethnicity
+      options:
+      - ''
+      - Hispanic or Latino
+      - Not Hispanic or Latino
+      maxLength: 100
+    - name: clientVeteranStatus
+      type: enum
+      label: Veteran Status
+      options:
+      - ''
+      - No military, Reserver, or National Guard service
+      - Veteran
+      - Service Disabled Veteran
+      - Active Duty
+      - Member of Reserve
+      - Member of National Guard
+      - Spouse of Military Member
+      maxLength: 100
+    - name: legalEntityType
+      type: enum
+      label: Legal Entity Type
+      options:
+      - Sole Proprietorship
+      - General Partnership
+      - Limited Partnership
+      - Limited Liability Partnership (LLP)
+      - Limited Liability Company (LLC)
+      - S-Corporation
+      - C-Corporation
+      - Nonprofit Corporation
+      - Benefit Corporation (B-Corp)
+      - Cooperative
+      - Not Yet Formed
+      - Other
+      maxLength: 100
+    - name: stateOfFormation
+      type: varchar
+      label: State of Formation
+      maxLength: 2
+    - name: formationDate
+      type: date
+      label: Formation Date
+    - name: yearFounded
+      type: int
+      label: Year Founded
+      min: 1900
+      max: 2099
+    - name: federalEinOnFile
+      type: bool
+      label: Federal EIN Obtained
+    - name: ohioVendorsLicenseOnFile
+      type: bool
+      label: Ohio Vendor's License Obtained
+    - name: registeredOnSamGov
+      type: bool
+      label: Registered on SAM.gov
+    - name: localLicensesAndPermits
+      type: text
+      label: Local Licenses and Permits Held
+    - name: annualRevenueRange
+      type: enum
+      label: Annual Revenue Range
+      options:
+      - Pre-Revenue
+      - Under $50,000
+      - $50,000 to $100,000
+      - $100,000 to $250,000
+      - $250,000 to $500,000
+      - $500,000 to $1 Million
+      - $1 Million to $2 Million
+      - $2 Million to $5 Million
+      - $5 Million to $10 Million
+      - Over $10 Million
+      - Prefer Not to Share
+      maxLength: 100
+    - name: certificationsHeld
+      type: multiEnum
+      label: Certifications Currently Held
+      options:
+      - SBA 8(a) Business Development
+      - SBA Women-Owned Small Business (WOSB)
+      - SBA Economically Disadvantaged WOSB (EDWOSB)
+      - SBA Veteran-Owned Small Business (VOSB)
+      - SBA Service-Disabled VOSB (SDVOSB)
+      - SBA HUBZone
+      - SBA Small Disadvantaged Business (SDB)
+      - Federal Disadvantaged Business Enterprise (DBE)
+      - Ohio Minority Business Enterprise (MBE)
+      - Ohio Women Business Enterprise (WBE)
+      - Ohio Encouraging Diversity, Growth and Equity (EDGE)
+      - Ohio Veteran-Friendly Business Enterprise (VFBE)
+      - Cuyahoga County MBE
+      - Cuyahoga County WBE
+      - Cuyahoga County SBE
+      - Other
+    - name: revenueTrend
+      type: enum
+      label: Revenue Trend (last 12 months)
+      options:
+      - Growing Significantly
+      - Growing Modestly
+      - Flat
+      - Declining Modestly
+      - Declining Significantly
+      - Too New to Tell
+      maxLength: 100
+    - name: profitabilityStatus
+      type: enum
+      label: Profitability Status
+      options:
+      - Profitable
+      - Breakeven
+      - Operating at a Loss
+      - Owner Draws Only (No Formal Profit)
+      - Pre-Revenue
+      - Prefer Not to Share
+      maxLength: 100
+    - name: mostRecentFullYearRevenue
+      type: currency
+      label: Most Recent Full Year Revenue
+    - name: fiscalYearEndMonth
+      type: enum
+      label: Fiscal Year End
+      options:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      maxLength: 100
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          tabBreak: true
+          tabLabel: Overview
+          rows:
+          - - name
+            - linkedCompany
+          - - description
+          - - clientcontact
+            - clientContactEmail
+          noteText: ''
+          noteStyle: info
+        - label: Advanced Profile
+          tabBreak: true
+          tabLabel: Adv Profile
+          rows:
+          - - clientRace
+            - clientEthnicity
+          - - legalEntityType
+            - formationDate
+          - - federalEinOnFile
+            - localLicensesAndPermits
+          - - ohioVendorsLicenseOnFile
+            - registeredOnSamGov
+          - - stateOfFormation
+            - annualRevenueRange
+          noteText: null
+          noteStyle: info
+        - label: Certifications
+          tabBreak: true
+          tabLabel: Certifications
+          rows:
+          - - certificationsHeld
+            - clientVeteranStatus
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: clientcontact
+          width: 16
+        - field: createdAt
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - industrySector
+      - annualRevenueRange
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        _delimiter_:
+          disabled: true
+        clientEngagements:
+          index: 0
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
