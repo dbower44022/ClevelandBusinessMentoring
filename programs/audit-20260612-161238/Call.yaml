@@ -1,0 +1,79 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Call captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-12T16:15:19Z.
+entities:
+  Call:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - parent
+          - - status
+            - direction
+          - - dateStart
+            - dateEnd
+          - - duration
+            - reminders
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name
+          - - status
+            - direction
+          - - dateStart
+          - - duration
+            - null
+          - - dateEnd
+          - - parent
+          - - reminders
+          - - description
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: parent
+          width: 22
+        - field: status
+          width: 15
+        - field: dateStart
+          width: 15
+        - field: assignedUser
+          width: 15
+      listSmall:
+        columns:
+        - field: name
+          link: 'true'
+        - field: status
+          width: 25
+        - field: dateStart
+          width: 25
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - account
+      - dateStart
+      - direction
+      - status
+      - parent
+      - users
+      - contacts
+      - leads
+      massUpdate:
+      - status
+      - assignedUser
+      - users
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

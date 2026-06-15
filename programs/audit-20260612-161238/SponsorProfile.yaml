@@ -1,0 +1,109 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of SponsorProfile captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-12T16:15:20Z.
+entities:
+  SponsorProfile:
+    action: create
+    type: Base
+    labelSingular: Sponsor
+    labelPlural: Sponsors
+    stream: true
+    fields:
+    - name: totalContribution
+      type: currency
+      label: Total Contribution
+    - name: lastContribution
+      type: date
+      label: Last Contribution Date
+    - name: lastContacted
+      type: date
+      label: Last Contacted
+    - name: bMSponsorManager
+      type: link
+      label: Primary CBM Manager
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - sponsorCompany
+          - - sponsorContact
+            - bMSponsorManager
+            - lastContacted
+          - - description
+        - label: Contribution Info
+          tabBreak: true
+          tabLabel: Contribution Info
+          rows:
+          - - lastContribution
+            - totalContribution
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: sponsorManager
+          width: 16
+        - field: sponsorContact
+          width: 16
+        - field: lastContacted
+          width: 16
+        - field: lastContribution
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        _delimiter_:
+          disabled: true
+        _tabBreak_0:
+          index: 0
+          tabBreak: true
+          tabLabel: Sponsored Events
+        sponsoredEvents:
+          index: 1
+        _tabBreak_1:
+          index: 2
+          tabBreak: true
+          tabLabel: Sponsor Contacts
+        sponsorContacts:
+          index: 3
+        _tabBreak_3:
+          index: 4
+          tabBreak: true
+          tabLabel: Sponsor Contributions
+        sponsorContributions:
+          index: 5
+        _tabBreak_4:
+          index: 6
+          tabBreak: true
+          tabLabel: Sponsor Sessions
+        sponsorSessions:
+          index: 7
+        _tabBreak_2:
+          index: 8
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 9
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

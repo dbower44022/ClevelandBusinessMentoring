@@ -1,0 +1,86 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Document captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-13T23:59:23Z.
+entities:
+  Document:
+    fields:
+    - name: clientEngagement
+      type: link
+      label: Engagement
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - file
+            - null
+          - - name
+            - folder
+        - label: Details
+          rows:
+          - - type
+            - publishDate
+          - - status
+            - expirationDate
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name: file
+              fullWidth: true
+          - - name: name
+              fullWidth: true
+          - - status
+            - folder
+          - - name: description
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: file
+          width: 10
+          notSortable: true
+        - field: status
+          width: 15
+        - field: createdAt
+          width: 18
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: file
+          width: 10
+          notSortable: true
+        - field: createdAt
+          width: 27
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - accounts
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - expirationDate
+      - type
+      - status
+      - publishDate
+      massUpdate:
+      - assignedUser
+      - teams
+      - folder
+      relationships:
+      - accounts
+      bottomPanelsDetail:
+        accounts:
+          name: accounts
+          index: 5
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

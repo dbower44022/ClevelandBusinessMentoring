@@ -1,0 +1,4688 @@
+{
+  "manifest_version": 1,
+  "profiled_at": "2026-06-12T16:15:20Z",
+  "completed_at": "2026-06-12T16:21:37Z",
+  "source_url": "https://crm-test.clevelandbusinessmentors.org/",
+  "source_label": "espocrm @ crm-test.clevelandbusinessmentors.org",
+  "profiler_version": "0.1.0",
+  "options": {
+    "dormancy_window_days": 365,
+    "low_population_threshold": 0.05,
+    "scan_cap": 10000
+  },
+  "anomalies": [
+    {
+      "scope": "metric",
+      "entity": "User",
+      "field": "emails",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "User",
+      "field": "userData",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "User",
+      "field": "cAccounts",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Account",
+      "field": "cCompanyPartnerType",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Account",
+      "field": "cPortalUsers",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "accounts",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "calls",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "cases",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "cCEngagementsAsContact",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "cCPresenterEvents",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "cCEvents",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Contact",
+      "field": "cCSessionsAttended",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isLinked rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Document",
+      "field": "accounts",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "Document",
+      "field": "contacts",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CClientProfile",
+      "field": "clientContactEmail",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CEvent",
+      "field": "eventGraphic",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CEvent",
+      "field": "sponsorGraphic",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "postalCode",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "personalEmail",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "contactPhone",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "contactCity",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "contactStreet",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "profilePhoto",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CMentorProfile",
+      "field": "resumeUpload",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    },
+    {
+      "scope": "metric",
+      "entity": "CPartnerProfile",
+      "field": "partnerEmail",
+      "metric": "populated_count",
+      "status": 400,
+      "note": "isNotNull rejected for attribute; metric scan-derived"
+    }
+  ],
+  "entities": {
+    "Email": {
+      "record_count": -2,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:15:20Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 10
+      },
+      "fields": {
+        "cPartnerProfile": {
+          "populated_count": -2
+        },
+        "users": {
+          "populated_count": -2
+        },
+        "replied": {
+          "populated_count": -2
+        },
+        "replies": {
+          "populated_count": -2
+        },
+        "inboundEmails": {
+          "populated_count": -2
+        },
+        "emailAccounts": {
+          "populated_count": -2
+        },
+        "groupFolder": {
+          "populated_count": -2
+        },
+        "tasks": {
+          "populated_count": -2
+        },
+        "account": {
+          "populated_count": -2
+        }
+      }
+    },
+    "User": {
+      "record_count": 23,
+      "last_record_created_at": "2026-06-12T03:56:24Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:15:23Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 21
+      },
+      "fields": {
+        "emails": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "teams": {
+          "populated_count": 21,
+          "population_rate": 0.913,
+          "last_populated_at": "2026-06-12T03:56:24Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "roles": {
+          "populated_count": 8,
+          "population_rate": 0.348,
+          "last_populated_at": "2026-06-09T19:56:46Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "portals": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "portalRoles": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "workingTimeRanges": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "userData": {},
+        "meetings": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "calls": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "notes": {
+          "populated_count": 14,
+          "population_rate": 0.609,
+          "last_populated_at": "2026-06-12T03:56:24Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "contact": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cAccounts": {},
+        "tasks": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "targetLists": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "reportEmailSending": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        }
+      }
+    },
+    "Account": {
+      "record_count": 27,
+      "last_record_created_at": "2026-06-11T03:43:10Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:15:31Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 146
+      },
+      "fields": {
+        "cClientProfile": {
+          "populated_count": 21,
+          "population_rate": 0.778,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "distinct_value_count": 21,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a26daeada37637cf": 1,
+              "6a22db995c1812235": 1,
+              "6a225928ccda17877": 1,
+              "6a224bdea2e91cfd9": 1,
+              "6a203e2e4b8474f3e": 1,
+              "6a203d67ada90bc2b": 1,
+              "6a21d92d2ece1e2c5": 1,
+              "6a203ce8ae5d1d82e": 1,
+              "6a1f0dcfb717bc20b": 1,
+              "6a1ed3455eabfb6b5": 1
+            }
+          }
+        },
+        "cOrganizationType": {
+          "populated_count": 8,
+          "population_rate": 0.296,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 2,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "For-Profit": 7,
+              "Non-Profit": 1
+            },
+            "undeclared_values": {}
+          }
+        },
+        "cBusinessStage": {
+          "populated_count": 27,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 5,
+          "declared_option_count": 5,
+          "used_option_count": 5,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Pre-Startup": 11,
+              "Startup": 10,
+              "Early Stage": 3,
+              "Growth Stage": 1,
+              "Established": 2
+            },
+            "undeclared_values": {}
+          }
+        },
+        "cIndustrySector": {
+          "populated_count": 27,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 10,
+          "declared_option_count": 20,
+          "used_option_count": 10,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Agriculture, Forestry, Fishing and Hunting": 14,
+              "Mining, Quarrying, and Oil and Gas Extraction": 0,
+              "Utilities": 0,
+              "Construction": 2,
+              "Manufacturing": 0,
+              "Wholesale Trade": 0,
+              "Retail Trade": 0,
+              "Transportation and Warehousing": 1,
+              "Information": 2,
+              "Finance and Insurance": 1,
+              "Real Estate and Rental and Leasing": 1,
+              "Professional, Scientific, and Technical Services": 0,
+              "Management of Companies and Enterprises": 0,
+              "Administrative and Support and Waste Management": 0,
+              "Educational Services": 1,
+              "Health Care and Social Assistance": 1,
+              "Arts, Entertainment, and Recreation": 1,
+              "Accommodation and Food Services": 3,
+              "Other Services (except Public Administration)": 0,
+              "Public Administration": 0
+            },
+            "ghost_options": 10,
+            "undeclared_values": {}
+          }
+        },
+        "cIndustrySubsector": {
+          "populated_count": 5,
+          "population_rate": 0.185,
+          "last_populated_at": "2026-05-19T03:40:22Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 2,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Option 1": 5
+            },
+            "ghost_options": 1,
+            "undeclared_values": {}
+          }
+        },
+        "cClientNotes": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cSponsorProfile": {
+          "populated_count": 2,
+          "population_rate": 0.074,
+          "last_populated_at": "2026-05-28T14:12:13Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a184d43a6b0f0c35": 1,
+              "6a0be58a7b202aa92": 1
+            }
+          }
+        },
+        "cPrimaryContact": {
+          "populated_count": 2,
+          "population_rate": 0.074,
+          "last_populated_at": "2026-05-17T06:12:33Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a0a229da48d3d7dd": 1,
+              "6a07768bcdc9bd44f": 1
+            }
+          }
+        },
+        "cCompanyType": {
+          "populated_count": 22,
+          "population_rate": 0.815,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "distinct_value_count": 3,
+          "declared_option_count": 5,
+          "used_option_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Client": 19,
+              "Sponsor": 1,
+              "Partner": 3,
+              "Other": 0
+            },
+            "ghost_options": 2,
+            "undeclared_values": {}
+          }
+        },
+        "cSponsorshipLevel": {
+          "populated_count": 5,
+          "population_rate": 0.185,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 5,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Title": 4,
+              "Platinum": 1,
+              "Gold": 0,
+              "Silver": 0,
+              "Bronze": 0
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "cAnnualPledgeAmount": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-05-17T06:12:33Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "50000": 1
+            },
+            "low_population": true
+          }
+        },
+        "cSponsorshipStartDate": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-05-17T06:12:33Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-01": 1
+            },
+            "low_population": true
+          }
+        },
+        "cSponsorshipRenewalDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cSponsorNotes": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cPartnershipStartDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cPartnershipAgreementDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cPartnerContactCadence": {
+          "populated_count": 5,
+          "population_rate": 0.185,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 5,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Monthly": 5,
+              "Quarterly": 0,
+              "Semi-Annually": 0,
+              "Annually": 0,
+              "As-Needed": 0
+            },
+            "ghost_options": 4,
+            "undeclared_values": {}
+          }
+        },
+        "cPartnerNotes": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cCompanyPartnerProfile": {
+          "populated_count": 3,
+          "population_rate": 0.111,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a2a2f6fb49faf4c5": 1,
+              "6a089656c830b02b2": 1,
+              "6a0cacd7abcc587ca": 1
+            }
+          }
+        },
+        "cCompanyPartnerType": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cAccountType": {
+          "populated_count": 20,
+          "population_rate": 0.741,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 3,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Client": 19,
+              "Partner": 1,
+              "Donor/Sponsor": 0
+            },
+            "ghost_options": 1,
+            "undeclared_values": {}
+          }
+        },
+        "cLinkedInPage": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cClientStatus": {
+          "populated_count": 27,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 5,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Prospect": 27,
+              "Applicant": 0,
+              "Active Client": 0,
+              "Inactive Client": 0,
+              "Former Client": 0
+            },
+            "ghost_options": 4,
+            "undeclared_values": {}
+          }
+        },
+        "cApplicantSinceTimestamp": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cPartnerOrganizationType": {
+          "populated_count": 2,
+          "population_rate": 0.074,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 7,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Community Organization": 2,
+              "Nonprofit": 0,
+              "Government Agency": 0,
+              "Academic Institution": 0,
+              "Financial Institution": 0,
+              "Corporation": 0,
+              "Other": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {}
+          }
+        },
+        "cPartnerType": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "declared_option_count": 6,
+          "used_option_count": 0,
+          "detail": {
+            "value_distribution": {
+              "Client Referral": 0,
+              "Mentor Source": 0,
+              "Co-Sponsor": 0,
+              "Joint Marketing": 0,
+              "Funder": 0,
+              "Other": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "cPartnerStatus": {
+          "populated_count": 27,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 4,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Prospect": 27,
+              "Active": 0,
+              "Lapsed": 0,
+              "Inactive": 0
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "cPublicAnnouncementAllowed": {
+          "populated_count": 27,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 27
+            }
+          }
+        },
+        "cTargetPopulation": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cParentAccount": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cAssignedLiaison": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "cAnnualPledgeAmountCurrency": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-05-17T06:12:33Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "USD": 1
+            },
+            "low_population": true
+          }
+        },
+        "cAnnualPledgeAmountConverted": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-05-17T06:12:33Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "50000": 1
+            },
+            "low_population": true
+          }
+        },
+        "cPortalUsers": {},
+        "contacts": {
+          "populated_count": 24,
+          "population_rate": 0.889,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "contactsPrimary": {
+          "populated_count": 24,
+          "population_rate": 0.889,
+          "last_populated_at": "2026-06-11T03:43:10Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "opportunities": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cases": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "documents": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "meetingsPrimary": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "emailsPrimary": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-06-02T12:57:41Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "callsPrimary": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "tasksPrimary": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "campaign": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "targetLists": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "originalLead": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cPartnerProfile": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-05-17T06:12:33Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "cContributions": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cChildAccounts": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cEngagements": {
+          "populated_count": 1,
+          "population_rate": 0.037,
+          "last_populated_at": "2026-05-15T18:43:15Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        }
+      }
+    },
+    "Call": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:23Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "users": {
+          "populated_count": 0
+        },
+        "account": {
+          "populated_count": 0
+        },
+        "contacts": {
+          "populated_count": 0
+        },
+        "leads": {
+          "populated_count": 0
+        }
+      }
+    },
+    "Campaign": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:23Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "accounts": {
+          "populated_count": 0
+        },
+        "targetLists": {
+          "populated_count": 0
+        },
+        "cExcludingTargetLists": {
+          "populated_count": 0
+        },
+        "contacts": {
+          "populated_count": 0
+        },
+        "leads": {
+          "populated_count": 0
+        },
+        "opportunities": {
+          "populated_count": 0
+        },
+        "campaignLogRecords": {
+          "populated_count": 0
+        },
+        "trackingUrls": {
+          "populated_count": 0
+        },
+        "massEmails": {
+          "populated_count": 0
+        }
+      }
+    },
+    "Case": {
+      "record_count": 1,
+      "last_record_created_at": "2026-06-01T16:34:29Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:23Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 8
+      },
+      "fields": {
+        "account": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "lead": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contact": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contacts": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "articles": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        }
+      }
+    },
+    "Contact": {
+      "record_count": 48,
+      "last_record_created_at": "2026-06-12T15:33:30Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:26Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 70
+      },
+      "fields": {
+        "cClientContact": {
+          "populated_count": 21,
+          "population_rate": 0.438,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "distinct_value_count": 21,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a26daeada37637cf": 1,
+              "6a22db995c1812235": 1,
+              "6a225928ccda17877": 1,
+              "6a224bdea2e91cfd9": 1,
+              "6a203e2e4b8474f3e": 1,
+              "6a203d67ada90bc2b": 1,
+              "6a203ce8ae5d1d82e": 1,
+              "6a1f0dcfb717bc20b": 1,
+              "6a1ed3455eabfb6b5": 1,
+              "6a203bff6c52aa636": 1
+            }
+          }
+        },
+        "cMentorProfile": {
+          "populated_count": 17,
+          "population_rate": 0.354,
+          "last_populated_at": "2026-06-12T15:33:30Z",
+          "distinct_value_count": 17,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a2c26cb2b9751e67": 1,
+              "6a2c26bbc70688639": 1,
+              "6a2c24cfa54290faa": 1,
+              "6a2c1e0d536b7cb8c": 1,
+              "6a2c07139412c0c62": 1,
+              "6a2bd7d55a08d7d96": 1,
+              "6a2b505d5041c2d93": 1,
+              "6a26dadb396cb2ff3": 1,
+              "6a228a86a7f8fc970": 1,
+              "6a2245861e63eb655": 1
+            }
+          }
+        },
+        "cContactType": {
+          "populated_count": 48,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T15:33:30Z",
+          "distinct_value_count": 5,
+          "declared_option_count": 8,
+          "used_option_count": 5,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 10,
+              "Client": 21,
+              "Mentor": 16,
+              "Partner": 1,
+              "Administrator": 0,
+              "Presenter": 0,
+              "Donor": 1,
+              "Member": 0
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "cPreferredName": {
+          "populated_count": 14,
+          "population_rate": 0.292,
+          "last_populated_at": "2026-06-12T15:33:30Z",
+          "distinct_value_count": 14,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "Richard": 1,
+              "Freddie": 1,
+              "bob": 1,
+              "Maty": 1,
+              "Milt": 1,
+              "Minnie": 1,
+              "Joe": 1,
+              "Ally": 1,
+              "Roar": 1,
+              "Waldo": 1
+            }
+          }
+        },
+        "cLinkedInProfile": {
+          "populated_count": 5,
+          "population_rate": 0.104,
+          "last_populated_at": "2026-06-12T15:33:30Z",
+          "distinct_value_count": 5,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "https://www.linkedin.com/in/richard-brooks-74640/": 1,
+              "https://www.linkedin.com/in/danyurman/": 1,
+              "https://www.linkedin.com/in/tmendelsohn/": 1,
+              "https://www.linkedin.com/in/dougbower/": 1,
+              "linkedin.com/ajkldsa": 1
+            }
+          }
+        },
+        "cPrimaryCompany": {
+          "populated_count": 2,
+          "population_rate": 0.042,
+          "last_populated_at": "2026-05-17T20:18:37Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a095c51ed406138a": 1,
+              "6a0769438d0fbe55b": 1
+            },
+            "low_population": true
+          }
+        },
+        "cPartnerProfile": {
+          "populated_count": 2,
+          "population_rate": 0.042,
+          "last_populated_at": "2026-05-22T05:18:32Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a089656c830b02b2": 1,
+              "6a0cacd7abcc587ca": 1
+            },
+            "low_population": true
+          }
+        },
+        "cSponsorProfile": {
+          "populated_count": 2,
+          "population_rate": 0.042,
+          "last_populated_at": "2026-06-09T14:40:44Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a184d43a6b0f0c35": 1,
+              "6a0be58a7b202aa92": 1
+            },
+            "low_population": true
+          }
+        },
+        "cSpouseName": {
+          "populated_count": 1,
+          "population_rate": 0.021,
+          "last_populated_at": "2026-05-17T05:01:04Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "Mindy": 1
+            },
+            "low_population": true
+          }
+        },
+        "cBirthday": {
+          "populated_count": 1,
+          "population_rate": 0.021,
+          "last_populated_at": "2026-05-17T05:01:04Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "1960-11-07": 1
+            },
+            "low_population": true
+          }
+        },
+        "cPersonalProfile": {
+          "populated_count": 1,
+          "population_rate": 0.021,
+          "last_populated_at": "2026-05-17T05:01:04Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>Loves mentoring new startups, especially technology.&nbsp; But also interested in helping trades.&nbsp; Also big into the Maker community and high tech fabrication.</p><p>Love flying, Sailing SCUBA, and anything near water!</p>": 1
+            },
+            "low_population": true
+          }
+        },
+        "cSuffix": {
+          "populated_count": 1,
+          "population_rate": 0.021,
+          "last_populated_at": "2026-06-02T12:57:41Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 7,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Jr": 0,
+              "Sr": 0,
+              "PhD": 1,
+              "MD": 0,
+              "Esq": 0,
+              "CPA": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "cPartnerProfiles": {
+          "populated_count": 2,
+          "population_rate": 0.042,
+          "last_populated_at": "2026-06-11T03:43:47Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "portalUser": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "accounts": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "account": {
+          "populated_count": 27,
+          "population_rate": 0.562,
+          "last_populated_at": "2026-06-11T03:59:20Z",
+          "distinct_value_count": 24,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a1ed345021b42292": 2,
+              "6a0769438d0fbe55b": 2,
+              "6a0953bb0142ff872": 2,
+              "6a2a2ece8deb1ea44": 1,
+              "6a184d3dc0c4eaac3": 1,
+              "6a26daea7af0829e6": 1,
+              "6a22db98f1210f30f": 1,
+              "6a2259285d63758c7": 1,
+              "6a224bde2adc0a1b3": 1,
+              "6a203e2daeb0a8c48": 1
+            }
+          }
+        },
+        "cLiaisonForPartnerAccounts": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "calls": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "campaign": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "casesPrimary": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cases": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "opportunities": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "opportunitiesPrimary": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "meetings": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "targetLists": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "originalLead": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "documents": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "tasksPrimary": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cPrimaryEngagementsAsContact": {
+          "populated_count": 18,
+          "population_rate": 0.375,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "cCEngagementsAsContact": {},
+        "cCPresenterEvents": {},
+        "cCEvents": {},
+        "cCSessionsAttended": {},
+        "cSponsorProfiles": {
+          "populated_count": 1,
+          "population_rate": 0.021,
+          "last_populated_at": "2026-06-09T16:38:50Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "cContributions": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "cEventRegistrations": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        }
+      }
+    },
+    "Document": {
+      "record_count": 1,
+      "last_record_created_at": "2026-05-22T14:07:18Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:51Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 10
+      },
+      "fields": {
+        "cClientEngagement": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-05-22T14:07:18Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a07783d64f353a92": 1
+            }
+          }
+        },
+        "accounts": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contacts": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "opportunities": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "leads": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "folder": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        }
+      }
+    },
+    "Lead": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:54Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "createdAccount": {
+          "populated_count": 0
+        },
+        "calls": {
+          "populated_count": 0
+        },
+        "campaign": {
+          "populated_count": 0
+        },
+        "cases": {
+          "populated_count": 0
+        },
+        "createdContact": {
+          "populated_count": 0
+        },
+        "documents": {
+          "populated_count": 0
+        },
+        "meetings": {
+          "populated_count": 0
+        },
+        "createdOpportunity": {
+          "populated_count": 0
+        },
+        "targetLists": {
+          "populated_count": 0
+        }
+      }
+    },
+    "Meeting": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:55Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "users": {
+          "populated_count": 0
+        },
+        "account": {
+          "populated_count": 0
+        },
+        "contacts": {
+          "populated_count": 0
+        },
+        "leads": {
+          "populated_count": 0
+        }
+      }
+    },
+    "Opportunity": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:55Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "account": {
+          "populated_count": 0
+        },
+        "campaign": {
+          "populated_count": 0
+        },
+        "contacts": {
+          "populated_count": 0
+        },
+        "contact": {
+          "populated_count": 0
+        },
+        "documents": {
+          "populated_count": 0
+        },
+        "originalLead": {
+          "populated_count": 0
+        }
+      }
+    },
+    "TargetList": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:55Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "users": {
+          "populated_count": 0
+        },
+        "accounts": {
+          "populated_count": 0
+        },
+        "campaigns": {
+          "populated_count": 0
+        },
+        "cCampaignsExcluding": {
+          "populated_count": 0
+        },
+        "contacts": {
+          "populated_count": 0
+        },
+        "leads": {
+          "populated_count": 0
+        },
+        "category": {
+          "populated_count": 0
+        },
+        "massEmails": {
+          "populated_count": 0
+        },
+        "massEmailsExcluding": {
+          "populated_count": 0
+        },
+        "syncWithReports": {
+          "populated_count": 0
+        }
+      }
+    },
+    "Task": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:56Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "email": {
+          "populated_count": 0
+        },
+        "assignedUser": {
+          "populated_count": 0
+        },
+        "account": {
+          "populated_count": 0
+        },
+        "contact": {
+          "populated_count": 0
+        }
+      }
+    },
+    "CClientProfile": {
+      "record_count": 23,
+      "last_record_created_at": "2026-06-08T15:08:26Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:16:56Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 198
+      },
+      "fields": {
+        "clientContactEmail": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "industrySector": {
+          "populated_count": 3,
+          "population_rate": 0.13,
+          "last_populated_at": "2026-06-04T19:59:41Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 20,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Agriculture, Forestry, Fishing and Hunting": 3,
+              "Mining, Quarrying, and Oil and Gas Extraction": 0,
+              "Utilities": 0,
+              "Construction": 0,
+              "Manufacturing": 0,
+              "Wholesale Trade": 0,
+              "Retail Trade": 0,
+              "Transportation and Warehousing": 0,
+              "Information": 0,
+              "Finance and Insurance": 0,
+              "Real Estate and Rental and Leasing": 0,
+              "Professional, Scientific, and Technical Services": 0,
+              "Management of Companies and Enterprises": 0,
+              "Administrative and Support and Waste Management": 0,
+              "Educational Services": 0,
+              "Health Care and Social Assistance": 0,
+              "Arts, Entertainment, and Recreation": 0,
+              "Accommodation and Food Services": 0,
+              "Other Services (except Public Administration)": 0,
+              "Public Administration": 0
+            },
+            "ghost_options": 19,
+            "undeclared_values": {}
+          }
+        },
+        "clientRace": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 6,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "American Indian or Alaska Native": 0,
+              "Asian": 0,
+              "Black or African American": 0,
+              "Native Hawaiin or Other Pacific Islander": 0,
+              "White": 1
+            },
+            "ghost_options": 5,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "clientEthnicity": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 3,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Hispanic or Latino": 0,
+              "Not Hispanic or Latino": 1
+            },
+            "ghost_options": 2,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "clientVeteranStatus": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 8,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "No military, Reserver, or National Guard service": 1,
+              "Veteran": 0,
+              "Service Disabled Veteran": 0,
+              "Active Duty": 0,
+              "Member of Reserve": 0,
+              "Member of National Guard": 0,
+              "Spouse of Military Member": 0
+            },
+            "ghost_options": 7,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "legalEntityType": {
+          "populated_count": 4,
+          "population_rate": 0.174,
+          "last_populated_at": "2026-06-04T19:59:41Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 12,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Sole Proprietorship": 4,
+              "General Partnership": 0,
+              "Limited Partnership": 0,
+              "Limited Liability Partnership (LLP)": 0,
+              "Limited Liability Company (LLC)": 0,
+              "S-Corporation": 0,
+              "C-Corporation": 0,
+              "Nonprofit Corporation": 0,
+              "Benefit Corporation (B-Corp)": 0,
+              "Cooperative": 0,
+              "Not Yet Formed": 0,
+              "Other": 0
+            },
+            "ghost_options": 11,
+            "undeclared_values": {}
+          }
+        },
+        "stateOfFormation": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "formationDate": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-04": 1
+            },
+            "low_population": true
+          }
+        },
+        "yearFounded": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "federalEinOnFile": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 22
+            }
+          }
+        },
+        "ohioVendorsLicenseOnFile": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 23
+            }
+          }
+        },
+        "registeredOnSamGov": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 23
+            }
+          }
+        },
+        "localLicensesAndPermits": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "annualRevenueRange": {
+          "populated_count": 3,
+          "population_rate": 0.13,
+          "last_populated_at": "2026-06-04T19:59:41Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 11,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Pre-Revenue": 2,
+              "Under $50,000": 0,
+              "$50,000 to $100,000": 1,
+              "$100,000 to $250,000": 0,
+              "$250,000 to $500,000": 0,
+              "$500,000 to $1 Million": 0,
+              "$1 Million to $2 Million": 0,
+              "$2 Million to $5 Million": 0,
+              "$5 Million to $10 Million": 0,
+              "Over $10 Million": 0,
+              "Prefer Not to Share": 0
+            },
+            "ghost_options": 9,
+            "undeclared_values": {}
+          }
+        },
+        "certificationsHeld": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 16,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "SBA 8(a) Business Development": 0,
+              "SBA Women-Owned Small Business (WOSB)": 0,
+              "SBA Economically Disadvantaged WOSB (EDWOSB)": 0,
+              "SBA Veteran-Owned Small Business (VOSB)": 0,
+              "SBA Service-Disabled VOSB (SDVOSB)": 0,
+              "SBA HUBZone": 0,
+              "SBA Small Disadvantaged Business (SDB)": 0,
+              "Federal Disadvantaged Business Enterprise (DBE)": 0,
+              "Ohio Minority Business Enterprise (MBE)": 1,
+              "Ohio Women Business Enterprise (WBE)": 0,
+              "Ohio Encouraging Diversity, Growth and Equity (EDGE)": 0,
+              "Ohio Veteran-Friendly Business Enterprise (VFBE)": 0,
+              "Cuyahoga County MBE": 1,
+              "Cuyahoga County WBE": 0,
+              "Cuyahoga County SBE": 0,
+              "Other": 0
+            },
+            "ghost_options": 14,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "revenueTrend": {
+          "populated_count": 3,
+          "population_rate": 0.13,
+          "last_populated_at": "2026-06-04T19:59:41Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 6,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Growing Significantly": 3,
+              "Growing Modestly": 0,
+              "Flat": 0,
+              "Declining Modestly": 0,
+              "Declining Significantly": 0,
+              "Too New to Tell": 0
+            },
+            "ghost_options": 5,
+            "undeclared_values": {}
+          }
+        },
+        "profitabilityStatus": {
+          "populated_count": 3,
+          "population_rate": 0.13,
+          "last_populated_at": "2026-06-04T19:59:41Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 6,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Profitable": 2,
+              "Breakeven": 0,
+              "Operating at a Loss": 1,
+              "Owner Draws Only (No Formal Profit)": 0,
+              "Pre-Revenue": 0,
+              "Prefer Not to Share": 0
+            },
+            "ghost_options": 4,
+            "undeclared_values": {}
+          }
+        },
+        "mostRecentFullYearRevenue": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "fiscalYearEndMonth": {
+          "populated_count": 2,
+          "population_rate": 0.087,
+          "last_populated_at": "2026-06-04T19:59:41Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 12,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "January": 2,
+              "February": 0,
+              "March": 0,
+              "April": 0,
+              "May": 0,
+              "June": 0,
+              "July": 0,
+              "August": 0,
+              "September": 0,
+              "October": 0,
+              "November": 0,
+              "December": 0
+            },
+            "ghost_options": 11,
+            "undeclared_values": {}
+          }
+        },
+        "primaryCustomerType": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 5,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Business-to-Business (B2B)": 0,
+              "Business-to-Consumer (B2C)": 1,
+              "Business-to-Government (B2G)": 0,
+              "Nonprofit-to-Donor (for nonprofit clients)": 0,
+              "Other": 0
+            },
+            "ghost_options": 4,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "geographicMarketReach": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 7,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Hyper-Local (within a few miles)": 1,
+              "Local (within Cuyahoga County)": 0,
+              "Regional (Northeast Ohio)": 0,
+              "Statewide (Ohio)": 0,
+              "Multi-State": 0,
+              "National": 0,
+              "International": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "salesChannels": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 11,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Direct Sales": 1,
+              "Retail Storefront": 1,
+              "E-Commerce Website": 0,
+              "Wholesale to Other Businesses": 0,
+              "Distributors and Resellers": 0,
+              "Online Marketplaces (Amazon, Etsy, eBay, etc.)": 0,
+              "Referrals and Word of Mouth": 0,
+              "Catalog or Direct Mail": 0,
+              "Trade Shows and Events": 0,
+              "Subscription or Recurring Revenue": 0,
+              "Other": 0
+            },
+            "ghost_options": 9,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "socialMediaPresence": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "declared_option_count": 8,
+          "used_option_count": 0,
+          "detail": {
+            "value_distribution": {
+              "Facebook": 0,
+              "Instagram": 0,
+              "LinkedIn": 0,
+              "X (formerly Twitter)": 0,
+              "YouTube": 0,
+              "TikTok": 0,
+              "Pinterest": 0,
+              "Other": 0
+            },
+            "ghost_options": 8,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "hasGoogleBusinessProfile": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 22
+            }
+          }
+        },
+        "usesEmailMarketing": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 23
+            }
+          }
+        },
+        "isHomeBased": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 23
+            }
+          }
+        },
+        "conductsBusinessOnline": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 23
+            }
+          }
+        },
+        "fundingSourcesUsedToDate": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-05-15T19:34:28Z",
+          "distinct_value_count": 3,
+          "declared_option_count": 15,
+          "used_option_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Personal Savings": 0,
+              "Friends and Family": 1,
+              "Bank Loan (Conventional)": 0,
+              "SBA Loan": 1,
+              "Line of Credit": 0,
+              "Credit Cards": 1,
+              "Angel Investor": 0,
+              "Venture Capital": 0,
+              "Crowdfunding": 0,
+              "Grant": 0,
+              "Microloan": 0,
+              "Equipment Financing": 0,
+              "Revenue-Based Financing": 0,
+              "Bootstrap (Revenue Only)": 0,
+              "Other": 0
+            },
+            "ghost_options": 12,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "linkedCompany": {
+          "populated_count": 21,
+          "population_rate": 0.913,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "clientcontact": {
+          "populated_count": 21,
+          "population_rate": 0.913,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "distinct_value_count": 21,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a26daeab11ce12ab": 1,
+              "6a22db9932ff83d78": 1,
+              "6a2259289a8c1f7c0": 1,
+              "6a224bde700ae70df": 1,
+              "6a203e2e0f944b1d2": 1,
+              "6a203d6779205e8e8": 1,
+              "6a203b488c90e2bda": 1,
+              "6a1e60fea3e2e6ff0": 1,
+              "6a1f0dcf8858252fa": 1,
+              "6a1ed3453982066f3": 1
+            }
+          }
+        },
+        "clientEngagements": {
+          "populated_count": 18,
+          "population_rate": 0.783,
+          "last_populated_at": "2026-06-08T15:08:26Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        }
+      }
+    },
+    "CContribution": {
+      "record_count": 2,
+      "last_record_created_at": "2026-06-09T14:38:05Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:18:09Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 43
+      },
+      "fields": {
+        "contributionType": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T14:38:05Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 3,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Donation": 2,
+              "Sponsorship": 0,
+              "Grant": 0
+            },
+            "ghost_options": 2,
+            "undeclared_values": {}
+          }
+        },
+        "status": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T14:38:05Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 6,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Applied": 2,
+              "Pledged": 0,
+              "Committed": 0,
+              "Received": 0,
+              "Unsuccessful": 0,
+              "Cancelled": 0
+            },
+            "ghost_options": 5,
+            "undeclared_values": {}
+          }
+        },
+        "amount": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-06-09T14:38:05Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2000": 1
+            }
+          }
+        },
+        "applicationDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "commitmentDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "expectedPaymentDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "receivedDate": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-06-09T14:38:05Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-01": 1
+            }
+          }
+        },
+        "designation": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "acknowledgmentSent": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 2
+            }
+          }
+        },
+        "acknowledgmentDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "notes": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "giftType": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T14:38:05Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 7,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Cash": 1,
+              "Check": 1,
+              "Credit Card": 0,
+              "ACH": 0,
+              "Online Payment": 0,
+              "In-Kind": 0,
+              "Other": 0
+            },
+            "ghost_options": 5,
+            "undeclared_values": {}
+          }
+        },
+        "inKindDescription": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "inKindValuationBasis": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "nextGrantDeadline": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "donorAccount": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "donorContact": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "sponsorProfile": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T14:38:05Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a184d43a6b0f0c35": 1,
+              "6a0be58a7b202aa92": 1
+            }
+          }
+        }
+      }
+    },
+    "CEngagement": {
+      "record_count": 19,
+      "last_record_created_at": "2026-06-09T20:00:25Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:18:24Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 114
+      },
+      "fields": {
+        "engagementStatus": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 6,
+          "declared_option_count": 12,
+          "used_option_count": 6,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Submitted": 9,
+              "Declined": 0,
+              "Pending Acceptance": 3,
+              "Assigned": 3,
+              "Assignment Declined": 1,
+              "Assignment Dormant": 0,
+              "Active": 2,
+              "On-Hold": 0,
+              "Dormant": 1,
+              "Inactive": 0,
+              "Abandoned": 0,
+              "Completed": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {}
+          }
+        },
+        "meetingCadence": {
+          "populated_count": 8,
+          "population_rate": 0.421,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 4,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Weekly": 7,
+              "Bi-Weekly": 0,
+              "Monthly": 0,
+              "As Needed": 1
+            },
+            "ghost_options": 2,
+            "undeclared_values": {}
+          }
+        },
+        "holdEndDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "mentoringFocusAreas": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 13,
+          "declared_option_count": 42,
+          "used_option_count": 13,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Accounting & Tax Services": 7,
+              "Advertising, Design, & Marketing": 0,
+              "Agriculture": 2,
+              "Animal & Veterinary Services": 1,
+              "Architecture, Engineering, & Related Services": 1,
+              "Arts, Entertainment, & Recreation": 0,
+              "Auto Repair & Mechanic": 2,
+              "Beauty, Cosmetics & Salon Services": 1,
+              "Business Consulting & Coaching": 2,
+              "Childcare": 0,
+              "Commercial & Residential Services": 0,
+              "Construction": 1,
+              "Counseling & Therapy": 0,
+              "Distribution & Transportation of Goods": 0,
+              "Education": 1,
+              "Farming & Livestock": 0,
+              "Fine Arts, Artisan, & Craft Work": 0,
+              "Fishing & Hunting": 0,
+              "Food & Beverage": 0,
+              "Forestry": 0,
+              "Funeral & Death Care Services": 0,
+              "Information Technology": 1,
+              "Manufacturing": 0,
+              "Media & Publishing": 0,
+              "Mining, Quarry, & Utilities": 0,
+              "Nonprofit": 1,
+              "Personal Care Services": 0,
+              "Photography & Video Services": 0,
+              "Professional Services": 0,
+              "Public Relations & Communications": 0,
+              "Real Estate": 0,
+              "Recruiting & Staffing": 0,
+              "Rental & Leasing": 0,
+              "Restaurant & Bar": 0,
+              "Retail": 0,
+              "Social Assistance & Family Services": 0,
+              "Transportation": 0,
+              "Travel, Hospitality, & Tourism": 0,
+              "Warehousing": 0,
+              "Waste Management & Disposal": 0,
+              "Website Development": 1,
+              "Wellness, Healthcare, & Home Health": 1
+            },
+            "ghost_options": 29,
+            "undeclared_values": {}
+          }
+        },
+        "mentoringNeedsDescription": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 19,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>Client wishes to establish a vet practice</p>": 1,
+              "Automated smoke test after CLI rebuild on 2026-06-08. Safe to delete.": 1,
+              "test": 1,
+              "fdsfa": 1,
+              "fdsafsaf": 1,
+              "End-to-end verification after name field revert.": 1,
+              "digital experience architect": 1,
+              "fdsafsa": 1,
+              "sdfsdf": 1,
+              "Yada, Yada, Yada": 1
+            }
+          }
+        },
+        "engagementNotes": {
+          "populated_count": 2,
+          "population_rate": 0.105,
+          "last_populated_at": "2026-06-03T14:40:40Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>This client request came in last week, please get to her as soon as possible.</p>": 1,
+              "<li class=\"font-claude-response-body whitespace-normal break-words pl-2\"><strong>B. Modest showcase.</strong> Same as A, plus a small header block at the top of the dialog body containing: the app wordmark \"CRMBuilder v2\" in <code class=\"bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]\">font.size.heading_2</code> (22px), <code class=\"bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]\">font.weight.semibold</code>, <code class=\"bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]\">color.neutral.900</code>, with a short tagline below in <code class=\"bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]\">font.size.small</code>, <code class=\"bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]\">color.neutral.500</code> (e.g., \"Methodology-aware CRM implementation tooling\"). The metadata table renders below the header. Visually marks the About dialog as a slight identity moment without overdoing it. Modest visual interest; no logo/illustration.</li><p>\n</p><li class=\"font-claude-response-body whitespace-normal break-words pl-2\"><strong>C. Full showcase with brand mark.</strong> Same as B, plus a custom-rendered brand mark (an SVG drawn from Lucide-style strokes, or a small custom mark) at the top of the header block, ~48\u00d748px, in <code class=\"bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]\">color.accent.default</code>. The dialog becomes a deliberate identity moment \u2014 what someone screenshots when they say \"this is CRMBuilder v2.\" Requires authoring a brand mark, which is in scope for the styling pass but adds a small design subtask.</li>": 1
+            }
+          }
+        },
+        "totalSessions": {
+          "populated_count": 3,
+          "population_rate": 0.158,
+          "last_populated_at": "2026-06-05T14:22:17Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "1": 2,
+              "11": 1
+            }
+          }
+        },
+        "totalSessionsLast30Days": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "lastSessionDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "totalSessionHours": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "nextSessionDateTime": {
+          "populated_count": 1,
+          "population_rate": 0.053,
+          "last_populated_at": "2026-05-15T19:47:09Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-08 16:00:00": 1
+            }
+          }
+        },
+        "closeDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "closeReason": {
+          "populated_count": 7,
+          "population_rate": 0.368,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 4,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Goals Achieved": 7,
+              "Client Withdrew": 0,
+              "Inactive / No Response": 0,
+              "Other": 0
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "newBusinessStarted": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 18
+            }
+          }
+        },
+        "newLocationOpened": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 19
+            }
+          }
+        },
+        "significantRevenueIncrease": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 19
+            }
+          }
+        },
+        "revenueIncreasePercentage": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "significantEmploymentIncrease": {
+          "populated_count": 19,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 0,
+              "false": 19
+            }
+          }
+        },
+        "employmentIncreasePercentage": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "engagementStartDate": {
+          "populated_count": 3,
+          "population_rate": 0.158,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-10": 1,
+              "2026-06-12": 1,
+              "2026-06-30": 1
+            }
+          }
+        },
+        "clientOrganization": {
+          "populated_count": 1,
+          "population_rate": 0.053,
+          "last_populated_at": "2026-05-15T19:47:09Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a0769438d0fbe55b": 1
+            }
+          }
+        },
+        "primaryEngagementContact": {
+          "populated_count": 18,
+          "population_rate": 0.947,
+          "last_populated_at": "2026-06-08T15:08:27Z",
+          "distinct_value_count": 18,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a26daeab11ce12ab": 1,
+              "6a22db9932ff83d78": 1,
+              "6a2259289a8c1f7c0": 1,
+              "6a224bde700ae70df": 1,
+              "6a203e2e0f944b1d2": 1,
+              "6a203d6779205e8e8": 1,
+              "6a203b488c90e2bda": 1,
+              "6a1f0dcf8858252fa": 1,
+              "6a1ed3453982066f3": 1,
+              "6a1e385329ac47762": 1
+            }
+          }
+        },
+        "engagementContacts": {
+          "populated_count": 11,
+          "population_rate": 0.579,
+          "last_populated_at": "2026-06-08T15:08:27Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "engagementDocuments": {
+          "populated_count": 1,
+          "population_rate": 0.053,
+          "last_populated_at": "2026-05-15T19:47:09Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "engagementClient": {
+          "populated_count": 18,
+          "population_rate": 0.947,
+          "last_populated_at": "2026-06-08T15:08:27Z",
+          "distinct_value_count": 18,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a26daeada37637cf": 1,
+              "6a22db995c1812235": 1,
+              "6a225928ccda17877": 1,
+              "6a224bdea2e91cfd9": 1,
+              "6a203e2e4b8474f3e": 1,
+              "6a203d67ada90bc2b": 1,
+              "6a203ce8ae5d1d82e": 1,
+              "6a1f0dcfb717bc20b": 1,
+              "6a1ed3455eabfb6b5": 1,
+              "6a1e3853618ee413f": 1
+            }
+          }
+        },
+        "additionalMentors": {
+          "populated_count": 2,
+          "population_rate": 0.105,
+          "last_populated_at": "2026-06-03T14:40:40Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "mentorProfile": {
+          "populated_count": 9,
+          "population_rate": 0.474,
+          "last_populated_at": "2026-06-09T20:00:25Z",
+          "distinct_value_count": 6,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a1e5f2ab841b5c9c": 3,
+              "6a21d6ea7d3df05c9": 2,
+              "6a1f5000d13b080bf": 1,
+              "6a2b505d5041c2d93": 1,
+              "6a2c2941bd6973a5c": 1,
+              "6a094f071d6d76c5b": 1
+            }
+          }
+        },
+        "referringPartner": {
+          "populated_count": 2,
+          "population_rate": 0.105,
+          "last_populated_at": "2026-06-02T17:07:27Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a0cacd7abcc587ca": 1,
+              "6a089656c830b02b2": 1
+            }
+          }
+        },
+        "requestedMentor": {
+          "populated_count": 1,
+          "population_rate": 0.053,
+          "last_populated_at": "2026-05-15T19:47:09Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a0895d37ca798119": 1
+            }
+          }
+        },
+        "engagementSessions": {
+          "populated_count": 3,
+          "population_rate": 0.158,
+          "last_populated_at": "2026-06-05T14:22:17Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        }
+      }
+    },
+    "CEvent": {
+      "record_count": 33,
+      "last_record_created_at": "2026-06-11T23:00:06Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:19:05Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 50
+      },
+      "fields": {
+        "format": {
+          "populated_count": 33,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T23:00:06Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 3,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "In-Person": 0,
+              "Virtual": 33,
+              "Hybrid": 0
+            },
+            "ghost_options": 2,
+            "undeclared_values": {}
+          }
+        },
+        "topic": {
+          "populated_count": 3,
+          "population_rate": 0.091,
+          "last_populated_at": "2026-05-30T03:45:27Z",
+          "distinct_value_count": 3,
+          "declared_option_count": 10,
+          "used_option_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Business Fundamentals": 1,
+              "Marketing & Sales": 0,
+              "Finance & Accounting": 1,
+              "Legal & Compliance": 0,
+              "Operations": 0,
+              "Technology & Digital": 1,
+              "Leadership & People": 0,
+              "Industry-Specific": 0,
+              "Networking": 0,
+              "Other": 0
+            },
+            "ghost_options": 7,
+            "undeclared_values": {}
+          }
+        },
+        "venueCapacity": {
+          "populated_count": 1,
+          "population_rate": 0.03,
+          "last_populated_at": "2026-05-17T20:12:14Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "100": 1
+            },
+            "low_population": true
+          }
+        },
+        "location": {
+          "populated_count": 14,
+          "population_rate": 0.424,
+          "last_populated_at": "2026-06-08T13:30:11Z",
+          "distinct_value_count": 8,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "https://us06web.zoom.us/j/87695406473": 6,
+              "https://us06web.zoom.us/j/83457814676": 2,
+              "https://us06web.zoom.us/j/86833843979": 1,
+              "LEDSIGNZ \"Broadcast ANYWERE\", 4681 Northfield Rd, North Randall, OH 44128, USA": 1,
+              "https://us06web.zoom.us/j/87409612445": 1,
+              "https://us06web.zoom.us/j/87318793360": 1,
+              "https://us06web.zoom.us/j/86750746074": 1,
+              "https://us06web.zoom.us/j/85415952452": 1
+            }
+          }
+        },
+        "virtualMeetingUrl": {
+          "populated_count": 2,
+          "population_rate": 0.061,
+          "last_populated_at": "2026-05-30T03:45:27Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "https://score.tfaforms.net/112?EventID=a10Vt00000D8o09&_gl=1*7224j4*_gcl_au*NDY1MTgyNzIyLjE3Nzk5NDQ2MjM.*_ga*MTA4NTU0Nzg2LjE3Nzk5NDQ2MjM.*_ga_3LHXGY70TN*czE3ODAxMTI1NjUkbzYkZzEkdDE3ODAxMTI2MjUkajYwJGwwJGgw": 1,
+              "zom.us": 1
+            }
+          }
+        },
+        "registrationUrl": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "recordingUrl": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "documents": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "eventFee": {
+          "populated_count": 1,
+          "population_rate": 0.03,
+          "last_populated_at": "2026-05-30T03:45:27Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "0": 1
+            },
+            "low_population": true
+          }
+        },
+        "eventType": {
+          "populated_count": 33,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T23:00:06Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 4,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Online Webinar": 33,
+              "In Person Event": 0,
+              "Online Course": 0,
+              "": 0
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "eventOverview": {
+          "populated_count": 1,
+          "population_rate": 0.03,
+          "last_populated_at": "2026-05-30T03:45:27Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p style=\"border: 0px; font-size: 18px; margin: 0px 0px 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(111, 111, 114); font-family: Lato, sans-serif; background-color: rgb(255, 255, 255); \"><span style=\"font-weight: 700; \">Stop letting money problems hold your business back!</span>&nbsp;Discover the insider secrets to securing business funding from someone who knows what lenders really want. Explore funding option available\u2014from traditional loans to alternative financing\u2014and learn exactly what each source requires. You'll understand how lenders evaluate applications, what red flags to avoid, and how to position your business for funding success. Essential for startups and existing businesses facing cash flow challenges.</p><p style=\"border: 0px; font-size: 18px; margin: 0px; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(111, 111, 114); font-family: Lato, sans-serif; background-color: rgb(255, 255, 255); \"></p><p style=\"border: 0px; font-size: 18px; margin: 0px 0px 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(111, 111, 114); font-family: Lato, sans-serif; background-color: rgb(255, 255, 255); \">Our Presenter, Paul Bosley</p><p style=\"border: 0px; font-size: 18px; margin: 0px 0px 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(111, 111, 114); font-family: Lato, sans-serif; background-color: rgb(255, 255, 255); \">Paul Bosley has worked in the financing industry for over a decade. His company, Business Finance Depot, specializes in providing financing for start-ups and existing businesses by packaging SBA loans and equipment leases. Paul is a frequent speaker at franchising and fitness industry trade shows &amp;amp; a contributing writer for franchising and fitness industry publications. Paul is in the process of earning his Master\u2019s Degree in Accountancy with a concentration in Business Valuation.</p>": 1
+            },
+            "low_population": true
+          }
+        },
+        "eventGraphic": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "sponsorGraphic": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "eventSyllabus": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "eventReleaseDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "presenters": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "contacts": {
+          "populated_count": 1,
+          "population_rate": 0.03,
+          "last_populated_at": "2026-05-17T20:12:14Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "sponsorProfiles": {
+          "populated_count": 1,
+          "population_rate": 0.03,
+          "last_populated_at": "2026-05-20T21:38:21Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "registrations": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "resources": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        }
+      }
+    },
+    "CEventRegistration": {
+      "record_count": 0,
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:19:22Z",
+        "dormant": true,
+        "empty": true,
+        "sampled": false,
+        "request_count": 1
+      },
+      "fields": {
+        "registrationDate": {
+          "populated_count": 0
+        },
+        "registrationSource": {
+          "populated_count": 0,
+          "declared_option_count": 2,
+          "used_option_count": 0,
+          "detail": {
+            "value_distribution": {
+              "Online": 0,
+              "Walk-In": 0
+            },
+            "ghost_options": 2
+          }
+        },
+        "attendanceStatus": {
+          "populated_count": 0,
+          "declared_option_count": 4,
+          "used_option_count": 0,
+          "detail": {
+            "value_distribution": {
+              "Registered": 0,
+              "Attended": 0,
+              "No-Show": 0,
+              "Cancelled": 0
+            },
+            "ghost_options": 4
+          }
+        },
+        "specialRequests": {
+          "populated_count": 0
+        },
+        "confirmationSentAt": {
+          "populated_count": 0
+        },
+        "remindersSent": {
+          "populated_count": 0,
+          "declared_option_count": 3,
+          "used_option_count": 0,
+          "detail": {
+            "value_distribution": {
+              "7-day": 0,
+              "1-day": 0,
+              "1-hour": 0
+            },
+            "ghost_options": 3
+          }
+        },
+        "lastCommunicationBouncedAt": {
+          "populated_count": 0
+        },
+        "postEventFollowUpSentAt": {
+          "populated_count": 0
+        },
+        "cancellationDate": {
+          "populated_count": 0
+        },
+        "cancellationReason": {
+          "populated_count": 0
+        },
+        "contact": {
+          "populated_count": 0
+        },
+        "event": {
+          "populated_count": 0
+        }
+      }
+    },
+    "CMentorProfile": {
+      "record_count": 23,
+      "last_record_created_at": "2026-06-12T15:52:16Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:19:23Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 203
+      },
+      "fields": {
+        "mentorStatus": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 8,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Candidate": 20,
+              "Provisional": 0,
+              "Approved": 0,
+              "Active": 3,
+              "Dormant": 0,
+              "Retired": 0,
+              "Terminated": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {}
+          }
+        },
+        "cbmEmail": {
+          "populated_count": 6,
+          "population_rate": 0.261,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 5,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "sharon.rose@cbmentors.org": 2,
+              "joseph.blow@cbmentors.org": 1,
+              "tony.tiger@cbmentors.org": 1,
+              "doug.bower@cbmentors.org": 1,
+              "cici.caver@cbmentors.org": 1
+            }
+          }
+        },
+        "industrySector": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 7,
+          "declared_option_count": 20,
+          "used_option_count": 7,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Agriculture, Forestry, Fishing and Hunting": 11,
+              "Mining, Quarrying, and Oil and Gas Extraction": 0,
+              "Utilities": 2,
+              "Construction": 0,
+              "Manufacturing": 3,
+              "Wholesale Trade": 0,
+              "Retail Trade": 0,
+              "Transportation and Warehousing": 1,
+              "Information": 4,
+              "Finance and Insurance": 0,
+              "Real Estate and Rental and Leasing": 0,
+              "Professional, Scientific, and Technical Services": 1,
+              "Management of Companies and Enterprises": 0,
+              "Administrative and Support and Waste Management": 0,
+              "Educational Services": 0,
+              "Health Care and Social Assistance": 0,
+              "Arts, Entertainment, and Recreation": 0,
+              "Accommodation and Food Services": 1,
+              "Other Services (except Public Administration)": 0,
+              "Public Administration": 0
+            },
+            "ghost_options": 13,
+            "undeclared_values": {}
+          }
+        },
+        "mentoringFocusAreas": {
+          "populated_count": 19,
+          "population_rate": 0.826,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 19,
+          "declared_option_count": 42,
+          "used_option_count": 19,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Accounting & Tax Services": 7,
+              "Advertising, Design, & Marketing": 0,
+              "Agriculture": 2,
+              "Animal & Veterinary Services": 1,
+              "Architecture, Engineering, & Related Services": 1,
+              "Arts, Entertainment, & Recreation": 0,
+              "Auto Repair & Mechanic": 0,
+              "Beauty, Cosmetics & Salon Services": 0,
+              "Business Consulting & Coaching": 8,
+              "Childcare": 0,
+              "Commercial & Residential Services": 0,
+              "Construction": 0,
+              "Counseling & Therapy": 0,
+              "Distribution & Transportation of Goods": 0,
+              "Education": 3,
+              "Farming & Livestock": 0,
+              "Fine Arts, Artisan, & Craft Work": 0,
+              "Fishing & Hunting": 0,
+              "Food & Beverage": 1,
+              "Forestry": 0,
+              "Funeral & Death Care Services": 0,
+              "Information Technology": 4,
+              "Manufacturing": 3,
+              "Media & Publishing": 2,
+              "Mining, Quarry, & Utilities": 0,
+              "Nonprofit": 4,
+              "Personal Care Services": 0,
+              "Photography & Video Services": 0,
+              "Professional Services": 3,
+              "Public Relations & Communications": 0,
+              "Real Estate": 1,
+              "Recruiting & Staffing": 1,
+              "Rental & Leasing": 0,
+              "Restaurant & Bar": 1,
+              "Retail": 1,
+              "Social Assistance & Family Services": 0,
+              "Transportation": 0,
+              "Travel, Hospitality, & Tourism": 1,
+              "Warehousing": 0,
+              "Waste Management & Disposal": 1,
+              "Website Development": 0,
+              "Wellness, Healthcare, & Home Health": 1
+            },
+            "ghost_options": 23,
+            "undeclared_values": {}
+          }
+        },
+        "mentoringWhyInterested": {
+          "populated_count": 17,
+          "population_rate": 0.739,
+          "last_populated_at": "2026-06-12T15:33:31Z",
+          "distinct_value_count": 17,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "I have been a business mentor for many years and enjoy working with entrepreneurs.": 1,
+              "I like Rocks": 1,
+              "Now retired. Wife told me she married me for better or worse but not for lunch.": 1,
+              "To give back what I learned in my career as a business owner": 1,
+              "Help others get rich": 1,
+              "A Nn-Profit Expert-I can Cleveland Business Mentor clients with both for profit and non-profit businesses. In my business background I was assisted by mentors while developing my own consulting practice. In 2013 when I retired, I created a new business with a colleague with the help and support  of mentors who assisted with startup and operational matters. I continue to be assisted by other mentors today. I would like to provide support and coaching to others interested in creating a business.": 1,
+              "I love kittens": 1,
+              "Automated smoke test after CLI rebuild on 2026-06-08. Safe to delete.": 1,
+              "My wife has threatened to leave me if I don't find something to do with my time since I retired.   CBM seems like an organization where I can use the skills that I have to help others, and also keep my wife happy.": 1,
+              "fdsfdsa": 1
+            }
+          }
+        },
+        "mentorProfessionalBio": {
+          "populated_count": 16,
+          "population_rate": 0.696,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 15,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "Describe your work experience": 2,
+              "<p>Test ... can we uplaod</p>": 1,
+              "With over 40 years of experience in hospitality management, I bring expertise in hotels, restaurants, and general business operations.  My background spans all facets of hospitality, including lodging development and operation, restaurant management, meeting sourcing, and corporate housing. Whether you are launching a hospitality-related venture or seeking to improve operational efficiency, I can offer strategic insights and practical guidance.": 1,
+              "I work in a rock quary": 1,
+              "30 years business development in electronics manufacturingf": 1,
+              "15 years finance manager in Corporate , then 28 years in a franchised printing business that my wife and I started. After selling, I worked in Franchise development for 3 1/2 year helping prosdpective franchisees evaluate business opportunities, arrange financing, etc.": 1,
+              "45 years as business executive and 17 years of non profit management experience.": 1,
+              "I have experience  in government administration and leadership, health and commercial insurance management, private non-profit management, for profit mental health organization management, program design/implementation, project monitoring and evaluation, human relations, strategic planning and compliance audit.": 1,
+              "I have lots of kittens": 1,
+              "I have owned a small taxidermy business that I started from scratch.   I recently sold it to my (4) employees, who had all been with me for the duration of the business (35 years).  I belonged to the taxidermists union, where I was consistently elected as the union \"boss\" every year until I retired, so I know how unions work and how to help individual union members how to start their own businesses.  Also, I am very interested in learning about other businesses and getting to know other CBM members.": 1
+            }
+          }
+        },
+        "mentoringSkills": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>mentoring mentors; technology; education</p>": 1
+            },
+            "low_population": true
+          }
+        },
+        "mentorStartDate": {
+          "populated_count": 5,
+          "population_rate": 0.217,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 5,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-04-01": 1,
+              "2026-06-04": 1,
+              "2026-01-06": 1,
+              "2025-03-03": 1,
+              "2026-06-03": 1
+            }
+          }
+        },
+        "felonyConfiction": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 22
+            }
+          }
+        },
+        "howDidYouHearAboutCBM": {
+          "populated_count": 15,
+          "population_rate": 0.652,
+          "last_populated_at": "2026-06-12T15:33:31Z",
+          "distinct_value_count": 7,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "Friend or relative": 6,
+              "Other": 3,
+              "Online search": 2,
+              "TV": 1,
+              "Workshop/Event": 1,
+              "Newspaper": 1,
+              "SBA": 1
+            }
+          }
+        },
+        "yearsOfExperience": {
+          "populated_count": 2,
+          "population_rate": 0.087,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "50": 2
+            }
+          }
+        },
+        "postalCode": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "personalEmail": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contactPhone": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contactCity": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contactStreet": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "mentorType": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 6,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Mentor": 21,
+              "Subject Matter Expert": 2,
+              "Presenter": 0,
+              "Volunteer": 0,
+              "Other": 0
+            },
+            "ghost_options": 4,
+            "undeclared_values": {}
+          }
+        },
+        "fluentLanguages": {
+          "populated_count": 16,
+          "population_rate": 0.696,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 36,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "American Sign Language": 4,
+              "Arabic": 0,
+              "Bengali": 0,
+              "Cantonese": 0,
+              "Chinese": 0,
+              "Czech": 0,
+              "Danish": 0,
+              "Dutch": 0,
+              "English": 12,
+              "French": 0,
+              "German": 0,
+              "Greek": 0,
+              "Gujarati": 0,
+              "Hebrew": 0,
+              "Hindi": 0,
+              "Hungarian": 0,
+              "Indonesian": 0,
+              "Italian": 0,
+              "Japanese": 0,
+              "Korean": 0,
+              "Lithuanian": 0,
+              "Malay": 0,
+              "Mandarin": 0,
+              "Marathi": 0,
+              "Norwegian": 0,
+              "Pashto": 0,
+              "Polish": 0,
+              "Portuguese": 0,
+              "Punjabi": 0,
+              "Russian": 0,
+              "Spanish": 0,
+              "Swedish": 0,
+              "Tagalog": 0,
+              "Telugu": 0,
+              "Urdu": 0,
+              "Other": 0
+            },
+            "ghost_options": 34,
+            "undeclared_values": {}
+          }
+        },
+        "trainingCompleted": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 22
+            }
+          }
+        },
+        "trainingCompletionDate": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-01": 1
+            },
+            "low_population": true
+          }
+        },
+        "ethicsAgreementAccepted": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 22
+            }
+          }
+        },
+        "ethicsAgreementAcceptanceDateTime": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-02 04:00:00": 1
+            },
+            "low_population": true
+          }
+        },
+        "backgroundCheckCompleted": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 22
+            }
+          }
+        },
+        "backgroundCheckDate": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-02": 1
+            },
+            "low_population": true
+          }
+        },
+        "departureReason": {
+          "populated_count": 8,
+          "population_rate": 0.348,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 5,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Relocated": 8,
+              "Career Change": 0,
+              "Time Constraints": 0,
+              "Personal": 0,
+              "Other": 0
+            },
+            "ghost_options": 4,
+            "undeclared_values": {}
+          }
+        },
+        "departureDate": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "maximumClientCapacity": {
+          "populated_count": 3,
+          "population_rate": 0.13,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2": 1,
+              "6": 1,
+              "10": 1
+            }
+          }
+        },
+        "acceptingNewClients": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 5,
+              "false": 18
+            }
+          }
+        },
+        "currentActiveClients": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "1": 23
+            }
+          }
+        },
+        "availableCapacity": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 4,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "-1": 20,
+              "1": 1,
+              "5": 1,
+              "9": 1
+            }
+          }
+        },
+        "totalLifetimeSessions": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "totalMentoringHours": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "totalSessionsLast30Days": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "boardPosition": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "duesStatus": {
+          "populated_count": 8,
+          "population_rate": 0.348,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 3,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Unpaid": 7,
+              "Paid": 1,
+              "Waived": 0
+            },
+            "ghost_options": 1,
+            "undeclared_values": {}
+          }
+        },
+        "duesPaymentDate": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-01-06": 1
+            },
+            "low_population": true
+          }
+        },
+        "duesRenewalDate": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2027-01-01": 1
+            },
+            "low_population": true
+          }
+        },
+        "profilePhoto": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "termsAccepted": {
+          "populated_count": 23,
+          "population_rate": 1.0,
+          "distinct_value_count": 2,
+          "detail": {
+            "value_distribution": {
+              "true": 17,
+              "false": 6
+            }
+          }
+        },
+        "areaOfExpertise": {
+          "populated_count": 2,
+          "population_rate": 0.087,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 2,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Area 1": 2,
+              "Area 2": 1
+            },
+            "undeclared_values": {}
+          }
+        },
+        "aboutMentor": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>About me</p>": 1
+            },
+            "low_population": true
+          }
+        },
+        "resumeUpload": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "contactRecord": {
+          "populated_count": 17,
+          "population_rate": 0.739,
+          "last_populated_at": "2026-06-12T15:33:31Z",
+          "distinct_value_count": 17,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a2c26caefde5d20e": 1,
+              "6a2c26bb9865988dd": 1,
+              "6a2c24cf42664f36c": 1,
+              "6a2c1e0d25bafc176": 1,
+              "6a2c07136e3acfd60": 1,
+              "6a2bd7d513fe88763": 1,
+              "6a2b505d20e8ef000": 1,
+              "6a26dadb02044a87e": 1,
+              "6a228a8678c06d78b": 1,
+              "6a224585e62035564": 1
+            }
+          }
+        },
+        "engagements": {
+          "populated_count": 5,
+          "population_rate": 0.217,
+          "last_populated_at": "2026-06-12T15:52:16Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "engagements1": {
+          "populated_count": 6,
+          "population_rate": 0.261,
+          "last_populated_at": "2026-06-12T15:44:01Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "engagementsMentorRequested": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        },
+        "sponsorsManaged": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-04T19:26:12Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "managedSponsors": {
+          "populated_count": 1,
+          "population_rate": 0.043,
+          "last_populated_at": "2026-06-02T04:50:07Z",
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "low_population": true
+          }
+        },
+        "managedPartners": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "detail": {
+            "low_population": true
+          }
+        }
+      }
+    },
+    "CPartnerProfile": {
+      "record_count": 3,
+      "last_record_created_at": "2026-06-11T03:45:51Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:20:41Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 72
+      },
+      "fields": {
+        "partnershipType": {
+          "populated_count": 2,
+          "population_rate": 0.667,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 5,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Referral Partner": 1,
+              "Training Partner": 0,
+              "Community Partner": 0,
+              "Service Partner": 0,
+              "Funding Partner": 1
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "partnershipStartDate": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-01": 1
+            }
+          }
+        },
+        "partnershipAgreementDate": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-03": 1
+            }
+          }
+        },
+        "partnerContactCadence": {
+          "populated_count": 2,
+          "population_rate": 0.667,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 5,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Monthly": 1,
+              "Quarterly": 0,
+              "Semi-Annually": 0,
+              "Annually": 0,
+              "As-Needed": 1
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "partnerNotes": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p><b><span style=\"font-size: 18px;\">Key is a great Partner!!!</span></b></p>": 1
+            }
+          }
+        },
+        "partnershipValue": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "distinct_value_count": 3,
+          "declared_option_count": 8,
+          "used_option_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Connection to stakeholders / expanding influence": 0,
+              "Workshop Speakers / Educational Resources": 0,
+              "Co-Hosted Events": 1,
+              "Link on Website": 0,
+              "Facilities": 1,
+              "Funding / Donations": 1,
+              "Other": 0,
+              "None": 0
+            },
+            "ghost_options": 5,
+            "undeclared_values": {}
+          }
+        },
+        "cBMValueProvided": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "declared_option_count": 6,
+          "used_option_count": 0,
+          "detail": {
+            "value_distribution": {
+              "Free mentoring support": 0,
+              "Speking Opportunities": 0,
+              "Co-hosted events or webinars": 0,
+              "Recognition on CBM Site": 0,
+              "Recognition on CBM Materials": 0,
+              "Other": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {},
+            "low_population": true
+          }
+        },
+        "partnershipStatus": {
+          "populated_count": 3,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 6,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Meetings Held": 3,
+              "Proposal Sent": 0,
+              "MOU/Contract Sent": 0,
+              "MOU/Contract Signed": 0,
+              "Inactive": 0,
+              "Candidate": 0
+            },
+            "ghost_options": 5,
+            "undeclared_values": {}
+          }
+        },
+        "relationGoalsEst": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 4,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Yes": 1,
+              "No": 0,
+              "In Progress": 0,
+              "": 0
+            },
+            "ghost_options": 3,
+            "undeclared_values": {}
+          }
+        },
+        "partnerEmail": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "lastContacted": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-05-04": 1
+            }
+          }
+        },
+        "partnerEmails": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "partnerCompany": {
+          "populated_count": 3,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a2a2ece8deb1ea44": 1,
+              "6a095c51ed406138a": 1,
+              "6a0fe816637294d98": 1
+            }
+          }
+        },
+        "account": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a095c51ed406138a": 1
+            }
+          }
+        },
+        "contacts": {
+          "populated_count": 2,
+          "population_rate": 0.667,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "primaryPartnercontact": {
+          "populated_count": 2,
+          "population_rate": 0.667,
+          "last_populated_at": "2026-06-11T03:45:51Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a2a2ef3c7c1fb27f": 1,
+              "6a0a229da48d3d7dd": 1
+            }
+          }
+        },
+        "engagements": {
+          "populated_count": 2,
+          "population_rate": 0.667,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "partnerManager": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "sessions": {
+          "populated_count": 1,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-19T18:32:55Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        }
+      }
+    },
+    "CResource": {
+      "record_count": 1,
+      "last_record_created_at": "2026-06-01T15:44:21Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:21:07Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 30
+      },
+      "fields": {
+        "resourceType": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-01T15:44:21Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 7,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Recorded Event": 0,
+              "Document": 0,
+              "Video": 1,
+              "Audio": 0,
+              "Template": 0,
+              "Link": 0,
+              "Other": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {}
+          }
+        },
+        "category": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-01T15:44:21Z",
+          "distinct_value_count": 1,
+          "declared_option_count": 7,
+          "used_option_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "Starting a Business": 1,
+              "Financing": 0,
+              "Marketing and Sales": 0,
+              "Operations": 0,
+              "Leadership and Strategy": 0,
+              "Legal and Compliance": 0,
+              "Other": 0
+            },
+            "ghost_options": 6,
+            "undeclared_values": {}
+          }
+        },
+        "url": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-01T15:44:21Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "https://www.youtube.com/watch?v=GXrX0cXmngA": 1
+            }
+          }
+        },
+        "file": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "resourceDate": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-01T15:44:21Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-01": 1
+            }
+          }
+        },
+        "listedPublicly": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 0
+            }
+          }
+        },
+        "publishedAt": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "featured": {
+          "populated_count": 1,
+          "population_rate": 1.0,
+          "distinct_value_count": 1,
+          "detail": {
+            "value_distribution": {
+              "true": 1,
+              "false": 0
+            }
+          }
+        },
+        "sourceEvent": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        }
+      }
+    },
+    "CSession": {
+      "record_count": 15,
+      "last_record_created_at": "2026-06-12T16:04:05Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:21:18Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 31
+      },
+      "fields": {
+        "sessionType": {
+          "populated_count": 15,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-06-12T16:04:05Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 3,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "In-Person": 4,
+              "Video Call": 11,
+              "Phone Call": 0
+            },
+            "ghost_options": 1,
+            "undeclared_values": {}
+          }
+        },
+        "meetingLocationType": {
+          "populated_count": 5,
+          "population_rate": 0.333,
+          "last_populated_at": "2026-05-22T18:26:57Z",
+          "distinct_value_count": 2,
+          "declared_option_count": 4,
+          "used_option_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "value_distribution": {
+              "": 0,
+              "Organization Office": 4,
+              "Client's Place of Business": 0,
+              "Other": 1
+            },
+            "ghost_options": 2,
+            "undeclared_values": {}
+          }
+        },
+        "locationDetails": {
+          "populated_count": 1,
+          "population_rate": 0.067,
+          "last_populated_at": "2026-05-17T18:21:05Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "Zoom Link: https://us02web.zoom.us/j/5012166942": 1
+            }
+          }
+        },
+        "topicsCovered": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "sessionNotes": {
+          "populated_count": 4,
+          "population_rate": 0.267,
+          "last_populated_at": "2026-06-12T16:04:05Z",
+          "distinct_value_count": 4,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>Discovery Session</p>": 1,
+              "<p>fdsafdsafsaf</p>": 1,
+              "<p>They are looking at a new marketing organization.</p><p><br></p>": 1,
+              "<div class=\"ql-block\" data-block-id=\"block-a171070f-55a5-4e73-ae26-4bac4596de15\">The Client_Profile entity is a Basic Entity that is created when a client fills our a mentor request form.   It is used to connect a company(if the request is for an existing company), contact and engagement together as a result of a Mentoring Request form being submitted.  Therefore, all of the of the information submitted on the Mentor Request form should be available on the Client Profile.   </div><p style=\"margin-bottom: 1em; \">&nbsp;</p><div class=\"ql-block\" data-block-id=\"block-cyI0bTbfQA\"><strong>Native Fields:</strong></div><ul><li>CompanyName</li><li>CompanyEmail</li></ul>": 1
+            }
+          }
+        },
+        "nextSteps": {
+          "populated_count": 2,
+          "population_rate": 0.133,
+          "last_populated_at": "2026-06-12T16:04:05Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "<p>Listen to the workshop on one page business plan and fill out the form.</p>": 1,
+              "<p>Next Steps:</p><ol><li>Step one</li><li>Step two</li></ol>": 1
+            }
+          }
+        },
+        "nextSessionDateTime": {
+          "populated_count": 3,
+          "population_rate": 0.2,
+          "last_populated_at": "2026-06-12T16:04:05Z",
+          "distinct_value_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-06-18 05:30:00": 1,
+              "2026-06-05 20:00:00": 1,
+              "2026-06-05 16:00:00": 1
+            }
+          }
+        },
+        "sessionAttendees": {
+          "populated_count": 2,
+          "population_rate": 0.133,
+          "last_populated_at": "2026-05-22T16:47:24Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "engagement": {
+          "populated_count": 13,
+          "population_rate": 0.867,
+          "last_populated_at": "2026-06-12T16:04:05Z",
+          "distinct_value_count": 3,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a07783d64f353a92": 11,
+              "6a203ce8d59eccbeb": 1,
+              "6a22db997a7f49b67": 1
+            }
+          }
+        },
+        "partnerSession": {
+          "populated_count": 1,
+          "population_rate": 0.067,
+          "last_populated_at": "2026-06-09T18:04:58Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a0cacd7abcc587ca": 1
+            }
+          }
+        },
+        "sponsorProfile": {
+          "populated_count": 2,
+          "population_rate": 0.133,
+          "last_populated_at": "2026-06-09T18:16:28Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a184d43a6b0f0c35": 1,
+              "6a0be58a7b202aa92": 1
+            }
+          }
+        }
+      }
+    },
+    "CSponsorProfile": {
+      "record_count": 2,
+      "last_record_created_at": "2026-05-28T14:12:19Z",
+      "detail": {
+        "profiled_entity_at": "2026-06-12T16:21:29Z",
+        "dormant": false,
+        "empty": false,
+        "sampled": false,
+        "request_count": 23
+      },
+      "fields": {
+        "totalContribution": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "lastContribution": {
+          "populated_count": 0,
+          "population_rate": 0.0,
+          "distinct_value_count": 0,
+          "detail": {
+            "top_values": {},
+            "low_population": true
+          }
+        },
+        "lastContacted": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-05-19T04:22:34Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "2026-05-03": 1
+            }
+          }
+        },
+        "cBMSponsorManager": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-05-19T04:22:34Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a1e60ff4a680893d": 1
+            }
+          }
+        },
+        "sponsorCompany": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-05-28T14:12:19Z",
+          "distinct_value_count": 2,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a184d3dc0c4eaac3": 1,
+              "6a095c51ed406138a": 1
+            }
+          }
+        },
+        "sponsorContacts": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-05-28T14:12:19Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "sponsorContact": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-05-19T04:22:34Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a28419a6533732b3": 1
+            }
+          }
+        },
+        "sponsorContributions": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-05-28T14:12:19Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "sponsoredEvents": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-05-19T04:22:34Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        },
+        "sponsorManager": {
+          "populated_count": 1,
+          "population_rate": 0.5,
+          "last_populated_at": "2026-05-28T14:12:19Z",
+          "distinct_value_count": 1,
+          "detail": {
+            "last_populated_at_basis": "created_at",
+            "top_values": {
+              "6a21d154e5f74f5fa": 1
+            }
+          }
+        },
+        "sponsorSessions": {
+          "populated_count": 2,
+          "population_rate": 1.0,
+          "last_populated_at": "2026-05-28T14:12:19Z",
+          "detail": {
+            "last_populated_at_basis": "created_at"
+          }
+        }
+      }
+    }
+  }
+}

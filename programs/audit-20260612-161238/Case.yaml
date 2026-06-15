@@ -1,0 +1,102 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Case captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-12T16:15:19Z.
+entities:
+  Case:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - number
+          - - status
+            - account
+          - - priority
+            - contacts
+          - - type
+            - null
+          - - name: description
+              fullWidth: true
+          - - name: attachments
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name
+          - - status
+            - priority
+          - - type
+            - number
+          - - account
+            - contacts
+          - - description
+          - - attachments
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: number
+          widthPx: 100
+        - field: status
+          width: 11
+        - field: priority
+          width: 11
+        - field: account
+          width: 18
+        - field: assignedUser
+          width: 14
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: number
+          width: 14
+        - field: status
+          width: 14
+        - field: priority
+          width: 14
+        - field: account
+          width: 22
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - collaborators
+      - status
+      - priority
+      - account
+      - contact
+      - number
+      - name
+      - description
+      - isInternal
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - streamUpdatedAt
+      massUpdate:
+      - priority
+      - status
+      - assignedUser
+      - teams
+      relationships:
+      - articles
+      bottomPanelsDetail:
+        articles:
+          name: articles
+          index: 5
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+      sidePanelsDetailSmall:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        tasks:
+          disabled: true

@@ -1,0 +1,88 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Meeting captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-13T23:59:23Z.
+entities:
+  Meeting:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - parent
+          - - status
+            - null
+          - - dateStart
+            - dateEnd
+          - - duration
+            - reminders
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name
+          - - status
+            - null
+          - - dateStart
+          - - duration
+            - null
+          - - dateEnd
+          - - parent
+          - - reminders
+          - - description
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: parent
+          width: 22
+        - field: status
+          width: 15
+        - field: dateStart
+          width: 15
+        - field: assignedUser
+          width: 15
+      listSmall:
+        columns:
+        - field: name
+          link: 'true'
+        - field: status
+          width: 25
+        - field: dateStart
+          width: 25
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - account
+      - dateStart
+      - status
+      - parent
+      - users
+      - contacts
+      - leads
+      massUpdate:
+      - status
+      - assignedUser
+      - users
+      bottomPanelsDetail:
+        _delimiter_:
+          disabled: true
+        scheduler:
+          index: 0
+        stream:
+          dynamicLogicVisible: null
+          style: default
+          sticked: false
+          index: 1
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

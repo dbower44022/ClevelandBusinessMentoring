@@ -1,0 +1,128 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Opportunity captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-12T16:15:19Z.
+entities:
+  Opportunity:
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - account
+          - - stage
+            - amount
+          - - probability
+            - closeDate
+          - - contacts
+            - leadSource
+          - - name: description
+              fullWidth: true
+      detailConvert:
+        panels:
+        - rows:
+          - - name
+            - null
+          - - stage
+            - amount
+          - - probability
+            - null
+          - - closeDate
+            - null
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+          - - name: account
+              fullWidth: true
+          - - stage
+            - closeDate
+          - - name: amount
+              fullWidth: true
+          - - name: contacts
+              fullWidth: true
+          - - name: description
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: account
+          width: 22
+        - field: stage
+          width: 15
+        - field: assignedUser
+          width: 12
+        - field: createdAt
+          width: 12
+        - field: closeDate
+          width: 9
+          hidden: true
+        - field: amount
+          width: 10
+          align: right
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: account
+          width: 25
+        - field: stage
+          width: 20
+        - field: amount
+          width: 20
+          align: right
+      kanban:
+        columns:
+        - field: name
+          link: true
+        - field: amount
+          align: right
+          isLarge: true
+        - field: account
+        - field: closeDate
+          align: right
+          isMuted: true
+        - field: assignedUser
+          hidden: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - streamUpdatedAt
+      - account
+      - amountConverted
+      - amountWeightedConverted
+      - campaign
+      - closeDate
+      - contacts
+      - leadSource
+      - probability
+      - stage
+      - description
+      massUpdate:
+      - stage
+      - assignedUser
+      - teams
+      relationships:
+      - documents
+      bottomPanelsDetail:
+        documents:
+          name: documents
+          index: 5
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+      sidePanelsDetailSmall:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        tasks:
+          disabled: true

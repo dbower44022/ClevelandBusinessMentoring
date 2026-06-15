@@ -75,7 +75,10 @@ entities:
         required: false
         options:
           - "Candidate"
+          - "Provisional"
           - "Approved"
+          - "Active"
+          - "Dormant"
           - "Retired"
           - "Terminated"
 

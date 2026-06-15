@@ -1,0 +1,78 @@
+version: "1.0"
+content_version: "1.1.0"
+description: >
+  cbm-client-intake — IntakeSubmission custom entity (V2 ENT-015).
+  Logs EVERY web intake-form submission for audit + inbound analytics, with a
+  reason: Normal (processed OK), Honeypot (spam-guard hold), or
+  OrchestratorError (CRM write failed). Deploys to EspoCRM as CIntakeSubmission.
+  v1.1: added Normal reason option, the source field, and the contact link.
+
+entities:
+
+  IntakeSubmission:
+    description: >
+      One web intake-form submission. Created by the cbm-client-intake app.
+      name / assignedUser / teams / createdAt are native to the Base type;
+      createdAt is the submission time used for analytics.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Intake Submission"
+      labelPlural: "Intake Submissions"
+      stream: true
+      disabled: false
+
+    fields:
+      - name: form
+        type: enum
+        label: "Form"
+        options:
+          - "client-intake"
+          - "volunteer"
+          - "info-request"
+
+      - name: reason
+        type: enum
+        label: "Reason"
+        options:
+          - "Normal"
+          - "Honeypot"
+          - "OrchestratorError"
+
+      - name: submitterEmail
+        type: email
+        label: "Submitter Email"
+
+      - name: status
+        type: enum
+        label: "Status"
+        default: "New"
+        options:
+          - "New"
+          - "Approved"
+          - "Rejected"
+          - "Processed"
+
+      - name: source
+        type: varchar
+        label: "Source"
+
+      - name: description
+        type: text
+        label: "Description"
+
+relationships:
+
+  - name: intakeSubmissionToContact
+    description: >
+      Links each submission to the Contact it created/matched, for verification
+      and conversion analytics. Many submissions to one Contact (manyToOne from
+      the submission side). The app sets this via the contactId attribute.
+    entity: IntakeSubmission
+    entityForeign: Contact
+    linkType: manyToOne
+    link: contact
+    linkForeign: intakeSubmissions
+    label: "Contact"
+    labelForeign: "Intake Submissions"
+    audited: false
