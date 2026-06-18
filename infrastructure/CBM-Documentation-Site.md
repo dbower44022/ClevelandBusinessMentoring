@@ -173,32 +173,40 @@ BookStack runs DB migrations automatically on start. **Take a backup first**
 (below). Review the [BookStack release notes](https://github.com/BookStackApp/BookStack/releases)
 before major version jumps.
 
-### Backups  ⚠️ not yet automated
-Two things must be captured: the **database** and the **uploaded files**
-(`bookstack/` = images/attachments). The `APP_KEY` in `.env` is also required to
-decrypt restored data — keep it with the backup.
-
-```bash
-cd /opt/bookstack
-set -a; . ./.env; set +a
-# database (consistent dump; preferred over copying db/ live)
-docker exec bookstack_db mariadb-dump -uroot -p"$DB_ROOT_PASSWORD" bookstack \
-  | gzip > "backup-db-$(date +%F).sql.gz"
-# uploaded files + app state
-tar czf "backup-files-$(date +%F).tar.gz" -C /opt/bookstack bookstack
+### Backups — automated (nightly)
+A nightly backup runs on the droplet via **root cron**:
 ```
-Copy both artifacts (and a copy of `.env`) off the droplet. **Recommended:** add a
-cron job and ship to off-host storage (DO Spaces / elsewhere) — currently a
-manual step.
+30 3 * * * /opt/bookstack/backup.sh
+```
+`/opt/bookstack/backup.sh` writes a timestamped, gzip'd **database dump** plus a
+**files archive** (uploaded images/attachments + `.env` — which holds the
+`APP_KEY` needed to decrypt restored data — + `compose.yaml` + `Caddyfile`) to
+`/opt/bookstack/backups/`, keeping **14 days** and logging to
+`/opt/bookstack/backups/backup.log`.
+
+- The DB is dumped as the **`bookstack` app user** (`DB_PASSWORD`) with
+  `--single-transaction` — *not* root, which uses socket auth and rejects the
+  password.
+- Run on demand any time: `/opt/bookstack/backup.sh`, then check the log.
+- The script is version-controlled at `infrastructure/bookstack-backup.sh` in this
+  repo; if the droplet is rebuilt, redeploy it (`scp` to `/opt/bookstack/backup.sh`,
+  `chmod 700`, re-add the cron line).
+
+> ⚠️ **Off-host gap (still open):** these backups live on the **same droplet**, so
+> they protect against data mistakes (restore a dump) but **not** droplet loss.
+> For disaster recovery, also keep an off-host copy — e.g. enable DigitalOcean's
+> droplet backups (weekly images, ~20% of droplet cost) via
+> `doctl compute droplet-action enable-backups <id>`, or ship the `backups/`
+> artifacts to DO Spaces / another host. **Not yet configured.**
 
 ### Restore
 ```bash
 cd /opt/bookstack
+DB_PASSWORD=$(grep -E '^DB_PASSWORD=' .env | cut -d= -f2-)
 # ensure .env uses the SAME APP_KEY as the backup, then:
 docker compose up -d bookstack_db
-set -a; . ./.env; set +a
-zcat backup-db-YYYY-MM-DD.sql.gz | docker exec -i bookstack_db mariadb -uroot -p"$DB_ROOT_PASSWORD" bookstack
-tar xzf backup-files-YYYY-MM-DD.tar.gz -C /opt/bookstack
+zcat backups/db-YYYY-MM-DD_HHMMSS.sql.gz | docker exec -i bookstack_db mariadb -ubookstack -p"$DB_PASSWORD" bookstack
+tar xzf backups/files-YYYY-MM-DD_HHMMSS.tar.gz -C /opt/bookstack
 docker compose up -d
 ```
 
