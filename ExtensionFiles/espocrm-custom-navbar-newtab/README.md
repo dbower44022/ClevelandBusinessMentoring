@@ -5,6 +5,10 @@ external `http(s)` address) open in a **new browser tab** instead of navigating
 away from the CRM. Built for the BookStack docs site
 (`https://docs.clevelandbusinessmentors.org`).
 
+> Part of the CBM documentation site. For the full picture — the BookStack app,
+> its hosting, and end-to-end deploy/maintenance — see
+> [`../../infrastructure/CBM-Documentation-Site.md`](../../infrastructure/CBM-Documentation-Site.md).
+
 EspoCRM 9.3.6 URL tabs have no built-in iframe/new-tab option, so this adds a
 tiny custom navbar view that extends the core one and sets `target="_blank"` on
 external links only. No core files are modified.

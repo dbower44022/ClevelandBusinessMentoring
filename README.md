@@ -13,6 +13,7 @@ ClevelandBusinessMentoring/
 ├── reports/                 # Deployment run/verify reports
 ├── ComparisonDocs/          # Research and platform comparison documents
 ├── AccountInformation/      # Account credentials and recovery information
+├── infrastructure/          # Hosting/ops docs (e.g. the BookStack documentation site)
 ├── UI Mocks and Screenshots/# UI design assets
 ├── scripts/                 # Utility scripts
 │   └── espocrm-setup/       # Early EspoCRM setup reference scripts
@@ -33,6 +34,14 @@ for an instance.
 
 See the tool's [Deployment Guide](https://github.com/dbower44022/espo-implementation-tool/blob/main/docs/deployment-guide.md)
 for step-by-step deployment instructions.
+
+## Documentation Site
+
+End-user documentation / training is published on a BookStack site at
+**https://docs.clevelandbusinessmentors.org**, hosted on its own droplet and
+linked from a "CBM Documentation" tab in both the sandbox and production CRMs.
+Deployment and maintenance instructions are in
+[`infrastructure/CBM-Documentation-Site.md`](infrastructure/CBM-Documentation-Site.md).
 
 ## Reference Manual
 
