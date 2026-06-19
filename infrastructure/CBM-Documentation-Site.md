@@ -96,19 +96,30 @@ If the droplet is ever lost or you need to stand up a fresh copy:
 
 ---
 
-## 4. EspoCRM integration (the "CBM Documentation" tab)
+## 4. EspoCRM integration (Documentation tab + Help button)
 
-Each EspoCRM instance links to the docs site via a navbar **URL tab**, made to
-open in a **new browser tab** by a small custom client extension.
+Each EspoCRM instance links to the docs site two ways, both via **one custom
+client extension** (a navbar view that extends the core one):
 
-- **Extension** (open-external-tabs-in-new-tab): files + deploy steps live in
+- **Documentation tab** — a navbar **URL tab** opened in a **new browser tab**.
+- **Help button** — a fixed, bottom-right pill on every screen that opens
+  **context-relevant** docs in a separate, movable browser window (Admin → the
+  EspoCRM System Guide; Engagement/Session → the Mentor Guide; else a BookStack
+  search). It's fixed-positioned (not navbar-injected) because CBM's side-bar
+  navbar mode hides the top-right slot.
+
+Setup:
+
+- **Extension**: files + deploy steps + the curated context map live in
   [`../ExtensionFiles/espocrm-custom-navbar-newtab/`](../ExtensionFiles/espocrm-custom-navbar-newtab/README.md).
   Deploy = `docker cp` the two files into the `espocrm` container, `chown
-  www-data`, `php command.php rebuild`, hard-refresh. Persists across restarts
-  and EspoCRM upgrades (the `custom/` dir is on a host bind mount).
+  www-data`, `php command.php rebuild`, then load in a **fresh/cache-disabled**
+  browser session (EspoCRM is an SPA — a normal reload may serve a cached module;
+  first-time users get the current version automatically). Persists across
+  restarts and EspoCRM upgrades (the `custom/` dir is on a host bind mount).
 - **Tab**: Administration → User Interface → Tab List → **Add URL** → label
   `CBM Documentation`, URL `https://docs.clevelandbusinessmentors.org`, icon
-  `fas fa-book-open` → drag to position → Apply → Save → hard-refresh.
+  `fas fa-book-open` → drag to position → Apply → Save → reload.
 
 > **Tab-list footgun (if scripting it):** EspoCRM's global `tabList` lives in the
 > `espocrm` container's `data/config.php`. An empty/absent `tabList` means "use
