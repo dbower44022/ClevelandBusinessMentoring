@@ -1,0 +1,114 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  cbm-client-intake — InformationRequest custom entity. A dedicated, self-
+  contained record of each website info-request submission (requester name /
+  email / phone / company / message / source / status), linked to the Contact
+  (and the Account when a company is involved). Created best-effort by the
+  cbm-client-intake app (forms/info_request) IN ADDITION to the Contact.description
+  stamp and the CIntakeSubmission audit log. Deploys to EspoCRM as
+  CInformationRequest. Already deployed to crm-test; this program documents and
+  reconciles that build (action: create is idempotent — re-run to add fields).
+
+entities:
+
+  InformationRequest:
+    description: >
+      One website information-request submission. Created by the cbm-client-
+      intake app. name / assignedUser / teams / createdAt are native to the Base
+      type; createdAt is the submission time used for analytics. The app writes
+      the field api-names below verbatim (plain camelCase, no `c` prefix).
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Information Request"
+      labelPlural: "Information Requests"
+      stream: true
+      disabled: false
+
+    fields:
+      - name: firstName
+        type: varchar
+        label: "First Name"
+
+      - name: lastName
+        type: varchar
+        label: "Last Name"
+
+      - name: email
+        type: varchar
+        label: "Email"
+
+      - name: phone
+        type: varchar
+        label: "Phone"
+
+      - name: company
+        type: varchar
+        label: "Company"
+
+      - name: message
+        type: text
+        label: "Message"
+
+      - name: source
+        type: text
+        label: "Source"
+
+      - name: requestStatus
+        type: enum
+        label: "Request Status"
+        default: "New"
+        options:
+          - "New"
+          - "In Progress"
+          - "Responded"
+          - "Closed"
+
+      # Mirror-the-intake-submission fields, also populated by the app
+      # (form / submitterEmail / description), plus a staff-entry response.
+      - name: form
+        type: text
+        label: "Form"
+
+      - name: submitterEmail
+        type: varchar
+        label: "Submitter Email"
+
+      - name: description
+        type: text
+        label: "Description"
+
+      - name: response
+        type: wysiwyg
+        label: "Response"
+
+relationships:
+
+  - name: informationRequestToContact
+    description: >
+      Links each information request to the Contact it created/matched. Many
+      requests to one Contact (manyToOne from the request side). The app sets
+      this via the contactId attribute. Always set.
+    entity: InformationRequest
+    entityForeign: Contact
+    linkType: manyToOne
+    link: contact
+    linkForeign: cInformationRequests
+    label: "Contact"
+    labelForeign: "Information Requests"
+    audited: false
+
+  - name: informationRequestToAccount
+    description: >
+      Links a request to the company Account when one is involved (a new contact
+      with a company name). Many requests to one Account (manyToOne). The app
+      sets this via the infoRequestCompanyId attribute. Optional.
+    entity: InformationRequest
+    entityForeign: Account
+    linkType: manyToOne
+    link: infoRequestCompany
+    linkForeign: cInformationRequests
+    label: "Company"
+    labelForeign: "Information Requests"
+    audited: false
