@@ -1,0 +1,74 @@
+version: "1.0"
+content_version: "1.0.0"
+description: >
+  CBM end-to-end pipeline proof — slice 1. The IntakeSubmission custom entity,
+  generated from the confirmed CBM V2 design (ENG-002: entity ENT-021, fields
+  FLD-361..367, requirement REQ-001), under release REL-001 / project PRJ-002 /
+  planning item PI-005. A self-contained audit-log of each inbound intake-form
+  submission: which form was submitted, the reason classification, the submitter
+  email, the lead source, a handling status, whether CBM has responded, and the
+  response text. No relationships and no record data in this pass (pass 1 proves
+  the schema spine: design -> YAML -> deploy -> verify). Deploys to EspoCRM as
+  CIntakeSubmission. action: create is idempotent — already present on crm-test
+  (audited from there); additive on a fresh instance.
+
+entities:
+
+  IntakeSubmission:
+    description: >
+      One inbound intake-form submission. name / assignedUser / teams /
+      createdAt are native to the Base type. Field api-names below are plain
+      camelCase (no `c` prefix); EspoCRM stores them under the custom entity
+      verbatim.
+    action: create
+    type: Base
+    settings:
+      labelSingular: "Intake Submission"
+      labelPlural: "Intake Submissions"
+      stream: true
+      disabled: false
+
+    fields:
+      - name: form
+        type: enum
+        label: "Form"
+        options:
+          - "client-intake"
+          - "volunteer"
+          - "info-request"
+          - "Partner"
+          - "Sponsor"
+
+      - name: reason
+        type: enum
+        label: "Reason"
+        options:
+          - "Normal"
+          - "Honeypot"
+          - "OrchestratorError"
+
+      - name: submitterEmail
+        type: email
+        label: "Submitter Email"
+
+      - name: status
+        type: enum
+        label: "Status"
+        default: "New"
+        options:
+          - "New"
+          - "Approved"
+          - "Rejected"
+          - "Processed"
+
+      - name: source
+        type: varchar
+        label: "Source"
+
+      - name: responded
+        type: bool
+        label: "Responded"
+
+      - name: response
+        type: text
+        label: "Response"
