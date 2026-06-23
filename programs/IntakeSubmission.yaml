@@ -1,5 +1,5 @@
 version: "1.0"
-content_version: "1.0.0"
+content_version: "1.1.0"
 description: >
   CBM end-to-end pipeline proof — slice 1. The IntakeSubmission custom entity,
   generated from the confirmed CBM V2 design (ENG-002: entity ENT-021, fields
@@ -72,3 +72,25 @@ entities:
       - name: response
         type: text
         label: "Response"
+
+relationships:
+
+  # Pass 2 of the CBM pipeline proof (REQ-002 / ASN-034). manyToOne from the
+  # submission side: each submission belongs to one Contact (link: contact);
+  # a Contact has many submissions (linkForeign: cIntakeSubmissions). Already
+  # present on crm-test (audited from there); additive on a fresh instance.
+  - name: intakeSubmissionToContact
+    description: >
+      Links each intake submission to the Contact it came from. Many
+      submissions to one Contact (manyToOne from the submission side).
+    entity: IntakeSubmission
+    entityForeign: Contact
+    linkType: manyToOne
+    link: contact
+    # Unprefixed on purpose: Contact is a native entity, so EspoCRM auto-applies
+    # the c-prefix to the foreign-side link name (-> cIntakeSubmissions). Passing
+    # an already-prefixed name here makes EspoCRM double-prefix (cCIntakeSubmissions).
+    linkForeign: intakeSubmissions
+    label: "Contact"
+    labelForeign: "Intake Submissions"
+    audited: false
