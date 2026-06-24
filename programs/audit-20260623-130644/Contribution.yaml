@@ -1,0 +1,194 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Contribution captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-23T17:08:42Z.
+entities:
+  Contribution:
+    action: create
+    type: Base
+    labelSingular: Contribution
+    labelPlural: Contributions
+    stream: false
+    fields:
+    - name: contributionType
+      type: enum
+      label: Contribution Type
+      required: true
+      audited: true
+      options:
+      - Donation
+      - Sponsorship
+      - Grant
+      style:
+        Donation: primary
+        Sponsorship: info
+        Grant: success
+      maxLength: 100
+    - name: status
+      type: enum
+      label: Status
+      required: true
+      audited: true
+      options:
+      - Applied
+      - Pledged
+      - Committed
+      - Received
+      - Unsuccessful
+      - Cancelled
+      style:
+        Pledged: info
+        Committed: warning
+        Received: success
+      maxLength: 100
+    - name: amount
+      type: currency
+      label: Amount
+      audited: true
+    - name: applicationDate
+      type: date
+      label: Application Date
+      audited: true
+    - name: commitmentDate
+      type: date
+      label: Commitment Date
+      audited: true
+    - name: expectedPaymentDate
+      type: date
+      label: Expected Payment Date
+      audited: true
+    - name: receivedDate
+      type: date
+      label: Received Date
+      audited: true
+    - name: designation
+      type: varchar
+      label: Designation
+    - name: acknowledgmentSent
+      type: bool
+      label: Acknowledgment Sent
+    - name: acknowledgmentDate
+      type: date
+      label: Acknowledgment Date
+    - name: notes
+      type: wysiwyg
+      label: Notes
+    - name: giftType
+      type: enum
+      label: Gift Type
+      options:
+      - Cash
+      - Check
+      - Credit Card
+      - ACH
+      - Online Payment
+      - In-Kind
+      - Other
+      maxLength: 100
+    - name: inKindDescription
+      type: varchar
+      label: In-Kind Description
+    - name: inKindValuationBasis
+      type: varchar
+      label: In-Kind Valuation Basis
+    - name: nextGrantDeadline
+      type: date
+      label: Next Grant Deadline
+    layout:
+      detail:
+        panels:
+        - label: Identification
+          rows:
+          - - name
+          - - contributionType
+            - status
+          - - amount
+            - designation
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Lifecycle Dates
+          rows:
+          - - applicationDate
+            - commitmentDate
+          - - expectedPaymentDate
+            - receivedDate
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Donation Details
+          dynamicLogicVisible:
+            all:
+            - field: contributionType
+              op: equals
+              value: Donation
+          rows:
+          - - giftType
+            - inKindDescription
+          - - inKindValuationBasis
+            - null
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Grant Details
+          dynamicLogicVisible:
+            all:
+            - field: contributionType
+              op: equals
+              value: Grant
+          rows:
+          - - nextGrantDeadline
+            - null
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Acknowledgment
+          rows:
+          - - acknowledgmentSent
+            - acknowledgmentDate
+          - - notes
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          width: 22
+        - field: contributionType
+          width: 12
+        - field: status
+          width: 12
+        - field: amount
+          width: 12
+        - field: receivedDate
+          width: 14
+        - field: campaign
+          width: 14
+        - field: acknowledgmentSent
+          width: 14
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: contributionType
+          width: 20
+        - field: amount
+          width: 20
+        - field: receivedDate
+          width: 20
+      kanban:
+        columns:
+        - field: name
+          link: true
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

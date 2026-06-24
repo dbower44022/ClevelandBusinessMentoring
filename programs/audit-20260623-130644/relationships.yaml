@@ -1,0 +1,580 @@
+version: '1.0'
+content_version: 1.0.0
+description: Relationships audit snapshot captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-23T17:08:42Z.
+relationships:
+- name: accountToContact
+  entity: Account
+  entityForeign: Contact
+  linkType: oneToMany
+  link: contacts
+  linkForeign: accounts
+  label: Employees
+  labelForeign: Companie0
+- name: accountToContact
+  entity: Account
+  entityForeign: Contact
+  linkType: oneToMany
+  link: contactsPrimary
+  linkForeign: account
+  label: Contacts (primary)
+  labelForeign: Account (Primary)
+- name: accountToOpportunity
+  entity: Account
+  entityForeign: Opportunity
+  linkType: oneToMany
+  link: opportunities
+  linkForeign: account
+  label: Opportunities
+  labelForeign: Account
+- name: accountToCase
+  entity: Account
+  entityForeign: Case
+  linkType: oneToMany
+  link: cases
+  linkForeign: account
+  label: Cases
+  labelForeign: Account
+- name: accountToDocument
+  entity: Account
+  entityForeign: Document
+  linkType: oneToMany
+  link: documents
+  linkForeign: accounts
+  label: Documents
+  labelForeign: Accounts
+  audited: true
+- name: accountToMeeting
+  entity: Account
+  entityForeign: Meeting
+  linkType: oneToMany
+  link: meetingsPrimary
+  linkForeign: account
+  label: Meetings (expanded)
+  labelForeign: Account
+- name: accountToEmail
+  entity: Account
+  entityForeign: Email
+  linkType: oneToMany
+  link: emailsPrimary
+  linkForeign: account
+  label: Emails (expanded)
+  labelForeign: Account
+- name: accountToCall
+  entity: Account
+  entityForeign: Call
+  linkType: oneToMany
+  link: callsPrimary
+  linkForeign: account
+  label: Calls (expanded)
+  labelForeign: Account
+- name: accountToTask
+  entity: Account
+  entityForeign: Task
+  linkType: oneToMany
+  link: tasksPrimary
+  linkForeign: account
+  label: Tasks (expanded)
+  labelForeign: Account
+- name: accountToCampaign
+  entity: Account
+  entityForeign: Campaign
+  linkType: manyToOne
+  link: campaign
+  linkForeign: accounts
+  label: Campaign
+  labelForeign: Accounts
+- name: accountToTargetList
+  entity: Account
+  entityForeign: TargetList
+  linkType: oneToMany
+  link: targetLists
+  linkForeign: accounts
+  label: Target Lists
+  labelForeign: Accounts
+- name: accountToUser
+  entity: Account
+  entityForeign: User
+  linkType: oneToMany
+  link: portalUsers
+  linkForeign: accounts
+  label: Portal Users
+  labelForeign: Accounts
+- name: accountToLead
+  entity: Account
+  entityForeign: Lead
+  linkType: oneToMany
+  link: originalLead
+  linkForeign: createdAccount
+  label: Original Lead
+  labelForeign: Account
+- name: accountToClientProfile
+  entity: Account
+  entityForeign: ClientProfile
+  linkType: manyToOne
+  link: clientProfile
+  linkForeign: linkedCompany
+  label: Client Profile
+  labelForeign: Company
+- name: accountToSponsorProfile
+  entity: Account
+  entityForeign: SponsorProfile
+  linkType: oneToMany
+  link: sponsorProfile
+  linkForeign: sponsorCompany
+  label: Sponsor Profile
+  labelForeign: Sponsor Company Info
+- name: accountToContact
+  entity: Account
+  entityForeign: Contact
+  linkType: oneToMany
+  link: primaryContact
+  linkForeign: primaryCompany
+  label: Primary Contact
+  labelForeign: Client Company
+- name: accountToPartnerProfile
+  entity: Account
+  entityForeign: PartnerProfile
+  linkType: oneToMany
+  link: companyPartnerProfile
+  linkForeign: partnerCompany
+  label: Partner Profile
+  labelForeign: Partner Company
+- name: accountToPartnerProfile
+  entity: Account
+  entityForeign: PartnerProfile
+  linkType: oneToMany
+  link: cPartnerProfile
+  linkForeign: account
+  label: Partner Profile
+  labelForeign: Account
+  audited: true
+- name: accountToContribution
+  entity: Account
+  entityForeign: Contribution
+  linkType: oneToMany
+  link: cContributions
+  linkForeign: donorAccount
+  label: Contributions
+  labelForeign: Donor Account
+  audited: true
+- name: accountToAccount
+  entity: Account
+  entityForeign: Account
+  linkType: manyToOne
+  link: parentAccount
+  linkForeign: cChildAccounts
+  label: Parent Account
+  labelForeign: Child Accounts
+- name: accountToContact
+  entity: Account
+  entityForeign: Contact
+  linkType: manyToOne
+  link: assignedLiaison
+  linkForeign: cLiaisonForPartnerAccounts
+  label: Assigned Liaison
+  labelForeign: Liaison for Partner Accounts
+- name: accountToEngagement
+  entity: Account
+  entityForeign: Engagement
+  linkType: oneToMany
+  link: cEngagements
+  linkForeign: clientOrganization
+  label: Engagements
+  labelForeign: Client Organization
+  audited: true
+- name: accountToInformationRequest
+  entity: Account
+  entityForeign: InformationRequest
+  linkType: oneToMany
+  link: cInformationRequests
+  linkForeign: infoRequestCompany
+  label: Information Requests
+  labelForeign: Company
+- name: contactToOpportunity
+  entity: Contact
+  entityForeign: Opportunity
+  linkType: oneToMany
+  link: opportunities
+  linkForeign: contacts
+  label: Opportunities
+  labelForeign: Contacts
+- name: contactToOpportunity
+  entity: Contact
+  entityForeign: Opportunity
+  linkType: oneToMany
+  link: opportunitiesPrimary
+  linkForeign: contact
+  label: Opportunities (Primary)
+  labelForeign: Contact (Primary)
+- name: contactToCase
+  entity: Contact
+  entityForeign: Case
+  linkType: oneToMany
+  link: casesPrimary
+  linkForeign: contact
+  label: Cases (Primary)
+  labelForeign: Contact (Primary)
+- name: contactToCase
+  entity: Contact
+  entityForeign: Case
+  linkType: oneToMany
+  link: cases
+  linkForeign: contacts
+  label: Cases
+  labelForeign: Contacts
+- name: contactToMeeting
+  entity: Contact
+  entityForeign: Meeting
+  linkType: oneToMany
+  link: meetings
+  linkForeign: contacts
+  label: Meetings
+  labelForeign: Contacts
+  audited: true
+- name: contactToCall
+  entity: Contact
+  entityForeign: Call
+  linkType: oneToMany
+  link: calls
+  linkForeign: contacts
+  label: Calls
+  labelForeign: Contacts
+  audited: true
+- name: contactToCampaign
+  entity: Contact
+  entityForeign: Campaign
+  linkType: manyToOne
+  link: campaign
+  linkForeign: contacts
+  label: Campaign
+  labelForeign: Contacts
+- name: contactToTargetList
+  entity: Contact
+  entityForeign: TargetList
+  linkType: oneToMany
+  link: targetLists
+  linkForeign: contacts
+  label: Target Lists
+  labelForeign: Contacts
+- name: contactToUser
+  entity: Contact
+  entityForeign: User
+  linkType: oneToMany
+  link: portalUser
+  linkForeign: contact
+  label: Portal User
+  labelForeign: Contact
+- name: contactToLead
+  entity: Contact
+  entityForeign: Lead
+  linkType: oneToMany
+  link: originalLead
+  linkForeign: createdContact
+  label: Original Lead
+  labelForeign: Contact
+- name: contactToDocument
+  entity: Contact
+  entityForeign: Document
+  linkType: oneToMany
+  link: documents
+  linkForeign: contacts
+  label: Documents
+  labelForeign: Contacts
+  audited: true
+- name: contactToTask
+  entity: Contact
+  entityForeign: Task
+  linkType: oneToMany
+  link: tasksPrimary
+  linkForeign: contact
+  label: Tasks (expanded)
+  labelForeign: Contact
+- name: contactToEngagement
+  entity: Contact
+  entityForeign: Engagement
+  linkType: oneToMany
+  link: cPrimaryEngagementsAsContact
+  linkForeign: primaryEngagementContact
+  label: Engagements (as Primary Contact)
+  labelForeign: Primary Engagement Contact
+- name: contactToEngagement
+  entity: Contact
+  entityForeign: Engagement
+  linkType: manyToMany
+  link: cEngagementsAsContact
+  linkForeign: engagementContacts
+  label: Engagements (as Contact)
+  labelForeign: Engagement Contacts
+  relationName: cEngagementContacts
+- name: contactToEvent
+  entity: Contact
+  entityForeign: Event
+  linkType: manyToMany
+  link: cPresenterEvents
+  linkForeign: presenters
+  label: Events (as Presenter)
+  labelForeign: Presenters
+  relationName: cEventPresenters
+- name: contactToClientProfile
+  entity: Contact
+  entityForeign: ClientProfile
+  linkType: oneToMany
+  link: clientContact
+  linkForeign: clientcontact
+  label: CBM Client Profile
+  labelForeign: Primary Client Contact
+- name: contactToMentorProfile
+  entity: Contact
+  entityForeign: MentorProfile
+  linkType: oneToMany
+  link: mentorProfile
+  linkForeign: contactRecord
+  label: Mentor Profile
+  labelForeign: Contact
+- name: contactToEvent
+  entity: Contact
+  entityForeign: Event
+  linkType: manyToMany
+  link: cEvents
+  linkForeign: contacts
+  label: Events Attended
+  labelForeign: Event Attendees
+  relationName: cEventContact
+- name: contactToSession
+  entity: Contact
+  entityForeign: Session
+  linkType: manyToMany
+  link: cSessionsAttended
+  linkForeign: sessionAttendees
+  label: Sessions Attended
+  labelForeign: Attendees
+  relationName: cSessionContact
+- name: contactToPartnerProfile
+  entity: Contact
+  entityForeign: PartnerProfile
+  linkType: manyToOne
+  link: partnerProfile
+  linkForeign: contacts
+  label: Related Partners
+  labelForeign: Partner Contacts
+  audited: true
+- name: contactToPartnerProfile
+  entity: Contact
+  entityForeign: PartnerProfile
+  linkType: oneToMany
+  link: partnerProfiles
+  linkForeign: primaryPartnercontact
+  label: Partners Managed
+  labelForeign: Primary Partner Contact
+- name: contactToSponsorProfile
+  entity: Contact
+  entityForeign: SponsorProfile
+  linkType: manyToOne
+  link: sponsorProfile
+  linkForeign: sponsorContacts
+  label: Sponsor Profile
+  labelForeign: Sponsor Contacts
+  audited: true
+- name: contactToSponsorProfile
+  entity: Contact
+  entityForeign: SponsorProfile
+  linkType: oneToMany
+  link: cSponsorProfiles
+  linkForeign: sponsorContact
+  label: Sponsor Profiles
+  labelForeign: Sponsor Contact
+- name: contactToContribution
+  entity: Contact
+  entityForeign: Contribution
+  linkType: oneToMany
+  link: cContributions
+  linkForeign: donorContact
+  label: Contributions
+  labelForeign: Donor Contact
+  audited: true
+- name: contactToEventRegistration
+  entity: Contact
+  entityForeign: EventRegistration
+  linkType: oneToMany
+  link: cEventRegistrations
+  linkForeign: contact
+  label: Event Registrations
+  labelForeign: Contact
+- name: contactToIntakeSubmission
+  entity: Contact
+  entityForeign: IntakeSubmission
+  linkType: oneToMany
+  link: cIntakeSubmissions
+  linkForeign: contact
+  label: Intake Submissions
+  labelForeign: Contact
+- name: contactToUser
+  entity: Contact
+  entityForeign: User
+  linkType: manyToOne
+  link: assignedUser
+  linkForeign: cLinkedContact
+  label: User
+  labelForeign: Contact
+- name: contactToInformationRequest
+  entity: Contact
+  entityForeign: InformationRequest
+  linkType: oneToMany
+  link: cInformationRequests
+  linkForeign: contact
+  label: Information Requests
+  labelForeign: Contact
+- name: clientprofileToEngagement
+  entity: ClientProfile
+  entityForeign: Engagement
+  linkType: oneToMany
+  link: clientEngagements
+  linkForeign: engagementClient
+  label: Engagements
+  labelForeign: Client
+- name: contributionToSponsorProfile
+  entity: Contribution
+  entityForeign: SponsorProfile
+  linkType: manyToOne
+  link: sponsorProfile
+  linkForeign: sponsorContributions
+  label: Sponsor Profile
+  labelForeign: Sponsor Contributions
+- name: engagementToMentorProfile
+  entity: Engagement
+  entityForeign: MentorProfile
+  linkType: manyToMany
+  link: additionalMentors
+  linkForeign: engagements
+  label: Additional Mentors
+  labelForeign: CoMentoring Engagements
+  relationName: cEngagementMentorProfile
+- name: engagementToMentorProfile
+  entity: Engagement
+  entityForeign: MentorProfile
+  linkType: manyToOne
+  link: mentorProfile
+  linkForeign: engagements1
+  label: Assigned Mentor
+  labelForeign: Assigned Engagements
+- name: engagementToPartnerProfile
+  entity: Engagement
+  entityForeign: PartnerProfile
+  linkType: manyToOne
+  link: referringPartner
+  linkForeign: engagements
+  label: Referring Partner
+  labelForeign: Referred Engagements
+- name: engagementToMentorProfile
+  entity: Engagement
+  entityForeign: MentorProfile
+  linkType: manyToOne
+  link: requestedMentor
+  linkForeign: engagementsMentorRequested
+  label: Mentor Requested
+  labelForeign: Client Requests
+- name: engagementToSession
+  entity: Engagement
+  entityForeign: Session
+  linkType: oneToMany
+  link: engagementSessions
+  linkForeign: engagement
+  label: Sessions
+  labelForeign: Engagement
+- name: engagementToDocument
+  entity: Engagement
+  entityForeign: Document
+  linkType: oneToMany
+  link: engagementDocuments
+  linkForeign: cClientEngagement
+  label: Engagement Documents
+  labelForeign: Engagement
+- name: eventToSponsorProfile
+  entity: Event
+  entityForeign: SponsorProfile
+  linkType: manyToMany
+  link: sponsorProfiles
+  linkForeign: sponsoredEvents
+  label: Sponsor Profiles
+  labelForeign: SponsoredEvents
+  relationName: cSponsorProfileEvent
+- name: eventToEventRegistration
+  entity: Event
+  entityForeign: EventRegistration
+  linkType: oneToMany
+  link: registrations
+  linkForeign: event
+  label: Registrations
+  labelForeign: Event
+- name: eventToResource
+  entity: Event
+  entityForeign: Resource
+  linkType: oneToMany
+  link: resources
+  linkForeign: sourceEvent
+  label: Resources
+  labelForeign: Source Event
+- name: informationrequestToMeeting
+  entity: InformationRequest
+  entityForeign: Meeting
+  linkType: oneToMany
+  link: meetings
+  linkForeign: parent
+  label: Meetings
+  labelForeign: Parent
+- name: informationrequestToCall
+  entity: InformationRequest
+  entityForeign: Call
+  linkType: oneToMany
+  link: calls
+  linkForeign: parent
+  label: Calls
+  labelForeign: Parent
+- name: mentorprofileToSponsorProfile
+  entity: MentorProfile
+  entityForeign: SponsorProfile
+  linkType: oneToMany
+  link: sponsorsManaged
+  linkForeign: sponsorManager
+  label: Managed Sponsor
+  labelForeign: CBM Manager
+- name: mentorprofileToSponsorProfile
+  entity: MentorProfile
+  entityForeign: SponsorProfile
+  linkType: oneToMany
+  link: managedSponsors
+  linkForeign: bMSponsorManager
+  label: Managed Sponsors
+  labelForeign: Primary CBM Manager
+- name: mentorprofileToPartnerProfile
+  entity: MentorProfile
+  entityForeign: PartnerProfile
+  linkType: oneToMany
+  link: managedPartners
+  linkForeign: partnerManager
+  label: Managed Partners
+  labelForeign: CBM Partner Manager
+- name: partnerprofileToEmail
+  entity: PartnerProfile
+  entityForeign: Email
+  linkType: oneToMany
+  link: partnerEmails
+  linkForeign: cPartnerProfile
+  label: Partner Emails
+  labelForeign: Partner Profile
+- name: partnerprofileToSession
+  entity: PartnerProfile
+  entityForeign: Session
+  linkType: oneToMany
+  link: sessions
+  linkForeign: partnerSession
+  label: Sessions
+  labelForeign: Partner
+- name: sessionToSponsorProfile
+  entity: Session
+  entityForeign: SponsorProfile
+  linkType: manyToOne
+  link: sponsorProfile
+  linkForeign: sponsorSessions
+  label: Sponsor
+  labelForeign: Sponsor Sessions
