@@ -1,0 +1,130 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Resource captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T03:52:09Z.
+entities:
+  Resource:
+    action: create
+    type: BasePlus
+    labelSingular: Resource
+    labelPlural: Resources
+    stream: true
+    settings:
+      orderBy: createdAt
+      order: desc
+    fields:
+    - name: resourceType
+      type: enum
+      label: Resource Type
+      required: true
+      options:
+      - Recorded Event
+      - Document
+      - Video
+      - Audio
+      - Template
+      - Link
+      - Other
+      maxLength: 100
+    - name: category
+      type: enum
+      label: Category
+      required: true
+      options:
+      - Starting a Business
+      - Financing
+      - Marketing and Sales
+      - Operations
+      - Leadership and Strategy
+      - Legal and Compliance
+      - Other
+      maxLength: 100
+    - name: url
+      type: url
+      label: URL
+    - name: file
+      type: varchar
+      label: File
+    - name: resourceDate
+      type: date
+      label: Resource Date
+    - name: listedPublicly
+      type: bool
+      label: Listed Publicly
+      default: 'false'
+      audited: true
+    - name: publishedAt
+      type: datetime
+      label: Published At
+      readOnly: true
+      audited: true
+    - name: featured
+      type: bool
+      label: Featured
+      default: 'false'
+    layout:
+      detail:
+        panels:
+        - label: Identification
+          rows:
+          - - name
+          - - resourceType
+            - category
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Content
+          rows:
+          - - description
+          - - url
+            - file
+          - - resourceDate
+            - null
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+        - label: Publishing
+          rows:
+          - - listedPublicly
+            - publishedAt
+          - - featured
+            - null
+          noteText: null
+          noteStyle: info
+          dynamicLogicStyled: null
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          width: 30
+          link: true
+          align: left
+        - field: resourceType
+          width: 14
+        - field: category
+          width: 18
+        - field: resourceDate
+          width: 12
+        - field: listedPublicly
+          width: 10
+        - field: featured
+          width: 10
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

@@ -1,0 +1,21 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of MentorProfile.yaml (entity settings only) from
+  dev audit.
+entities:
+  MentorProfile:
+    action: create
+    type: BasePlus
+    labelSingular: CBM Member
+    labelPlural: CBM Members
+    stream: true
+    settings:
+      orderBy: lastName
+      order: asc
+      textFilterFields:
+      - name
+      - mentoringSkills
+      - mentorProfessionalBio
+      - contactRecord.firstName
+      - contactRecord.lastName
+      fullTextSearch: true

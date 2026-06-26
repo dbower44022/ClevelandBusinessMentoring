@@ -1,0 +1,13 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Opportunity.yaml (entity settings only) from dev
+  audit.
+entities:
+  Opportunity:
+    settings:
+      orderBy: createdAt
+      order: desc
+      optimisticConcurrencyControl: true
+      iconClass: fas fa-dollar-sign
+      color: '#9fc77e'
+      kanbanViewMode: true

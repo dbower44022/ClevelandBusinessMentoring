@@ -1,0 +1,16 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Contact.yaml (entity settings only) from dev audit.
+entities:
+  Contact:
+    settings:
+      orderBy: lastName
+      order: asc
+      textFilterFields:
+      - name
+      - emailAddress
+      - firstName
+      - lastName
+      fullTextSearch: true
+      iconClass: fas fa-id-badge
+      color: '#a4c5e0'

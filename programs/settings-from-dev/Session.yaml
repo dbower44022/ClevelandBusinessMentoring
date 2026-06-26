@@ -1,0 +1,17 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Session.yaml (entity settings only) from dev audit.
+entities:
+  Session:
+    action: create
+    type: Event
+    labelSingular: Session
+    labelPlural: Sessions
+    stream: true
+    settings:
+      orderBy: dateStart
+      order: desc
+      textFilterFields:
+      - name
+      fullTextSearch: false
+      multipleAssignedUsers: true

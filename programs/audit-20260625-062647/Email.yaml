@@ -1,0 +1,117 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Email captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T06:30:25Z.
+entities:
+  Email:
+    settings:
+      orderBy: dateSent
+      order: desc
+      textFilterFields:
+      - name
+      - bodyPlain
+      - body
+      fullTextSearch: true
+      iconClass: fas fa-envelope
+      countDisabled: true
+      multipleAssignedUsers: true
+    fields:
+    - name: partnerProfile
+      type: link
+      label: Partner Profile
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - dateSent
+            - from
+          - - parent
+            - to
+          - - null
+            - cc
+          - - null
+            - bcc
+          - - name: subject
+              fullWidth: true
+          - - name: body
+              fullWidth: true
+          - - attachments
+            - isHtml
+      detailSmall:
+        panels:
+        - rows:
+          - - dateSent
+            - from
+          - - parent
+            - to
+          - - null
+            - cc
+          - - null
+            - bcc
+          - - name: subject
+              fullWidth: true
+          - - name: body
+              fullWidth: true
+          - - name: attachments
+              fullWidth: true
+      list:
+        columns:
+        - field: personStringData
+          width: 18
+          notSortable: true
+          noLabel: true
+        - field: subject
+          link: true
+          notSortable: true
+        - field: parent
+          width: 21
+          notSortable: true
+        - field: dateSent
+          width: 10
+          notSortable: true
+          align: right
+      listSmall:
+        columns:
+        - field: personStringData
+          width: 20
+          notSortable: true
+          noLabel: true
+        - field: subject
+          link: true
+          notSortable: true
+        - field: dateSent
+          width: 16
+          notSortable: true
+          align: right
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - account
+      - dateSent
+      - emailAddress
+      - from
+      - to
+      - isNotRead
+      - isNotReplied
+      - status
+      - parent
+      - teams
+      - sentBy
+      - users
+      - createdAt
+      - hasAttachment
+      - name
+      - body
+      - bodyPlain
+      - isAutoReply
+      - inboundEmails
+      - emailAccounts
+      massUpdate:
+      - parent
+      - teams
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

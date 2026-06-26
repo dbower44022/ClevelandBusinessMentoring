@@ -1,0 +1,104 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Task captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-26T03:24:26Z.
+entities:
+  Task:
+    settings:
+      orderBy: createdAt
+      order: desc
+      iconClass: fas fa-tasks
+      kanbanViewMode: true
+      optimisticConcurrencyControl: true
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - parent
+          - - status
+            - priority
+          - - dateStart
+            - dateCompleted
+          - - dateEnd
+            - reminders
+          - - name: description
+              fullWidth: true
+          - - name: attachments
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+          - - status
+            - priority
+          - - name: dateStart
+              fullWidth: true
+          - - name: dateEnd
+              fullWidth: true
+          - - name: parent
+              fullWidth: true
+          - - name: reminders
+              fullWidth: true
+          - - name: description
+              fullWidth: true
+          - - name: attachments
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: status
+          width: 14
+        - field: priority
+          width: 12
+        - field: dateEnd
+          width: 15
+        - field: assignedUser
+          width: 15
+        - field: createdAt
+          width: 15
+          hidden: true
+      listSmall:
+        columns:
+        - field: name
+          link: 'true'
+        - field: status
+          width: 20
+        - field: priority
+          width: 20
+        - field: dateEnd
+          width: 20
+      kanban:
+        columns:
+        - field: name
+          link: true
+        - field: priority
+          isMuted: true
+        - field: parent
+        - field: dateEnd
+          align: right
+          isMuted: true
+      filters:
+      - assignedUser
+      - teams
+      - collaborators
+      - status
+      - priority
+      - parent
+      - account
+      - dateStart
+      - dateEnd
+      - dateCompleted
+      - createdAt
+      - createdBy
+      - modifiedAt
+      massUpdate:
+      - status
+      - priority
+      - assignedUser
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

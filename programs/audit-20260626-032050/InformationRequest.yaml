@@ -1,0 +1,104 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of InformationRequest captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-26T03:24:26Z.
+entities:
+  InformationRequest:
+    action: create
+    type: BasePlus
+    labelSingular: Information Request
+    labelPlural: Information Requests
+    stream: false
+    settings:
+      orderBy: createdAt
+      order: desc
+    fields:
+    - name: requestStatus
+      type: enum
+      label: Request Status
+      options:
+      - ''
+      - New
+      - In Progress
+      - Responded
+      - Closed
+      maxLength: 100
+    - name: response
+      type: wysiwyg
+      label: Response
+    - name: form
+      type: text
+      label: Form
+    - name: source
+      type: text
+      label: Source
+    - name: submitterEmail
+      type: varchar
+      label: Submitter Email
+      maxLength: 200
+    - name: firstName
+      type: varchar
+      label: First Name
+      maxLength: 100
+    - name: lastName
+      type: varchar
+      label: Last Name
+      maxLength: 100
+    - name: email
+      type: varchar
+      label: Email
+      maxLength: 100
+    - name: phone
+      type: varchar
+      label: Phone
+      maxLength: 100
+    - name: company
+      type: varchar
+      label: Company
+      maxLength: 100
+    - name: message
+      type: text
+      label: Message
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - contact
+          - - requestStatus
+            - source
+            - submitterEmail
+          - - form
+            - response
+          - - description
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: createdAt
+          width: 16
+        - field: name
+          link: true
+        - field: submitterEmail
+          width: 16
+        - field: requestStatus
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

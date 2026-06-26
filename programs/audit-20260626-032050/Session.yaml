@@ -1,0 +1,193 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Session captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-26T03:24:26Z.
+entities:
+  Session:
+    action: create
+    type: Event
+    labelSingular: Session
+    labelPlural: Sessions
+    stream: true
+    settings:
+      orderBy: dateStart
+      order: desc
+      textFilterFields:
+      - name
+      fullTextSearch: false
+      multipleAssignedUsers: true
+    fields:
+    - name: sessionType
+      type: enum
+      label: Session Type
+      default: Client Session
+      options:
+      - ''
+      - Client Session
+      - Partner Session
+      - Sponsor Session
+      - Other Session
+      maxLength: 100
+    - name: meetingLocationType
+      type: enum
+      label: Meeting Location Type
+      options:
+      - ''
+      - Organization Office
+      - Client's Place of Business
+      - Other
+      maxLength: 100
+    - name: locationDetails
+      type: varchar
+      label: Location Details
+    - name: topicsCovered
+      type: multiEnum
+      label: Topics Covered
+    - name: sessionNotes
+      type: wysiwyg
+      label: Session Notes
+    - name: nextSteps
+      type: wysiwyg
+      label: Next Steps
+    - name: nextSessionDateTime
+      type: datetime
+      label: Next Session Date/Time
+    - name: meetingType
+      type: multiEnum
+      label: Meeting Type
+      default: []
+      options:
+      - ''
+      - In Person
+      - Remote Location
+      - Virtual Video
+      - Phone Only
+    layout:
+      detail:
+        panels:
+        - label: Session Detail
+          rows:
+          - - dateStart
+            - duration
+          - - meetingType
+            - meetingLocationType
+            - status
+          - - locationDetails
+            - topicsCovered
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Notes and Follow-Up
+          rows:
+          - - sessionNotes
+          - - nextSteps
+          - - nextSessionDateTime
+            - null
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: PartnerInfo
+          tabBreak: true
+          tabLabel: Partner Info
+          hidden: true
+          dynamicLogicVisible:
+            attribute: partnerSessionId
+            value: null
+          rows:
+          - - partnerSession
+          noteText: null
+          noteStyle: info
+        - label: Engagement Info
+          tabBreak: true
+          tabLabel: Engagement Info
+          hidden: true
+          dynamicLogicVisible:
+            attribute: engagementId
+            value: null
+          rows:
+          - - engagement
+          noteText: null
+          noteStyle: info
+        - label: Sponsor Info
+          tabBreak: true
+          tabLabel: Sponsor Info
+          hidden: true
+          dynamicLogicVisible:
+            attribute: sponsorProfileId
+            value: null
+          rows:
+          - - sponsorProfile
+            - null
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - status
+          - - dateStart
+            - dateEnd
+          - - duration
+          - - sessionNotes
+      list:
+        columns:
+        - field: name
+          width: 30
+          link: true
+          align: left
+        - field: dateStart
+          width: 18
+        - field: status
+          width: 16
+        - field: duration
+          width: 10
+        - field: nextSessionDateTime
+          width: 12
+        - field: meetingType
+          width: 16
+          notSortable: true
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: dateStart
+          width: 20
+        - field: status
+          width: 20
+        - field: sessionType
+          width: 20
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - dateStart
+      - assignedUser
+      - createdAt
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        scheduler:
+          disabled: true
+        _delimiter_:
+          disabled: true
+        _tabBreak_0:
+          index: 0
+          tabBreak: true
+          tabLabel: Attendees
+        sessionAttendees:
+          index: 1
+        _tabBreak_1:
+          index: 2
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 3
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+    formulaScript:
+      beforeSaveApiScript: "ifThen(\n    entity\\isNew(),\n    name = string\\concatenate(datetime\\format(datetime\\now(),\
+        \ '', 'YY-MM-DD'), ' - x',engagementName )\n);"

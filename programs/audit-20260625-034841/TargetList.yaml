@@ -1,0 +1,80 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of TargetList captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T03:52:09Z.
+entities:
+  TargetList:
+    settings:
+      orderBy: createdAt
+      order: desc
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - entryCount
+          - - category
+            - optedOutCount
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name
+          - - category
+          - - entryCount
+            - optedOutCount
+          - - description
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: entryCount
+          width: 20
+          notSortable: true
+        - field: createdAt
+          width: 20
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: entryCount
+          width: 25
+          notSortable: true
+        - field: createdAt
+          width: 25
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      massUpdate:
+      - teams
+      - assignedUser
+      - category
+      relationships:
+      - contacts
+      - leads
+      - accounts
+      - users
+      bottomPanelsDetail:
+        contacts:
+          name: contacts
+          index: 5
+        leads:
+          name: leads
+          index: 5.001
+        accounts:
+          name: accounts
+          index: 5.002
+        users:
+          name: users
+          index: 5.003
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

@@ -1,0 +1,10 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Document.yaml (entity settings only) from dev
+  audit.
+entities:
+  Document:
+    settings:
+      orderBy: createdAt
+      order: desc
+      iconClass: far fa-file-alt

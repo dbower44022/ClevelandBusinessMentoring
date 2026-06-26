@@ -1,0 +1,14 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Contribution.yaml (entity settings only) from
+  dev audit.
+entities:
+  Contribution:
+    action: create
+    type: BasePlus
+    labelSingular: Contribution
+    labelPlural: Contributions
+    stream: false
+    settings:
+      orderBy: createdAt
+      order: desc

@@ -1,0 +1,519 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of MentorProfile captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T06:30:25Z.
+entities:
+  MentorProfile:
+    action: create
+    type: BasePlus
+    labelSingular: CBM Member
+    labelPlural: CBM Members
+    stream: true
+    settings:
+      orderBy: lastName
+      order: asc
+      textFilterFields:
+      - name
+      - mentoringSkills
+      - mentorProfessionalBio
+      - contactRecord.firstName
+      - contactRecord.lastName
+      fullTextSearch: true
+    fields:
+    - name: mentorStatus
+      type: enum
+      label: Mentor Status
+      options:
+      - ''
+      - Prospect
+      - Candidate
+      - Under Review
+      - Provisional
+      - Approved
+      - Active
+      - Inactive
+      - Paused
+      - Dormant
+      - Resigned
+      - Retired
+      - Terminated
+      - Declined
+      maxLength: 100
+    - name: cbmEmail
+      type: varchar
+      label: CBM Email
+    - name: industrySector
+      type: enum
+      label: Industry Sector
+      default: Accommodation and Food Services
+      options:
+      - Accommodation and Food Services
+      - Administrative and Support and Waste Management
+      - Agriculture, Forestry, Fishing and Hunting
+      - Arts, Entertainment, and Recreation
+      - Construction
+      - Educational Services
+      - Finance and Insurance
+      - Health Care and Social Assistance
+      - Information
+      - Management of Companies and Enterprises
+      - Manufacturing
+      - Mining, Quarrying, and Oil and Gas Extraction
+      - Other Services (except Public Administration)
+      - Professional, Scientific, and Technical Services
+      - Public Administration
+      - Real Estate and Rental and Leasing
+      - Retail Trade
+      - Transportation and Warehousing
+      - Utilities
+      - Wholesale Trade
+      maxLength: 100
+    - name: mentoringFocusAreas
+      type: multiEnum
+      label: Mentoring Focus Areas
+      default: []
+      options:
+      - Accounting & Tax Services
+      - Advertising, Design, & Marketing
+      - Agriculture
+      - Animal & Veterinary Services
+      - Architecture, Engineering, & Related Services
+      - Arts, Entertainment, & Recreation
+      - Auto Repair & Mechanic
+      - Beauty, Cosmetics & Salon Services
+      - Business Consulting & Coaching
+      - Childcare
+      - Commercial & Residential Services
+      - Construction
+      - Counseling & Therapy
+      - Distribution & Transportation of Goods
+      - Education
+      - Farming & Livestock
+      - Fine Arts, Artisan, & Craft Work
+      - Fishing & Hunting
+      - Food & Beverage
+      - Forestry
+      - Funeral & Death Care Services
+      - Information Technology
+      - Manufacturing
+      - Media & Publishing
+      - Mining, Quarry, & Utilities
+      - Nonprofit
+      - Personal Care Services
+      - Photography & Video Services
+      - Professional Services
+      - Public Relations & Communications
+      - Real Estate
+      - Recruiting & Staffing
+      - Rental & Leasing
+      - Restaurant & Bar
+      - Retail
+      - Social Assistance & Family Services
+      - Transportation
+      - Travel, Hospitality, & Tourism
+      - Warehousing
+      - Waste Management & Disposal
+      - Website Development
+      - Wellness, Healthcare, & Home Health
+    - name: mentoringWhyInterested
+      type: wysiwyg
+      label: Why Interested in Mentoring
+    - name: mentorProfessionalBio
+      type: wysiwyg
+      label: Professional Bio
+    - name: mentoringSkills
+      type: wysiwyg
+      label: Mentoring Skills
+    - name: mentorStartDate
+      type: date
+      label: Mentor Start Date
+    - name: felonyConfiction
+      type: bool
+      label: Felony Conviction
+    - name: howDidYouHearAboutCBM
+      type: varchar
+      label: How did you hear about CBM?
+    - name: yearsOfExperience
+      type: int
+      label: Years of Industry Experience
+    - name: postalCode
+      type: foreign
+      label: PostalCode
+      readOnly: true
+      link: contactRecord
+      field: addressPostalCode
+    - name: personalEmail
+      type: foreign
+      label: Personal Email
+      readOnly: true
+      link: contactRecord
+      field: emailAddress
+    - name: contactPhone
+      type: foreign
+      label: Phone
+      readOnly: true
+      link: contactRecord
+      field: phoneNumber
+    - name: contactCity
+      type: foreign
+      label: City
+      readOnly: true
+      link: contactRecord
+      field: addressCity
+    - name: contactStreet
+      type: foreign
+      label: Street
+      readOnly: true
+      link: contactRecord
+      field: addressStreet
+    - name: mentorType
+      type: enum
+      label: Mentor Type
+      default: Mentor
+      options:
+      - ''
+      - Mentor
+      - Co-Mentor Only
+      - Subject Matter Expert
+      - Presenter
+      - Volunteer
+      - Other
+      maxLength: 100
+    - name: fluentLanguages
+      type: multiEnum
+      label: Fluent Languages
+      default: []
+      options:
+      - English
+      - Spanish
+    - name: trainingCompleted
+      type: bool
+      label: Training Completed
+    - name: trainingCompletionDate
+      type: date
+      label: Training Completion Date
+    - name: ethicsAgreementAccepted
+      type: bool
+      label: Ethics Agreement Accepted
+    - name: ethicsAgreementAcceptanceDateTime
+      type: datetime
+      label: Ethics Agreement Acceptance Date/Time
+    - name: backgroundCheckCompleted
+      type: bool
+      label: Background Check Completed
+    - name: backgroundCheckDate
+      type: date
+      label: Background Check Date
+    - name: departureReason
+      type: enum
+      label: Departure Reason
+      options:
+      - ''
+      - Career Change
+      - Personal
+      - Relocated
+      - Time Constraints
+      - Other
+      maxLength: 100
+    - name: departureDate
+      type: date
+      label: Departure Date
+    - name: maximumClientCapacity
+      type: int
+      label: Maximum Client Capacity
+    - name: acceptingNewClients
+      type: bool
+      label: Accepting New Clients
+    - name: currentActiveClients
+      type: int
+      label: Current Active Clients
+      readOnly: true
+    - name: availableCapacity
+      type: int
+      label: Available Capacity
+      readOnly: true
+    - name: totalLifetimeSessions
+      type: int
+      label: Total Lifetime Sessions
+      readOnly: true
+    - name: totalMentoringHours
+      type: float
+      label: Total Mentoring Hours
+      readOnly: true
+    - name: totalSessionsLast30Days
+      type: int
+      label: Total Sessions (Last 30 Days)
+      readOnly: true
+    - name: boardPosition
+      type: varchar
+      label: Board Position
+    - name: duesStatus
+      type: enum
+      label: Dues Status
+      options:
+      - Unpaid
+      - Paid
+      - Waived
+      style:
+        Unpaid: warning
+        Paid: success
+      maxLength: 100
+    - name: duesPaymentDate
+      type: date
+      label: Dues Payment Date
+    - name: duesRenewalDate
+      type: date
+      label: Dues Renewal Date
+    - name: profilePhoto
+      type: image
+      label: Profile Photo
+    - name: termsAccepted
+      type: bool
+      label: TermsAccepted
+    - name: areaOfExpertise
+      type: multiEnum
+      label: Area Of Expertise
+      default: []
+      options:
+      - Artificial Intelligence for Small Businesses
+      - 'Arts: Visual, Crafts, Music, etc.'
+      - Business Strategy & Planning
+      - Compliance & Accreditation Audits
+      - Customer Experience & Service Excellence
+      - Digital Marketing & Social Media
+      - E-Commerce
+      - Finance & Cash Flow Management
+      - Franchising
+      - Funding & Capital Access
+      - Government Contracting and Regulations
+      - Group Homes
+      - Hospitality, Restaurants, Food Trucks, Lodging
+      - Human Resources & Talent Management
+      - International Business & Market Expansion
+      - Leadership & Executive Coaching
+      - Marketing & Branding
+      - Mergers, Acquisitions & Exit Planning
+      - Nonprofit Management & Fundraising
+      - Operations & Process Improvement
+      - Product Development & Innovation
+      - Program Design & Implementation
+      - Retail and Merchandising
+      - Sales & Business Development
+      - Social Assistance & Family Services
+      - Startup Launch & Entrepreneurship
+      - Strategic Planning
+      - Technology & Digital Transformation
+      - Transportation and Logistics
+    - name: aboutMentor
+      type: wysiwyg
+      label: AboutMentor
+    - name: resumeUpload
+      type: file
+      label: Resume Upload
+    - name: declinedReason
+      type: multiEnum
+      label: Declined Reason
+      default: []
+      options:
+      - ''
+      - Declined Reason 1
+      - Declined Reason 2
+    - name: mentorStatusNotes
+      type: text
+      label: Mentor Status Notes
+    - name: lastName
+      type: foreign
+      label: Last Name
+      readOnly: true
+      link: contactRecord
+      field: lastName
+    - name: rejectionReason
+      type: enum
+      label: Rejection Reason
+      options:
+      - ''
+      - Candidate Withdrew
+      - Conflict of Interest
+      - Failed Background Check
+      - Incomplete Application
+      - Insufficient Experience
+      - Unresponsive
+      - Other
+      maxLength: 100
+    - name: recordStatus
+      type: enum
+      label: Record Status
+      default: Incomplete
+      options:
+      - ''
+      - Incomplete
+      - Complete
+      - Duplicate
+      maxLength: 100
+    - name: publicProfile
+      type: bool
+      label: Public Profile
+    layout:
+      detail:
+        panels:
+        - tabBreak: true
+          tabLabel: Contact Info
+          rows:
+          - - contactRecord
+            - mentorType
+            - mentorStatus
+          - - cbmEmail
+            - personalEmail
+            - contactPhone
+          - - mentorStartDate
+            - contactCity
+          dynamicLogicStyled: null
+          noteText: null
+        - tabBreak: true
+          tabLabel: Mentor Profile
+          rows:
+          - - mentorProfessionalBio
+          - - mentoringSkills
+            - industrySector
+          - - mentoringFocusAreas
+            - howDidYouHearAboutCBM
+          - - mentoringWhyInterested
+            - yearsOfExperience
+          - - areaOfExpertise
+          - - aboutMentor
+          - - acceptingNewClients
+            - maximumClientCapacity
+            - currentActiveClients
+            - availableCapacity
+          - - totalLifetimeSessions
+            - totalMentoringHours
+            - fluentLanguages
+          noteText: null
+          noteStyle: info
+        - label: Profile Photo
+          tabBreak: true
+          tabLabel: Profile Photo
+          rows:
+          - - profilePhoto
+          - - resumeUpload
+          noteText: null
+          noteStyle: info
+        - label: Mentor Status
+          tabBreak: true
+          tabLabel: Mentor Status
+          hidden: true
+          dynamicLogicVisible:
+            attribute: $user.teamsIds
+            value: 6a2b6b0cb326a06ee
+          rows:
+          - - felonyConfiction
+            - termsAccepted
+            - backgroundCheckCompleted
+            - backgroundCheckDate
+          - - trainingCompleted
+            - trainingCompletionDate
+            - ethicsAgreementAccepted
+            - ethicsAgreementAcceptanceDateTime
+          - - departureReason
+            - departureDate
+            - declinedReason
+          - - mentorStatusNotes
+          noteText: null
+          noteStyle: info
+        - label: DuesStatus
+          tabBreak: true
+          tabLabel: Dues Status
+          hidden: true
+          dynamicLogicVisible:
+            attribute: $user.teamsIds
+            value: 6a2b6b0cb326a06ee
+          rows:
+          - - duesStatus
+            - duesRenewalDate
+            - duesPaymentDate
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: contactCity
+          width: 16
+        - field: mentorStatus
+          width: 16
+        - field: mentorType
+          width: 16
+        - field: cbmEmail
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - areaOfExpertise
+      - industrySector
+      - acceptingNewClients
+      - mentoringFocusAreas
+      - mentoringSkills
+      - mentorType
+      - mentorStatus
+      - availableCapacity
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        reportPanel6a0aaa8e98b2960b3:
+          disabled: true
+        _delimiter_:
+          disabled: true
+        _tabBreak_0:
+          index: 0
+          tabBreak: true
+          tabLabel: Mentoring Info
+        engagements1:
+          index: 1
+        engagementsMentorRequested:
+          index: 2
+        engagements:
+          index: 3
+        _tabBreak_2:
+          index: 4
+          tabBreak: true
+          tabLabel: Managed Sponsors/Partners
+        managedSponsors:
+          index: 5
+        managedPartners:
+          index: 6
+        _tabBreak_1:
+          index: 7
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 8
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+    formulaScript:
+      beforeSaveCustomScript: 'currentActiveClients = 1;
+
+        availableCapacity = maximumClientCapacity - currentActiveClients ;
+
+        '
+      beforeSaveApiScript: "// Only act when Mentor Status is Active\nifThen(\n  mentorStatus == 'Active',\n\n  // Set Mentor\
+        \ Start Date to today if not already set\n  ifThen(\n    mentorStartDate == null,\n    mentorStartDate = datetime\\\
+        today()\n  );\n\n  // Ensure the Contact's Assigned User is the mentor's own User account\n  $contactId = contactRecordId;\n\
+        \  ifThen(\n    $contactId != null,\n\n    $userId = record\\findOne('User', 'createdAt', 'asc', 'contactId=', $contactId);\n\
+        \    ifThen(\n      $userId != null,\n      $currentAssigned = record\\attribute('Contact', $contactId, 'assignedUserId');\n\
+        \      ifThen(\n        $currentAssigned != $userId,\n        record\\update('Contact', $contactId, 'assignedUserId',\
+        \ $userId)\n      )\n    )\n  )\n);"

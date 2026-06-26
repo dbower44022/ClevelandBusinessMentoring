@@ -1,0 +1,15 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Case.yaml (entity settings only) from dev audit.
+entities:
+  Case:
+    settings:
+      orderBy: number
+      order: desc
+      textFilterFields:
+      - name
+      - number
+      - description
+      fullTextSearch: true
+      optimisticConcurrencyControl: true
+      iconClass: fas fa-briefcase

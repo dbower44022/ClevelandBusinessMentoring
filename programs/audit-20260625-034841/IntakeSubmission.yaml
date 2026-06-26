@@ -1,0 +1,107 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of IntakeSubmission captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T03:52:09Z.
+entities:
+  IntakeSubmission:
+    action: create
+    type: BasePlus
+    labelSingular: Intake Submission
+    labelPlural: Intake Submissions
+    stream: true
+    settings:
+      orderBy: createdAt
+      order: desc
+    fields:
+    - name: form
+      type: enum
+      label: Form
+      default: client-intake
+      options:
+      - client-intake
+      - volunteer
+      - info-request
+      - Partner
+      - Sponsor
+      maxLength: 100
+    - name: reason
+      type: enum
+      label: Reason
+      options:
+      - Normal
+      - Honeypot
+      - OrchestratorError
+      maxLength: 100
+    - name: status
+      type: enum
+      label: Status
+      default: New
+      options:
+      - New
+      - Approved
+      - Rejected
+      - Processed
+      maxLength: 100
+    - name: source
+      type: varchar
+      label: Source
+    - name: responded
+      type: bool
+      label: Responded
+    - name: response
+      type: text
+      label: Response
+      maxLength: 1024
+    - name: submitterEmail
+      type: varchar
+      label: Submitter Email
+      maxLength: 100
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - submitterEmail
+          - - contact
+            - source
+          - - status
+            - reason
+            - form
+          - - responded
+            - response
+          - - description
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: form
+          width: 16
+        - field: createdAt
+          width: 16
+        - field: submitterEmail
+          width: 16
+        - field: responded
+          width: 16
+        - field: response
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

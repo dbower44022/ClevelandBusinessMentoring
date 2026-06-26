@@ -1,0 +1,16 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Account.yaml (entity settings only) from dev audit.
+entities:
+  Account:
+    settings:
+      orderBy: name
+      order: asc
+      textFilterFields:
+      - name
+      - emailAddress
+      fullTextSearch: true
+      optimisticConcurrencyControl: true
+      iconClass: fas fa-building
+      color: '#edc755'
+      multipleAssignedUsers: true

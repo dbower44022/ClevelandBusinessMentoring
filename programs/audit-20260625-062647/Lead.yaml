@@ -1,0 +1,124 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Lead captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T06:30:25Z.
+entities:
+  Lead:
+    settings:
+      orderBy: createdAt
+      order: desc
+      textFilterFields:
+      - name
+      - accountName
+      - emailAddress
+      iconClass: fas fa-address-card
+      color: '#d6a2c9'
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - accountName
+          - - emailAddress
+            - phoneNumber
+          - - title
+            - website
+          - - address
+            - null
+        - label: Details
+          rows:
+          - - status
+            - source
+          - - opportunityAmount
+            - campaign
+          - - industry
+            - null
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+          - - name: accountName
+              fullWidth: true
+          - - name: emailAddress
+              fullWidth: true
+          - - name: phoneNumber
+              fullWidth: true
+          - - title
+            - website
+          - - addressCity
+            - addressCountry
+          - - status
+            - source
+          - - name: description
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: 'true'
+        - field: status
+          width: 15
+        - field: emailAddress
+          width: 20
+          notSortable: true
+        - field: assignedUser
+          width: 18
+        - field: createdAt
+          width: 13
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: status
+          width: 17
+        - field: emailAddress
+          width: 27
+          notSortable: true
+        - field: createdAt
+          width: 18
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - streamUpdatedAt
+      - address
+      - accountName
+      - campaign
+      - emailAddress
+      - phoneNumber
+      - status
+      - source
+      - opportunityAmountConverted
+      - industry
+      - targetLists
+      - createdAccount
+      massUpdate:
+      - status
+      - assignedUser
+      - teams
+      relationships:
+      - targetLists
+      bottomPanelsDetail:
+        targetLists:
+          name: targetLists
+          index: 5
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+      sidePanelsDetailSmall:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        tasks:
+          disabled: true

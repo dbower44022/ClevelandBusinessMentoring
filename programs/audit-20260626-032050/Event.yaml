@@ -1,0 +1,220 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Event captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-26T03:24:26Z.
+entities:
+  Event:
+    action: create
+    type: Event
+    labelSingular: Event
+    labelPlural: Events
+    stream: true
+    settings:
+      orderBy: dateStart
+      order: desc
+      textFilterFields:
+      - name
+      fullTextSearch: true
+    fields:
+    - name: format
+      type: enum
+      label: Format
+      required: true
+      default: Virtual
+      options:
+      - In-Person
+      - Virtual
+      - Hybrid
+      maxLength: 100
+    - name: topic
+      type: enum
+      label: Topic
+      options:
+      - Business Fundamentals
+      - Marketing & Sales
+      - Finance & Accounting
+      - Legal & Compliance
+      - Operations
+      - Technology & Digital
+      - Leadership & People
+      - Industry-Specific
+      - Networking
+      - Other
+      maxLength: 100
+    - name: venueCapacity
+      type: int
+      label: Venue Capacity
+    - name: location
+      type: text
+      label: Location
+    - name: virtualMeetingUrl
+      type: url
+      label: Virtual Meeting URL
+    - name: registrationUrl
+      type: url
+      label: Registration URL
+      readOnly: true
+    - name: recordingUrl
+      type: url
+      label: Recording URL
+    - name: documents
+      type: varchar
+      label: Documents
+    - name: eventFee
+      type: int
+      label: Event Fee
+    - name: eventType
+      type: enum
+      label: Event Type
+      default: Online Webinar
+      options:
+      - Online Webinar
+      - In Person Event
+      - Online Course
+      - ''
+      maxLength: 100
+    - name: eventOverview
+      type: wysiwyg
+      label: Event Overview
+    - name: eventGraphic
+      type: file
+      label: Event Graphic
+    - name: sponsorGraphic
+      type: file
+      label: Sponsor Graphic
+    - name: eventSyllabus
+      type: wysiwyg
+      label: Event Syllabus
+    - name: eventReleaseDate
+      type: datetime
+      label: Event Release Date
+    layout:
+      detail:
+        panels:
+        - label: Classification
+          tabBreak: true
+          tabLabel: Event Info
+          rows:
+          - - name
+          - - format
+            - topic
+            - eventType
+          - - eventFee
+            - duration
+          - - dateStart
+            - status
+          - - description
+          - - eventOverview
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Venue and Access
+          tabBreak: true
+          tabLabel: Venue Info
+          rows:
+          - - venueCapacity
+            - location
+          - - virtualMeetingUrl
+            - registrationUrl
+          - - recordingUrl
+            - null
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Documents
+          tabBreak: true
+          tabLabel: Documents
+          rows:
+          - - documents
+            - null
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Event Graphics
+          tabBreak: true
+          tabLabel: Event Graphics
+          rows:
+          - - eventGraphic
+            - sponsorGraphic
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+          - - name: status
+              fullWidth: true
+          - - name: dateStart
+              fullWidth: true
+          - - name: duration
+              fullWidth: true
+          - - name: dateEnd
+              fullWidth: true
+          - - name: parent
+              fullWidth: true
+          - - name: description
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          width: 28
+          link: true
+          align: left
+        - field: status
+          width: 12
+        - field: format
+          width: 12
+        - field: topic
+          width: 16
+        - field: dateStart
+          width: 16
+        - field: venueCapacity
+          width: 10
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: dateStart
+          width: 20
+        - field: status
+          width: 20
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - eventType
+      - dateStart
+      - name
+      - topic
+      - location
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        scheduler:
+          disabled: true
+        _delimiter_:
+          disabled: true
+        _tabBreak_0:
+          index: 0
+          tabBreak: true
+          tabLabel: Event Info
+        presenters:
+          index: 1
+        contacts:
+          index: 2
+        sponsorProfiles:
+          index: 3
+        _tabBreak_1:
+          index: 4
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 5
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

@@ -1,0 +1,14 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of IntakeSubmission.yaml (entity settings only) from
+  dev audit.
+entities:
+  IntakeSubmission:
+    action: create
+    type: BasePlus
+    labelSingular: Intake Submission
+    labelPlural: Intake Submissions
+    stream: true
+    settings:
+      orderBy: createdAt
+      order: desc

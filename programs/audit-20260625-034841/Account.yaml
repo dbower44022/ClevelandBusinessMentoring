@@ -1,0 +1,372 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Account captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T03:52:08Z.
+entities:
+  Account:
+    settings:
+      orderBy: name
+      order: asc
+      textFilterFields:
+      - name
+      - emailAddress
+      fullTextSearch: true
+    fields:
+    - name: clientProfile
+      type: link
+      label: Client Profile
+    - name: organizationType
+      type: enum
+      label: Organization Type
+      options:
+      - For-Profit
+      - Non-Profit
+      maxLength: 100
+    - name: businessStage
+      type: enum
+      label: Business Stage
+      options:
+      - Pre-Startup
+      - Startup
+      - Early Stage
+      - Growth Stage
+      - Established
+      maxLength: 100
+    - name: industrySector
+      type: enum
+      label: Industry Sector
+      default: Agriculture, Forestry, Fishing and Hunting
+      options:
+      - Agriculture, Forestry, Fishing and Hunting
+      - Mining, Quarrying, and Oil and Gas Extraction
+      - Utilities
+      - Construction
+      - Manufacturing
+      - Wholesale Trade
+      - Retail Trade
+      - Transportation and Warehousing
+      - Information
+      - Finance and Insurance
+      - Real Estate and Rental and Leasing
+      - Professional, Scientific, and Technical Services
+      - Management of Companies and Enterprises
+      - Administrative and Support and Waste Management
+      - Educational Services
+      - Health Care and Social Assistance
+      - Arts, Entertainment, and Recreation
+      - Accommodation and Food Services
+      - Other Services (except Public Administration)
+      - Public Administration
+      maxLength: 100
+    - name: industrySubsector
+      type: enum
+      label: Industry Subsector
+      options:
+      - ''
+      - Option 1
+      maxLength: 100
+    - name: clientNotes
+      type: wysiwyg
+      label: Company Notes
+    - name: sponsorProfile
+      type: linkOne
+      label: Sponsor Profile
+    - name: primaryContact
+      type: linkOne
+      label: Primary Contact
+    - name: companyType
+      type: multiEnum
+      label: Company Type
+      default: []
+      options:
+      - ''
+      - Client
+      - Sponsor
+      - Partner
+      - Other
+    - name: sponsorshipLevel
+      type: enum
+      label: Sponsorship Level
+      options:
+      - Title
+      - Platinum
+      - Gold
+      - Silver
+      - Bronze
+      maxLength: 100
+    - name: annualPledgeAmount
+      type: currency
+      label: Annual Pledge Amount
+    - name: sponsorshipStartDate
+      type: date
+      label: Sponsorship Start Date
+    - name: sponsorshipRenewalDate
+      type: date
+      label: Sponsorship Renewal Date
+    - name: sponsorNotes
+      type: wysiwyg
+      label: Sponsor Notes
+    - name: partnershipStartDate
+      type: date
+      label: Partnership Start Date
+    - name: partnershipAgreementDate
+      type: date
+      label: Partnership Agreement Date
+    - name: partnerContactCadence
+      type: enum
+      label: Partner Contact Cadence
+      options:
+      - Monthly
+      - Quarterly
+      - Semi-Annually
+      - Annually
+      - As-Needed
+      maxLength: 100
+    - name: partnerNotes
+      type: wysiwyg
+      label: Partner Notes
+    - name: companyPartnerProfile
+      type: linkOne
+      label: Partner Profile
+    - name: accountType
+      type: multiEnum
+      label: Account Type
+      required: true
+      audited: true
+      options:
+      - Client
+      - Partner
+      - Donor/Sponsor
+      style:
+        Client: primary
+        Partner: info
+        Donor/Sponsor: success
+    - name: linkedInPage
+      type: url
+      label: LinkedIn Page
+    - name: clientStatus
+      type: enum
+      label: Client Status
+      default: Prospect
+      audited: true
+      options:
+      - Prospect
+      - Applicant
+      - Active Client
+      - Inactive Client
+      - Former Client
+      style:
+        Applicant: warning
+        Active Client: success
+      maxLength: 100
+    - name: applicantSinceTimestamp
+      type: datetime
+      label: Applicant Since
+      readOnly: true
+    - name: partnerOrganizationType
+      type: enum
+      label: Partner Organization Type
+      options:
+      - Community Organization
+      - Nonprofit
+      - Government Agency
+      - Academic Institution
+      - Financial Institution
+      - Corporation
+      - Other
+      maxLength: 100
+    - name: partnerType
+      type: multiEnum
+      label: Partner Type
+      options:
+      - Client Referral
+      - Mentor Source
+      - Co-Sponsor
+      - Joint Marketing
+      - Funder
+      - Other
+    - name: partnerStatus
+      type: enum
+      label: Partner Status
+      default: Prospect
+      audited: true
+      options:
+      - Prospect
+      - Active
+      - Lapsed
+      - Inactive
+      style:
+        Active: success
+        Lapsed: warning
+      maxLength: 100
+    - name: publicAnnouncementAllowed
+      type: bool
+      label: Public Announcement Allowed
+    - name: targetPopulation
+      type: text
+      label: Target Population
+    - name: parentAccount
+      type: link
+      label: Parent Account
+    - name: assignedLiaison
+      type: link
+      label: Assigned Liaison
+    - name: annualPledgeAmountCurrency
+      type: enum
+      label: Annual Pledge Amount (Currency)
+      maxLength: 3
+    - name: annualPledgeAmountConverted
+      type: currencyConverted
+      label: Annual Pledge Amount (Converted)
+      readOnly: true
+    layout:
+      detail:
+        panels:
+        - label: Identification
+          rows:
+          - - name
+          - - accountType
+            - linkedInPage
+          - - shippingAddress
+            - phoneNumber
+          - - null
+            - website
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Client Profile
+          tabBreak: true
+          tabLabel: Client Profile
+          hidden: true
+          dynamicLogicVisible:
+            attribute: companyType
+            value: Client
+          rows:
+          - - clientStatus
+            - applicantSinceTimestamp
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+        - label: Partner Profile
+          tabBreak: true
+          tabLabel: Partner Profile
+          hidden: true
+          dynamicLogicVisible:
+            attribute: companyType
+            value: Partner
+          rows:
+          - - partnerOrganizationType
+            - partnerType
+          - - partnerStatus
+            - partnershipStartDate
+          - - publicAnnouncementAllowed
+            - null
+          - - targetPopulation
+          - - partnerNotes
+          dynamicLogicStyled: null
+          noteText: null
+          noteStyle: info
+      detailConvert:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - null
+          - - website
+            - phoneNumber
+          - - emailAddress
+            - null
+          - - billingAddress
+            - shippingAddress
+        - label: Details
+          rows:
+          - - type
+            - industry
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name
+          - - website
+          - - emailAddress
+          - - phoneNumber
+          - - billingAddressCity
+            - billingAddressCountry
+          - - accountType
+            - industry
+          - - description
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: billingAddressCity
+          width: 16
+        - field: companyType
+          width: 16
+        - field: website
+          width: 25
+          notSortable: true
+      listSmall:
+        columns:
+        - field: name
+          link: true
+        - field: billingAddressCountry
+          width: 50
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - type
+      - industry
+      - description
+      - emailAddress
+      - phoneNumber
+      - billingAddressCountry
+      - billingAddressPostalCode
+      - website
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        _delimiter_:
+          disabled: true
+        _tabBreak_1:
+          index: 0
+          tabBreak: true
+          tabLabel: $Company Info
+        contacts:
+          dynamicLogicVisible: null
+          style: default
+          sticked: false
+          index: 1
+        documents:
+          index: 2
+        _tabBreak_0:
+          index: 3
+          tabBreak: true
+          tabLabel: $History
+        stream:
+          sticked: false
+          index: 4
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+      sidePanelsDetailSmall:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        tasks:
+          disabled: true

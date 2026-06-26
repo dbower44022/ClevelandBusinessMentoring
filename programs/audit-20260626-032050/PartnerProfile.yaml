@@ -1,0 +1,192 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of PartnerProfile captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-26T03:24:26Z.
+entities:
+  PartnerProfile:
+    action: create
+    type: BasePlus
+    labelSingular: Partner
+    labelPlural: Partners
+    stream: true
+    settings:
+      orderBy: createdAt
+      order: desc
+      textFilterFields:
+      - name
+      fullTextSearch: false
+    fields:
+    - name: partnershipType
+      type: enum
+      label: Partnership Type
+      options:
+      - ''
+      - Referral Partner
+      - Training Partner
+      - Cohort
+      - Service Partner
+      - Funding Partner
+      - Community Partner
+      - other
+      maxLength: 100
+    - name: partnershipStartDate
+      type: date
+      label: Partnership Start Date
+    - name: partnershipAgreementDate
+      type: date
+      label: Partnership Agreement Date
+    - name: partnerContactCadence
+      type: enum
+      label: Partner Contact Cadence
+      options:
+      - Monthly
+      - Quarterly
+      - Semi-Annually
+      - Annually
+      - As-Needed
+      maxLength: 100
+    - name: partnerNotes
+      type: wysiwyg
+      label: Partner Notes
+    - name: partnershipValue
+      type: multiEnum
+      label: Partnership Value
+      default: []
+      options:
+      - Connection to stakeholders / expanding influence
+      - Co-Hosted Events
+      - Facilities
+      - Link on Website
+      - Funding / Donations
+      - Workshop Speakers / Educational Resources
+      - Other
+    - name: cBMValueProvided
+      type: multiEnum
+      label: CBM Value Provided
+      default: []
+      options:
+      - Free mentoring support
+      - Speking Opportunities
+      - Co-hosted events or webinars
+      - Recognition on CBM Site
+      - Recognition on CBM Materials
+      - Other
+    - name: partnershipStatus
+      type: enum
+      label: Partnership Status
+      default: Meetings Held
+      options:
+      - Meetings Held
+      - Proposal Sent
+      - MOU/Contract Sent
+      - MOU/Contract Signed
+      - Inactive
+      - Candidate
+      maxLength: 100
+    - name: relationGoalsEst
+      type: enum
+      label: Relation Goals Established
+      options:
+      - 'Yes'
+      - 'No'
+      - In Progress
+      - ''
+      maxLength: 100
+    - name: partnerEmail
+      type: foreign
+      label: Partner Email
+      readOnly: true
+      link: primaryPartnercontact
+      field: emailAddress
+    - name: lastContacted
+      type: date
+      label: Last Contacted
+    layout:
+      detail:
+        panels:
+        - label: Overview
+          rows:
+          - - name
+            - partnerCompany
+            - partnershipType
+          - - partnerContactCadence
+            - partnershipStartDate
+            - partnershipAgreementDate
+          - - primaryPartnercontact
+            - partnerManager
+            - lastContacted
+          - - description
+        - label: Partner Profile
+          tabBreak: true
+          tabLabel: Partner Profile
+          rows:
+          - - partnerNotes
+            - partnershipStatus
+          - - partnershipValue
+            - cBMValueProvided
+          - - relationGoalsEst
+          noteText: null
+          noteStyle: info
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: partnerManager
+          width: 16
+        - field: primaryPartnercontact
+          width: 16
+        - field: lastContacted
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          link: true
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - partnershipType
+      - partnershipStatus
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        _delimiter_:
+          disabled: true
+        _tabBreak_1:
+          index: 0
+          tabBreak: true
+          tabLabel: Partner Profile
+        contacts:
+          index: 1
+        engagements:
+          index: 2
+        _tabBreak_3:
+          index: 3
+          tabBreak: true
+          tabLabel: Sessions
+        sessions:
+          index: 4
+        _tabBreak_2:
+          index: 5
+          tabBreak: true
+          tabLabel: Partner Email
+        partnerEmails:
+          index: 6
+        _tabBreak_0:
+          index: 7
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 8
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

@@ -1,0 +1,235 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Contact captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T03:52:09Z.
+entities:
+  Contact:
+    settings:
+      orderBy: lastName
+      order: asc
+      textFilterFields:
+      - name
+      - emailAddress
+      - firstName
+      - lastName
+      fullTextSearch: true
+    fields:
+    - name: clientContact
+      type: linkOne
+      label: CBM Client Profile
+    - name: mentorProfile
+      type: linkOne
+      label: Mentor Profile
+    - name: contactType
+      type: multiEnum
+      label: Contact Type
+      default:
+      - ''
+      audited: true
+      options:
+      - ''
+      - Client
+      - Mentor
+      - Partner
+      - Administrator
+      - Presenter
+      - Donor
+      - Member
+      - Prospect
+      - Sponsor
+      style:
+        Client: primary
+        Mentor: success
+        Partner: info
+        Administrator: warning
+    - name: preferredName
+      type: varchar
+      label: Preferred Name
+    - name: linkedInProfile
+      type: url
+      label: LinkedIn Profile
+    - name: primaryCompany
+      type: link
+      label: Client Company
+    - name: partnerProfile
+      type: link
+      label: Related Partners
+    - name: sponsorProfile
+      type: link
+      label: Sponsor Profile
+    - name: spouseName
+      type: varchar
+      label: Spouse Name
+      maxLength: 100
+    - name: birthday
+      type: date
+      label: Birthday
+    - name: personalProfile
+      type: wysiwyg
+      label: Personal Profile
+    - name: suffix
+      type: enum
+      label: Suffix
+      options:
+      - ''
+      - Jr
+      - Sr
+      - PhD
+      - MD
+      - Esq
+      - CPA
+      maxLength: 100
+    - name: partnerProfiles
+      type: linkMultiple
+      label: Partners Managed
+    - name: assignedUser
+      type: link
+      label: User
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - salutationName
+            - firstName
+            - lastName
+            - suffix
+          - - middleName
+            - preferredName
+            - title
+          - - emailAddress
+            - phoneNumber
+            - account
+          - - address
+            - linkedInProfile
+            - doNotCall
+          - - personalProfile
+        - tabBreak: true
+          tabLabel: Personal Info
+          rows:
+          - - birthday
+            - spouseName
+          noteText: null
+          noteStyle: info
+      detailConvert:
+        panels:
+        - rows:
+          - - name
+            - account
+          - - emailAddress
+            - phoneNumber
+          - - title
+            - null
+          - - address
+            - null
+          - - name: description
+              fullWidth: true
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+          - - name: accounts
+              fullWidth: true
+          - - name: emailAddress
+              fullWidth: true
+          - - name: phoneNumber
+              fullWidth: true
+          - - addressCity
+            - addressCountry
+          - - name: description
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          link: true
+        - field: account
+          width: 25
+        - field: emailAddress
+          width: 20
+          notSortable: true
+        - field: phoneNumber
+          width: 18
+          notSortable: true
+        - field: addressCity
+          width: 16
+      listSmall:
+        columns:
+        - field: name
+          width: 25
+          link: true
+          align: left
+        - field: account
+          width: 35
+        - field: emailAddress
+          width: 30
+          notSortable: true
+        - field: phoneNumber
+          width: 20
+        - field: title
+          width: 20
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - lastName
+      - primaryCompany
+      - emailAddress
+      - account
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - addressCity
+      - addressPostalCode
+      - phoneNumber
+      - accountType
+      massUpdate:
+      - assignedUser
+      - teams
+      relationships:
+      - opportunities
+      - cases
+      - targetLists
+      bottomPanelsDetail:
+        activities:
+          disabled: true
+        _delimiter_:
+          disabled: true
+        _tabBreak_0:
+          index: 0
+          tabBreak: true
+          tabLabel: Contact Info
+        cEvents:
+          index: 1
+        cPresenterEvents:
+          index: 2
+        _tabBreak_2:
+          index: 3
+          tabBreak: true
+          tabLabel: Client Info
+        cEngagementsAsContact:
+          index: 4
+        cPrimaryEngagementsAsContact:
+          index: 5
+        cSessionsAttended:
+          index: 6
+        _tabBreak_1:
+          index: 7
+          tabBreak: true
+          tabLabel: History
+        stream:
+          sticked: false
+          index: 8
+        history:
+          index: 9
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true
+      sidePanelsDetailSmall:
+        activities:
+          disabled: true
+        history:
+          disabled: true
+        tasks:
+          disabled: true

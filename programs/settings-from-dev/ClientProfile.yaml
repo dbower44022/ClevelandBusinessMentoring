@@ -1,0 +1,19 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of ClientProfile.yaml (entity settings only) from
+  dev audit.
+entities:
+  ClientProfile:
+    action: create
+    type: BasePlus
+    labelSingular: Client
+    labelPlural: Clients
+    stream: true
+    settings:
+      orderBy: createdAt
+      order: desc
+      textFilterFields:
+      - name
+      fullTextSearch: true
+      iconClass: fas fa-anchor-circle-check
+      multipleAssignedUsers: true

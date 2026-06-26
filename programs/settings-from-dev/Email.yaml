@@ -1,0 +1,16 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of Email.yaml (entity settings only) from dev audit.
+entities:
+  Email:
+    settings:
+      orderBy: dateSent
+      order: desc
+      textFilterFields:
+      - name
+      - bodyPlain
+      - body
+      fullTextSearch: true
+      countDisabled: true
+      iconClass: fas fa-envelope
+      multipleAssignedUsers: true

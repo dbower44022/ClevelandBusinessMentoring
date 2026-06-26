@@ -1,0 +1,91 @@
+version: '1.0'
+content_version: 1.0.0
+description: Audit snapshot of Campaign captured from https://crm-test.clevelandbusinessmentors.org/ on 2026-06-25T06:30:25Z.
+entities:
+  Campaign:
+    settings:
+      orderBy: createdAt
+      order: desc
+      iconClass: fas fa-chart-line
+    layout:
+      detail:
+        panels:
+        - rows:
+          - - name
+            - status
+          - - type
+            - startDate
+          - - budget
+            - endDate
+          - - targetLists
+            - excludingTargetLists
+          - - name: description
+              fullWidth: true
+        - label: Mail Merge
+          rows:
+          - - contactsTemplate
+            - leadsTemplate
+          - - accountsTemplate
+            - mailMergeOnlyWithAddress
+          name: mailMerge
+      detailSmall:
+        panels:
+        - rows:
+          - - name: name
+              fullWidth: true
+          - - type
+            - status
+          - - name: endDate
+              fullWidth: true
+      list:
+        columns:
+        - field: name
+          width: 40
+          link: true
+        - field: type
+          width: 20
+        - field: status
+        - field: createdAt
+      listSmall:
+        columns:
+        - field: name
+          width: 40
+          link: true
+        - field: type
+          width: 30
+        - field: status
+          width: 30
+      kanban:
+        columns:
+        - field: name
+          link: true
+      filters:
+      - assignedUser
+      - teams
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - type
+      - status
+      - endDate
+      massUpdate:
+      - assignedUser
+      - teams
+      bottomPanelsDetail:
+        massEmails:
+          index: 0
+        trackingUrls:
+          index: 1
+        campaignLogRecords:
+          index: 2
+        _delimiter_:
+          index: 3
+        opportunities:
+          index: 4
+        leads:
+          index: 5
+      bottomPanelsDetailSmall:
+        stream:
+          order: 1
+          sticked: false
+          hidden: true

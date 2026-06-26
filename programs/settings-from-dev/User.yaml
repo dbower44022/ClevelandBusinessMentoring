@@ -1,0 +1,13 @@
+version: '1.0'
+content_version: 1.0.0
+description: Settings-only slice of User.yaml (entity settings only) from dev audit.
+entities:
+  User:
+    settings:
+      orderBy: userName
+      order: asc
+      textFilterFields:
+      - name
+      - userName
+      - emailAddress
+      iconClass: fas fa-user-circle
